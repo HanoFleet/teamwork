@@ -1,6 +1,12 @@
 # CampusClaw 2.0 优化与扩展规划
 
-基线是 `HanoFleet/teamwork` 的 `main`，内容与 `HanoFleet/campusclaw` 相同。本文只做规划，不改代码。实现时按 `AGENTS.md`，先写 OpenSpec change，再改代码。
+| 姓名 | 学号 | 角色 |
+| --- | --- | --- |
+| 李斯坦 | 2601210362 | 角色一：制定规约 |
+| 韩雅慧 | 2601210643 | 角色二：开发系统 |
+| 禹霖 | 2601210536 | 角色三：项目验收 |
+
+基线是 `HanoFleet/teamwork` 的 `main`，内容与 `HanoFleet/campusclaw` 相同。本文只做规划，不改代码。实现时按 `AGENTS.md`，先写 OpenSpec change，再改代码。分工细节见第 4 节。
 
 ---
 
