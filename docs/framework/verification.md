@@ -1,6 +1,6 @@
 # Platform Foundation 验证记录
 
-日期：2026-10-28。分支：`change/platform-foundation`。骨架提交：`fca2793`。范围：第 7 课可运行骨架，不含材料库新功能。
+日期：2026-10-28。分支：`change/platform-foundation`。骨架提交：`635d465`。范围：第 7 课可运行骨架，不含材料库新功能。
 
 ## 结论
 

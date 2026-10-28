@@ -1,7 +1,7 @@
 {
   "project": "CampusClaw 2.0 platform foundation",
-  "created_at": "2026-10-28T06:44:42.304176+00:00",
-  "source_commit": "fca27934016d944141c0879e08008fbe1900477d",
+  "created_at": "2026-10-28T06:53:07.589439+00:00",
+  "source_commit": "635d4651f55807a0e12fbfa79e04d6db413f539d",
   "source_dirty": false,
   "environment": {
     "os": "macOS-26.6.2-arm64-arm-64bit",
@@ -21,8 +21,8 @@
       "name": "可复现启动与存活",
       "criterion": "Compose 起来后 /live 200，含 version/time",
       "status": "passed",
-      "elapsed_ms": 9,
-      "detail": "{\"status\":\"ok\",\"version\":\"v2.0.0-skeleton\",\"time\":\"2026-10-28T06:44:28Z\"}\n"
+      "elapsed_ms": 7,
+      "detail": "{\"status\":\"ok\",\"version\":\"v2.0.0-skeleton\",\"time\":\"2026-10-28T06:52:53Z\"}\n"
     },
     {
       "id": "A02",
@@ -33,7 +33,7 @@
       "detail": {
         "status": "ready",
         "version": "v2.0.0-skeleton",
-        "time": "2026-10-28T06:44:29Z",
+        "time": "2026-10-28T06:52:53Z",
         "checks": {
           "db": true,
           "embedding": true,
@@ -46,7 +46,7 @@
       "name": "就绪别名",
       "criterion": "/ready 与 /health 同源，200",
       "status": "passed",
-      "elapsed_ms": 4,
+      "elapsed_ms": 3,
       "detail": true
     },
     {
@@ -54,7 +54,7 @@
       "name": "未知 API 404",
       "criterion": "GET /api/nope -> 404",
       "status": "passed",
-      "elapsed_ms": 4,
+      "elapsed_ms": 2,
       "detail": true
     },
     {
@@ -62,7 +62,7 @@
       "name": "方法拒绝",
       "criterion": "POST /health -> 405",
       "status": "passed",
-      "elapsed_ms": 4,
+      "elapsed_ms": 2,
       "detail": true
     },
     {
@@ -70,7 +70,7 @@
       "name": "非法参数",
       "criterion": "GET /health?x=1 -> 400",
       "status": "passed",
-      "elapsed_ms": 4,
+      "elapsed_ms": 3,
       "detail": true
     },
     {
@@ -78,7 +78,7 @@
       "name": "未登录业务接口",
       "criterion": "GET /api/materials -> 401",
       "status": "passed",
-      "elapsed_ms": 4,
+      "elapsed_ms": 3,
       "detail": true
     },
     {
@@ -86,7 +86,7 @@
       "name": "请求 ID 贯穿",
       "criterion": "合法 X-Request-ID 原样回写",
       "status": "passed",
-      "elapsed_ms": 4,
+      "elapsed_ms": 3,
       "detail": "响应头保留 verify-lesson07"
     },
     {
@@ -94,7 +94,7 @@
       "name": "日志契约",
       "criterion": "单行 JSON，含 request_id/path/status，无机密",
       "status": "passed",
-      "elapsed_ms": 84,
+      "elapsed_ms": 69,
       "detail": "13 条请求日志可解析"
     },
     {
@@ -102,7 +102,7 @@
       "name": "依赖不可达",
       "criterion": "停 MySQL 后 live 200、health 503、业务 503",
       "status": "passed",
-      "elapsed_ms": 5242,
+      "elapsed_ms": 5247,
       "detail": "live=200, health=503(db=false), materials=503"
     },
     {
@@ -110,7 +110,7 @@
       "name": "依赖恢复",
       "criterion": "重启 MySQL 后 /health 恢复 200",
       "status": "passed",
-      "elapsed_ms": 2171,
+      "elapsed_ms": 2167,
       "detail": "MySQL 恢复后 /health=200"
     },
     {
@@ -118,7 +118,7 @@
       "name": "端口边界",
       "criterion": "db/qdrant/api 无 ports，web 有 ports",
       "status": "passed",
-      "elapsed_ms": 74,
+      "elapsed_ms": 72,
       "detail": "只有 web 映射端口"
     },
     {
@@ -126,7 +126,7 @@
       "name": "Qdrant 不可达",
       "criterion": "停 Qdrant 后 live 200、health 503，恢复后 200",
       "status": "passed",
-      "elapsed_ms": 4327,
+      "elapsed_ms": 4388,
       "detail": "qdrant=down 时 health=503，恢复后 health=200"
     },
     {
@@ -134,7 +134,7 @@
       "name": "优雅停机",
       "criterion": "stop api 后日志含 shutdown_complete",
       "status": "passed",
-      "elapsed_ms": 223,
+      "elapsed_ms": 235,
       "detail": "api 收到 SIGTERM 后记录 shutdown_complete"
     }
   ]

@@ -2,10 +2,10 @@
 <style>body{font-family:system-ui,sans-serif;margin:32px;line-height:1.5}table{border-collapse:collapse;width:100%}
 td,th{border:1px solid #ccc;padding:6px;vertical-align:top}code{white-space:pre-wrap}.passed{color:#0a7a2f}.failed{color:#b00020}</style>
 <h1>CampusClaw 2.0 platform foundation 验收报告</h1>
-<p>状态：<b>passed</b>；通过 14，失败 0；提交 <code>fca27934016d944141c0879e08008fbe1900477d</code>。</p>
-<table><thead><tr><th>ID</th><th>检查</th><th>判据</th><th>结果</th><th>证据</th></tr></thead><tbody><tr><td>A01</td><td>可复现启动与存活</td><td>Compose 起来后 /live 200，含 version/time</td><td class="passed">passed</td><td><code>{&quot;status&quot;:&quot;ok&quot;,&quot;version&quot;:&quot;v2.0.0-skeleton&quot;,&quot;time&quot;:&quot;2026-10-28T06:44:28Z&quot;}
+<p>状态：<b>passed</b>；通过 14，失败 0；提交 <code>635d4651f55807a0e12fbfa79e04d6db413f539d</code>。</p>
+<table><thead><tr><th>ID</th><th>检查</th><th>判据</th><th>结果</th><th>证据</th></tr></thead><tbody><tr><td>A01</td><td>可复现启动与存活</td><td>Compose 起来后 /live 200，含 version/time</td><td class="passed">passed</td><td><code>{&quot;status&quot;:&quot;ok&quot;,&quot;version&quot;:&quot;v2.0.0-skeleton&quot;,&quot;time&quot;:&quot;2026-10-28T06:52:53Z&quot;}
 </code></td></tr>
-<tr><td>A02</td><td>就绪检查</td><td>/health 200，db/qdrant/embedding 都为 true</td><td class="passed">passed</td><td><code>{&quot;status&quot;: &quot;ready&quot;, &quot;version&quot;: &quot;v2.0.0-skeleton&quot;, &quot;time&quot;: &quot;2026-10-28T06:44:29Z&quot;, &quot;checks&quot;: {&quot;db&quot;: true, &quot;embedding&quot;: true, &quot;qdrant&quot;: true}}</code></td></tr>
+<tr><td>A02</td><td>就绪检查</td><td>/health 200，db/qdrant/embedding 都为 true</td><td class="passed">passed</td><td><code>{&quot;status&quot;: &quot;ready&quot;, &quot;version&quot;: &quot;v2.0.0-skeleton&quot;, &quot;time&quot;: &quot;2026-10-28T06:52:53Z&quot;, &quot;checks&quot;: {&quot;db&quot;: true, &quot;embedding&quot;: true, &quot;qdrant&quot;: true}}</code></td></tr>
 <tr><td>A03</td><td>就绪别名</td><td>/ready 与 /health 同源，200</td><td class="passed">passed</td><td><code>true</code></td></tr>
 <tr><td>A04</td><td>未知 API 404</td><td>GET /api/nope -&gt; 404</td><td class="passed">passed</td><td><code>true</code></td></tr>
 <tr><td>A05</td><td>方法拒绝</td><td>POST /health -&gt; 405</td><td class="passed">passed</td><td><code>true</code></td></tr>
