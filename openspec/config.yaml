@@ -1,6 +1,10 @@
 schema: spec-driven
 
 context: |
-  CampusClaw 迭代 1。浏览器只访问 Nginx，Nginx 反代 /api 与 /health 到 Go，Go 使用 MySQL 8。
-  会话是 HttpOnly Cookie，班级只来自服务端会话。跨班与不存在的材料都返回同形 404。
-  标准启动方式只有 Docker Compose。检索只在会话班级内进行，Qdrant 不对外。不要引入 JWT、作业批改或超级管理员。
+  CampusClaw 2.0 小组项目。当前基线是迭代 1/2：登录与 HttpOnly Cookie、JWT Bearer（本 change 后只保留给脚本）、
+  教师/学生角色、班级隔离、txt/md 上传、关键字/向量/混合检索、可追溯问答。
+  浏览器只访问 Nginx，Nginx 反代 /api 与 /health 到 Go，Go 使用 MySQL 8 与 Qdrant。
+  会话是 HttpOnly Cookie，班级只来自服务端会话；跨班、已删除、他人私有和不存在资源都返回同形 404。
+  标准启动方式只有 Docker Compose，只有 web 映射端口，/health 不查数据库。
+  当前活动 change 是 upgrade-material-library；阶段一只写规约，不改 backend/frontend 业务代码。
+  不做超级管理员，不让 AI 给作业打分；不引入外部队列、Redis 或对象存储。

@@ -2,86 +2,173 @@
 
 ## Purpose
 
-规定第一阶段共享底座：可升级数据库、页面壳层、统一反馈和已知安全修复。它不引入后续教学业务。
+规定本 change 所有能力共用的底座：可升级数据库、页面壳层、全局搜索与统一反馈、索引与嵌入配置。它不实现材料库业务，也不引入后续教学业务。
 
 ## ADDED Requirements
 
 ### Requirement: 版本化数据库迁移
 
-服务启动 MUST 按数字顺序执行打包的迁移脚本，并在 `schema_migrations` 记录成功版本。已执行版本不得重复执行；已有数据库升级不得清空用户、材料、文件、切片或向量。迁移失败 MUST 使启动失败并保留可诊断错误。
+服务启动时 MUST 按版本号升序执行 `backend/internal/db/migrations/` 中打包的 SQL 脚本。每个脚本 MUST 在 `schema_migrations(version, name, checksum, applied_at)` 中记录版本、文件名和 SHA-256；已记录版本 MUST 跳过，已有版本的文件校验和不一致时 MUST 启动失败。迁移 MUST 在监听端口前完成；失败时进程 MUST 以非零状态退出，MUST NOT 清空、重建或覆盖已有表。`0001_baseline.sql` MUST 等价当前 `db.Migrate` 的全部 `CREATE TABLE IF NOT EXISTS` 语句，使迭代 1/2 的数据库无需清空即可升级。
 
-#### Scenario: 空库和旧库都能升级
+#### Scenario: 空库完成全部迁移
 
-- **WHEN** 使用空 MySQL 启动，或使用现有迭代 1/2 数据库启动
-- **THEN** 所有迁移按顺序完成，`schema_migrations` 含版本记录
-- **AND** 旧用户、材料和索引仍存在，新增列和表可用
+- **GIVEN** 一个空的 MySQL 8.0 数据库，`.env` 已按 `.env.example` 填好
+- **WHEN** 启动 api 进程
+- **THEN** `GET /health` 返回 200
+- **AND** `schema_migrations` 含从 `0001` 到当前最新版本的连续记录
+- **AND** `classes`、`users`、`sessions`、`materials`、`knowledge_entries`、`knowledge_chunks` 都存在
+
+#### Scenario: 旧库升级保留数据
+
+- **GIVEN** 一个迭代 1/2 的数据库，含 1 个教师、2 个学生、1 份材料和已 ready 的切片
+- **WHEN** 使用本 change 的 api 启动
+- **THEN** 上述用户、材料和切片行数不变，正文和文件仍可读取
+- **AND** `materials` 的新增列取默认值，`material_versions`、`tags`、`material_reads`、`favorites` 等新表存在
+- **AND** 预置账号和预置材料没有重复插入
+
+#### Scenario: 迁移失败时启动失败
+
+- **GIVEN** `migrations/` 中新增一个语法错误的版本 N+1，且版本 1 至 N 已成功执行
+- **WHEN** 启动 api
+- **THEN** 进程以非零状态退出，不监听端口
+- **AND** 错误日志包含失败版本号 N+1
+- **AND** `schema_migrations` 仍只有 1 至 N，已有业务行数不变
+
+#### Scenario: 校验和不一致拒绝启动
+
+- **GIVEN** 版本 `0002` 已执行，之后有人修改了 `0002_*.sql` 的内容
+- **WHEN** 启动 api
+- **THEN** 进程以非零状态退出，日志指出 `0002` 校验和不一致
+- **AND** 不执行 `0002` 之后的版本，不修改已有数据
 
 #### Scenario: 重启不重复迁移
 
-- **WHEN** API 重启两次
-- **THEN** 已记录迁移不重复执行
-- **AND** 种子和已有业务数据不复制、不覆盖
+- **GIVEN** 数据库已完成全部迁移
+- **WHEN** 连续启动 api 两次
+- **THEN** 每个版本的 `applied_at` 不变，`schema_migrations` 行数不增加
+- **AND** 种子用户和材料不重复，教师后来上传的材料仍在
 
 ### Requirement: 页面壳层与响应式导航
 
-前端 MUST 将页面和通用组件从单体 `App.tsx` 拆出。桌面导航 MUST 提供首页、材料、问答以及本阶段已有页面的入口；后续课程单元、作业、练习、通知和班级管理只能显示为明确的禁用占位，不得要求对应业务接口或搜索结果。窄屏 MUST 使用底部标签栏。必须保留北大红主色、浅色/深色主题和键盘可操作性。材料、编辑、版本、设置、注册等路由 MUST 可直接打开或刷新。
+前端 MUST 把 `frontend/src/App.tsx` 拆为 `pages/` 与 `components/`，路由状态 MUST 进入 URL。桌面宽度大于等于 768px 时 MUST 显示左侧导航，可用项为：首页 `/`、材料 `/materials`、问答 `/ask`、设置 `/settings`，教师额外显示回收站 `/trash`。窄屏小于 768px 时 MUST 显示底部标签栏，最多 4 项：首页、材料、问答、设置。直接打开 `/materials/{id}`、`/materials/{id}/edit`、`/materials/{id}/versions`、`/trash`、`/settings` MUST 返回 SPA 入口并在登录后渲染；未登录访问 MUST 回到登录页，且页面 MUST NOT 出现材料标题。北大红主色、浅色/深色主题和纯键盘操作 MUST 保留。
 
-#### Scenario: 桌面和窄屏主导航
+#### Scenario: 桌面导航
 
-- **WHEN** 在桌面和手机宽度登录
-- **THEN** 导航分别显示左侧栏和底部标签栏
-- **AND** 本阶段已有的首页、材料、问答入口可用，后续课程单元、作业、练习、通知和班级管理入口明确显示为禁用占位
-- **AND** 用户可以键盘到达材料、问答和设置页面
+- **GIVEN** `teacher_a` 已登录，浏览器视口为 1440×900
+- **WHEN** 打开 `/`
+- **THEN** 左侧导航出现，首页、材料、问答、设置、回收站可点击
+- **AND** 学习路径、作业、练习、通知、班级管理带有 `aria-disabled="true"`
+- **AND** 按 Tab 可依次到达全部可用项，按 Enter 可打开
 
-#### Scenario: 直接刷新深层路由
+#### Scenario: 窄屏底栏
 
-- **WHEN** 登录后直接打开 `/materials/{id}/versions` 或 `/settings`
-- **THEN** 页面按服务端会话恢复并显示对应内容
-- **AND** 未登录时回到登录页且不泄露材料标题
+- **GIVEN** `student_a1` 已登录，浏览器视口为 390×844
+- **WHEN** 打开 `/materials`
+- **THEN** 底部标签栏显示首页、材料、问答、设置四项
+- **AND** 不显示回收站和班级管理
+- **AND** 内容区可滚动到最后一个材料，不被底栏遮挡
 
-### Requirement: 全局搜索和统一反馈
+#### Scenario: 深层路由刷新
 
-Ctrl/⌘+K MUST 打开全局搜索，搜索本阶段已实现的材料、材料操作和常用操作；后续单元、作业、练习、通知数据未实现时不得出现在搜索结果中。后续教学入口可以作为禁用占位显示，但不得声称可搜索或打开。搜索支持上下键选择和 Enter 执行。页面加载 MUST 显示 skeleton；空列表 MUST 给出下一步建议；网络 503 或可重试错误 MUST 显示重试按钮。401 MUST 弹出重新登录并保留当前页面和未提交草稿。
+- **GIVEN** `teacher_a` 已登录，本班存在材料 id=1
+- **WHEN** 直接打开 `/materials/1/versions` 并刷新页面
+- **THEN** 响应为 200 的 SPA 入口，页面渲染版本页，不出现 404
+- **AND** 未登录会话打开同一 URL 时进入登录页，DOM 不含材料标题
 
-#### Scenario: 键盘搜索
+#### Scenario: 主题与键盘操作
 
-- **WHEN** 用户按 Ctrl/⌘+K 输入材料标题片段并按上下键、Enter
-- **THEN** 搜索结果可选中并打开材料详情
-- **AND** 结果不包含其他班级材料或教师专属操作
+- **GIVEN** 已登录用户
+- **WHEN** 切换到深色主题，并只用键盘打开材料详情
+- **THEN** `document.documentElement.dataset.theme` 为 `dark`，键盘焦点可见
+- **AND** 刷新后主题保持；主题偏好可以存在 localStorage，但其中 MUST NOT 含会话令牌
 
-#### Scenario: 错误可重试且草稿不丢
+### Requirement: 禁用占位与教师专属路由
 
-- **WHEN** 服务器暂时返回 503，用户正在编辑材料或填写问题
-- **THEN** 页面显示明确错误和重试按钮
-- **AND** 重试或重新登录后草稿仍在，提交成功后才清理
+学习路径、作业、练习、通知、班级管理 MUST 显示为禁用项，MUST NOT 注册路由，MUST NOT 请求后端；禁用项 MUST 带 `aria-disabled="true"`，键盘可以到达但不能激活。教师专属路由 `/trash` 对学生 MUST 显示无权限提示，MUST NOT 请求回收站数据。
 
-### Requirement: 可信限流和嵌入配置
+#### Scenario: 学生打开教师专属路由
 
-登录失败计数 MUST 存 MySQL，API 重启不得清除锁定。Go MUST 只信来自可信 web 代理的真实客户端 IP，不得使用可伪造的第一段 `X-Forwarded-For` 绕过限流。嵌入维度 MUST 来自 `EMBEDDING_DIM`，Qdrant 集合名 MUST 包含维度；维度不匹配不得静默写入错误集合。
+- **GIVEN** `student_a1` 已登录
+- **WHEN** 直接打开 `/trash`
+- **THEN** 页面显示「无权限」提示，不显示回收站列表
+- **AND** 网络面板没有成功的 `GET /api/trash` 请求；若发出请求，返回 403
 
-#### Scenario: 重启不能绕过登录锁定
+#### Scenario: 后续教学入口只是占位
 
-- **WHEN** 用户达到失败阈值后重启 API，再提交正确口令
-- **THEN** 仍返回与错误口令同形的 401，直到锁定期结束
+- **GIVEN** `student_a1` 已登录，桌面视口
+- **WHEN** 点击导航中的「作业」，或直接打开 `/assignments`
+- **THEN** 「作业」入口带 `aria-disabled="true"`，不跳转，不发请求
+- **AND** `/assignments` 不渲染业务页面，只显示「本阶段未开放」
 
-#### Scenario: 伪造代理头不能绕过
+### Requirement: 全局搜索与统一反馈
 
-- **WHEN** 客户端变更 `X-Forwarded-For` 头重复提交失败口令
-- **THEN** 失败计数仍按可信来源累计，正确口令不能因换头立即绕过锁定
+Ctrl/⌘+K MUST 打开全局搜索。搜索范围 MUST 限于当前用户可见的已实现资源：材料标题、材料操作（打开、编辑、版本、删除）和常用操作（切换主题、退出登录）。查询少于 1 个字符时 MUST NOT 请求后端；结果 MUST 最多 20 条，按标题匹配优先、更新时间降序。上下键 MUST 移动选中项，Enter MUST 执行，Esc MUST 关闭。不得返回其他班级材料或教师专属操作给学生。页面加载 MUST 显示 skeleton；空列表 MUST 显示下一步建议；400、401、404、409、413、503 MUST 显示可读错误；503 MUST 提供重试按钮。401 MUST 弹出重新登录，成功后 MUST 回到原路由；材料编辑器和提问框草稿 MUST 保存在 `localStorage` 的 `campusclaw.draft.*`，提交成功或用户明确放弃后 MUST 删除。
+
+#### Scenario: 键盘搜索材料
+
+- **GIVEN** A 班教师有标题含「函数」的材料，B 班有「B班-牛顿定律笔记」
+- **WHEN** 按 Ctrl/⌘+K，输入「函数」，按方向键下再按 Enter
+- **THEN** 打开对应材料详情
+- **AND** 结果列表不含「牛顿定律」
+- **AND** 请求 `GET /api/quick-search?q=函数` 的响应最多 20 条
+
+#### Scenario: 学生看不到教师操作
+
+- **GIVEN** `student_a1` 已登录
+- **WHEN** 打开全局搜索并输入「删除」
+- **THEN** 结果不含删除、编辑、版本恢复等教师操作
+- **AND** 只含学生可用的打开、收藏和材料搜索
+
+#### Scenario: 空结果给出下一步
+
+- **GIVEN** 本班没有标题含「zzz」的材料
+- **WHEN** 搜索「zzz」
+- **THEN** 显示「没有找到匹配项」和「试试材料页的标签筛选」
+- **AND** 不显示错误状态或重试按钮
+
+#### Scenario: 503 重试与草稿保留
+
+- **GIVEN** 教师正在 `/materials/1/edit` 编辑正文，草稿已写入 `localStorage`
+- **WHEN** 保存请求返回 503
+- **THEN** 页面显示「服务暂时不可用」和重试按钮，编辑器内容不变
+- **AND** 刷新页面后草稿仍在；保存成功后该草稿键被删除
+
+#### Scenario: 401 重新登录回到原页
+
+- **GIVEN** 会话过期，教师停留在 `/materials/1/versions`
+- **WHEN** 页面收到 401
+- **THEN** 弹出重新登录，登录成功后回到 `/materials/1/versions`
+- **AND** 登录页和返回后的页面都不显示其他班材料
+
+### Requirement: 索引与嵌入配置
+
+`EMBEDDING_DIM` MUST 是必填环境变量，取值为 1 至 4096 的整数；缺失、非整数或越界 MUST 使 api 启动失败，MUST NOT 回退到 256。Qdrant 集合名 MUST 为 `campusclaw_<EMBEDDING_DIM>`。本地嵌入 MUST 输出该维度；外部嵌入返回的向量长度不等于该值时，材料 MUST 标记为 `failed`，`index_error` 为 `embedding_dim_mismatch`，MUST NOT 写入任何 ready 切片。`MAX_UPLOAD_BYTES` MUST 保持 1 至 16777216 的整数校验。固定上限 MUST 为：单次批量 20 个文件、请求总大小 20 MiB、PDF 抽取 10 秒、抽取正文 2,000,000 字符、压缩包 2000 个条目、解压后 100 MiB、列表默认 20 条且最多 100 条。
 
 #### Scenario: 维度跟随配置
 
-- **WHEN** 使用不同 `EMBEDDING_DIM` 启动本地嵌入
-- **THEN** Qdrant 集合按该维度创建或选择
-- **AND** 检索向量长度与集合维度一致
+- **GIVEN** `EMBEDDING_DIM=768`，嵌入使用本地实现
+- **WHEN** 上传并索引一份材料
+- **THEN** Qdrant 集合名为 `campusclaw_768`，写入向量长度为 768
+- **AND** 检索返回 200
 
-### Requirement: 部署与客户端安全底线
+#### Scenario: 缺少维度拒绝启动
 
-Compose MUST 只映射 web 端口，Qdrant、MySQL 和模型网关不得映射宿主。密钥只能在服务端环境变量；前端源码和响应不得包含密钥、向量分量或伪造 `class_id`/`system` 消息。Markdown MUST 不执行原始 HTML，响应 MUST 设置 CSP。
+- **GIVEN** `.env` 未设置 `EMBEDDING_DIM`
+- **WHEN** 启动 api
+- **THEN** 进程以非零状态退出，日志包含 `EMBEDDING_DIM`
+- **AND** 不监听端口，不写 Qdrant
 
-#### Scenario: 宿主端口与源码检查
+#### Scenario: 维度不匹配不静默写入
 
-- **WHEN** 查看 Compose 配置和前端构建源码
-- **THEN** 只有 web 有 `ports`
-- **AND** 不存在前端 localStorage 令牌、`class_id: 999` 或伪造 system 消息
-- **AND** `verify.py` 中的隔离测试仍可使用这些测试输入而不进入正式页面
+- **GIVEN** Qdrant 已有 `campusclaw_256`，配置为 `EMBEDDING_DIM=768`，外部嵌入返回 256 维向量
+- **WHEN** 教师上传材料
+- **THEN** 材料 `index_status=failed`，`index_error=embedding_dim_mismatch`
+- **AND** `knowledge_chunks` 没有该材料的 ready 行，`campusclaw_768` 中没有该材料向量
+
+#### Scenario: 批量与分页上限
+
+- **GIVEN** 教师一次选择 21 个文件
+- **WHEN** 调用批量上传
+- **THEN** 返回 400 `too_many_files`
+- **AND** 材料表、版本表和上传目录都不新增
+- **AND** 20 个文件的同一请求被接受
