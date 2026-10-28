@@ -50,6 +50,8 @@ curl -fsS http://localhost:8080/health
 ```bash
 make check     # 规约、规范、strict、分层、密钥、变异、Go 测试/vet、前端构建
 make grade     # 独立 Compose 项目 14 项验收，生成 reports/teacher-*/ 报告
+
+`.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check` 与 `make grade`。
 python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、问答
 ```
 

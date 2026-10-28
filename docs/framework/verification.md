@@ -55,6 +55,6 @@ $ python3 scripts/verify.py
 
 - 现有 `httpapi/auth.go`、`materials.go`、`server.go` 中的 SQL 是迭代 1/2 legacy 例外，已在 `design.md` 和 `docs/standards/02-backend.md` 登记；`layer_check.py` 只对新增文件失败。
 - `/health` 的语义从“进程存活”改为“依赖就绪”，`/live` 承担存活；`verify.py` 已同步。
-- CI 工作流已准备；本次推送因 PAT 缺少 `workflow` 权限未包含 `.github/workflows/check.yml`，待权限修复或从 GitHub 网页添加；本地 `make check`/`make grade` 已通过。
+- CI 工作流在 `.github/workflows/check.yml`，推送和 PR 都会运行 `make check` 与 `make grade`；运行记录见 GitHub Actions。
 - 前端依赖已升级到 Vite 8.3.5、react-router-dom 7.18.5，`npm audit` 为 0；未做完整浏览器回归，本 change 只保证构建和现有页面可加载。
 - 单人/三人评审：角色二、角色三的独立复现仍按 `docs/项目启动-四步核对.md` 的待办执行，不冒充已完成。
