@@ -49,7 +49,7 @@ description: 按 CampusClaw 2.0 工程规范执行四类固定动作：加一个
 4. 断言不只查状态码，还要查数据变化；对被测逻辑做一次等价破坏，确认用例变红。
 5. 更新 `docs/verification.md`：命令、退出码、结果、负责人。
 
-**产出**：测试文件、`go test ./...` / `verify.py` / Playwright 输出、验证记录。
+**产出**：测试文件、`make check` / `make grade` / `verify.py` 输出、验证记录。
 
 ## 4. 按规范发一次版本
 
@@ -57,7 +57,7 @@ description: 按 CampusClaw 2.0 工程规范执行四类固定动作：加一个
 
 **步骤**：
 
-1. 跑门禁：`openspec validate --strict`、`spec_check.py`、`standards_check.py`、`go test ./...`、`verify.py`、Playwright、`docker compose config`。
+1. 跑门禁：`make check`、`make grade`、`python3 scripts/verify.py`；材料库实现后再加 Playwright。
 2. 迁移先加后删；旧版本仍可读；回滚不反向执行迁移。
 3. 构建镜像并用提交号/版本号打标签；同一镜像换 `.env` 部署。
 4. 启动后先看 `/ready`，通过后才接流量；记录版本、命令、结果和负责人。

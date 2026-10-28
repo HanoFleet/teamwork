@@ -4,11 +4,12 @@
 
 ## 当前阶段
 
-- 阶段一是**制定规约 + 立规范**，活动 change 是 `openspec/changes/2026-10-14-upgrade-material-library/`。第一眼入口是 `SPEC.md`；本阶段只改 `openspec/`、`docs/`、`.cursor/`、`scripts/spec_check.py` 和 `scripts/standards_check.py`，不改业务代码。
-- 旧实现（backend、frontend、Compose、`verify.py`）已打包到 `archive/campusclaw-baseline.zip`，基线标签 `v2.0.0-baseline`。需要跑基线时解压归档或 `git checkout v2.0.0-baseline`，不要在根目录重新展开代码。
-- 规约入口：`proposal.md`（动因与边界）、`design.md`（取舍与接口）、`specs/*/spec.md`（可判定场景）、`tasks.md`（实现顺序与验收）。
-- 规约校验：`npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict`；结构自查：`python3 scripts/spec_check.py`；规范自查：`python3 scripts/standards_check.py`。三条都必须退出码 0。
-- 阶段一不归档 change。只有角色三完成 `tasks.md` 的 7.1 至 7.5，并留下 `docs/verification.md` 记录后，才允许合并 delta 并归档。
+- 第 7 课骨架已完成并归档：`openspec/changes/archive/2026-10-28-establish-platform-foundation/`。当前工作分支是 `change/platform-foundation`；材料库 change `openspec/changes/2026-10-14-upgrade-material-library/` 仍是活动规约，尚未实现。
+- 根目录的 `backend/`、`frontend/`、Compose 是可运行工程；`archive/campusclaw-baseline.zip` 只是历史快照，不用它代替当前代码。
+- 第一眼入口是 `SPEC.md`；骨架入口是归档的 foundation change，后续入口是 material-library change。
+- 门禁：`make check`、`make grade`、`python3 scripts/verify.py`；`openspec validate --all --strict` 和两个结构自查也必须 0。
+- 骨架的 1.8/1.9 待完成（CI 首次运行、证据归档、标签）；材料库的 `tasks.md` 一条都未勾选。只有在对应 verify 通过后才勾选。
+- 现有 `httpapi/auth.go`、`materials.go`、`server.go` 的 SQL 是 legacy 例外；新增 `httpapi` 文件不得写 SQL，材料库 change 再迁移。
 
 ## 工程规范（必读）
 
@@ -46,14 +47,14 @@
 - 密钥、`.env`、上传文件和数据库文件不进 Git。仓库里只保留 `.env.example`；缺必填变量启动失败；泄露后按 README 的步骤轮换。
 - 上传按白名单校验扩展名、文件头和压缩包大小；上传目录不作为静态资源；下载按附件返回。
 - 材料正文和用户问题都是外部数据；客户端 `system` 消息丢弃；没有依据不生成；SQL 一律参数绑定。
-- Qdrant、嵌入/对话网关和数据库不映射宿主端口；`/health` 不查数据库，依赖状态由 `/ready` 提供。
+- Qdrant、嵌入/对话网关和数据库不映射宿主端口；`/live` 只报存活，`/health` 和 `/ready` 检查依赖，`/health` 不访问业务数据。
 - 日志是单行 JSON，带 `request_id`；日志和错误响应不含口令、令牌、Cookie、正文、绝对路径、DSN。
 
 ## 评审与完成定义
 
 - 完成定义五项：对应场景全部满足、用例通过、门禁通过、文档同步、验证记录归档；缺一即未完成。
-- 合并前门禁：`openspec validate --strict`、`python3 scripts/spec_check.py`、`python3 scripts/standards_check.py`、`go test ./...`、`python3 scripts/verify.py`、`npx playwright test`、`docker compose config`。任一非零退出即阻断。
-- 变化规模：一次 change 不超过一个 capability 或一组任务；超过先拆分。本 change 已到上限，后续必须拆。
+- 合并前门禁：`npx -y @fission-ai/openspec@1.15.0 validate --all --strict`、`python3 scripts/spec_check.py`、`python3 scripts/standards_check.py`、`make check`、`make grade`、`python3 scripts/verify.py`。任一非零退出即阻断；材料库实现后再补 Playwright。
+- 变化规模：一次 change 不超过一个 capability 或一组任务；foundation 已归档，material-library 是下一个大 change，后续功能必须再拆。
 - 评审检查表：先看边界和失败路径，再看接口和数据模型，最后看任务顺序和证据；工具检查格式、错误码、密钥、依赖和测试结果。
 - 证据归档：变更说明、验证记录、评审结论放进 `docs/`，按 change 名可查；不接受“已实现”这类口头结论。
 - 提交信息：`<type>(<capability>): <task-id> <一句话>`，正文写 `Change:`、`Task:`、`Spec:`、`Verify:` 四字段；`Spec:` 写依据的 capability/Requirement，至少能对应到 `specs/` 里的标题。
@@ -61,7 +62,7 @@
 
 ## 协作
 
-- 分支：`change/<change-name>`；提交信息格式 `<type>(<capability>): <task-id> <一句话>`。
+- 分支：`change/<change-name>`（当前 `change/platform-foundation`）；提交信息格式 `<type>(<capability>): <task-id> <一句话>`。
 - 角色一制定规约，角色二实现，角色三验收且不写功能代码。角色一不在未经评审的情况下替角色二改实现。
 - 评审顺序：先确认边界和失败路径，再确认接口和数据模型，最后确认任务顺序和验收命令。
 - 实现时才发现的行为选择，补进 `design.md` 或对应的 delta，再改代码。

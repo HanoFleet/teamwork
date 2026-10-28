@@ -34,9 +34,9 @@
 6. **增加材料版本历史**：编辑、替换、恢复都追加新版本，旧版本不可改写；保存带 `base_version`，冲突返回 409 和最新内容；支持列出、读取、比较和恢复任意版本。
 7. **增加材料库日常操作**：批量上传（最多 20 个文件）、删除/撤销/回收站/彻底删除、标签、重命名、排序、分页、阅读进度、收藏和最近阅读。
 8. **拆分前端并统一反馈**：把 `App.tsx` 拆为 `pages/` 与 `components/`，路由进入 URL，提供桌面左栏/窄屏底栏、全局搜索、骨架屏、空状态、503 重试和草稿保留；移除 localStorage 令牌、伪造 `class_id: 999` 和客户端 `system` 消息。
-9. **修复已知底座问题**：登录失败计数落 MySQL 并只信可信代理 IP；`EMBEDDING_DIM` 配置化且 Qdrant 集合名带维度；CSP、附件下载头和上传归档资源限制；结构化日志与请求 ID、`/health` 存活与 `/ready` 就绪分离、优雅停机。
+9. **修复已知底座问题**：登录失败计数落 MySQL 并只信可信代理 IP；`EMBEDDING_DIM` 配置化且 Qdrant 集合名带维度；CSP、附件下载头和上传归档资源限制。日志、`/live`/`/health`/`/ready` 和优雅停机由已归档的 `2026-10-28-establish-platform-foundation` 提供，本 change 不重复修改。
 
-以上每一条都能单独演示或被测试；第 1、2、3、9 条是第 4 至 8 条的前置。
+以上每一条都能单独演示或被测试；第 1、2、3、9 条是第 4 至 8 条的前置。平台骨架、日志、就绪检查和优雅停机由 `2026-10-28-establish-platform-foundation` 提供。
 
 ## Out of Scope（本次不做）
 
@@ -65,7 +65,7 @@
 
 ### New Capabilities
 
-- `platform-foundation`：版本化迁移、页面壳层、全局搜索与统一反馈、索引与嵌入配置。
+- `platform-foundation`：版本化迁移、页面壳层、全局搜索与统一反馈、索引与嵌入配置（骨架、日志和就绪检查已在归档的 foundation change 中完成）。
 - `material-library`：批量上传与进度、回收站、标签与分页、编辑与版本历史、文件替换、原文定位、阅读进度与收藏、统一错误形状。
 
 ### Modified Capabilities
@@ -77,11 +77,11 @@
 
 | Capability | 类型 | Requirement 数 | Scenario 数 | 主要失败路径 | 验收证据 |
 | --- | --- | ---: | ---: | --- | --- |
-| `platform-foundation` | 新增 | 7 | 27 | 迁移失败启动失败、缺少 `EMBEDDING_DIM`、401/503、`/ready` 失败 | Go 单测、`verify.py`、Playwright、`docker compose config` |
+| `platform-foundation` | 新增 | 5 | 20 | 迁移失败启动失败、缺少 `EMBEDDING_DIM`、401/503 | Go 单测、`verify.py`、Playwright、`docker compose config` |
 | `material-library` | 新增 | 9 | 42 | 400/403/404/409/413、用户伪造字段 | `verify.py`、Go 单测、Playwright、数据库查询 |
 | `auth-upload` | 修改 | 7 | 44 | 400/401/403/404/413/503、重启后锁定 | `verify.py`、curl、数据库查询 |
 | `knowledge-retrieval` | 修改 | 5 | 30 | 400/403/404/503、重建失败保留旧索引 | `verify.py`、Go 单测、Qdrant 查询 |
-| **合计** |  | **28** | **143** |  |  |
+| **合计** |  | **26** | **136** |  |  |
 
 每个 Requirement 至少有一个 Scenario；没有 Scenario 的 Requirement 不允许出现。四个能力的具体条款见 `specs/<capability>/spec.md`，任务与场景的对应关系见 `tasks.md` 每条的 `verify`。
 

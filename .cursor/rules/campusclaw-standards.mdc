@@ -32,13 +32,9 @@ alwaysApply: true
 ## 门禁（合并前必须全绿）
 
 ```bash
-npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict
-python3 scripts/spec_check.py
-python3 scripts/standards_check.py
-go test ./...
+make check
+make grade
 python3 scripts/verify.py
-npx playwright test
-docker compose config
 ```
 
 任何一项非零退出即阻断合并。不得跳过钩子、改低阈值或保留“已知失败”。
@@ -46,10 +42,11 @@ docker compose config
 ## 目录落点
 
 - 接口层：`backend/internal/httpapi/`
-- 业务层：`backend/internal/library/`、`indexer/`、`retrieval/`
-- 数据访问层：`backend/internal/db/`
-- 适配层：`backend/internal/extract/`、`qdrant/`、`embed/`、`chat/`
-- 页面与组件：`frontend/src/pages/`、`frontend/src/components/`
+- 业务层：`backend/internal/service/`、`retrieval/`；材料库实现时加 `library/`、`indexer/`
+- 数据访问层：`backend/internal/repository/`、`db/`
+- 横切与配置：`backend/internal/health/`、`logging/`、`lifecycle/`、`config/`
+- 适配层：`backend/internal/qdrant/`、`embed/`、`chat/`；材料库实现时加 `extract/`
+- 页面与组件：`frontend/src/`；材料库实现时拆 `pages/`、`components/`
 - 规约：`openspec/changes/<change>/`
 - 规范：`docs/standards/`；数据字典：`docs/data-dictionary.md`
 - 证据：`docs/verification.md`、`docs/阶段一-交付说明.md`

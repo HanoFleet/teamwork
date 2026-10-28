@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><title>CampusClaw 验收报告</title>
+<style>body{font-family:system-ui,sans-serif;margin:32px;line-height:1.5}table{border-collapse:collapse;width:100%}
+td,th{border:1px solid #ccc;padding:6px;vertical-align:top}code{white-space:pre-wrap}.passed{color:#0a7a2f}.failed{color:#b00020}</style>
+<h1>CampusClaw 2.0 platform foundation 验收报告</h1>
+<p>状态：<b>passed</b>；通过 14，失败 0；提交 <code>fca27934016d944141c0879e08008fbe1900477d</code>。</p>
+<table><thead><tr><th>ID</th><th>检查</th><th>判据</th><th>结果</th><th>证据</th></tr></thead><tbody><tr><td>A01</td><td>可复现启动与存活</td><td>Compose 起来后 /live 200，含 version/time</td><td class="passed">passed</td><td><code>{&quot;status&quot;:&quot;ok&quot;,&quot;version&quot;:&quot;v2.0.0-skeleton&quot;,&quot;time&quot;:&quot;2026-10-28T06:44:28Z&quot;}
+</code></td></tr>
+<tr><td>A02</td><td>就绪检查</td><td>/health 200，db/qdrant/embedding 都为 true</td><td class="passed">passed</td><td><code>{&quot;status&quot;: &quot;ready&quot;, &quot;version&quot;: &quot;v2.0.0-skeleton&quot;, &quot;time&quot;: &quot;2026-10-28T06:44:29Z&quot;, &quot;checks&quot;: {&quot;db&quot;: true, &quot;embedding&quot;: true, &quot;qdrant&quot;: true}}</code></td></tr>
+<tr><td>A03</td><td>就绪别名</td><td>/ready 与 /health 同源，200</td><td class="passed">passed</td><td><code>true</code></td></tr>
+<tr><td>A04</td><td>未知 API 404</td><td>GET /api/nope -&gt; 404</td><td class="passed">passed</td><td><code>true</code></td></tr>
+<tr><td>A05</td><td>方法拒绝</td><td>POST /health -&gt; 405</td><td class="passed">passed</td><td><code>true</code></td></tr>
+<tr><td>A06</td><td>非法参数</td><td>GET /health?x=1 -&gt; 400</td><td class="passed">passed</td><td><code>true</code></td></tr>
+<tr><td>A07</td><td>未登录业务接口</td><td>GET /api/materials -&gt; 401</td><td class="passed">passed</td><td><code>true</code></td></tr>
+<tr><td>A08</td><td>请求 ID 贯穿</td><td>合法 X-Request-ID 原样回写</td><td class="passed">passed</td><td><code>响应头保留 verify-lesson07</code></td></tr>
+<tr><td>A09</td><td>日志契约</td><td>单行 JSON，含 request_id/path/status，无机密</td><td class="passed">passed</td><td><code>13 条请求日志可解析</code></td></tr>
+<tr><td>A10</td><td>依赖不可达</td><td>停 MySQL 后 live 200、health 503、业务 503</td><td class="passed">passed</td><td><code>live=200, health=503(db=false), materials=503</code></td></tr>
+<tr><td>A11</td><td>依赖恢复</td><td>重启 MySQL 后 /health 恢复 200</td><td class="passed">passed</td><td><code>MySQL 恢复后 /health=200</code></td></tr>
+<tr><td>A12</td><td>端口边界</td><td>db/qdrant/api 无 ports，web 有 ports</td><td class="passed">passed</td><td><code>只有 web 映射端口</code></td></tr>
+<tr><td>A13</td><td>Qdrant 不可达</td><td>停 Qdrant 后 live 200、health 503，恢复后 200</td><td class="passed">passed</td><td><code>qdrant=down 时 health=503，恢复后 health=200</code></td></tr>
+<tr><td>A14</td><td>优雅停机</td><td>stop api 后日志含 shutdown_complete</td><td class="passed">passed</td><td><code>api 收到 SIGTERM 后记录 shutdown_complete</code></td></tr></tbody></table>

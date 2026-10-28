@@ -17,8 +17,8 @@
 
 > 旧实现已打包到 `archive/campusclaw-baseline.zip`；实现阶段从归档恢复对应目录。本文中的 `backend/`、`frontend/`、Compose 路径指恢复后的目标结构。
 
-- 目录：`backend/internal/httpapi/` 是接口层；`library/`、`indexer/`、`retrieval/` 是业务层；`db/` 是数据访问层；`extract/`、`qdrant/`、`embed/`、`chat/` 是适配层。
-- 现有偏差：`httpapi/materials.go` 和 `httpapi/auth.go` 里有 SQL；本 change 把材料读写逐步移到 `library/`，新增代码不得再在 handler 里写 SQL。
+- 目录：`backend/internal/httpapi/` 是接口层；`service/`、`retrieval/` 是业务层；`repository/`、`db/` 是数据访问层；`health/`、`logging/`、`lifecycle/`、`config/` 是横切与配置包；`qdrant/`、`embed/`、`chat/` 是适配层。
+- 现有 legacy 例外：`httpapi/auth.go`、`materials.go`、`server.go` 里有迭代 1/2 的 SQL；新增 `httpapi` 文件不得再写 SQL，材料库 change 再迁移。例外已写入 foundation 的 `design.md`。
 - 现有接口都在 `/api/` 下，没有 `/v1` 前缀。把 `/api` 视为 v1 命名空间；新增接口继续用 `/api/...`，不为了“版本化”重命名已有路径。出现破坏性变更时另开 `/api/v2/...`，旧路径保留一个版本周期。
 - 现有成功响应是资源相关 JSON（`{materials:[]}`、`{hits:[]}`、`{answer,citations}`），错误响应是 `{"error":"<code>"}`。本 change 保留成功形状，错误体增加 `request_id` 放在响应头 `X-Request-ID`，不改已有字段名。
 - 配置全部来自环境变量；缺失即启动失败，不取默认密钥。`EMBEDDING_DIM` 必填，`SHUTDOWN_TIMEOUT` 固定 10 秒。
@@ -28,7 +28,7 @@
 
 | 条目 | 项目事实 | 为什么 | 怎么检查 |
 | --- | --- | --- | --- |
-| 分层与依赖方向 | 接口层只做参数解析、权限调用和错误映射；业务层持有事务和规则；数据访问层持有 SQL；适配层只封装外部服务。依赖方向 `httpapi → library/indexer/retrieval → db`，禁止反向 | 分层混乱会让权限和事务散落，无法定位缺陷 | 新增模块检查落点；`grep -R "SELECT\|INSERT\|UPDATE\|DELETE" backend/internal/httpapi` 应为空（现有遗留逐步清零） |
+| 分层与依赖方向 | 接口层只做参数解析、权限调用和错误映射；业务层持有事务和规则；数据访问层持有 SQL；适配层只封装外部服务。依赖方向 `httpapi → service/retrieval → repository/db`，禁止反向；`health`、`logging`、`lifecycle` 是横切包，不反向依赖业务 | 分层混乱会让权限和事务散落，无法定位缺陷 | 新增模块检查落点；`python3 scripts/layer_check.py` 通过；`python3 scripts/mutation.py` 注入 SQL 时必须失败 |
 | 接口命名与版本 | 资源用小写复数：`/api/materials`、`/api/materials/{id}/versions`；读 GET，建 POST，改 PATCH/PUT，删 DELETE；路径不写动词。`/api` 是 v1，破坏性变更用 `/api/v2` | 同一资源多种命名会让调用方和测试不断猜 | 新接口对照命名表；出现 `/getMaterial`、`/deleteMaterial` 这类路径即缺陷 |
 | 统一响应与错误码 | 成功返回资源 JSON；失败统一 `{"error":"<code>"}`，响应头 `X-Request-ID`；错误码只从下表取，新增先登记 | 错误码散落会让前端和验收无法按码判定 | 抽查 400/401/403/404/409/413/503 各一条；出现表外 code 即缺陷 |
 | 错误码清单 | `invalid_request`、`invalid_file`、`invalid_archive`、`invalid_query`、`invalid_pagination`、`invalid_tag`、`not_editable`、`not_replaceable`、`type_mismatch`、`unauthorized`、`invalid_credentials`、`forbidden`、`not_found`、`version_conflict`、`not_deleted`、`payload_too_large`、`too_many_files`、`no_files`、`unavailable`、`embedding_dim_mismatch` | 错误码是验收和前端分支的唯一稳定标识 | 维护本表；新增错误码必须在同一提交登记 |
@@ -58,7 +58,7 @@ GET    /ready                                # 无需登录，返回依赖状态
 2. 接口命名与版本：本 change 的 15 个新路径全部符合资源命名；不改已有路径。
 3. 统一错误结构与错误码清单：本文件维护唯一清单。
 4. 幂等声明：上表覆盖本 change 全部写接口。
-5. 配置外置：`EMBEDDING_DIM` 缺失即启动失败。
+5. 配置外置：`APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS` 和现有必填项缺失即启动失败；`EMBEDDING_DIM` 在材料库 change 增加。
 6. 分页与排序：`page/page_size/sort` 白名单和 `id` 兜底。
 
 ## 违反时怎么处理

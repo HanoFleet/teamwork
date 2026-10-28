@@ -1,6 +1,6 @@
 # 旧实现归档
 
-`campusclaw-baseline.zip` 是 CampusClaw 2.0 改造前的可运行基线，来自标签 `v2.0.0-baseline`（提交 `4fd4232`）。本次提交按老师要求只交规约，所以旧代码不再散落在根目录，而是打包成一个文件；它仍然完整、可解压、可运行，也仍然能从 Git 历史和标签找回。
+`campusclaw-baseline.zip` 是 CampusClaw 2.0 改造前的可运行基线，来自标签 `v2.0.0-baseline`（提交 `4fd4232`）。当前可运行代码已经恢复到根目录的 `backend/`、`frontend/` 和 Compose；本归档保留为历史快照，用于对比、回溯和重新生成基线，不再是唯一的代码副本。
 
 ## 包含什么
 
@@ -46,6 +46,6 @@ git archive --format=zip --prefix=campusclaw-baseline/ v2.0.0-baseline \
   -o archive/campusclaw-baseline.zip
 ```
 
-## 为什么不在根目录保留代码
+## 当前代码在哪里
 
-本次评审对象是“阶段一：制定规约”。根目录保留 `README.md`、`SPEC.md`、`openspec/`、`docs/standards/` 和本归档，评审时不会先看到实现代码。旧实现通过标签和 ZIP 保留，满足可回溯和可复现，不占提交重点。
+第 7 课要求可运行骨架，所以根目录已经恢复 `backend/`、`frontend/`、`docker-compose.yml` 和 `scripts/verify.py`，并增加了 `/live`、`/health`、`/ready`、JSON 日志和优雅停机。本归档只用于对比和回溯，不需要解压才能运行当前仓库。

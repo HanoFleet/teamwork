@@ -22,7 +22,7 @@
 - 端到端：`frontend/e2e/`，Playwright，桌面 1440×900 和手机 390×844 各跑主路径。
 - 本地模式：`EMBEDDING_URL=local`、`CHAT_URL=local` 时不访问真实网关；Qdrant 和 MySQL 由 Compose 提供。
 - 测试数据：只用预置账号 `teacher_a`、`student_a1`、`student_b1` 和测试上传的临时材料；生产数据不进测试环境。
-- 当前 change 的验收入口：`openspec validate --strict`、`python3 scripts/spec_check.py`、`python3 scripts/standards_check.py`、`go test ./...`、`python3 scripts/verify.py`、`npx playwright test`。
+- 当前 change 的验收入口：`make check`（规约/规范/strict/分层/密钥/变异/Go/前端）、`make grade`（独立 Compose 14 项）、`python3 scripts/verify.py`；Playwright 在材料库实现时补。
 
 ## 规范条目
 
@@ -33,7 +33,7 @@
 | 三类组织 | 正常、失败、边界分开；失败路径数不少于需求条数；边界取等价类两端（0/1、20/21、100/101） | 只测正常路径无法发现权限和限额问题 | 目录或命名能看出三类；缺一类即未完成 |
 | 数据隔离 | 每条用例创建自己的材料/标签/进度，结束后清理；不依赖执行顺序和残留数据；随机顺序运行结果一致 | 依赖残留数据会让单独跑和全量跑结果不同 | 打乱顺序运行两次；清空测试数据后重跑 |
 | 外部依赖 | Qdrant、嵌入、对话网关、时钟用可注入替身；断网后测试仍通过；Qdrant 停止场景单独跑 | 真实外部服务不可控，故障场景无法稳定复现 | 断网运行单元测；停 Qdrant 跑 `keyword`/`vector` 场景 |
-| 一键运行 | README 写清命令、环境变量、退出码和报告位置：`go test ./...`、`python3 scripts/verify.py`、`npx playwright test` | 新成员按文档跑不起来，测试等于不存在 | 新成员按 README 从干净克隆执行一次 |
+| 一键运行 | README 写清命令、环境变量、退出码和报告位置：`make check`、`make grade`、`python3 scripts/verify.py` | 新成员按文档跑不起来，测试等于不存在 | 新成员按 README 从干净克隆执行一次 |
 | 通过判定 | 失败以非零退出码阻断；不得保留“已知失败”；跳过必须写理由和登记人 | 绿色但带跳过会掩盖真实缺陷 | 检查退出码和跳过列表；跳过数只减不增 |
 | 断言有效性 | 判据：改坏被测逻辑，用例是否变红；只断言状态码不断言数据变化是不够的 | 形状相同的错误无法被发现 | 对被测逻辑做一次等价破坏（如把 404 改成 403），用例应失败 |
 | 缺陷判定口径 | 有业务 code 时只看 code；无 code 时按接口文档 HTTP 码；文档未写才用兜底表 | 把“HTTP 200 但业务拒绝”误判为成功很常见 | 构造 200 + `{error}` 响应，检查用例是否判失败 |
@@ -46,7 +46,7 @@
 | 层次 | 用例 |
 | --- | --- |
 | Go 单元 | 迁移执行/校验和、文件头与 ZIP 限制、PDF/DOCX/PPTX 抽取、码点映射、generation 切换、409 冲突、分页边界、限流键、日志字段、`/health` 与 `/ready` |
-| `verify.py` | 登录/锁定、跨班同形 404、上传失败无残留、批量 20/21、异步索引 failed→retry、先建后换、版本冲突、回收站、标签分页、进度/收藏、学生 403、`/ready` 503 |
+| `verify.py` | 登录/锁定、跨班同形 404、上传失败无残留、批量 20/21、异步索引 failed→retry、先建后换、版本冲突、回收站、标签分页、进度/收藏、学生 403、`/live` 200、`/health` 503 |
 | Playwright | ① 上传 PDF → 等 ready → 检索 → 引用高亮；② 编辑 → 旧引用“原文已更新” → 恢复；③ 删除 → 撤销/回收站 → 彻底删除 |
 | 手动 | 390×844、深色主题、纯键盘各走一遍登录、列表、详情、编辑、版本、回收站 |
 

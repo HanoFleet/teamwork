@@ -9,6 +9,10 @@
 - 敏感级别：公开 / 内部 / 敏感 / 个人信息。
 - 删除规则：软删除只改标记；彻底删除按 `07-data.md` 的副本清单执行。
 
+## 当前 change 的数据影响
+
+`2026-10-28-establish-platform-foundation` 不改数据库结构，只增加 `APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS` 等运行配置。材料库的表结构变更（`material_versions`、`tags`、`material_reads` 等）属于 `2026-10-14-upgrade-material-library`，实现时按本字典一起更新。
+
 ## 迁移与认证
 
 ### `schema_migrations`

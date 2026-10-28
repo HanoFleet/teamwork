@@ -8,3 +8,5 @@ campusclaw-baseline/
 .DS_Store
 __pycache__/
 *.pyc
+.env.acceptance
+reports/

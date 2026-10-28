@@ -140,7 +140,7 @@ def main() -> int:
     if not (ROOT / "archive" / "campusclaw-baseline.sha256").is_file():
         fail("缺少 archive/campusclaw-baseline.sha256")
 
-    for required in [".env.example", "LICENSE", "scripts/start-baseline.sh"]:
+    for required in [".env.example", "LICENSE", "docker-compose.yml", "Makefile", "scripts/check.sh", "scripts/grade.sh"]:
         if not (ROOT / required).is_file():
             fail(f"第一次提交缺少文件：{required}")
     for phrase in ["第一次提交检查", "许可证", "主干唯一", "YYYY-MM-DD"]:

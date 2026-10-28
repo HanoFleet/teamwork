@@ -8,9 +8,9 @@
 
 ## 0. 基线（骨架优先）
 
-- [ ] **0.1 确认现有骨架可启动** — 涉及：`archive/campusclaw-baseline.zip`、`archive/README.md`。从干净克隆解压归档（或 `git checkout v2.0.0-baseline`），按包内 README 复制 `.env` 并填好变量，执行 `docker compose up --build -d`；记录 commit、`/health` 响应和 `python3 scripts/verify.py` 的基线结果。verify: `curl -fsS http://localhost:8080/health` 返回 200；`python3 scripts/verify.py` 通过。
+- [ ] **0.1 确认现有骨架可启动** — 涉及：`docker-compose.yml`、`.env.example`、`scripts/verify.py`。在 `change/platform-foundation` 分支上复制 `.env` 并填好变量，执行 `docker compose up --build -d --wait`；记录 commit、`/live`、`/health` 和 `python3 scripts/verify.py` 的结果。verify: `curl -fsS http://localhost:8080/live` 返回 200；`curl -fsS http://localhost:8080/health` 返回 200 `ready`；`python3 scripts/verify.py` 通过。
 - [ ] **0.2 建立规约校验入口** — 涉及：`openspec/changes/2026-10-14-upgrade-material-library/`。在干净环境执行 `npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict`。verify: 退出码 0，输出 `Change '2026-10-14-upgrade-material-library' is valid`。
-- [ ] **0.3 创建变更分支并保护基线** — 涉及：Git。从 `main` 建 `change/2026-10-14-upgrade-material-library`；不在 `main` 上直接改。verify: `git branch --show-current` 输出分支名；`git log --oneline -1` 是基线 commit。
+- [ ] **0.3 创建变更分支并保护基线** — 涉及：Git。从 `main` 建 `change/platform-foundation`；不在 `main` 上直接改。verify: `git branch --show-current` 输出分支名；`git log --oneline -1` 是基线 commit。
 - [ ] **0.4 跑工程规范自查** — 涉及：`docs/standards/`、`AGENTS.md`、`.cursor/rules/`。执行 `python3 scripts/standards_check.py`，确认八类规范文件、规则入口和检查列齐备。verify: 退出码 0；输出八类规范名称和检查项数量。
 
 ## 1. 迁移与配置底座
@@ -21,8 +21,6 @@
 - [ ] **1.4 回填旧数据** — 涉及：`0002` 或 `0003_backfill.sql`、`db.Seed`。为已有材料插入 v1 版本，`body` 取现有 `knowledge_entries.body`，`file_type` 按 `original_ext` 映射；旧切片置 `generation=0`，材料置 `pending`。verify: 旧库升级后每份材料恰有一条 v1；旧切片仍在且 `generation=0`；材料状态为 pending。
 - [ ] **1.5 配置 `EMBEDDING_DIM`** — 涉及：`backend/internal/config/config.go`、`.env.example`、`docker-compose.yml`、`backend/internal/embed/embed.go`、`backend/internal/qdrant/client.go`。必填、1 至 4096；本地嵌入输出该维度；Qdrant 集合名 `campusclaw_<dim>`。verify: 缺变量启动失败；`EMBEDDING_DIM=768` 时集合名和向量长度都是 768；`go test ./internal/embed/...` 通过。
 - [ ] **1.6 登录失败计数落库和可信 IP** — 涉及：`backend/internal/auth/limiter.go`、`backend/internal/httpapi/auth.go`、`backend/internal/httpapi/server.go`、`frontend/nginx.conf`。删除内存计数，读写 `login_failures`；Nginx 覆盖 `X-Real-IP`；Go 只在直接对端属于可信私网时采用，否则用连接地址；成功后清计数，锁定到期后重置。verify: 重启 api 后仍锁定；伪造 `X-Forwarded-For` 5 次后正确口令仍 401；`login_failures` 只有真实 IP 一行。
-- [ ] **1.7 结构化日志与请求 ID** — 涉及：`backend/internal/httpapi/server.go`、`cmd/server/main.go`、新增 `internal/logging/`。stdout 单行 JSON；字段 `ts/level/msg/request_id`，请求日志加 `method/path/status/duration_ms`，可用时加 `class_id/user_id`；`X-Request-ID` 合法则沿用，否则生成 UUIDv4 并回写；过滤口令、令牌、Cookie、正文、路径和 DSN。verify: 请求带/不带 `X-Request-ID` 各一次，响应头和日志的 id 一致；日志可被 `jq` 解析；库停时日志 `status=503` 且不含 DSN。
-- [ ] **1.8 存活/就绪检查与优雅停机** — 涉及：`backend/internal/httpapi/server.go`、`cmd/server/main.go`、`backend/internal/config/config.go`。`/health` 返回 `{status,version,time}` 且不访问依赖；`/ready` 检查 MySQL ping、Qdrant 可达、`EMBEDDING_DIM` 有效，失败 503 并给 `checks`；SIGTERM 后停止接新连接，最多等 10 秒。verify: 停 db 时 `/health` 200、`/ready` 503 `db=false`；停 Qdrant 时 `qdrant=false`；SIGTERM 时在途请求完成且进程 0 退出。
 
 ## 2. 文件抽取与上传
 

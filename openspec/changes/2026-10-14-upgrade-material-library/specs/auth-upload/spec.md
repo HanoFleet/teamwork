@@ -254,14 +254,15 @@
 
 ### Requirement: Docker Compose 部署与健康检查
 
-标准启动方式 MUST 是 Docker Compose 的 web、api、db、qdrant 四个服务。只有 web MUST 映射宿主端口。数据库和 Qdrant 端口 MUST NOT 映射到宿主。`GET /health` MUST 不要求登录，且 MUST NOT 查询数据库。数据库不可用时，业务接口 MUST 返回 503，而不是 401。`docker compose down` 之后再 `up`（不带 `-v`）MUST 保留已上传的数据。api 镜像 MUST 包含 `pdftotext`。
+标准启动方式 MUST 是 Docker Compose 的 web、api、db、qdrant 四个服务。只有 web MUST 映射宿主端口。数据库和 Qdrant 端口 MUST NOT 映射到宿主。`GET /live` MUST 不要求登录，且 MUST NOT 访问 MySQL、Qdrant、嵌入或对话网关。`GET /health` MUST 不要求登录，检查 MySQL ping、Qdrant 可达和嵌入配置；全部通过返回 200，任一失败返回 503。数据库不可用时，业务接口 MUST 返回 503，而不是 401。`docker compose down` 之后再 `up`（不带 `-v`）MUST 保留已上传的数据。api 镜像 MUST 包含 `pdftotext`。
 
 #### Scenario: Compose 启动后可访问
 
 - **GIVEN** 已从 `.env.example` 复制并填好变量
 - **WHEN** 执行 `docker compose up --build -d`
 - **THEN** 浏览器可以打开 web 端口上的登录页
-- **AND** 未登录 `GET /health` 返回 200 且响应体表示进程存活
+- **AND** 未登录 `GET /live` 返回 200 且响应体表示进程存活
+- **AND** `GET /health` 返回 200 `{status:"ready"}`
 
 #### Scenario: 数据库端口不对外
 
@@ -273,8 +274,9 @@
 #### Scenario: 数据库停止时健康检查与业务接口分离
 
 - **GIVEN** web 和 api 正在运行
-- **WHEN** 停止 db 容器后访问 `/health` 和 `GET /api/materials`
-- **THEN** `/health` 仍返回 200
+- **WHEN** 停止 db 容器后访问 `/live`、`/health` 和 `GET /api/materials`
+- **THEN** `/live` 仍返回 200
+- **AND** `/health` 返回 503，`checks.db=false`
 - **AND** 材料接口返回 503，而不是 401
 
 #### Scenario: 重建容器后数据仍在
