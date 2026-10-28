@@ -33,6 +33,11 @@
 | F7 / S18 失败或缺证据不能判通过 | `python3 scripts/acceptance.py --self-test` 退出 1，报告 `status=failed` |
 | F7 / S19 验收隔离并清理 | `make grade` 使用 `campusclaw-acceptance` 独立项目、随机端口/口令，`down -v` 只清理自建资源；正式 Compose 不受影响 |
 
+## CI
+
+- 2026-10-28，提交 `6298002`，GitHub Actions [run 40647071837](https://github.com/HanoFleet/teamwork/actions/runs/40647071837)：`check` 和 `grade` 两个 job 都成功。
+- 工作流：`.github/workflows/check.yml`，在 push、PR 和手动触发时运行 `make check` 与 `make grade`。
+
 ## 门禁命令
 
 ```text
