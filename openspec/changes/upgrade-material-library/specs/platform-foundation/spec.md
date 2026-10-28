@@ -172,3 +172,66 @@ Ctrl/⌘+K MUST 打开全局搜索。搜索范围 MUST 限于当前用户可见�
 - **THEN** 返回 400 `too_many_files`
 - **AND** 材料表、版本表和上传目录都不新增
 - **AND** 20 个文件的同一请求被接受
+
+### Requirement: 结构化日志与请求 ID
+
+api MUST 在 stdout 输出单行 JSON 日志。每行 MUST 含 `ts`（RFC3339 UTC）、`level`、`msg` 和 `request_id`；HTTP 请求日志 MUST 另含 `method`、`path`、`status`、`duration_ms`，可用时含 `class_id` 和 `user_id`。`request_id` MUST 从 `X-Request-ID` 读取，取值必须是 8 至 64 个可见 ASCII 字符；缺失或非法时 MUST 由服务端生成 UUIDv4。响应 MUST 回写 `X-Request-ID`。日志 MUST NOT 含口令、令牌、Cookie、材料正文、上传文件绝对路径或数据库连接串。日志写入失败 MUST NOT 改变业务响应。
+
+#### Scenario: 无请求 ID 时生成并回写
+
+- **GIVEN** 用户已登录，请求不带 `X-Request-ID`
+- **WHEN** 调用 `GET /api/me`
+- **THEN** 响应头含 `X-Request-ID`
+- **AND** stdout 的一行日志可以解析为 JSON，`request_id` 与响应头相同
+- **AND** 该行含 `method`、`path`、`status` 和 `duration_ms`，不含令牌或口令
+
+#### Scenario: 合法请求 ID 贯穿响应和日志
+
+- **GIVEN** 请求头带 `X-Request-ID: abc12345`
+- **WHEN** 调用 `GET /api/materials`
+- **THEN** 响应头 `X-Request-ID` 等于 `abc12345`
+- **AND** 对应日志行的 `request_id` 也是 `abc12345`
+- **AND** 另一个请求带非法值（少于 8 字符或含空格）时，服务端生成新的合法 ID
+
+#### Scenario: 依赖故障日志不含机密
+
+- **GIVEN** MySQL 已停止
+- **WHEN** 调用 `GET /api/materials`
+- **THEN** 日志行 `level=error`、`status=503`
+- **AND** 日志不含数据库口令、DSN、Cookie 或材料正文
+- **AND** 响应仍是 503 `{"error":"unavailable"}`
+
+### Requirement: 存活与就绪检查分离
+
+`GET /health` MUST 是存活检查：不要求登录，MUST NOT 访问 MySQL、Qdrant、嵌入或对话网关，返回 200 和 `{status:"ok",version,time}`。`GET /ready` MUST 是就绪检查：不要求登录，检查 MySQL ping、Qdrant 可达和 `EMBEDDING_DIM` 配置有效；全部通过返回 200 `{status:"ready",checks:{db:true,qdrant:true,embedding:true}}`，任一失败返回 503 `{status:"not_ready",checks:{...}}`，MUST NOT 含密钥、DSN 或内部路径。收到 SIGTERM 后 MUST 停止接受新连接，等待在途请求最多 10 秒后退出；MUST NOT 在迁移或索引写入中途强杀进程。
+
+#### Scenario: 依赖正常时存活与就绪都通过
+
+- **GIVEN** MySQL、Qdrant 和嵌入配置都正常
+- **WHEN** 分别请求 `/health` 和 `/ready`
+- **THEN** 两个响应都是 200
+- **AND** `/health` 含 `status`、`version` 和 `time`
+- **AND** `/ready` 的 `checks` 中 `db`、`qdrant`、`embedding` 都是 `true`
+
+#### Scenario: 数据库停止时只有就绪失败
+
+- **GIVEN** MySQL 已停止，api 仍在运行
+- **WHEN** 分别请求 `/health` 和 `/ready`
+- **THEN** `/health` 仍返回 200
+- **AND** `/ready` 返回 503，`checks.db=false`
+- **AND** 响应不含 DSN、口令或内部路径
+
+#### Scenario: Qdrant 停止时就绪失败
+
+- **GIVEN** Qdrant 已停止，MySQL 正常
+- **WHEN** 请求 `/ready`
+- **THEN** 响应 503，`checks.qdrant=false`
+- **AND** `/health` 仍返回 200，`keyword` 检索仍可用
+
+#### Scenario: 优雅停机等待在途请求
+
+- **GIVEN** 一个请求正在处理，预计需要 2 秒
+- **WHEN** 进程收到 SIGTERM
+- **THEN** 进程停止接受新连接
+- **AND** 在途请求在 10 秒内完成并返回
+- **AND** 进程随后以 0 退出，不中断迁移或索引写入

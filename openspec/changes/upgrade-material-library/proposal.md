@@ -34,7 +34,7 @@
 6. **增加材料版本历史**：编辑、替换、恢复都追加新版本，旧版本不可改写；保存带 `base_version`，冲突返回 409 和最新内容；支持列出、读取、比较和恢复任意版本。
 7. **增加材料库日常操作**：批量上传（最多 20 个文件）、删除/撤销/回收站/彻底删除、标签、重命名、排序、分页、阅读进度、收藏和最近阅读。
 8. **拆分前端并统一反馈**：把 `App.tsx` 拆为 `pages/` 与 `components/`，路由进入 URL，提供桌面左栏/窄屏底栏、全局搜索、骨架屏、空状态、503 重试和草稿保留；移除 localStorage 令牌、伪造 `class_id: 999` 和客户端 `system` 消息。
-9. **修复已知底座问题**：登录失败计数落 MySQL 并只信可信代理 IP；`EMBEDDING_DIM` 配置化且 Qdrant 集合名带维度；CSP、附件下载头和上传归档资源限制。
+9. **修复已知底座问题**：登录失败计数落 MySQL 并只信可信代理 IP；`EMBEDDING_DIM` 配置化且 Qdrant 集合名带维度；CSP、附件下载头和上传归档资源限制；结构化日志与请求 ID、`/health` 存活与 `/ready` 就绪分离、优雅停机。
 
 以上每一条都能单独演示或被测试；第 1、2、3、9 条是第 4 至 8 条的前置。
 
@@ -77,11 +77,11 @@
 
 | Capability | 类型 | Requirement 数 | Scenario 数 | 主要失败路径 | 验收证据 |
 | --- | --- | ---: | ---: | --- | --- |
-| `platform-foundation` | 新增 | 5 | 20 | 迁移失败启动失败、缺少 `EMBEDDING_DIM`、401/503 | Go 单测、`verify.py`、Playwright、`docker compose config` |
+| `platform-foundation` | 新增 | 7 | 27 | 迁移失败启动失败、缺少 `EMBEDDING_DIM`、401/503、`/ready` 失败 | Go 单测、`verify.py`、Playwright、`docker compose config` |
 | `material-library` | 新增 | 9 | 42 | 400/403/404/409/413、用户伪造字段 | `verify.py`、Go 单测、Playwright、数据库查询 |
 | `auth-upload` | 修改 | 7 | 44 | 400/401/403/404/413/503、重启后锁定 | `verify.py`、curl、数据库查询 |
 | `knowledge-retrieval` | 修改 | 5 | 30 | 400/403/404/503、重建失败保留旧索引 | `verify.py`、Go 单测、Qdrant 查询 |
-| **合计** |  | **26** | **136** |  |  |
+| **合计** |  | **28** | **143** |  |  |
 
 每个 Requirement 至少有一个 Scenario；没有 Scenario 的 Requirement 不允许出现。四个能力的具体条款见 `specs/<capability>/spec.md`，任务与场景的对应关系见 `tasks.md` 每条的 `verify`。
 
@@ -92,7 +92,7 @@
 | 输入非法 | 非法扩展名、伪造 PDF 头、加密/损坏 Office、非法分页、非法标签、非文本格式编辑、空查询 | 400/413；无文件、无数据库行、无版本 |
 | 无权限 | 学生上传/批量上传/编辑/删除/重建、客户端声明 `role=teacher` | 403；相关表和目录计数不变 |
 | 资源不存在或不可见 | 跨班 id、已删除材料、非法 id、永不存在的 id；同班他人的进度/收藏 | 同形 404：状态、头、body 逐字节相同；他人私有数据不可通过任何 id 读取 |
-| 外部依赖不可达 | Qdrant 停止、数据库停止、嵌入失败、迁移失败 | `keyword` 仍可用；`vector`/`hybrid` 503；`/health` 不查库；材料 `failed` 可重试；迁移失败启动退出 |
+| 外部依赖不可达 | Qdrant 停止、数据库停止、嵌入失败、迁移失败 | `keyword` 仍可用；`vector`/`hybrid` 503；`/health` 不查库、`/ready` 返回依赖状态；材料 `failed` 可重试；迁移失败启动退出 |
 | 并发冲突 | 两个窗口基于同一 `base_version` 保存 | 后者 409，含 `current_version` 和最新正文，旧内容不被覆盖 |
 | 边界值 | 20/21 个文件、`page_size` 100/101、800/80 切分、0.35 阈值、`k=60`、2 秒轮询/节流 | 边界内成功，越界返回 400/413 或按规则过滤 |
 
@@ -104,7 +104,7 @@
 2. 跨班、已删除和不存在 id 都返回同形 404；响应不泄露资源是否存在；同班他人的进度和收藏不可通过任何 id 或查询参数读取。
 3. 没有依据就不生成；`/api/ask` 的非流式协议和 `citations` 顺序保持不变。
 4. Qdrant、嵌入网关、对话网关和数据库不映射宿主端口；密钥只在服务端环境变量。
-5. 只用 Docker Compose 启动，只有 web 映射端口；`/health` 不查数据库。
+5. 只用 Docker Compose 启动，只有 web 映射端口；`/health` 不查数据库，依赖状态由 `/ready` 提供。
 6. 上传的文件、`materials`、`material_versions`、`knowledge_entries` 要么全部写入，要么全部不写。
 7. 不做超级管理员，不让 AI 给作业打分。
 8. 网页只依赖 HttpOnly Cookie；Bearer 令牌只为 curl 和验收脚本保留。
@@ -114,7 +114,7 @@
 ## Success Criteria（完成现象）
 
 - `npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict` 退出码为 0，无 error、无 warning。
-- `python3 scripts/spec_check.py` 退出码为 0，确认四份文件齐备、每个场景有 GIVEN/WHEN/THEN、每个需求至少一个场景、失败路径不少于四类、能力与场景对应表覆盖四个能力。
+- `python3 scripts/spec_check.py` 和 `python3 scripts/standards_check.py` 退出码为 0：前者检查四份文件、场景三段式、失败路径和任务清单；后者检查八类工程规范、规则入口和检查列。
 - 四份文件齐备：`proposal.md`、`design.md`、`specs/*/spec.md`、`tasks.md`。
 - 每条 Requirement 至少一组 Scenario；没有无归属的 Scenario；能力与场景对应表可逐行核对。
 - 数值判据具体：20 个文件、2 秒、800/80 字、0.35、`k=60`、100 条分页、409/413/503 等均可直接转成测试断言。

@@ -11,15 +11,18 @@
 - [ ] **0.1 确认现有骨架可启动** — 涉及：`README.md`、`docker-compose.yml`、`.env.example`。从干净克隆复制 `.env` 并填好变量，执行 `docker compose up --build -d`；记录 commit、`/health` 响应和 `python3 scripts/verify.py` 的基线结果。verify: `curl -fsS http://localhost:8080/health` 返回 200；`python3 scripts/verify.py` 通过。
 - [ ] **0.2 建立规约校验入口** — 涉及：`openspec/changes/upgrade-material-library/`。在干净环境执行 `npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict`。verify: 退出码 0，输出 `Change 'upgrade-material-library' is valid`。
 - [ ] **0.3 创建变更分支并保护基线** — 涉及：Git。从 `main` 建 `change/upgrade-material-library`；不在 `main` 上直接改。verify: `git branch --show-current` 输出分支名；`git log --oneline -1` 是基线 commit。
+- [ ] **0.4 跑工程规范自查** — 涉及：`docs/standards/`、`AGENTS.md`、`.cursor/rules/`。执行 `python3 scripts/standards_check.py`，确认八类规范文件、规则入口和检查列齐备。verify: 退出码 0；输出八类规范名称和检查项数量。
 
 ## 1. 迁移与配置底座
 
 - [ ] **1.1 实现迁移执行器** — 涉及：`backend/internal/db/migrate.go`（新增）。启动时按版本号排序读取 `migrations/*.sql`，计算 SHA-256，已记录版本跳过，校验和不一致返回错误；在监听端口前执行。verify: `go test ./internal/db/...`；人为改坏 `0002` 后启动，进程非零退出且日志含 checksum。
 - [ ] **1.2 固化迁移 0001** — 涉及：`backend/internal/db/migrations/0001_baseline.sql`（新增）、`db.go`。把现有 `CREATE TABLE IF NOT EXISTS` 原样搬入；替换 `db.Migrate` 为迁移执行器；保留 `Seed`。verify: 空库启动后 `schema_migrations` 有 `0001`；三个预置账号和两份预置材料存在。
-- [ ] **1.3 增加迁移 0002** — 涉及：`0002_material_library.sql`（新增）。按 `design.md` 第 5 节增加 `materials` 列、`material_versions`、`knowledge_entries.version/page_table`、`knowledge_chunks.generation/start_page/end_page`、`tags`、`material_tags`、`material_reads`、`favorites`、`login_failures` 及索引。verify: `SHOW CREATE TABLE` 与 `DESCRIBE` 含全部字段；重复启动不重复执行。
+- [ ] **1.3 增加迁移 0002** — 涉及：`0002_material_library.sql`（新增）。按 `design.md` 第 5 节增加 `materials` 列（含 `updated_at`）、`material_versions`、`knowledge_entries.version/page_table`、`knowledge_chunks.generation/start_page/end_page`、`tags`、`material_tags`、`material_reads`、`favorites`、`login_failures` 及索引。verify: `SHOW CREATE TABLE` 与 `DESCRIBE` 含全部字段；重复启动不重复执行。
 - [ ] **1.4 回填旧数据** — 涉及：`0002` 或 `0003_backfill.sql`、`db.Seed`。为已有材料插入 v1 版本，`body` 取现有 `knowledge_entries.body`，`file_type` 按 `original_ext` 映射；旧切片置 `generation=0`，材料置 `pending`。verify: 旧库升级后每份材料恰有一条 v1；旧切片仍在且 `generation=0`；材料状态为 pending。
 - [ ] **1.5 配置 `EMBEDDING_DIM`** — 涉及：`backend/internal/config/config.go`、`.env.example`、`docker-compose.yml`、`backend/internal/embed/embed.go`、`backend/internal/qdrant/client.go`。必填、1 至 4096；本地嵌入输出该维度；Qdrant 集合名 `campusclaw_<dim>`。verify: 缺变量启动失败；`EMBEDDING_DIM=768` 时集合名和向量长度都是 768；`go test ./internal/embed/...` 通过。
 - [ ] **1.6 登录失败计数落库和可信 IP** — 涉及：`backend/internal/auth/limiter.go`、`backend/internal/httpapi/auth.go`、`backend/internal/httpapi/server.go`、`frontend/nginx.conf`。删除内存计数，读写 `login_failures`；Nginx 覆盖 `X-Real-IP`；Go 只在直接对端属于可信私网时采用，否则用连接地址；成功后清计数，锁定到期后重置。verify: 重启 api 后仍锁定；伪造 `X-Forwarded-For` 5 次后正确口令仍 401；`login_failures` 只有真实 IP 一行。
+- [ ] **1.7 结构化日志与请求 ID** — 涉及：`backend/internal/httpapi/server.go`、`cmd/server/main.go`、新增 `internal/logging/`。stdout 单行 JSON；字段 `ts/level/msg/request_id`，请求日志加 `method/path/status/duration_ms`，可用时加 `class_id/user_id`；`X-Request-ID` 合法则沿用，否则生成 UUIDv4 并回写；过滤口令、令牌、Cookie、正文、路径和 DSN。verify: 请求带/不带 `X-Request-ID` 各一次，响应头和日志的 id 一致；日志可被 `jq` 解析；库停时日志 `status=503` 且不含 DSN。
+- [ ] **1.8 存活/就绪检查与优雅停机** — 涉及：`backend/internal/httpapi/server.go`、`cmd/server/main.go`、`backend/internal/config/config.go`。`/health` 返回 `{status,version,time}` 且不访问依赖；`/ready` 检查 MySQL ping、Qdrant 可达、`EMBEDDING_DIM` 有效，失败 503 并给 `checks`；SIGTERM 后停止接新连接，最多等 10 秒。verify: 停 db 时 `/health` 200、`/ready` 503 `db=false`；停 Qdrant 时 `qdrant=false`；SIGTERM 时在途请求完成且进程 0 退出。
 
 ## 2. 文件抽取与上传
 
@@ -51,7 +54,7 @@
 ## 5. 前端壳层与材料库页面
 
 - [ ] **5.1 拆分 `App.tsx` 并建立路由** — 涉及：`frontend/src/App.tsx`、`frontend/src/pages/`、`frontend/src/components/`、`frontend/src/main.tsx`。拆出首页、材料、材料详情、编辑、版本、回收站、问答、设置；路由进入 URL；现有登录、主题、材料列表行为不变。verify: `npm run build` 通过；深链 `/materials/1/versions` 刷新可打开；未登录回登录页。
-- [ ] **5.2 实现响应式导航和主题** — 涉及：`components/`、`styles.css`。桌面 ≥768px 左栏；窄屏 <768px 底栏；教师多回收站；学习路径/作业/练习/通知/班级管理禁用且不注册路由；保留北大红、深浅主题、键盘焦点。verify: Playwright 1440×900 和 390×844 各截图/断言一次；Tab 可达全部可用项。
+- [ ] **5.2 实现响应式导航和主题** — 涉及：`components/`、`styles.css`。把现有 800px 媒体查询改为 768px；桌面 ≥768px 左栏；窄屏 <768px 底栏；教师多回收站；学习路径/作业/练习/通知/班级管理禁用且不注册路由；保留北大红、深浅主题、键盘焦点。verify: Playwright 1440×900 和 390×844 各截图/断言一次；Tab 可达全部可用项。
 - [ ] **5.3 材料列表、标签、分页和状态** — 涉及：`pages/Materials.tsx`、`components/`。列表显示标题、时间、标签、`index_status`、已读/未读；标签筛选、排序、分页；pending/indexing 每 2 秒刷新，failed 显示原因和重试。verify: Playwright 上传后状态从 pending 到 ready；分页和标签筛选结果与 API 一致。
 - [ ] **5.4 批量上传队列** — 涉及：`pages/Materials.tsx`、`components/UploadQueue.tsx`。拖拽多文件；逐文件显示上传中/索引中/可检索/失败和原因；失败可重试；一个失败不影响其他。verify: Playwright 一次拖入 2 个合法 + 1 个损坏 PDF，三个状态分别正确。
 - [ ] **5.5 材料详情、大纲和高亮** — 涉及：`pages/MaterialDetail.tsx`、`components/Outline.tsx`、`components/Highlight.tsx`。详情显示大纲、正文、标签、版本、索引状态；从引用进入按码点滚动和高亮；显示“切片 n · 第 p 页”；旧版本提示“原文已更新”。verify: Playwright 点击引用定位；emoji 前后高亮不偏移；刷新后大纲可再次跳转。
@@ -69,7 +72,7 @@
 ## 7. 验收与归档
 
 - [ ] **7.1 扩展 `scripts/verify.py`** — 涉及：`scripts/verify.py`、`docs/verification.md`。保留现有全部检查；新增迁移、多格式、批量、异步索引、先建后换、版本冲突、回收站、标签分页、进度收藏、统一 404、学生 403、依赖不可达。每类新资源测“跨班 id / 已删除或不可见 id / 不存在 id”，响应必须逐字节相同；进度和收藏另测伪造 `user_id` 被忽略。verify: 从干净 Compose 运行 `python3 scripts/verify.py` 全绿；结果写入 `docs/verification.md`。
-- [ ] **7.2 Go 单元测试** — 涉及：`backend/internal/*_test.go`。覆盖抽取、文件头/ZIP 限制、码点映射、迁移、队列状态、generation 切换、409 冲突、大纲、分页、限流键、搜索过滤。verify: `go test ./...` 全绿；覆盖率报告存 `docs/`。
+- [ ] **7.2 Go 单元测试** — 涉及：`backend/internal/*_test.go`。覆盖抽取、文件头/ZIP 限制、码点映射、迁移、队列状态、generation 切换、409 冲突、大纲、分页、限流键、搜索过滤、日志字段、`/health` 与 `/ready`。verify: `go test ./...` 全绿；覆盖率报告存 `docs/`。
 - [ ] **7.3 Playwright 端到端** — 涉及：`frontend/e2e/`（新增）。三条主路径在 1440×900 和 390×844 各跑一次：① 上传 PDF → 等 ready → 检索 → 点引用高亮；② 编辑 → 旧引用提示“原文已更新” → 恢复旧版本；③ 删除 → 撤销/回收站恢复 → 彻底删除。verify: `npx playwright test` 全绿；失败时保存截图和 trace。
 - [ ] **7.4 手动检查清单** — 涉及：`docs/manual-checklist.md`（新增）。手机宽度、深色主题、只用键盘各走一遍登录、列表、详情、编辑、版本、回收站；记录日期、浏览器版本和结果。verify: 清单每项有实际结果，不接受“应该可以”。
 - [ ] **7.5 汇总验收记录** — 涉及：`docs/verification.md`。写清每个 change 条目的场景、命令、实际结果、通过/失败、证据链接；失败项写退回原因。verify: 角色三签字；失败项全部关闭或明确延后。
@@ -79,7 +82,7 @@
 
 - 所有 checkbox 已勾选，且每条都有可复现的 `verify` 结果。
 - `npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict` 通过，无 error、无 warning。
-- `python3 scripts/spec_check.py` 通过。
+- `python3 scripts/spec_check.py` 和 `python3 scripts/standards_check.py` 通过。
 - `go test ./...`、`python3 scripts/verify.py`、`npx playwright test` 全绿。
 - `docker compose config` 只有 web 暴露端口；`/health` 不查库；停 db 时业务接口 503。
 - 仓库全部提交历史中检索不到密钥、`.env`、上传文件或数据库文件。

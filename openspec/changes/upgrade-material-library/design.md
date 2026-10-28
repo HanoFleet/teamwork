@@ -136,6 +136,8 @@ backend/internal/
 | `GET /api/favorites` | 当前用户 | 200 `{items}` | 401 |
 | `GET /api/recent` | 当前用户 | 200 最近阅读最多 5 条 | 401 |
 | `GET /api/quick-search?q=` | 已登录 | 200 最多 20 条 | 401；503 |
+| `GET /health` | 公开 | 200 `{status,version,time}`，不查依赖 | 无 |
+| `GET /ready` | 公开 | 200 `{status:"ready",checks}` | 503 `{status:"not_ready",checks}` |
 
 现有 `POST /api/search`、`POST /api/ask`、`POST /api/materials/{id}/reindex` 的路径保持不变；`/api/search` 增加可选的 `scope`（材料 id 列表或标签），不改变默认行为。
 
@@ -156,6 +158,7 @@ backend/internal/
   - `index_error VARCHAR(512) NULL`
   - `deleted_at DATETIME NULL`
   - `current_generation INT NOT NULL DEFAULT 0`
+  - `updated_at DATETIME NOT NULL`
   - `INDEX idx_materials_class_deleted (class_id, deleted_at, created_at)`
   - `INDEX idx_materials_status (index_status)`
 - `material_versions`：
@@ -253,10 +256,11 @@ backend/internal/
 | `LOGIN_FAIL_THRESHOLD` | 5 | 正整数 | 登录失败阈值 |
 | `LOGIN_LOCK_MINUTES` | 15 | 正整数 | 锁定时长 |
 | `TRUSTED_PROXY_CIDRS` | `10/8,172.16/12,192.168/16,127/8` | 固定 | 可信代理网段 |
+| `SHUTDOWN_TIMEOUT` | 10 秒 | 固定 | SIGTERM 后等待在途请求的上限 |
 
 新增环境变量必须写进 `.env.example` 和 `docker-compose.yml`；缺失或越界时启动失败，不取默认值。固定常量写在代码里并在测试中引用，不通过请求参数覆盖。
 
-## 10. 安全
+## 10. 安全与可观测性
 
 - 上传：扩展名白名单之外校验文件头；PDF 必须以 `%PDF-` 开头；DOCX/PPTX 必须是合法 ZIP，限制条目数和解压后大小；下载一律 `Content-Disposition: attachment` 和 `nosniff`。
 - Markdown 继续不渲染原始 HTML；响应增加 CSP：`default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'`。
@@ -264,6 +268,9 @@ backend/internal/
 - 材料文字只作为依据交给模型；客户端传来的 `system` 消息继续丢弃。
 - 登录限流键为 `(username, trusted_ip)`；Nginx 用 `proxy_set_header X-Real-IP $remote_addr` 覆盖，Go 只在直接对端属于可信私网时采用该值，`X-Forwarded-For` 不参与计数。
 - 网页端不保存令牌；Bearer 只用于脚本，服务端仍校验会话行。
+- 日志：stdout 单行 JSON，字段 `ts`、`level`、`msg`、`request_id`，HTTP 请求另含 `method`、`path`、`status`、`duration_ms`；可用时加 `class_id`、`user_id`。`request_id` 从 `X-Request-ID` 读取（8 至 64 个可见 ASCII），缺失时生成 UUIDv4，并回写响应头。日志不写口令、令牌、Cookie、正文、绝对路径或 DSN。
+- 检查：`/health` 只表示进程存活，不访问依赖；`/ready` 检查 MySQL ping、Qdrant 可达和 `EMBEDDING_DIM` 有效，失败返回 503。课程样例把依赖状态放在 `/health`，本项目为保留既有“`/health` 不查库”的公开契约，把依赖状态放到 `/ready`；这是写入规范的例外，不做静默偏离。
+- 停机：收到 SIGTERM 后停止接受新连接，等待在途请求最多 10 秒，再退出；迁移和索引写入不在中途强杀。
 
 ## 11. 迁移计划
 
@@ -281,7 +288,7 @@ backend/internal/
 - 原文码点映射和多页抽取比现有文本切分复杂，需要覆盖 emoji、中文、页码和旧引用的 Go/前端测试。
 - 进程内队列只支持单实例；api 重启会短暂中断索引，但状态可补排，符合现有单实例部署约束。
 - 软删除保留文件和版本会占用空间；彻底删除是教师显式操作，不提供自动清理。
-- 136 个场景的验收需要角色三按 `tasks.md` 的 `verify` 分批执行；这是本 change 的主要进度风险。
+- 143 个场景的验收需要角色三按 `tasks.md` 的 `verify` 分批执行；这是本 change 的主要进度风险。
 
 ## 13. Open Questions
 

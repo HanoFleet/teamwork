@@ -5,6 +5,7 @@ context: |
   教师/学生角色、班级隔离、txt/md 上传、关键字/向量/混合检索、可追溯问答。
   浏览器只访问 Nginx，Nginx 反代 /api 与 /health 到 Go，Go 使用 MySQL 8 与 Qdrant。
   会话是 HttpOnly Cookie，班级只来自服务端会话；跨班、已删除、他人私有和不存在资源都返回同形 404。
-  标准启动方式只有 Docker Compose，只有 web 映射端口，/health 不查数据库。
-  当前活动 change 是 upgrade-material-library；阶段一只写规约，不改 backend/frontend 业务代码。
+  标准启动方式只有 Docker Compose，只有 web 映射端口；/health 只报存活，/ready 检查依赖。
+  工程规范在 docs/standards/，数据字典在 docs/data-dictionary.md；改代码前必须阅读。
+  当前活动 change 是 upgrade-material-library；阶段一只写规约和工程规范，不改 backend/frontend 业务代码。
   不做超级管理员，不让 AI 给作业打分；不引入外部队列、Redis 或对象存储。
