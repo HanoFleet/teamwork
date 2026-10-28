@@ -7,5 +7,6 @@ context: |
   会话是 HttpOnly Cookie，班级只来自服务端会话；跨班、已删除、他人私有和不存在资源都返回同形 404。
   标准启动方式只有 Docker Compose，只有 web 映射端口；/health 只报存活，/ready 检查依赖。
   工程规范在 docs/standards/，数据字典在 docs/data-dictionary.md；改代码前必须阅读。
-  当前活动 change 是 upgrade-material-library；阶段一只写规约和工程规范，不改 backend/frontend 业务代码。
+  当前活动 change 是 upgrade-material-library；阶段一只写规约和工程规范，不改业务代码。
+  旧实现已打包到 archive/campusclaw-baseline.zip，基线标签 v2.0.0-baseline。
   不做超级管理员，不让 AI 给作业打分；不引入外部队列、Redis 或对象存储。

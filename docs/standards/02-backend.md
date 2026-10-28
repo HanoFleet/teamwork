@@ -15,6 +15,8 @@
 
 ## 项目事实
 
+> 旧实现已打包到 `archive/campusclaw-baseline.zip`；实现阶段从归档恢复对应目录。本文中的 `backend/`、`frontend/`、Compose 路径指恢复后的目标结构。
+
 - 目录：`backend/internal/httpapi/` 是接口层；`library/`、`indexer/`、`retrieval/` 是业务层；`db/` 是数据访问层；`extract/`、`qdrant/`、`embed/`、`chat/` 是适配层。
 - 现有偏差：`httpapi/materials.go` 和 `httpapi/auth.go` 里有 SQL；本 change 把材料读写逐步移到 `library/`，新增代码不得再在 handler 里写 SQL。
 - 现有接口都在 `/api/` 下，没有 `/v1` 前缀。把 `/api` 视为 v1 命名空间；新增接口继续用 `/api/...`，不为了“版本化”重命名已有路径。出现破坏性变更时另开 `/api/v2/...`，旧路径保留一个版本周期。

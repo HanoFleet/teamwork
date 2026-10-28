@@ -4,7 +4,8 @@
 
 ## 当前阶段
 
-- 阶段一是**制定规约 + 立规范**，活动 change 是 `openspec/changes/upgrade-material-library/`。本阶段只改 `openspec/`、`docs/`、`.cursor/rules/`、`scripts/spec_check.py` 和 `scripts/standards_check.py`，不改 `backend/`、`frontend/` 的业务代码。
+- 阶段一是**制定规约 + 立规范**，活动 change 是 `openspec/changes/upgrade-material-library/`。第一眼入口是 `SPEC.md`；本阶段只改 `openspec/`、`docs/`、`.cursor/`、`scripts/spec_check.py` 和 `scripts/standards_check.py`，不改业务代码。
+- 旧实现（backend、frontend、Compose、`verify.py`）已打包到 `archive/campusclaw-baseline.zip`，基线标签 `v2.0.0-baseline`。需要跑基线时解压归档或 `git checkout v2.0.0-baseline`，不要在根目录重新展开代码。
 - 规约入口：`proposal.md`（动因与边界）、`design.md`（取舍与接口）、`specs/*/spec.md`（可判定场景）、`tasks.md`（实现顺序与验收）。
 - 规约校验：`npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict`；结构自查：`python3 scripts/spec_check.py`；规范自查：`python3 scripts/standards_check.py`。三条都必须退出码 0。
 - 阶段一不归档 change。只有角色三完成 `tasks.md` 的 7.1 至 7.5，并留下 `docs/verification.md` 记录后，才允许合并 delta 并归档。

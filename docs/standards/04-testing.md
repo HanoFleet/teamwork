@@ -15,6 +15,8 @@
 
 ## 项目事实
 
+> 旧实现已打包到 `archive/campusclaw-baseline.zip`；实现阶段从归档恢复对应目录。本文中的 `backend/`、`frontend/`、Compose 路径指恢复后的目标结构。
+
 - 单元测试：`backend/internal/**/*_test.go`，`go test ./...`。
 - 接口测试：`scripts/verify.py`，按 README 启动 Compose 后运行，结果写 `docs/verification.md`。
 - 端到端：`frontend/e2e/`，Playwright，桌面 1440×900 和手机 390×844 各跑主路径。

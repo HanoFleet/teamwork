@@ -127,13 +127,26 @@ def main() -> int:
     if "项目启动四步" not in readme:
         fail("README 缺少“项目启动四步”章节")
 
+    spec_entry = read(ROOT / "SPEC.md")
+    for filename in ["proposal.md", "design.md", "specs/", "tasks.md"]:
+        if filename not in spec_entry:
+            fail(f"SPEC.md 没有链接规约文件：{filename}")
+    if "archive/campusclaw-baseline.zip" not in spec_entry:
+        fail("SPEC.md 没有说明旧实现归档位置")
+
+    archive_zip = ROOT / "archive" / "campusclaw-baseline.zip"
+    if not archive_zip.is_file() or archive_zip.stat().st_size == 0:
+        fail("缺少 archive/campusclaw-baseline.zip")
+    if not (ROOT / "archive" / "campusclaw-baseline.sha256").is_file():
+        fail("缺少 archive/campusclaw-baseline.sha256")
+
     print("-" * 60)
     if failures:
         print(f"未通过：{len(failures)} 项")
         for item in failures:
             print(f"  ✗ {item}")
         return 1
-    print("通过：八类规范、常驻规则、工程技能、数据字典、四步核对和 README 链接均齐备。")
+    print("通过：八类规范、常驻规则、工程技能、数据字典、四步核对、SPEC 入口和归档包均齐备。")
     return 0
 
 

@@ -15,6 +15,8 @@
 
 ## 项目事实
 
+> 旧实现已打包到 `archive/campusclaw-baseline.zip`；实现阶段从归档恢复对应目录。本文中的 `backend/`、`frontend/`、Compose 路径指恢复后的目标结构。
+
 - Compose 服务：`web`（Nginx）、`api`（Go）、`db`（MySQL 8）、`qdrant`；只有 `web` 映射宿主端口 `WEB_PORT`（默认 8080）。
 - 卷：`db_data`、`uploads`、`qdrant_data`；`docker compose down` 不带 `-v` 保留数据。
 - `api` 镜像分两阶段：`golang:1.25-alpine` 构建，`alpine:3.21` 运行；运行镜像包含 `ca-certificates` 和 `poppler-utils`。

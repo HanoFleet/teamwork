@@ -8,7 +8,7 @@
 
 ## 0. 基线（骨架优先）
 
-- [ ] **0.1 确认现有骨架可启动** — 涉及：`README.md`、`docker-compose.yml`、`.env.example`。从干净克隆复制 `.env` 并填好变量，执行 `docker compose up --build -d`；记录 commit、`/health` 响应和 `python3 scripts/verify.py` 的基线结果。verify: `curl -fsS http://localhost:8080/health` 返回 200；`python3 scripts/verify.py` 通过。
+- [ ] **0.1 确认现有骨架可启动** — 涉及：`archive/campusclaw-baseline.zip`、`archive/README.md`。从干净克隆解压归档（或 `git checkout v2.0.0-baseline`），按包内 README 复制 `.env` 并填好变量，执行 `docker compose up --build -d`；记录 commit、`/health` 响应和 `python3 scripts/verify.py` 的基线结果。verify: `curl -fsS http://localhost:8080/health` 返回 200；`python3 scripts/verify.py` 通过。
 - [ ] **0.2 建立规约校验入口** — 涉及：`openspec/changes/upgrade-material-library/`。在干净环境执行 `npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict`。verify: 退出码 0，输出 `Change 'upgrade-material-library' is valid`。
 - [ ] **0.3 创建变更分支并保护基线** — 涉及：Git。从 `main` 建 `change/upgrade-material-library`；不在 `main` 上直接改。verify: `git branch --show-current` 输出分支名；`git log --oneline -1` 是基线 commit。
 - [ ] **0.4 跑工程规范自查** — 涉及：`docs/standards/`、`AGENTS.md`、`.cursor/rules/`。执行 `python3 scripts/standards_check.py`，确认八类规范文件、规则入口和检查列齐备。verify: 退出码 0；输出八类规范名称和检查项数量。
