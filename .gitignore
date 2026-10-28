@@ -4,6 +4,7 @@ node_modules/
 dist/
 server
 campusclaw-baseline/
+.baseline/
 .DS_Store
 __pycache__/
 *.pyc

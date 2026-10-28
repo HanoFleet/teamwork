@@ -1,16 +1,16 @@
-# upgrade-material-library — 任务清单
+# 2026-10-14-upgrade-material-library — 任务清单
 
 > **执行顺序**：按编号。第 0 组是基线，必须先完成；没有可启动的基线和通过的现有验收，不写业务代码。
 > **勾选规则**：只有角色二完成实现、角色三按该条 `verify` 复现通过后，才能勾选。角色一不得用“代码已写”替代验收证据。
-> **分支与提交**：分支 `change/upgrade-material-library`；提交信息格式 `<type>(material-library): <task-id> <一句话>`，例如 `feat(material-library): 2.4 上传写入 v1 并异步索引`。
-> **规约校验**：`npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict`。
+> **分支与提交**：分支 `change/2026-10-14-upgrade-material-library`；提交信息格式 `<type>(material-library): <task-id> <一句话>`，例如 `feat(material-library): 2.4 上传写入 v1 并异步索引`。
+> **规约校验**：`npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict`。
 > **实现约束**：没有写进本 change delta 的行为不实现；规约含糊时先改 delta，再改代码。
 
 ## 0. 基线（骨架优先）
 
 - [ ] **0.1 确认现有骨架可启动** — 涉及：`archive/campusclaw-baseline.zip`、`archive/README.md`。从干净克隆解压归档（或 `git checkout v2.0.0-baseline`），按包内 README 复制 `.env` 并填好变量，执行 `docker compose up --build -d`；记录 commit、`/health` 响应和 `python3 scripts/verify.py` 的基线结果。verify: `curl -fsS http://localhost:8080/health` 返回 200；`python3 scripts/verify.py` 通过。
-- [ ] **0.2 建立规约校验入口** — 涉及：`openspec/changes/upgrade-material-library/`。在干净环境执行 `npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict`。verify: 退出码 0，输出 `Change 'upgrade-material-library' is valid`。
-- [ ] **0.3 创建变更分支并保护基线** — 涉及：Git。从 `main` 建 `change/upgrade-material-library`；不在 `main` 上直接改。verify: `git branch --show-current` 输出分支名；`git log --oneline -1` 是基线 commit。
+- [ ] **0.2 建立规约校验入口** — 涉及：`openspec/changes/2026-10-14-upgrade-material-library/`。在干净环境执行 `npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict`。verify: 退出码 0，输出 `Change '2026-10-14-upgrade-material-library' is valid`。
+- [ ] **0.3 创建变更分支并保护基线** — 涉及：Git。从 `main` 建 `change/2026-10-14-upgrade-material-library`；不在 `main` 上直接改。verify: `git branch --show-current` 输出分支名；`git log --oneline -1` 是基线 commit。
 - [ ] **0.4 跑工程规范自查** — 涉及：`docs/standards/`、`AGENTS.md`、`.cursor/rules/`。执行 `python3 scripts/standards_check.py`，确认八类规范文件、规则入口和检查列齐备。verify: 退出码 0；输出八类规范名称和检查项数量。
 
 ## 1. 迁移与配置底座
@@ -81,7 +81,7 @@
 ## 完成定义（Definition of Done）
 
 - 所有 checkbox 已勾选，且每条都有可复现的 `verify` 结果。
-- `npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict` 通过，无 error、无 warning。
+- `npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict` 通过，无 error、无 warning。
 - `python3 scripts/spec_check.py` 和 `python3 scripts/standards_check.py` 通过。
 - `go test ./...`、`python3 scripts/verify.py`、`npx playwright test` 全绿。
 - `docker compose config` 只有 web 暴露端口；`/health` 不查库；停 db 时业务接口 503。

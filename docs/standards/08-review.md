@@ -13,8 +13,8 @@
 
 ## 项目事实
 
-- 当前 change：`upgrade-material-library`，阶段一只交付规约和规范，不实现业务代码。
-- 规约门禁：`npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict`。
+- 当前 change：`2026-10-14-upgrade-material-library`，阶段一只交付规约和规范，不实现业务代码。
+- 规约门禁：`npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict`。
 - 结构门禁：`python3 scripts/spec_check.py`、`python3 scripts/standards_check.py`。
 - 实现门禁：`go test ./...`、`python3 scripts/verify.py`、`npx playwright test`、`docker compose config`。
 - 证据目录：`docs/verification.md`、`docs/阶段一-交付说明.md`、`docs/项目启动-四步核对.md`。
@@ -31,7 +31,7 @@
 | 责任人 | 作者负责当天修复失败用例和评审意见；评审人 24 小时内给出结论；验收人只认可复现证据 | 没有时限的评审会无限拖延 | 记录提交时间、评审时间、修复时间 |
 | 例外 | 例外写入本规范或对应 change 的 `design.md`，写明原因、影响、替代检查和失效时间；口头豁免无效 | 例外留在会话里，下次没人知道 | 搜 `例外` 关键字；无书面记录即违规 |
 | 证据归档 | 每次变更把变更说明、验证记录、评审结论放进 `docs/`，按 change 名可检索；截图/trace 放 `docs/` 或链接 | 没有证据无法复盘，也无法证明个人贡献 | 打开 `docs/` 能按 change 名找到三类材料 |
-| 提交信息 | 格式 `<type>(<capability>): <task-id> <一句话>`；正文三字段：`Change:`、`Task:`、`Verify:` | 提交历史是个人贡献和回溯的依据 | `git log` 抽查；缺三字段即不合规 |
+| 提交信息 | 格式 `<type>(<capability>): <task-id> <一句话>`；正文四字段：`Change:`、`Task:`、`Spec:`、`Verify:`；`Spec:` 写依据的 capability/Requirement | 提交历史是个人贡献和回溯的依据 | `git log` 抽查；缺字段或 `Spec:` 对应不到规约即不合规 |
 | 标签 | 骨架基线打 `v2.0.0-baseline`；每次发布打版本标签；标签指向通过门禁的提交 | 没有标签无法回滚到确定版本 | `git tag` 对照发布记录 |
 | 复盘 | 每次验收失败记录：现象、根因、修复、预防；同类问题第二次出现时更新规范 | 不复盘会重复踩同一个坑 | 看 `docs/verification.md` 是否有失败记录和预防措施 |
 
@@ -40,8 +40,9 @@
 ```text
 feat(material-library): 2.4 上传写入 v1 并异步入队
 
-Change: upgrade-material-library
+Change: 2026-10-14-upgrade-material-library
 Task: 2.4
+Spec: material-library/批量上传与索引进度
 Verify: go test ./internal/httpapi/... && python3 scripts/verify.py
 ```
 

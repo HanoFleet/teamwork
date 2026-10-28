@@ -1,4 +1,4 @@
-# 设计：upgrade-material-library
+# 设计：2026-10-14-upgrade-material-library
 
 ## Context
 

@@ -140,6 +140,13 @@ def main() -> int:
     if not (ROOT / "archive" / "campusclaw-baseline.sha256").is_file():
         fail("缺少 archive/campusclaw-baseline.sha256")
 
+    for required in [".env.example", "LICENSE", "scripts/start-baseline.sh"]:
+        if not (ROOT / required).is_file():
+            fail(f"第一次提交缺少文件：{required}")
+    for phrase in ["第一次提交检查", "许可证", "主干唯一", "YYYY-MM-DD"]:
+        if phrase not in readme:
+            fail(f"README 缺少第一次提交约定：{phrase}")
+
     print("-" * 60)
     if failures:
         print(f"未通过：{len(failures)} 项")

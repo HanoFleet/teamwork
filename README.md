@@ -1,6 +1,6 @@
 # CampusClaw 2.0 · 小组项目仓库
 
-> **本次提交重点：阶段一“制定规约”。** 第一眼入口是 [`SPEC.md`](SPEC.md)；完整规约在 `openspec/changes/upgrade-material-library/`。改造前的可运行实现已打包成 [`archive/campusclaw-baseline.zip`](archive/campusclaw-baseline.zip)，根目录不再散落业务代码。
+> **本次提交重点：阶段一“制定规约”。** 第一眼入口是 [`SPEC.md`](SPEC.md)；完整规约在 `openspec/changes/2026-10-14-upgrade-material-library/`。改造前的可运行实现已打包成 [`archive/campusclaw-baseline.zip`](archive/campusclaw-baseline.zip)，根目录不再散落业务代码。
 
 CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材料，本班学生只读；正文切成切片后，本班可以用关键字、向量或混合检索，命中能回到原文；没有依据时不生成回答。本仓库是第 7 课小组项目的主仓库。
 
@@ -31,7 +31,7 @@ CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材
 | 步骤 | 交付物 | 仓库位置 | 完成现象 | 当前状态 |
 | --- | --- | --- | --- | --- |
 | 1 建仓库 | 仓库、README、忽略规则、协作约定 | 仓库根目录、`.gitignore`、`AGENTS.md` | 仓库可访问，协作约定清楚 | 已完成；旧实现另有归档和标签 |
-| 2 定规约 | 一份变更的四份文件 | `openspec/changes/upgrade-material-library/` | `--strict` 通过；另起会话可照做 | 格式与结构已完成；另起会话评审待三人执行 |
+| 2 定规约 | 一份变更的四份文件 | `openspec/changes/2026-10-14-upgrade-material-library/` | `--strict` 通过；另起会话可照做 | 格式与结构已完成；另起会话评审待三人执行 |
 | 3 立规范 | 规则文件与按需调用的技能 | `docs/standards/`、`.cursor/rules/`、`.cursor/skills/`、`AGENTS.md` | 改一次代码产物的分层命名符合规范；换会话结果一致 | 八类规范已落文件；`standards_check.py` 通过；换会话一致性待评审 |
 | 4 落骨架 | 可启动最小实现、健康检查、版本标签 | `archive/campusclaw-baseline.zip`、`v2.0.0-baseline` | 解压 → 填配置 → 一条命令 → `/health` 成功 | 基线已归档；本 change 的 1.7/1.8 补日志与 `/ready`，2.x 收口分层 |
 
@@ -41,14 +41,14 @@ CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材
 
 ## 规约入口
 
-变更名：`upgrade-material-library`。入口：`openspec/changes/upgrade-material-library/`。
+变更名：`2026-10-14-upgrade-material-library`。入口：`openspec/changes/2026-10-14-upgrade-material-library/`。
 
 | 文件 | 回答的问题 | 评审标准 |
 | --- | --- | --- |
-| [`proposal.md`](openspec/changes/upgrade-material-library/proposal.md) | 为什么做、做到哪、不做什么、放弃过哪些方案 | 不读代码也能判定必要性；至少 3 条“不做”和 1 条被放弃的候选方案 |
-| [`design.md`](openspec/changes/upgrade-material-library/design.md) | 选型、分层、关键取舍、接口、数据模型、状态机 | 每条取舍都写明“选了什么、放弃了什么、代价由谁承担” |
-| [`specs/`](openspec/changes/upgrade-material-library/specs/) | 四条能力、28 条需求、143 个场景 | 每个场景是“前置条件 / 操作 / 可观测结果”，每条需求至少一个场景 |
-| [`tasks.md`](openspec/changes/upgrade-material-library/tasks.md) | 按什么顺序实现、每条怎么验 | 骨架任务排最前；每条都有 `涉及` 和 `verify` |
+| [`proposal.md`](openspec/changes/2026-10-14-upgrade-material-library/proposal.md) | 为什么做、做到哪、不做什么、放弃过哪些方案 | 不读代码也能判定必要性；至少 3 条“不做”和 1 条被放弃的候选方案 |
+| [`design.md`](openspec/changes/2026-10-14-upgrade-material-library/design.md) | 选型、分层、关键取舍、接口、数据模型、状态机 | 每条取舍都写明“选了什么、放弃了什么、代价由谁承担” |
+| [`specs/`](openspec/changes/2026-10-14-upgrade-material-library/specs/) | 四条能力、28 条需求、143 个场景 | 每个场景是“前置条件 / 操作 / 可观测结果”，每条需求至少一个场景 |
+| [`tasks.md`](openspec/changes/2026-10-14-upgrade-material-library/tasks.md) | 按什么顺序实现、每条怎么验 | 骨架任务排最前；每条都有 `涉及` 和 `verify` |
 
 阅读顺序：先看 [`SPEC.md`](SPEC.md) 的“一分钟看懂 / 核心边界”，再读 `proposal.md` 的“本次做到哪 / 本次不做 / 放弃的候选方案”，然后看 `design.md` 的“关键取舍”，按能力读 `specs/`，最后用 `tasks.md` 判断实现顺序。
 
@@ -90,7 +90,7 @@ CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材
 ## 怎么校验
 
 ```bash
-npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict
+npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict
 python3 scripts/spec_check.py
 python3 scripts/standards_check.py
 ```
@@ -99,7 +99,7 @@ python3 scripts/standards_check.py
 
 ## 怎么评审（另起会话测试）
 
-**定规约**：新开会话，只给仓库路径 + `upgrade-material-library`，要求它先读四份文件，再列出含糊或缺失的行为问题。它能按 `tasks.md` 编号实现且问不出业务行为问题，就算通过。
+**定规约**：新开会话，只给仓库路径 + `2026-10-14-upgrade-material-library`，要求它先读四份文件，再列出含糊或缺失的行为问题。它能按 `tasks.md` 编号实现且问不出业务行为问题，就算通过。
 
 **立规范**：新开会话，只给仓库路径，要求它“按 `docs/standards/02-backend.md` 加一个材料标签接口”。检查目录是否落在 `httpapi/library/db` 的规定层、命名是否是 `/api/materials/{id}` + PATCH、错误是否只用错误码清单里的 code、是否声明幂等。换一个会话再做一次，两次结果应一致。
 
@@ -123,14 +123,18 @@ python3 scripts/standards_check.py
 ├── README.md                         本文件
 ├── AGENTS.md                         项目规则（规约先行、权限在服务端、密钥不入库）
 ├── .gitignore                        忽略规则
+├── .env.example                      环境变量模板，只写键名和占位
+├── LICENSE                           许可证说明（未选择）
 ├── .cursor/
 │   ├── rules/campusclaw-standards.mdc 常驻工程规范入口
 │   ├── skills/campusclaw-engineering/SKILL.md 加页面/加接口/补测试/发版本
 │   └── commands/opsx-*.md            OpenSpec 命令
 ├── archive/
 │   ├── README.md                     旧实现归档说明和重新生成命令
-│   └── campusclaw-baseline.zip        旧实现（backend、frontend、Compose、verify.py）
+│   ├── campusclaw-baseline.zip        旧实现（backend、frontend、Compose、verify.py）
+│   └── campusclaw-baseline.sha256     归档包校验和
 ├── scripts/
+│   ├── start-baseline.sh             解压归档、启动 Compose、等待 /health
 │   ├── spec_check.py                 规约结构自查
 │   └── standards_check.py            八类工程规范自查
 ├── docs/
@@ -154,7 +158,7 @@ python3 scripts/standards_check.py
     ├── specs/                        已归档的长期规约（事实来源）
     └── changes/
         ├── archive/                  已归档的历史 change
-        └── upgrade-material-library/ 本阶段的活动 change
+        └── 2026-10-14-upgrade-material-library/ 本阶段的活动 change
 ```
 
 ## 旧实现存档
@@ -162,10 +166,18 @@ python3 scripts/standards_check.py
 `archive/campusclaw-baseline.zip` 包含改造前的 Go api、React 前端、Nginx、Compose、`scripts/verify.py`、基线 README/ITERATION 和验收记录。需要跑基线时：
 
 ```bash
+cp .env.example .env
+# 填写 SESSION_SECRET、MYSQL_ROOT_PASSWORD、DB_PASSWORD、SEED_*_PASSWORD
+./scripts/start-baseline.sh
+```
+
+脚本会解压归档到 `.baseline/`、把根目录 `.env` 复制进基线、执行 `docker compose up --build -d`，并等待 `/health` 成功。手动方式：
+
+```bash
 unzip archive/campusclaw-baseline.zip
 cd campusclaw-baseline
 cp .env.example .env
-# 填写 SESSION_SECRET、MYSQL_ROOT_PASSWORD、DB_PASSWORD、SEED_*_PASSWORD
+# 填写密钥和口令
 docker compose up --build -d
 curl -fsS http://localhost:8080/health
 python3 scripts/verify.py
@@ -185,13 +197,34 @@ ZIP 由 `git archive` 从标签 `v2.0.0-baseline`（`4fd4232`）生成；重新�
 
 ## 协作约定
 
-- **规约先行**：没有写进 OpenSpec delta 的行为不实现。规约含糊或没写“不做”时，先改 delta，再改代码。
-- **角色边界**：角色一负责提案、设计、规约和规范；角色二只实现规约行为；角色三写验收、逐条判定，不写功能代码。
-- **分支与提交**：功能开发在 `change/<change-name>` 分支进行；提交信息写 `<type>(<capability>): <task-id> <一句话>`，正文含 `Change:`、`Task:`、`Verify:`。
-- **勾选规则**：一个 task 做完并跑过该条 `verify`，才勾选 `tasks.md`；不能用“代码已写”代替验收证据。
-- **评审**：每个 change 先由三人评审规约，确认无歧义后再进入实现；实现中发现冲突，先改 delta。
-- **密钥**：`.env`、上传文件和数据库文件不进 Git；归档包只含 `.env.example`。
+- **主干唯一**：`main` 是唯一主干。阶段一只有文档提交，直接在 `main` 上完成；开始写第一行功能代码后，`main` 设保护规则，直接推送应被拒绝，功能改动走 `change/<change-name>` 分支和评审。
+- **每次改动一条变更**：命名 `YYYY-MM-DD-短横小写英文名`，当前活动变更是 `2026-10-14-upgrade-material-library`；验收通过后归档，归档后的规约并入 `openspec/specs/`，成为下一次改动的既有约定。
+- **提交信息写依据**：提交信息写“改了什么、依据哪条规约”，格式为 `<type>(<capability>): <task-id> <一句话>`，正文含 `Change:`、`Task:`、`Spec:`、`Verify:`；不写 `update`/`fix` 这类无信息提交。
+- **每人克隆跑通**：每位成员按 README 从零克隆、填配置、跑通 `/health`；未参与启动的成员也要独立成功，不需要口头补充。
+- **分工不是各写各的**：角色一、二、三只是评审和交付责任，规约、规范、骨架由全组一起定、一起评审；评审对象是仓库里的文件，不是印象。
+- **密钥边界**：根目录和归档包只放 `.env.example`，只写键名和占位；密钥、数据库口令、上传文件不进代码、镜像层、前端构建产物、日志与错误信息、问题单与截图。发现泄露立即轮换并重写历史。
 - **归档**：全部验收通过后才把 delta 合并到 `openspec/specs/` 并归档 change；归档后 `openspec/specs/` 是长期事实来源。
+
+## 第一次提交检查
+
+| 检查项 | 现状 |
+| --- | --- |
+| README 有项目定位和从克隆到启动的步骤 | 有；`./scripts/start-baseline.sh` 一条命令启动归档基线 |
+| `.gitignore` 过滤依赖、构建产物、本机配置/密钥、临时文件 | 有；含 `node_modules`、`dist`、`.env`、`.baseline` 等 |
+| LICENSE 或“未选择”说明 | 有；见下面“许可证” |
+| 协作约定写进 README | 有；主干唯一、变更命名、提交依据、每人跑通、密钥边界 |
+| `.env.example` 只写键名和占位 | 有；根目录 `.env.example` |
+| 变更目录按 `YYYY-MM-DD-英文名` 命名 | 有；`openspec/changes/2026-10-14-upgrade-material-library/` |
+| 归档后的规约能在主干检索到 | 有；`openspec/specs/` 和 `openspec/changes/archive/` |
+| 全部提交历史检索不到密钥 | 已用 `git grep` 检查；归档包只含 `.env.example` |
+| 主干保护、直接推送被拒绝 | 需在 GitHub 仓库设置中开启；阶段一文档提交不涉及功能代码 |
+| 每位成员独立克隆跑通 | 待组员按 README 各自执行一次 |
+
+结论：**文件层面可以提交**；剩下两项是组内动作（每人克隆跑通）和仓库设置（主干保护），不影响把仓库地址交上去。
+
+## 许可证
+
+未选择许可证。课程作业保留所有权利；如需复用代码、规约或规范，请先联系作者。若后续要开源，再补 MIT 或 Apache-2.0 全文，并在此处更新。
 
 ## 链接
 

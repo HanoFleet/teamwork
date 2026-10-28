@@ -32,7 +32,7 @@ alwaysApply: true
 ## 门禁（合并前必须全绿）
 
 ```bash
-npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict
+npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict
 python3 scripts/spec_check.py
 python3 scripts/standards_check.py
 go test ./...
@@ -61,6 +61,7 @@ docker compose config
 
 Change: <change-name>
 Task: <task-id>
+Spec: <capability>/<Requirement>
 Verify: <命令或证据>
 ```
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """阶段一规约结构自查。
 
-只读脚本：检查 upgrade-material-library 的四份文件、需求/场景结构、
+只读脚本：检查 2026-10-14-upgrade-material-library 的四份文件、需求/场景结构、
 失败路径覆盖、能力与场景对应表、任务清单顺序。退出码 0 表示全部通过。
 """
 
@@ -13,7 +13,7 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CHANGE = ROOT / "openspec" / "changes" / "upgrade-material-library"
+CHANGE = ROOT / "openspec" / "changes" / "2026-10-14-upgrade-material-library"
 SPECS = CHANGE / "specs"
 BASE_SPECS = ROOT / "openspec" / "specs"
 
@@ -88,6 +88,9 @@ def main() -> int:
     print(f"仓库：{ROOT}")
     print(f"变更：{CHANGE.relative_to(ROOT)}")
     print("-" * 60)
+
+    if not re.match(r"^\d{4}-\d{2}-\d{2}-[a-z0-9-]+$", CHANGE.name):
+        fail(f"变更目录名不符合 YYYY-MM-DD-短横小写英文名：{CHANGE.name}")
 
     required = [
         CHANGE / ".openspec.yaml",

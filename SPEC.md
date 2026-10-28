@@ -1,10 +1,10 @@
 # CampusClaw 2.0 规约
 
-> **本次提交重点：阶段一“制定规约”。** 入口就是本文件；完整规约在 `openspec/changes/upgrade-material-library/`。改造前的可运行实现已打包到 [`archive/campusclaw-baseline.zip`](archive/campusclaw-baseline.zip)，根目录不再散落业务代码。
+> **本次提交重点：阶段一“制定规约”。** 入口就是本文件；完整规约在 `openspec/changes/2026-10-14-upgrade-material-library/`。改造前的可运行实现已打包到 [`archive/campusclaw-baseline.zip`](archive/campusclaw-baseline.zip)，根目录不再散落业务代码。
 
 | 项目 | 内容 |
 | --- | --- |
-| 变更名 | `upgrade-material-library` |
+| 变更名 | `2026-10-14-upgrade-material-library` |
 | 阶段 | 阶段一：制定规约（另附八类工程规范） |
 | 负责人 | 李斯坦（角色一：制定规约） |
 | 评审 | 韩雅慧（角色二：开发系统）、禹霖（角色三：项目验收） |
@@ -26,10 +26,10 @@ CampusClaw 2.0 要把“能检索的材料列表”扩展成教师和学生日�
 
 | 文件 | 回答的问题 | 直接打开 |
 | --- | --- | --- |
-| 动因 | 为什么做、做到哪、不做什么、放弃过哪些候选方案 | [`proposal.md`](openspec/changes/upgrade-material-library/proposal.md) |
-| 设计 | 选型、分层、关键取舍、接口、数据模型、状态机 | [`design.md`](openspec/changes/upgrade-material-library/design.md) |
-| 需求规约 | 4 个 capability、28 条需求、143 个场景 | [`specs/`](openspec/changes/upgrade-material-library/specs/) |
-| 任务清单 | 48 条可勾选任务，骨架任务排最前，每条带 `verify` | [`tasks.md`](openspec/changes/upgrade-material-library/tasks.md) |
+| 动因 | 为什么做、做到哪、不做什么、放弃过哪些候选方案 | [`proposal.md`](openspec/changes/2026-10-14-upgrade-material-library/proposal.md) |
+| 设计 | 选型、分层、关键取舍、接口、数据模型、状态机 | [`design.md`](openspec/changes/2026-10-14-upgrade-material-library/design.md) |
+| 需求规约 | 4 个 capability、28 条需求、143 个场景 | [`specs/`](openspec/changes/2026-10-14-upgrade-material-library/specs/) |
+| 任务清单 | 48 条可勾选任务，骨架任务排最前，每条带 `verify` | [`tasks.md`](openspec/changes/2026-10-14-upgrade-material-library/tasks.md) |
 
 ## 能力与规模
 
@@ -57,7 +57,7 @@ CampusClaw 2.0 要把“能检索的材料列表”扩展成教师和学生日�
 - 邀请码注册、CSV 导入、口令重置、超级管理员、AI 批改作业。
 - 外部队列、Redis、对象存储、UI 框架、富文本编辑器。
 
-完整“不做”清单见 [`proposal.md`](openspec/changes/upgrade-material-library/proposal.md) 的 Out of Scope。
+完整“不做”清单见 [`proposal.md`](openspec/changes/2026-10-14-upgrade-material-library/proposal.md) 的 Out of Scope。
 
 ## 关键判据
 
@@ -72,7 +72,7 @@ CampusClaw 2.0 要把“能检索的材料列表”扩展成教师和学生日�
 ## 怎么校验
 
 ```bash
-npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict
+npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict
 python3 scripts/spec_check.py
 python3 scripts/standards_check.py
 ```
@@ -101,4 +101,4 @@ python3 scripts/standards_check.py
 
 ## 后续
 
-阶段一不实现功能。实现、验收和归档按 [`tasks.md`](openspec/changes/upgrade-material-library/tasks.md) 第 0 至 7 组推进；全部验收通过后才把 delta 合并到 `openspec/specs/` 并归档。
+阶段一不实现功能。实现、验收和归档按 [`tasks.md`](openspec/changes/2026-10-14-upgrade-material-library/tasks.md) 第 0 至 7 组推进；全部验收通过后才把 delta 合并到 `openspec/specs/` 并归档。

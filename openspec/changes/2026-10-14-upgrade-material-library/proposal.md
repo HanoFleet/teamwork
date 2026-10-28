@@ -1,13 +1,13 @@
-# 变更提案：upgrade-material-library
+# 变更提案：2026-10-14-upgrade-material-library
 
 | 项目 | 内容 |
 | --- | --- |
-| 变更名 | `upgrade-material-library` |
+| 变更名 | `2026-10-14-upgrade-material-library` |
 | 阶段 | 阶段一：制定规约（只写规约，不实现） |
 | 负责人 | 李斯坦（角色一：制定规约） |
 | 评审 | 韩雅慧（角色二：开发系统）、禹霖（角色三：项目验收） |
 | 基线 | 迭代 1/2：登录、班级隔离、txt/md 上传、三种检索、可追溯问答 |
-| 规约入口 | `openspec/changes/upgrade-material-library/specs/` |
+| 规约入口 | `openspec/changes/2026-10-14-upgrade-material-library/specs/` |
 | 归档状态 | 活动（未实现、未验收、未归档） |
 
 ## Why
@@ -113,7 +113,7 @@
 
 ## Success Criteria（完成现象）
 
-- `npx -y @fission-ai/openspec@1.15.0 validate upgrade-material-library --strict` 退出码为 0，无 error、无 warning。
+- `npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict` 退出码为 0，无 error、无 warning。
 - `python3 scripts/spec_check.py` 和 `python3 scripts/standards_check.py` 退出码为 0：前者检查四份文件、场景三段式、失败路径和任务清单；后者检查八类工程规范、规则入口和检查列。
 - 四份文件齐备：`proposal.md`、`design.md`、`specs/*/spec.md`、`tasks.md`。
 - 每条 Requirement 至少一组 Scenario；没有无归属的 Scenario；能力与场景对应表可逐行核对。

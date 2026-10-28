@@ -425,7 +425,7 @@ CSV 单次最多 200 行。初始口令由服务端随机生成，bcrypt 哈希�
 
 拆成三个 OpenSpec change，每个对应一个模块：
 
-1. **`upgrade-material-library`**：数据库迁移机制、页面框架、现有问题修复，以及模块一。其他两个 change 都建立在它之上，所以先做。
+1. **`2026-10-14-upgrade-material-library`**：数据库迁移机制、页面框架、现有问题修复，以及模块一。其他两个 change 都建立在它之上，所以先做。
 2. **`add-conversational-qa`**：模块二。
 3. **`add-class-teaching`**：模块三。练习功能可以先用手动出题；等第 2 个 change 的「生成练习」完成后再接上。课程单元要编排材料、练习和作业，学情统计要读这些数据，所以这两项放在这个 change 的最后。
 
