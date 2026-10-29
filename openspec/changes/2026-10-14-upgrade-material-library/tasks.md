@@ -26,28 +26,28 @@
 
 - [ ] **2.1 建立 `extract` 包与文件头校验** — 涉及：`backend/internal/extract/`（新增）。扩展名白名单 `.txt/.md/.pdf/.docx/.pptx`；PDF 必须 `%PDF-`；DOCX/PPTX 必须是合法 ZIP，条目不超过 2000、解压后不超过 100 MiB；txt/md 必须 UTF-8。verify: `go test ./internal/extract/...` 覆盖合法样本、伪造 PDF、非法 ZIP、超大条目、非 UTF-8。
 - [ ] **2.2 实现 PDF 抽取** — 涉及：`extract/pdf.go`。调用 `pdftotext`，超时 10 秒、正文不超过 2,000,000 字符；记录每页起止码点；扫描件、加密、损坏返回可读错误。verify: 3 页样本的 `page_table` 有 3 项；扫描件返回 `scanned_pdf`；超时返回 `extract_timeout`。
-- [ ] **2.3 实现 DOCX/PPTX 抽取** — 涉及：`extract/docx.go`、`extract/pptx.go`。用 `archive/zip` 和 `encoding/xml` 读取；DOCX 标题样式转 Markdown 标题；PPTX 记录每张幻灯片起止码点。verify: DOCX 样本的标题以 `#` 开头；PPTX 样本 `page_table` 用 `slide` 键；损坏文件返回 `invalid_archive`。
+- [ ] **2.3 实现 DOCX/PPTX 抽取** — 涉及：`extract/docx.go`、`extract/pptx.go`。用 `archive/zip` 和 `encoding/xml` 读取；DOCX 标题样式转 Markdown 标题；PPTX 记录每张幻灯片起止码点。verify: DOCX 样本的标题以 `#` 开头；PPTX 样本 `page_table` 用 `slide` 键；非 ZIP 返回 `invalid_archive`；ZIP 内 XML 损坏返回 `invalid_file`。
 - [ ] **2.4 上传写入 v1 并异步入队** — 涉及：`backend/internal/httpapi/materials.go`、`backend/internal/library/`。上传请求完成校验、抽取、文件写入，并在事务中写 `materials`、`material_versions` v1、`knowledge_entries`；提交后入队并立即返回 201 `{id,title,version:1,index_status:"pending"}`；失败清理文件和事务。verify: 上传响应在 1 秒内返回（PDF 抽取时间除外）；库里有一份材料和 v1；嵌入关闭时材料行、版本和文件保留，状态最终 failed 并可重试。
-- [ ] **2.5 实现批量上传** — 涉及：`httpapi/materials.go`、`httpapi/server.go`。新增 `POST /api/materials/batch`，字段 `files`；1 至 20 个文件，总大小不超过 20 MiB；逐文件校验和写入，一个失败不影响其他；响应 `items[]` 带 `client_id/ok/id/title/version/index_status/error`。verify: 2 个合法 + 1 个损坏 PDF 返回 201，2 个成功、1 个 `invalid_file`；21 个文件返回 400 `too_many_files`。
+- [ ] **2.5 实现批量上传** — 涉及：`httpapi/materials.go`、`httpapi/server.go`。新增 `POST /api/materials/batch`，字段 `files` 可重复，可选 `client_ids`；1 至 20 个文件，总大小不超过 20 MiB；0 个文件 400 `no_files`；逐文件校验和写入，一个失败不影响其他，全部失败仍 201 且无新增；响应 `items[]` 带 `client_id/ok/id/title/version/index_status/error`。verify: 2 个合法 + 1 个损坏 PDF 返回 201，2 个成功、1 个 `invalid_file`；21 个文件返回 400 `too_many_files`。
 - [ ] **2.6 统一上传错误与无残留断言** — 涉及：`httpapi/materials.go`、`library/`。把 400/403/413/503 映射为固定 `error` code；超限返回 413；扫描件、伪造头、加密/损坏 Office、事务失败都不留文件或行。verify: `verify.py` 的上传失败场景逐条通过；数据库行数和上传目录文件数在失败前后相同。
 
 ## 3. 后台索引与原文定位
 
 - [ ] **3.1 实现索引队列与状态机** — 涉及：`backend/internal/indexer/`（新增）、`httpapi/materials.go`、`retrieval/index.go`。进程内队列；上传/编辑/替换/恢复/reindex 置 `pending`；worker 置 `indexing`；成功 `ready`，失败 `failed` + `index_error`；启动时 `pending/indexing` 重新排队；同一材料只允许一个 worker。verify: 上传后状态先 pending/indexing，最终 ready；断开嵌入后 failed；恢复服务后 reindex 返回 202 并 ready；重启后 pending 材料继续索引。
-- [ ] **3.2 实现 generation 先建后换** — 涉及：`retrieval/index.go`、`library/`。新切片写新 generation；全部 ready 后在事务里切换 `materials.current_generation`、删除旧切片、最后删旧向量；失败只清理新 generation。verify: 重建期间旧 generation 检索可用；成功后旧切片/向量不存在；注入失败后旧 generation 仍 ready。
+- [ ] **3.2 实现 generation 先建后换** — 涉及：`retrieval/index.go`、`library/`。新切片写新 generation；全部 ready 后在事务里切换 `materials.current_generation`、删除旧切片，事务提交后删旧向量；失败只清理新 generation。reindex 接受 `{strategy?,max_len?,overlap_ratio?}`，非法 400。verify: 重建期间旧 generation 检索可用；成功后旧切片/向量不存在；注入失败后旧 generation 仍 ready。
 - [ ] **3.3 实现原文码点映射和页码** — 涉及：`backend/internal/chunk/`、`extract/`、`retrieval/index.go`。预处理保留到原文的映射；切片 `start/end` 落原文码点；PDF/PPT 计算 `start_page/end_page`。verify: 含 emoji 的单测切出的文本与原文一致；PDF 命中的 page 与 `page_table` 一致。
 - [ ] **3.4 引用带版本、区间和页码** — 涉及：`retrieval/service.go`、`httpapi/search.go`、`httpapi/ask.go`。命中增加 `version`、`start`、`end`、`page/slide`、`excerpt`；引用不使用 `chunk_id` 作为长期标识。verify: `verify.py` 检查字段；材料编辑后旧引用仍返回旧 excerpt 和 version；新引用使用当前 version。
-- [ ] **3.5 检索只读当前 generation** — 涉及：`retrieval/service.go`、`retrieval/index.go`。关键字 SQL 和 Qdrant 过滤都带 `class_id` 和 `current_generation`，只读 `ready` 切片；`vector` 阈值 0.35，`hybrid` RRF k=60。verify: 旧 generation 不进入结果；pending/failed 切片不参与；Qdrant 停止时 keyword 200、vector/hybrid 503。
+- [ ] **3.5 检索只读当前 generation** — 涉及：`retrieval/service.go`、`retrieval/index.go`。关键字 SQL 和 Qdrant 过滤都带 `class_id` 和 `current_generation`，只读 `ready` 切片；`vector` 阈值 0.35，`hybrid` RRF k=60；`/api/search` 的 `scope` 取交集，跨班 id 返回同形 404。verify: 旧 generation 不进入结果；pending/failed 切片不参与；Qdrant 停止时 keyword 200、vector/hybrid 503。
 
 ## 4. 材料库业务
 
 - [ ] **4.1 软删除、回收站、恢复和彻底删除** — 涉及：`backend/internal/library/trash.go`（新增）、`httpapi/materials.go`。`DELETE` 写 `deleted_at`；列表/详情/文件/检索/问答排除已删除；教师 `GET /api/trash`；restore 清空 `deleted_at`；purge 只接受已删除材料，删除文件、版本、切片、向量和标签关联，未删除返回 409。verify: 删除后学生五条读路径都不可见；恢复保留版本；purge 后按 id 404，未删除 purge 返回 409；学生写接口 403。
 - [ ] **4.2 标签、重命名、排序和分页** — 涉及：`library/library.go`、`httpapi/materials.go`。`PATCH` 标题 1 至 255、标签 1 至 32、每材料最多 10 个、同名复用；列表支持 `q/tag/sort/page/page_size`，默认 20、最大 100，响应含 `total`，同值按 id 降序。verify: 25 份材料、标签筛选、第 2 页和标题排序结果稳定；`page_size=101` 返回 400；学生 PATCH 403。
-- [ ] **4.3 在线编辑、409 冲突和版本历史** — 涉及：`library/versions.go`、`httpapi/materials.go`。`PUT content` 带 `body/change_note/base_version`；事务内比对 `current_version`，不一致 409 带最新正文；每次成功追加版本并置 pending；版本列表、单版本读取、恢复接口。verify: v1 保存成功生成 v2；两个窗口并发时后者 409；恢复 v1 生成 v4 且 v1-v3 不变；非文本格式 400。
+- [ ] **4.3 在线编辑、409 冲突和版本历史** — 涉及：`library/versions.go`、`httpapi/materials.go`。`PUT content` 带 `body/change_note/base_version`；事务内比对 `current_version`，不一致 409 带最新正文；每次成功追加版本并置 pending；版本列表、单版本读取、旧版本文件下载、恢复接口。verify: v1 保存成功生成 v2；两个窗口并发时后者 409；恢复 v1 生成 v4 且 v1-v3 不变；非文本格式 400。
 - [ ] **4.4 文件替换** — 涉及：`library/versions.go`、`httpapi/materials.go`。`POST file` 复用抽取和校验；只接受与当前 `file_type` 相同的 PDF/DOCX/PPTX；成功追加版本、置 pending；失败保留旧文件/正文/版本；文本格式返回 400；`base_version` 冲突 409。verify: 合法 PDF 替换生成 v2 且旧文件仍可读；损坏 PDF 返回 400 且 v1 不变；`.md` 和类型不一致都返回 400；学生 403。
 - [ ] **4.5 大纲和引用定位数据** — 涉及：`library/outline.go`、`httpapi/materials.go`。详情返回 Markdown ATX 标题的 `level/text/offset`；引用进入详情时按 `version/start/end` 定位；旧版本显示“原文已更新”和旧 excerpt；越界只显示摘录。verify: 大纲 3 项 level 正确；emoji 前后的引用高亮正确；旧版本和越界场景不 500。
 - [ ] **4.6 阅读进度、收藏和最近阅读** — 涉及：`library/reading.go`、`httpapi/materials.go`。`PUT/GET progress`、`PUT/DELETE favorite`、`GET favorites`、`GET recent`；`user_id` 只来自会话；`(user_id, material_id)` 唯一；前端滚动停止 2 秒后上报。verify: 重新打开回到 1200；两个学生互不覆盖；重复收藏不重复；伪造 `user_id` 被忽略；跨班/他人/不存在同形 404。
-- [ ] **4.7 统一 404 和 403** — 涉及：`httpapi/` 所有新 handler。按 id 先整行读出再校验班级和归属；跨班、同班他人私有、已删除、非法 id 返回相同 404；学生写接口 403；日志可区分，响应不可区分。verify: `verify.py` 对每类新资源比较状态、头和 body；进度和收藏的伪造 `user_id` 不生效；非法 id `abc/-1/0` 都是 404。
+- [ ] **4.7 统一 404 和 403** — 涉及：`httpapi/` 所有新 handler。按 id 先整行读出再校验班级和归属；跨班、同班他人私有、已删除、非法 id 返回相同 404；学生写接口 403；日志可区分，响应不可区分。verify: `verify.py` 对每类新资源比较状态码、Content-Type 和 body（忽略 X-Request-ID/Date）；进度和收藏的伪造 `user_id` 不生效；非法 id `abc/-1/0` 都是 404。
 
 ## 5. 前端壳层与材料库页面
 
@@ -65,11 +65,11 @@
 
 - [ ] **6.1 移除网页令牌和伪造字段** — 涉及：`frontend/src/api.ts`、`App.tsx`、`Ask.tsx`。删除 `localStorage` 令牌读写，请求带 `credentials: "include"`；删除 `class_id: 999` 和客户端 `system` 消息；保留 Bearer 仅给脚本。verify: 构建产物 grep 不到 `campusclaw_token`、`class_id: 999`；curl 仍可用 Bearer 调用 `/api/me`。
 - [ ] **6.2 增加 CSP、附件下载头和安全响应头** — 涉及：`frontend/nginx.conf`、`httpapi/json.go`、`httpapi/materials.go`、`docker-compose.yml`。CSP 按 `design.md` 第 10 节；下载 `Content-Disposition: attachment`、`nosniff`；不暴露服务器版本。verify: `curl -I` 检查三个头；上传目录静态路径 404。
-- [ ] **6.3 收口 Compose 和镜像** — 涉及：`docker-compose.yml`、`backend/Dockerfile`。api 镜像安装 `poppler-utils`；仍只有 web 端口；`/health` 不查库；Qdrant/MySQL 不映射宿主。verify: `docker compose config` 只有 web 的 `ports`；`docker compose exec api pdftotext -v` 成功；停 db 后 `/health` 200、业务 503。
+- [ ] **6.3 收口 Compose 和镜像** — 涉及：`docker-compose.yml`、`backend/Dockerfile`。api 镜像安装 `poppler-utils`；仍只有 web 端口；`/live` 不查库；Qdrant/MySQL 不映射宿主。verify: `docker compose config` 只有 web 的 `ports`；`docker compose exec api pdftotext -v` 成功；停 db 后 `/live` 200、`/health` 503、业务 503。
 
 ## 7. 验收与归档
 
-- [ ] **7.1 扩展 `scripts/verify.py`** — 涉及：`scripts/verify.py`、`docs/verification.md`。保留现有全部检查；新增迁移、多格式、批量、异步索引、先建后换、版本冲突、回收站、标签分页、进度收藏、统一 404、学生 403、依赖不可达。每类新资源测“跨班 id / 已删除或不可见 id / 不存在 id”，响应必须逐字节相同；进度和收藏另测伪造 `user_id` 被忽略。verify: 从干净 Compose 运行 `python3 scripts/verify.py` 全绿；结果写入 `docs/verification.md`。
+- [ ] **7.1 扩展 `scripts/verify.py`** — 涉及：`scripts/verify.py`、`docs/verification.md`。保留现有全部检查；新增迁移、多格式、批量、异步索引、先建后换、版本冲突、回收站、标签分页、进度收藏、统一 404、学生 403、依赖不可达。每类新资源测“跨班 id / 已删除或不可见 id / 不存在 id”，状态码、Content-Type 和 body 必须逐字节相同（忽略 X-Request-ID/Date）；进度和收藏另测伪造 `user_id` 被忽略。verify: 从干净 Compose 运行 `python3 scripts/verify.py` 全绿；结果写入 `docs/verification.md`。
 - [ ] **7.2 Go 单元测试** — 涉及：`backend/internal/*_test.go`。覆盖抽取、文件头/ZIP 限制、码点映射、迁移、队列状态、generation 切换、409 冲突、大纲、分页、限流键、搜索过滤、日志字段、`/health` 与 `/ready`。verify: `go test ./...` 全绿；覆盖率报告存 `docs/`。
 - [ ] **7.3 Playwright 端到端** — 涉及：`frontend/e2e/`（新增）。三条主路径在 1440×900 和 390×844 各跑一次：① 上传 PDF → 等 ready → 检索 → 点引用高亮；② 编辑 → 旧引用提示“原文已更新” → 恢复旧版本；③ 删除 → 撤销/回收站恢复 → 彻底删除。verify: `npx playwright test` 全绿；失败时保存截图和 trace。
 - [ ] **7.4 手动检查清单** — 涉及：`docs/manual-checklist.md`（新增）。手机宽度、深色主题、只用键盘各走一遍登录、列表、详情、编辑、版本、回收站；记录日期、浏览器版本和结果。verify: 清单每项有实际结果，不接受“应该可以”。
@@ -82,6 +82,6 @@
 - `npx -y @fission-ai/openspec@1.15.0 validate 2026-10-14-upgrade-material-library --strict` 通过，无 error、无 warning。
 - `python3 scripts/spec_check.py` 和 `python3 scripts/standards_check.py` 通过。
 - `go test ./...`、`python3 scripts/verify.py`、`npx playwright test` 全绿。
-- `docker compose config` 只有 web 暴露端口；`/health` 不查库；停 db 时业务接口 503。
+- `docker compose config` 只有 web 暴露端口；`/live` 不查库；停 db 时 `/live` 200、`/health` 503、业务接口 503。
 - 仓库全部提交历史中检索不到密钥、`.env`、上传文件或数据库文件。
 - 角色三在 `docs/verification.md` 留下验收记录；未通过项不得归档。

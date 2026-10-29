@@ -15,11 +15,11 @@
 
 ## 项目事实
 
-> 旧实现已打包到 `archive/campusclaw-baseline.zip`；实现阶段从归档恢复对应目录。本文中的 `backend/`、`frontend/`、Compose 路径指恢复后的目标结构。
+> 第 7 课已把可运行代码恢复到根目录的 `backend/`、`frontend/` 和 Compose；`archive/campusclaw-baseline.zip` 只是历史快照。本文中的 `backend/`、`frontend/` 指向当前代码。
 
 - Compose 服务：`web`（Nginx）、`api`（Go）、`db`（MySQL 8）、`qdrant`；只有 `web` 映射宿主端口 `WEB_PORT`（默认 8080）。
 - 卷：`db_data`、`uploads`、`qdrant_data`；`docker compose down` 不带 `-v` 保留数据。
-- `api` 镜像分两阶段：`golang:1.25-alpine` 构建，`alpine:3.21` 运行；运行镜像包含 `ca-certificates` 和 `poppler-utils`。
+- `api` 镜像分两阶段：`golang:1.25-alpine` 构建，`alpine:3.21` 运行；运行镜像当前包含 `ca-certificates`；`poppler-utils` 由材料库 change 加入。
 - 健康检查：`/live` 是存活检查，不查依赖；`/health` 是就绪检查，查 MySQL、Qdrant、嵌入配置；`/ready` 是 `/health` 的别名。
 - 日志：stdout 单行 JSON，字段 `ts/level/msg/request_id`，请求日志加 `method/path/status/duration_ms`。
 - 配置：全部来自 `.env`；`.env.example` 只保留键名/占位；密钥不入库。

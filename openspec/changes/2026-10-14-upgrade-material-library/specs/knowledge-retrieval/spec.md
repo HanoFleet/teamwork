@@ -8,7 +8,7 @@
 
 ### Requirement: 上传后切分并建立索引
 
-教师上传成功、材料行、版本 1 和 `knowledge_entries` 已提交之后，系统 MUST 在后台按本次切分策略把当前版本正文切成切片，写入 `knowledge_chunks`，再按每批 32 条调用嵌入服务，把向量写入 Qdrant。上传接口 MUST 在索引完成前返回 201；材料 MUST 暴露 `pending`、`indexing`、`ready`、`failed` 状态和 `index_error`。向量主键 MUST 等于切片 id，并与 payload 中的 `chunk_id` 相同。Qdrant payload MUST 只含 `class_id`、`material_id`、`knowledge_entry_id`、`chunk_id`、`chunk_index`、`generation`，MUST NOT 含切片正文。未指定策略时 MUST 使用 `auto`：最大 800 字、重叠 80 字，优先在空行、换行、句号处断开。种子材料和重启时处于 `pending` 或 `indexing` 的材料 MUST 重新排队。`knowledge_entries.body` MUST 是当前版本的原文或抽取文本，预处理不得改写该字段。迁移前已存在的切片 MUST 保留 `generation=0` 作为 legacy，可继续检索，但不保证 `start/end` 可高亮。
+教师上传成功、材料行、版本 1 和 `knowledge_entries` 已提交之后，系统 MUST 在后台按本次切分策略把当前版本正文切成切片，写入 `knowledge_chunks`，再按每批 32 条调用嵌入服务，把向量写入 Qdrant。每次索引任务 MUST 绑定开始时的 `material_id`、`version` 和 generation；worker 完成时若 `materials.current_version` 已变化或材料行已不存在，MUST NOT 切换 `current_generation`，只清理本次新 generation，并把材料留给新版本的任务。上传接口 MUST 在索引完成前返回 201；材料 MUST 暴露 `pending`、`indexing`、`ready`、`failed` 状态和 `index_error`。向量主键 MUST 等于切片 id，并与 payload 中的 `chunk_id` 相同。Qdrant payload MUST 只含 `class_id`、`material_id`、`knowledge_entry_id`、`chunk_id`、`chunk_index`、`generation`，MUST NOT 含切片正文。未指定策略时 MUST 使用 `auto`：最大 800 字、重叠 80 字，优先在空行、换行、句号处断开。种子材料和重启时处于 `pending` 或 `indexing` 的材料 MUST 重新排队。`knowledge_entries.body` MUST 是当前版本的原文或抽取文本，预处理不得改写该字段。迁移前已存在的切片 MUST 保留 `generation=0` 作为 legacy，可继续检索，但不保证 `start/end` 可高亮。
 
 #### Scenario: 上传后本班可按原文检索
 
@@ -65,7 +65,7 @@
 
 ### Requirement: 三种检索模式
 
-系统 MUST 提供 `keyword`、`vector`、`hybrid` 三种模式，未指定时 MUST 使用 `hybrid`。空查询 MUST 返回 400。`keyword` MUST 只查 MySQL 全文索引（`FULLTEXT ... WITH PARSER ngram`，token 长度 2），只查 `materials.current_generation` 中 `index_status='ready'` 的切片，MUST NOT 调用嵌入，MUST NOT 访问 Qdrant。`vector` MUST 先把问句做成向量，在 Qdrant 里按会话班级和当前 generation 过滤，丢弃余弦相似度低于 0.35 的候选，再用向量主键回 MySQL 取正文。`hybrid` MUST 同时走两路，各路先按自己的规则过滤，再用 RRF（`k = 60`）按名次融合；缺席的一路 MUST NOT 贡献分数。摘录 MUST 取自 MySQL 的 `chunk_text`。Qdrant 不可用时，`keyword` MUST 仍能返回结果；`vector` 与 `hybrid` MUST 返回 503，MUST NOT 编造相似度。
+系统 MUST 提供 `keyword`、`vector`、`hybrid` 三种模式，未指定时 MUST 使用 `hybrid`。空查询 MUST 返回 400。`POST /api/search` MAY 接受 `scope` 对象 `{material_ids?: number[], tag?: string}`，两者同时出现时取交集；`material_ids` 中每个 id MUST 存在于会话班级，跨班、已删除或不存在的 id MUST 返回同形 404；省略 `material_ids` 等于不限，空数组等于无结果；`tag` MUST 为 1 至 32 个字符；省略 `scope` 等于本班全部材料。`keyword` MUST 只查 MySQL 全文索引（`FULLTEXT ... WITH PARSER ngram`，token 长度 2），只查 `materials.current_generation` 中 `index_status='ready'` 的切片，MUST NOT 调用嵌入，MUST NOT 访问 Qdrant。`vector` MUST 先把问句做成向量，在 Qdrant 里按会话班级和当前 generation 过滤，丢弃余弦相似度低于 0.35 的候选，再用向量主键回 MySQL 取正文。`hybrid` MUST 同时走两路，各路先按自己的规则过滤，再用 RRF（`k = 60`）按名次融合；缺席的一路 MUST NOT 贡献分数。摘录 MUST 取自 MySQL 的 `chunk_text`。Qdrant 不可用时，`keyword` MUST 仍能返回结果；`vector` 与 `hybrid` MUST 返回 503，MUST NOT 编造相似度。
 
 #### Scenario: 原文用词走关键字路径
 
@@ -116,9 +116,17 @@
 - **THEN** 只有 `ready` 切片进入结果
 - **AND** `pending` 和 `failed` 切片不贡献分数，也不触发嵌入
 
+#### Scenario: scope 限定材料与标签
+
+- **GIVEN** A 班材料 m1 标签为「第一章」，m2 无标签；B 班材料 m3
+- **WHEN** A 班用户以 `keyword` 检索并在 `scope` 中分别指定 `{material_ids:[m1]}`、`{tag:"第一章"}`、`{material_ids:[m3]}`
+- **THEN** 前两次只返回 m1 的命中
+- **AND** 第三次因为 m3 不属于本班而返回同形 404
+- **AND** 空 `scope` 与不传 `scope` 结果相同
+
 ### Requirement: 命中必须可回溯至原文
 
-每条命中 MUST 包含材料 id、材料标题、`version`、切片序号、`start`、`end`、`excerpt`，PDF 或 PPT 另带 `page` 或 `slide`。`start` 含、`end` 不含，单位是当前版本正文的 Unicode 码点。调用方 MUST 能用材料 id 打开本班材料详情。摘录 MUST 来自 MySQL，MUST NOT 来自 Qdrant payload。所选模式过滤后没有候选时，响应 MUST 为 200，`hits` 为空，并给出文案「资料中未找到相关内容」。系统 MUST NOT 用低于阈值的切片凑数。
+每条命中 MUST 包含材料 id、材料标题、`version`、切片序号、`start`、`end`、`excerpt`，PDF 或 PPT 另带 `page` 或 `slide`；跨页切片 MUST 报告 `start_page`/`start_slide`（切片起始页）。`start` 含、`end` 不含，单位是当前版本正文的 Unicode 码点。调用方 MUST 能用材料 id 打开本班材料详情。摘录 MUST 来自 MySQL，MUST NOT 来自 Qdrant payload。所选模式过滤后没有候选时，响应 MUST 为 200，`hits` 为空，并给出文案「资料中未找到相关内容」。系统 MUST NOT 用低于阈值的切片凑数。
 
 #### Scenario: 命中带出处字段
 
@@ -194,9 +202,16 @@
 - **THEN** 只返回当前 generation 中属于 A 班的切片
 - **AND** 旧 generation 和 B 班切片都不出现
 
+#### Scenario: 索引中编辑不切换旧版本
+
+- **GIVEN** 材料 v1 正在 `indexing`，教师随后保存 v2
+- **WHEN** v1 的 worker 完成
+- **THEN** `current_generation` 不切换，v1 新 generation 被清理
+- **AND** 材料保持 pending 等待 v2；v2 ready 后检索只使用 v2
+
 ### Requirement: 三种切分策略与重建索引
 
-系统 MUST 支持 `auto`、`custom`、`hierarchy`。`custom` 的最大长度 MUST 在 100 至 2000 字，重叠比例 MUST 在 0% 至 50%；`hierarchy` MUST 按 Markdown 标题分章，过长时再套 `auto`。已入库材料 MUST NOT 自动改切分。教师重建索引 MUST 返回 202，并使用新的 generation 先写入；全部成功后 MUST 在一个事务里把 `materials.current_generation` 切到新 generation、删除旧切片，最后删除旧向量。重建期间旧索引 MUST 照常可检索；失败时 MUST 只清理新 generation，旧 generation 保持 ready。启动时 MUST 把 `pending` 或 `indexing` 的材料重新排队。学生调用重建 MUST 返回 403，且切片与向量不变。
+系统 MUST 支持 `auto`、`custom`、`hierarchy`。`custom` 的最大长度 MUST 在 100 至 2000 字，重叠比例 MUST 在 0% 至 50%；`hierarchy` MUST 按 Markdown 标题分章，过长时再套 `auto`。已入库材料 MUST NOT 自动改切分。教师重建索引 MUST 接受 JSON `{strategy?, max_len?, overlap_ratio?}`，`strategy` 默认 `auto`；`custom` MUST 同时提供 `max_len`（100–2000）和 `overlap_ratio`（0–0.5），缺失或越界 MUST 返回 400 `invalid_query`。材料已 `pending`/`indexing` 时，reindex MUST 返回 202 并用本次参数替换排队任务；在途 run 完成后按最新参数重排，MUST NOT 并行两个 worker。上传、编辑、替换、恢复默认复用 `materials.index_strategy` 保存的最近显式策略；reindex 显式传 `strategy` 时更新该列。重建 MUST 返回 202 并使用新的 generation 先写入；全部成功后 MUST 在一个事务里切换 `materials.current_generation`、删除旧切片，事务提交后再删除旧向量（MUST NOT 在事务内调用 Qdrant）。重建期间旧索引 MUST 照常可检索；失败时 MUST 只清理新 generation，旧 generation 保持 ready。启动时 MUST 把 `pending` 或 `indexing` 的材料重新排队。学生调用重建 MUST 返回 403，且切片与向量不变。
 
 #### Scenario: 更换策略必须显式重建
 
@@ -205,6 +220,13 @@
 - **THEN** 重建成功后只保留 hierarchy generation 的切片和向量
 - **AND** 原 auto 切片和向量已删除
 - **AND** `knowledge_entries.body` 仍是当前版本原文
+
+#### Scenario: 重建参数非法
+
+- **GIVEN** 本班教师和一份已有索引的材料
+- **WHEN** 调用 reindex，`strategy` 为 `unknown`，或 `custom` 的 `max_len=99`，或 `overlap_ratio=0.6`
+- **THEN** 每次响应都是 400，`error=invalid_query`
+- **AND** `current_generation`、切片和向量都不变
 
 #### Scenario: 学生不得重建索引
 

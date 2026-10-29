@@ -4,11 +4,11 @@
 
 ## 当前阶段
 
-- 第 7 课骨架已完成并归档：`openspec/changes/archive/2026-10-28-establish-platform-foundation/`。当前工作分支是 `change/platform-foundation`；材料库 change `openspec/changes/2026-10-14-upgrade-material-library/` 仍是活动规约，尚未实现。
+- 第 7 课骨架已完成、归档并合并到 `main`；`change/platform-foundation` 分支保留历史。材料库 change `openspec/changes/2026-10-14-upgrade-material-library/` 仍是活动规约，尚未实现。
 - 根目录的 `backend/`、`frontend/`、Compose 是可运行工程；`archive/campusclaw-baseline.zip` 只是历史快照，不用它代替当前代码。
 - 第一眼入口是 `SPEC.md`；骨架入口是归档的 foundation change，后续入口是 material-library change。
 - 门禁：`make check`、`make grade`、`python3 scripts/verify.py`；`openspec validate --all --strict` 和两个结构自查也必须 0。
-- 骨架的 1.8/1.9 待完成（CI 首次运行、证据归档、标签）；材料库的 `tasks.md` 一条都未勾选。只有在对应 verify 通过后才勾选。
+- 骨架的 1.8/1.9 已完成（CI 运行成功、证据归档 `docs/lesson-07/`、标签 `v0.1.0-skeleton`）；材料库的 `tasks.md` 一条都未勾选。只有在对应 verify 通过后才勾选。
 - 现有 `httpapi/auth.go`、`materials.go`、`server.go` 的 SQL 是 legacy 例外；新增 `httpapi` 文件不得写 SQL，材料库 change 再迁移。
 
 ## 工程规范（必读）

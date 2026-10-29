@@ -15,7 +15,7 @@
 
 ## 项目事实
 
-> 旧实现已打包到 `archive/campusclaw-baseline.zip`；实现阶段从归档恢复对应目录。本文中的 `backend/`、`frontend/`、Compose 路径指恢复后的目标结构。
+> 第 7 课已把可运行代码恢复到根目录的 `backend/`、`frontend/` 和 Compose；`archive/campusclaw-baseline.zip` 只是历史快照。本文中的 `backend/`、`frontend/` 指向当前代码。
 
 - 角色只有 `teacher` 和 `student`，班级来自服务端会话，前端不提供切换班级的入口。
 - 当前阶段可用的页面：首页 `/`、材料 `/materials`、材料详情 `/materials/{id}`、编辑 `/materials/{id}/edit`（教师）、版本 `/materials/{id}/versions`（教师）、回收站 `/trash`（教师）、问答 `/ask`、设置 `/settings`。

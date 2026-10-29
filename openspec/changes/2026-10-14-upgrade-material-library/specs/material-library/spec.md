@@ -8,7 +8,7 @@
 
 ### Requirement: 批量上传与索引进度
 
-教师 MUST 能通过 `POST /api/materials/batch` 一次提交 1 至 20 个文件（字段 `files`），单文件上限 `MAX_UPLOAD_BYTES`，请求总上限 20 MiB。每个文件 MUST 独立校验和写入；一个失败 MUST NOT 回滚同批已成功文件。请求 MUST 在索引完成前返回 201；成功项带 id、version=1 和 `index_status=pending`，失败项带 error。索引状态 MUST 为 `pending`、`indexing`、`ready`、`failed`，`failed` 带 `index_error`；前端每 2 秒轮询直到 ready 或 failed，教师可对 failed 材料调用 `POST /api/materials/{id}/reindex` 重试（202）。学生调用 MUST 返回 403 且无残留。
+教师 MUST 能通过 `POST /api/materials/batch` 以 `multipart/form-data` 提交 1 至 20 个文件，字段 `files` 可重复；可附带 `client_ids`（JSON 字符串数组，缺省时用 1 基序号）。单文件上限 `MAX_UPLOAD_BYTES`，总上限 20 MiB；0 个文件 400 `no_files`，超过 20 个 400 `too_many_files`，请求级失败无写入。每个文件独立校验和写入，一个失败不影响其他；全部失败仍返回 201，items 全部 `ok=false` 且无新增。响应 items 带 `client_id`、成功项 `id/title/version=1/index_status=pending`、失败项 `error`。索引状态为 `pending/indexing/ready/failed`，failed 带 `index_error`，前端每 2 秒轮询，教师可 reindex（202）。学生 403 且无残留。
 
 #### Scenario: 一批文件独立完成
 
@@ -32,6 +32,13 @@
 - **THEN** 上传返回 201；随后 `index_status=failed`，`index_error` 非空
 - **AND** 调用 `POST /api/materials/{id}/reindex` 返回 202，索引完成后状态变为 `ready`
 
+#### Scenario: 单文件超限只失败该项
+
+- **GIVEN** `teacher_a` 已登录，请求总大小不超过 20 MiB
+- **WHEN** 批量提交一个合法文件和一份超过 `MAX_UPLOAD_BYTES` 的文件
+- **THEN** 响应 201，超大文件 item 为 `ok=false,error=payload_too_large`
+- **AND** 合法文件正常写入并进入索引，超大文件不留文件或数据库行
+
 #### Scenario: 超过 20 个文件
 
 - **GIVEN** `teacher_a` 已登录
@@ -46,9 +53,30 @@
 - **THEN** 响应状态为 403，`error=forbidden`
 - **AND** 没有文件落盘，没有数据库行
 
+#### Scenario: 零文件被拒绝
+
+- **GIVEN** `teacher_a` 已登录
+- **WHEN** 调用 `POST /api/materials/batch`，字段 `files` 为空
+- **THEN** 响应 400，`error=no_files`
+- **AND** 材料表、版本表和上传目录都没有新增
+
+#### Scenario: client_ids 数量不匹配
+
+- **GIVEN** `teacher_a` 已登录
+- **WHEN** 提交 2 个文件但 `client_ids` 只有 1 个
+- **THEN** 响应 400，`error=invalid_request`
+- **AND** 材料表、版本表和上传目录都没有新增
+
+#### Scenario: 全部文件失败仍返回 201
+
+- **GIVEN** `teacher_a` 已登录
+- **WHEN** 批量提交两个都损坏的 PDF，`client_ids=["a","b"]`
+- **THEN** 响应 201，两个 item 的 `client_id` 分别为 `a`/`b`，`ok=false`
+- **AND** 材料表、版本表和上传目录都没有新增
+
 ### Requirement: 删除、撤销与回收站
 
-本班教师 MUST 能软删除材料：`DELETE /api/materials/{id}` 返回 204，并在 `materials.deleted_at` 写入 UTC 时间。删除后 MUST 立即从同班学生的列表、详情、文件、检索和问答中消失；教师 MUST 只在 `GET /api/trash` 看到它。教师 MUST 能在前端提示的 10 秒内撤销，也 MUST 能在回收站随时恢复：`POST /api/materials/{id}/restore` 返回 200，清空 `deleted_at`，保留全部版本、标签、阅读进度和收藏。彻底删除 MUST 只在回收站执行：`DELETE /api/materials/{id}/purge` 返回 204，删除文件、版本、切片、向量和标签关联；对未删除材料调用 MUST 返回 409 `not_deleted`，不删除任何数据。彻底删除后按 id 访问 MUST 返回 404。跨班或不存在 id MUST 与上述 404 同形；学生调用任一写接口 MUST 返回 403。
+本班教师 MUST 能软删除材料：DELETE 返回 204 并写 `deleted_at`；删除后学生所有读路径（列表、详情、文件、检索、问答、收藏、最近、快捷搜索）立即不可见，教师只在回收站看到。回收站可恢复：restore 接受 `{base_version}`，返回 200，清空 `deleted_at`；版本不是当前版本返回 409 `version_conflict`；未删除或已恢复材料返回 409 `not_deleted`。删除不取消在途索引，但不得重新可见；恢复返回删除前 `index_status`：ready 保持，pending/indexing 继续排队，failed 保持并需手动 reindex。purge 只在回收站：返回 204，清理文件、版本、知识条目正文、切片、向量、标签关联、阅读进度和收藏；取消排队/在途索引，worker 发现行不存在时丢弃新 generation，不写切片/向量；未删除材料 purge 返回 409 `not_deleted`；彻底删除后按 id 404；跨班/不存在同形 404；学生写接口 403。
 
 #### Scenario: 删除立即隐藏
 
@@ -57,6 +85,7 @@
 - **THEN** 响应 204，`materials.deleted_at` 非空
 - **AND** `student_a1` 的列表、详情、文件、`keyword` 检索和 `ask` 都不再出现 id=1
 - **AND** `teacher_a` 的 `GET /api/trash` 含 id=1
+- **AND** 再次 DELETE 返回 204，`deleted_at` 不变
 
 #### Scenario: 十秒内撤销
 
@@ -80,6 +109,13 @@
 - **THEN** 响应 204；文件、`materials`、`material_versions`、`knowledge_chunks` 和 Qdrant 点都不存在
 - **AND** 教师和学生按 id 访问都是 404
 
+#### Scenario: 索引中彻底删除不复活
+
+- **GIVEN** 材料 id=1 正在 `indexing`
+- **WHEN** 教师先删除再 purge
+- **THEN** 在途 worker 丢弃本次新 generation，不写切片或向量
+- **AND** 教师和学生按 id 访问都是 404
+
 #### Scenario: 未删除材料不能彻底删除
 
 - **GIVEN** 材料 id=1 未删除，仍有文件、版本和切片
@@ -101,9 +137,23 @@
 - **THEN** 响应 404，响应体与删除不存在的 id 相同
 - **AND** A 班材料的 `deleted_at` 仍为空
 
+#### Scenario: 未删除或重复恢复被拒绝
+
+- **GIVEN** 材料 id=1 未删除；另一份材料 id=2 已删除并已恢复
+- **WHEN** 教师分别对 id=1 和 id=2 调用 restore，`base_version` 都等于当前版本
+- **THEN** 两个响应都是 409，`error=not_deleted`
+- **AND** 两份材料的 `deleted_at` 仍为空，版本行不变
+
+#### Scenario: 删除中的索引不重新可见
+
+- **GIVEN** 材料 id=1 正在 `indexing`，学生可见
+- **WHEN** 教师删除 id=1，后台索引随后完成
+- **THEN** 学生列表、详情、文件和检索始终看不到 id=1
+- **AND** 教师回收站能看到 id=1；恢复后 `ready` 保持 ready、`pending`/`indexing` 继续排队、`failed` 保持 failed 需手动 reindex
+
 ### Requirement: 标签、重命名、排序和分页
 
-本班教师 MUST 能通过 `PATCH /api/materials/{id}` 重命名材料（`title` 为 1 至 255 个字符）并设置标签（每个标签 1 至 32 个字符，每份材料最多 10 个；同名标签在本班内复用）。`GET /api/materials` MUST 支持 `q`、`tag`、`sort`（`created_desc` 为默认，另有 `created_asc`、`title_asc`、`title_desc`）、`page`（大于等于 1）和 `page_size`（1 至 100，默认 20）；响应 MUST 含 `items`、`page`、`page_size`、`total`。排序 MUST 稳定：同值以 `id DESC` 兜底。请求中的 `class_id` MUST 被忽略。学生 MUST 只能读取，调用 PATCH MUST 返回 403。非法分页或标签 MUST 返回 400，且不修改数据。
+本班教师 MUST 能通过 `PATCH /api/materials/{id}` 重命名材料并设置标签。请求体 `{title?, tags?}`；省略字段不变，`tags` 整体替换，`[]` 清空。`title` 1–255 字符，空或超长 400 `invalid_request`；标签 1–32 字符、每材料最多 10 个、同名复用，非法 400 `invalid_tag`。`GET /api/materials` 支持 `q/tag/sort/page/page_size`（默认 20，最大 100）；`q` 对标题和正文做大小写不敏感子串匹配，`sort` 只允许白名单值，默认 `created_desc`，非法 `sort` 或分页返回 400 `invalid_pagination`；响应含 `items/page/page_size/total`，同值按 `id DESC` 兜底；请求 `class_id` 忽略。学生只读，PATCH 403；非法分页 400 `invalid_pagination`，不修改数据。
 
 #### Scenario: 标签筛选、排序与分页
 
@@ -148,6 +198,14 @@
 - **THEN** 响应 400，`error=invalid_tag`
 - **AND** 标签表和关联表都不新增
 
+#### Scenario: 部分更新与清空标签
+
+- **GIVEN** 材料 id=1 的标题为「旧标题」，标签为 `["第一章","实验"]`
+- **WHEN** PATCH 只提交 `{"tags":["第一章"]}`，再提交 `{"tags":[]}`
+- **THEN** 第一次后标题仍为「旧标题」，标签只剩「第一章」
+- **AND** 第二次后标签为空，标题不变
+- **AND** 两次都不生成新版本，不触发重新索引
+
 ### Requirement: 在线编辑正文
 
 本班教师 MUST 能编辑 `.txt` 和 `.md` 正文：`PUT /api/materials/{id}/content`，请求体为 `{body, change_note, base_version}`；`body` 上限 `MAX_UPLOAD_BYTES`，`change_note` 上限 200 字符。每次保存 MUST 在 `material_versions` 追加一行并把 `current_version` 加 1，MUST NOT 改写旧版本；随后 MUST 排队后台索引。`base_version` 不等于当前版本时 MUST 返回 409 `version_conflict`，响应含 `current_version` 和最新 `body`，MUST NOT 写入新版本。非 `.txt` 或 `.md` 材料调用本接口 MUST 返回 400 `not_editable`。学生调用 MUST 返回 403；跨班或不存在 id MUST 返回同形 404。
@@ -191,7 +249,7 @@
 
 ### Requirement: 版本历史与恢复
 
-教师 MUST 能通过 `GET /api/materials/{id}/versions` 列出材料全部版本、通过 `GET /api/materials/{id}/versions/{v}` 读取任一版本内容、在前端比较任意两个版本，并通过 `POST /api/materials/{id}/versions/{v}/restore` 恢复任一版本。版本行 MUST 追加写入，MUST NOT 被后续编辑、替换或恢复改写。恢复 MUST 携带 `base_version`；不等于当前版本时 MUST 返回 409 `version_conflict`，MUST NOT 写入新版本。恢复成功 MUST 生成一个新版本，内容等于被恢复版本，并把 `current_version` 加 1；随后 MUST 排队后台索引。学生调用任一版本写接口 MUST 返回 403；跨班或不存在 id MUST 返回同形 404。
+教师 MUST 能通过 `GET /api/materials/{id}/versions` 列出全部版本、`GET .../versions/{v}` 读取任一版本、`GET .../versions/{v}/file` 下载二进制版本、在前端比较任意两版，并通过 `POST .../versions/{v}/restore` 恢复任一版本。版本行只追加，不得被后续编辑、替换或恢复改写。恢复请求 `{base_version}`；不是当前版本返回 409 `version_conflict`，成功生成新版本并把 `current_version` 加 1，随后排队索引。版本文件下载只支持 PDF/DOCX/PPTX，用 `Content-Disposition: attachment`；`.txt/.md` 调用 MUST 返回 400 `not_replaceable`，正文用 `GET .../versions/{v}`；跨班、非法版本或不存在版本同形 404。学生访问版本列表/详情/文件 MUST 返回 403，写接口同样 403。
 
 #### Scenario: 恢复不改写历史
 
@@ -207,6 +265,21 @@
 - **WHEN** 调用 `GET /api/materials/1/versions`，并在前端选择 v1 与 v3
 - **THEN** 响应 200，返回 3 条元数据（版本号、类型、编辑人、修改说明、时间）
 - **AND** 前端差异视图列出新增和删除行，不修改任何版本
+- **AND** PDF/DOCX/PPTX 的版本比较只显示元数据和文件下载，不做文本 diff
+
+#### Scenario: 读取旧版本文件
+
+- **GIVEN** PDF 材料 id=1 有 v1、v2 两个版本
+- **WHEN** 教师请求 `GET /api/materials/1/versions/1/file`
+- **THEN** 响应 200，`Content-Disposition` 以 `attachment` 开头，内容是 v1 文件
+- **AND** 请求不存在的 v3 返回 404；对 `.md` 版本调用该接口返回 400 `not_replaceable`
+
+#### Scenario: 学生不能读版本
+
+- **GIVEN** `student_a1` 已登录，本班材料 id=1 有版本
+- **WHEN** 请求版本列表、版本详情或版本文件
+- **THEN** 每个响应都是 403，`error=forbidden`
+- **AND** 不返回版本正文、文件或修改说明
 
 ### Requirement: 文件替换
 
@@ -277,7 +350,7 @@
 
 ### Requirement: 阅读进度与收藏
 
-学生 MUST 能通过 `PUT /api/materials/{id}/progress` 记录 `{version, position, completed}`，`position` 为 0 至当前正文码点长度；并通过 `GET /api/materials/{id}/progress` 读取自己的进度。服务端 MUST 从会话取 `user_id`，忽略请求中的该字段，按 `(user_id, material_id)` 唯一保存。前端 MUST 在滚动停止 2 秒后最多上报一次；材料列表 MUST 标记已读/未读，首页 MUST 通过 `GET /api/recent` 返回最近 5 条。学生 MUST 能通过 `PUT` 或 `DELETE /api/materials/{id}/favorite` 收藏，并通过 `GET /api/favorites` 查看。教师 MUST 只能看到自己的记录；跨班、他人私有或不存在 id MUST 返回同形 404。
+学生 MUST 能通过 `PUT /api/materials/{id}/progress` 记录 `{version,position,completed}`；`version` 必须等于 `current_version`，否则 409 `version_conflict`；`position` 为 0 至正文码点长度，越界 400 `invalid_position`；`completed` 原样保存。`GET .../progress` 读取自己的进度；无记录返回默认值，记录版本落后时返回截断到当前长度的 stale 记录，下一次 PUT 覆盖。服务端只从会话取 `user_id`，按 `(user_id,material_id)` 唯一保存；前端滚动停止 2 秒后最多上报一次。学生可通过 `PUT`/`DELETE /api/materials/{id}/favorite` 收藏，并通过 `GET /api/favorites` 查看。教师只看自己的记录；跨班、他人私有或不存在 id 同形 404。
 
 #### Scenario: 阅读位置恢复
 
@@ -315,6 +388,14 @@
 - **AND** 响应不含标题、用户名、路径或资源是否存在的信息
 - **AND** 请求体或查询参数附带 `user_id=<他人>` 不改变当前会话用户的结果
 
+#### Scenario: 无进度与旧版本进度
+
+- **GIVEN** `student_a1` 对 id=1 没有进度；id=2 有 version=1、position=500 的记录，当前版本已到 2、正文 300 个码点
+- **WHEN** 学生 GET 两个材料的 progress
+- **THEN** id=1 返回 200 `{version:2,position:0,completed:false,updated_at:null}`
+- **AND** id=2 返回 200 `{version:1,position:300,completed:false,stale:true}`
+- **AND** 下一次 PUT 覆盖旧记录
+
 #### Scenario: 教师只看到自己的
 
 - **GIVEN** `teacher_a` 和 `student_a1` 同属 A 班，`student_a1` 有阅读记录
@@ -322,9 +403,17 @@
 - **THEN** 只返回 `teacher_a` 自己的记录，或空列表
 - **AND** 不存在按学生 id 查询其进度的接口
 
+#### Scenario: 版本和位置边界
+
+- **GIVEN** 材料 id=1 的 `current_version=2`，正文 100 个码点
+- **WHEN** 学生 PUT `{version:1,position:10,completed:false}`，再 PUT `{version:2,position:101,completed:false}`
+- **THEN** 第一次返回 409 `version_conflict`
+- **AND** 第二次返回 400 `invalid_position`
+- **AND** `material_reads` 没有新增或更新
+
 ### Requirement: 统一错误形状与权限边界
 
-本 change 新增的所有按 id 资源（版本、回收站、阅读进度、收藏、索引状态）MUST 先读出完整行，再校验会话班级和用户归属。跨班、不存在、非法 id，以及已删除材料对普通读接口，MUST 返回完全相同的 404：状态码、`Content-Type`、响应体 `{"error":"not_found"}` 和响应头都一致；教师回收站列表和 restore 是已删除材料的显式例外。同班他人的进度和收藏 MUST NOT 通过任何 id 或查询参数读取，接口只使用会话 `user_id`。教师写接口 MUST 只接受会话中的 `teacher` 角色和本班材料；学生 MUST 返回 403。服务端日志 MAY 区分越权与不存在，但响应 MUST NOT 泄露资源是否存在。所有新接口 MUST 忽略请求中的 `class_id` 和 `user_id` 字段。
+本 change 新增的所有按 id 资源（版本、回收站、阅读进度、收藏、索引状态）MUST 先读出完整行，再校验会话班级和用户归属。跨班、不存在、非法 id，以及已删除材料对普通读接口，MUST 返回完全相同的 404：状态码、`Content-Type`、响应体 `{"error":"not_found"}` 逐字节一致；除 `X-Request-ID`、`Date` 等每请求变化的值外，响应头一致；教师回收站列表和 material restore 是显式例外；已删除材料的版本 restore 返回 404。同班他人的进度和收藏 MUST NOT 通过任何 id 或查询参数读取，接口只使用会话 `user_id`。先校验角色和路由，再按 id 取行：学生调用教师写接口 MUST 一律返回 403，即使 id 跨班或不存在；对教师，跨班、不存在、已删除和非法 id 同形 404。服务端日志 MAY 区分越权与不存在，但响应 MUST NOT 泄露资源是否存在。所有新接口 MUST 忽略请求中的 `class_id` 和 `user_id` 字段。
 
 #### Scenario: 新资源统一 404
 

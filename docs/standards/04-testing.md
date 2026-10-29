@@ -15,7 +15,7 @@
 
 ## 项目事实
 
-> 旧实现已打包到 `archive/campusclaw-baseline.zip`；实现阶段从归档恢复对应目录。本文中的 `backend/`、`frontend/`、Compose 路径指恢复后的目标结构。
+> 第 7 课已把可运行代码恢复到根目录的 `backend/`、`frontend/` 和 Compose；`archive/campusclaw-baseline.zip` 只是历史快照。本文中的 `backend/`、`frontend/` 指向当前代码。
 
 - 单元测试：`backend/internal/**/*_test.go`，`go test ./...`。
 - 接口测试：`scripts/verify.py`，按 README 启动 Compose 后运行，结果写 `docs/verification.md`。
@@ -55,7 +55,7 @@
 1. README 的一键命令、环境变量、退出码和报告位置。
 2. 一条能力的三类用例（正常/失败/边界）：建议从“上传多格式材料”或“跨班 404”开始。
 3. 数据隔离约定：独立数据、用例前后清理、随机顺序。
-4. 健康检查用例：`/health` 200 且不查库；`/ready` 在依赖停止时 503。
+4. 健康检查用例：`/live` 200 且不查库；`/health` 在依赖停止时 503。
 5. 失败即阻断，约定当天失败用例由谁修。
 6. 把“按规范补测试”写成技能或至少写成任务模板。
 

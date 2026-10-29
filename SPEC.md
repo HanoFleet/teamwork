@@ -35,7 +35,7 @@
 | --- | --- |
 | [`proposal.md`](openspec/changes/2026-10-14-upgrade-material-library/proposal.md) | 材料库、多格式、版本、回收站、阅读进度 |
 | [`design.md`](openspec/changes/2026-10-14-upgrade-material-library/design.md) | 迁移、抽取、先建后换、版本冲突、原文坐标 |
-| [`specs/`](openspec/changes/2026-10-14-upgrade-material-library/specs/) | 26 条需求、136 个场景 |
+| [`specs/`](openspec/changes/2026-10-14-upgrade-material-library/specs/) | 26 条需求、151 个场景 |
 | [`tasks.md`](openspec/changes/2026-10-14-upgrade-material-library/tasks.md) | 46 条任务，未勾选 |
 
 它依赖已归档的 foundation 骨架；日志、`/live`/`/health`/`/ready` 和优雅停机不再重复定义。
@@ -60,7 +60,7 @@
 
 ## 关键判据
 
-- **启动**：`docker compose up --build -d --wait` 后四个服务 healthy；`/live` 2 秒内 200。
+- **启动**：`docker compose up --build -d --wait` 后 web/api/db healthy、qdrant 已启动；`/live` 2 秒内 200。
 - **就绪**：`/health` 返回 `{status:"ready",checks:{db,qdrant,embedding}}`；停 MySQL 后 503 且 `db=false`，停 Qdrant 后 503 且 `qdrant=false`。
 - **默认拒绝**：未知 `/api/*` 404；未登录业务接口 401；`/health` 带 query 400；非 GET 405。
 - **日志**：每行单行 JSON，含 `request_id`、`method`、`path`、`status`、`duration_ms`；无敏感内容。
@@ -76,7 +76,7 @@ make grade
 python3 scripts/verify.py
 ```
 
-预期：`make check` 退出 0；`make grade` 报告 14/14 通过；`verify.py` 全部断言通过。证据见 [`docs/framework/verification.md`](docs/framework/verification.md)。
+预期：`make check` 退出 0；`make grade` 报告 14/14 通过；`verify.py` 全部断言通过。证据见 [`docs/lesson-07/verification.md`](docs/lesson-07/verification.md)。
 
 ## 评审顺序
 

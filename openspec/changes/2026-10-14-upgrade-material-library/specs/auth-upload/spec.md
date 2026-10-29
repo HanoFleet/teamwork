@@ -8,7 +8,7 @@
 
 ### Requirement: 用户登录
 
-系统 MUST 允许教师与学生使用账号和密码登录，并签发服务端会话。未登录访问受保护接口时 MUST 返回 401，响应体 MUST NOT 含有材料标题、正文或磁盘路径。账号不存在、口令错误和登录限流 MUST 返回相同的状态码与响应体。登录成功 MUST 作废该用户此前的会话并换发新的会话标识。登出 MUST 删除服务端会话行，使旧 Cookie 失效。登录失败次数 MUST 以 `(username, trusted_ip)` 为键持久化在 MySQL 的 `login_failures` 表，API 重启 MUST NOT 清零。`trusted_ip` MUST 只取 Nginx 覆盖写入的 `X-Real-IP`，且仅当直接对端属于可信私网网段（`10.0.0.0/8`、`172.16.0.0/12`、`192.168.0.0/16`、`127.0.0.0/8`）时采用；否则 MUST 使用连接地址。`X-Forwarded-For` 的任何一段 MUST NOT 作为计数键。达到 `LOGIN_FAIL_THRESHOLD`（默认 5）后锁定 `LOGIN_LOCK_MINUTES`（默认 15）分钟；锁定期内即使口令正确 MUST 仍返回同形 401。锁定到期后 MUST 清除该键的失败计数。
+系统 MUST 允许教师与学生使用账号和密码登录，并签发服务端会话。未登录访问受保护接口时 MUST 返回 401，响应体 MUST NOT 含有材料标题、正文或磁盘路径。账号不存在、口令错误和登录限流 MUST 返回相同的状态码与响应体。登录成功 MUST 作废该用户此前的会话并换发新的会话标识。登出 MUST 删除服务端会话行，使旧 Cookie 失效。登录失败次数 MUST 以 `(username, trusted_ip)` 为键持久化在 MySQL 的 `login_failures` 表，API 重启 MUST NOT 清零。`trusted_ip` MUST 只取 Nginx 覆盖写入的 `X-Real-IP`，且仅当直接对端属于可信私网网段（`10.0.0.0/8`、`172.16.0.0/12`、`192.168.0.0/16`、`127.0.0.0/8`）时采用；否则 MUST 使用连接地址。`X-Forwarded-For` 的任何一段 MUST NOT 作为计数键。达到 `LOGIN_FAIL_THRESHOLD`（`.env.example` 示例 5；缺失或非法启动失败）后锁定 `LOGIN_LOCK_MINUTES`（`.env.example` 示例 15；缺失或非法启动失败）分钟；锁定期内即使口令正确 MUST 仍返回同形 401。锁定到期后 MUST 清除该键的失败计数。
 
 #### Scenario: 教师与学生登录成功
 
@@ -146,7 +146,7 @@
 
 ### Requirement: 材料上传与知识库入库
 
-教师上传成功时，系统 MUST 在校验通过后把原文件写入上传目录，并在同一数据库事务中插入 `materials`、`material_versions`（version=1）和 `knowledge_entries`（当前版本正文）。扩展名 MUST 使用白名单 `.txt`、`.md`、`.pdf`、`.docx`、`.pptx`。`.txt` 和 `.md` MUST 是 UTF-8；PDF MUST 以 `%PDF-` 开头；DOCX 和 PPTX MUST 是合法 ZIP，条目数不超过 2000，解压后不超过 100 MiB。PDF 文字抽取 MUST 在请求内完成，超时 10 秒、正文不超过 2,000,000 字符；DOCX 和 PPTX MUST 用 ZIP 加 XML 读取，标题样式 MUST 转为 Markdown 标题，页或幻灯片边界 MUST 记录到 `knowledge_entries.page_table`。扫描件、加密、损坏或无可复制文字 MUST 返回 400，并给出可读原因；MUST NOT 创建材料、版本、知识库、文件或切片。超过 `MAX_UPLOAD_BYTES` MUST 返回 413。事务提交后 MUST 将材料 id 放入后台索引队列并返回 201；事务失败 MUST NOT 留下材料行、版本行、知识库行或未关联文件。存储名 MUST 由服务端生成。
+教师上传成功时，系统 MUST 在校验通过后把原文件写入上传目录，并在同一数据库事务中插入 `materials`、`material_versions`（version=1）和 `knowledge_entries`（当前版本正文）。扩展名 MUST 使用白名单 `.txt`、`.md`、`.pdf`、`.docx`、`.pptx`，匹配前 MUST 对扩展名做小写归一（`.PDF` 视为 `.pdf`）。`.txt` 和 `.md` MUST 是 UTF-8；PDF MUST 以 `%PDF-` 开头；DOCX 和 PPTX MUST 是合法 ZIP，条目数不超过 2000，解压后不超过 100 MiB。PDF 文字抽取 MUST 在请求内完成，超时 10 秒、正文不超过 2,000,000 字符；DOCX 和 PPTX MUST 用 ZIP 加 XML 读取，标题样式 MUST 转为 Markdown 标题，页或幻灯片边界 MUST 记录到 `knowledge_entries.page_table`。扫描件、加密、损坏或无可复制文字 MUST 返回 400，并给出可读原因；MUST NOT 创建材料、版本、知识库、文件或切片。超过 `MAX_UPLOAD_BYTES` MUST 返回 413。事务提交后 MUST 将材料 id 放入后台索引队列并返回 201；事务失败 MUST NOT 留下材料行、版本行、知识库行或未关联文件。存储名 MUST 由服务端生成。
 
 #### Scenario: 上传后知识库与列表可查
 
@@ -201,9 +201,9 @@
 
 #### Scenario: 加密或损坏的 Office 文件被拒绝
 
-- **GIVEN** 一个损坏的 `.docx`，或解压后条目数超过 2000 的 `.pptx`
+- **GIVEN** 一个不是 ZIP 的 `.docx`，或解压后条目数超过 2000 的 `.pptx`
 - **WHEN** 教师上传该文件
-- **THEN** 响应 400，`error=invalid_archive` 或 `error=invalid_file`
+- **THEN** 不是 ZIP 的返回 400 `error=invalid_archive`；ZIP 可解压但 XML 损坏的返回 400 `error=invalid_file`
 - **AND** 不执行 XML 解析，不留下文件和数据库行
 
 #### Scenario: 事务失败不留残留

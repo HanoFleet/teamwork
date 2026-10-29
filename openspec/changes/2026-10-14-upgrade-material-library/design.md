@@ -110,7 +110,9 @@ backend/internal/
 
 ## 4. 接口契约
 
-所有接口默认要求登录，班级只来自会话。错误体统一为 `{"error":"<code>"}`；409 额外带 `current_version` 和 `body`。按 id 的资源先整行读出，再校验班级和归属。
+所有接口默认要求登录，班级只来自会话。错误体统一为 `{"error":"<code>"}`；409 统一为 `{error:"version_conflict",current_version,body?}`，文本编辑带最新 `body`，二进制替换不带 `body`、改带 `latest_file_url`。按 id 的资源先整行读出，再校验班级和归属。
+
+请求约定：单文件上传和替换使用 multipart 字段 `file`，替换另带 `change_note`、`base_version`；批量使用可重复的 `files` 和可选的 `client_ids`（JSON 字符串数组，长度必须等于 files，重复值允许，items 按 files 顺序返回；长度不匹配返回 400 `invalid_request` 且不写入）；请求总大小超过 20 MiB 返回 413 且不写入任何文件，单文件超过 `MAX_UPLOAD_BYTES` 只让该项 `ok=false,error=payload_too_large`；单文件遇到临时数据库/队列错误时该项 `ok=false,error=unavailable`，同批其他文件不受影响。恢复使用 JSON `{base_version}`。
 
 | 方法与路径 | 权限 | 成功 | 主要失败 |
 | --- | --- | --- | --- |
@@ -121,15 +123,16 @@ backend/internal/
 | `GET /api/materials/{id}/file` | 已登录 | 200 附件 | 404 |
 | `PATCH /api/materials/{id}` | 本班教师 | 200 | 400 `invalid_tag`；403；404 |
 | `DELETE /api/materials/{id}` | 本班教师 | 204，进入回收站 | 403；404 |
-| `POST /api/materials/{id}/restore` | 本班教师 | 200 | 403；404 |
+| `POST /api/materials/{id}/restore` | 本班教师 | 200 | 403；404；409 `version_conflict`/`not_deleted` |
 | `DELETE /api/materials/{id}/purge` | 本班教师 | 204 | 403；404；409 `not_deleted` |
 | `GET /api/trash` | 本班教师 | 200 | 403 |
 | `PUT /api/materials/{id}/content` | 本班教师 | 200 `{version,index_status}` | 400 `not_editable`；403；404；409；413 |
-| `POST /api/materials/{id}/file` | 本班教师 | 200 `{version,index_status}` | 400/413；403；404；409 |
+| `POST /api/materials/{id}/file` | 本班教师 | 200 `{version,index_status}` | 400/413；403；404；409 `version_conflict` |
 | `GET /api/materials/{id}/versions` | 本班教师 | 200 `{versions:[...]}` | 403；404 |
 | `GET /api/materials/{id}/versions/{v}` | 本班教师 | 200 `{version,kind,body?,file_url?,change_note}` | 403；404 |
+| `GET /api/materials/{id}/versions/{v}/file` | 本班教师 | 200 附件 | 403；404 |
 | `POST /api/materials/{id}/versions/{v}/restore` | 本班教师 | 200 `{version}` | 403；404；409 |
-| `POST /api/materials/{id}/reindex` | 本班教师 | 202 `{index_status:"pending"}` | 403；404 |
+| `POST /api/materials/{id}/reindex` | 本班教师 | 202 `{index_status:"pending"}` | 400 `invalid_query`（策略/参数）；403；404 |
 | `PUT /api/materials/{id}/progress` | 本班学生/教师 | 204 | 400；404 |
 | `GET /api/materials/{id}/progress` | 当前用户 | 200 `{version,position,completed}` | 404 |
 | `PUT/DELETE /api/materials/{id}/favorite` | 当前用户 | 204 | 404 |
@@ -137,9 +140,17 @@ backend/internal/
 | `GET /api/recent` | 当前用户 | 200 最近阅读最多 5 条 | 401 |
 | `GET /api/quick-search?q=` | 已登录 | 200 最多 20 条 | 401；503 |
 
-`/live`、`/health`、`/ready` 由已归档的 `2026-10-28-establish-platform-foundation` 提供，本 change 不修改。
+`/live`、`/health`、`/ready` 由已归档的 `2026-10-28-establish-platform-foundation` 提供，本 change 不修改。`GET /api/materials/{id}/file` 返回 `current_version` 的存储文件；`.txt/.md` 编辑后没有新存储文件时仍返回 v1 上传原文件，当前正文用详情或版本接口读取。
 
-现有 `POST /api/search`、`POST /api/ask`、`POST /api/materials/{id}/reindex` 的路径保持不变；`/api/search` 增加可选的 `scope`（材料 id 列表或标签），不改变默认行为。
+现有 `POST /api/search`、`POST /api/ask`、`POST /api/materials/{id}/reindex` 的路径保持不变；`/api/search` 增加可选的 `scope` 对象 `{material_ids?: number[], tag?: string}`，两者同时出现取交集，`material_ids` 必须属于会话班级，否则同形 404。reindex 请求体为 `{strategy?,max_len?,overlap_ratio?}`，默认 `auto`，非法参数 400 `invalid_query`。
+
+### 响应形状
+
+- `GET /api/trash`：`{items:[{id,title,deleted_at,current_version}],page,page_size,total}`，按 `deleted_at DESC, id DESC`。
+- `GET /api/favorites`：`{items:[{id,title,created_at}]}`，按 `created_at DESC, id DESC`。
+- `GET /api/recent`：`{items:[{id,title,position,updated_at}]}`，最多 5 条，按 `updated_at DESC`。
+- `GET /api/quick-search`：`{items:[{type:"material"|"action",id,title,path}]}`，最多 20 条；材料按标题前缀匹配优先于子串匹配，同分按 `updated_at DESC, id DESC`；action 只含教师材料操作（打开、编辑、版本、删除）、学生材料操作（打开、收藏）和通用操作（切换主题、退出登录）。
+- `GET /api/materials`：`items` 含 `id`、`title`、`created_at`、`current_version`、`index_status`、`tags`、`read`；`read` 只对当前学生按 `completed` 计算，教师一律为 `false`，材料版本变化后视为未读。
 
 ## 5. 数据模型
 
@@ -158,6 +169,9 @@ backend/internal/
   - `index_error VARCHAR(512) NULL`
   - `deleted_at DATETIME NULL`
   - `current_generation INT NOT NULL DEFAULT 0`
+  - `index_strategy VARCHAR(32) NOT NULL DEFAULT 'auto'`
+  - `index_max_len INT NOT NULL DEFAULT 800`
+  - `index_overlap_ratio DECIMAL(4,3) NOT NULL DEFAULT 0.000`
   - `updated_at DATETIME NOT NULL`
   - `INDEX idx_materials_class_deleted (class_id, deleted_at, created_at)`
   - `INDEX idx_materials_status (index_status)`
@@ -179,11 +193,15 @@ backend/internal/
   - `version INT NOT NULL DEFAULT 1`
   - `page_table JSON NULL`，元素为 `{page, start, end}`（PPT 用 `slide`）
   - `body` 继续是当前版本的原文或抽取文本；预处理不改写它。
+  - 每份材料只有一行当前知识条目（`UNIQUE(material_id)`）；历史正文在 `material_versions.body`，不在本表重复。
 - `knowledge_chunks` 增加：
   - `generation INT NOT NULL DEFAULT 0`
+  - `version INT NOT NULL`
+  - `index_status ENUM('pending','ready','failed') NOT NULL DEFAULT 'pending'`
   - `start_page INT NULL`、`end_page INT NULL`
   - `INDEX idx_chunks_generation (material_id, generation, index_status)`
   - `start_offset/end_offset` 改为当前版本原文的码点下标。
+- generation 规则：新上传使用 generation 1；每次重建在当前值上加 1；迁移前的旧切片保留 generation 0 作为 legacy；检索只读 `materials.current_generation`。
 
 ### 标签、阅读与收藏
 
@@ -210,7 +228,7 @@ backend/internal/
 
 规则：
 
-- 上传、编辑、替换、恢复、reindex 都把材料置为 `pending`，并清除旧 `index_error`。
+- 上传、编辑、替换、恢复、reindex 都把材料置为 `pending`，并清除旧 `index_error`；编辑/替换/恢复复用 `materials.index_strategy`、`index_max_len`、`index_overlap_ratio`；reindex 显式传参时更新这三列，重启补排也从这三列恢复参数。reindex 在已 pending/indexing 时替换排队参数，在途 run 完成后按最新参数重排，不并行两个 worker。
 - worker 取任务后置为 `indexing`；同一材料同一时间只允许一个 worker。
 - 成功：`knowledge_chunks` 的新 generation 全部 `ready`，在事务里更新 `materials.current_generation`，删除旧 generation 的切片，最后删除旧向量，材料置 `ready`。
 - 失败：只删除新 generation 的切片和向量，旧 generation 仍为当前；材料置 `failed`，写 `index_error`。
@@ -253,10 +271,10 @@ backend/internal/
 | `READ_PROGRESS_THROTTLE_MS` | 2000 | 固定 | 阅读进度上报节流 |
 | `PAGE_SIZE_DEFAULT` | 20 | 固定 | 列表默认条数 |
 | `PAGE_SIZE_MAX` | 100 | 固定 | 列表最大条数 |
-| `LOGIN_FAIL_THRESHOLD` | 5 | 正整数 | 登录失败阈值 |
-| `LOGIN_LOCK_MINUTES` | 15 | 正整数 | 锁定时长 |
+| `LOGIN_FAIL_THRESHOLD` | `.env.example` 示例 5 | 正整数；缺失/非法启动失败 | 登录失败阈值 |
+| `LOGIN_LOCK_MINUTES` | `.env.example` 示例 15 | 正整数；缺失/非法启动失败 | 锁定时长 |
 | `TRUSTED_PROXY_CIDRS` | `10/8,172.16/12,192.168/16,127/8` | 固定 | 可信代理网段 |
-| `SHUTDOWN_TIMEOUT` | 10 秒 | 固定 | SIGTERM 后等待在途请求的上限 |
+| `SHUTDOWN_TIMEOUT_SECONDS` | 10 秒 | 1–30 | SIGTERM 后等待在途请求的上限 |
 
 新增环境变量必须写进 `.env.example` 和 `docker-compose.yml`；缺失或越界时启动失败，不取默认值。固定常量写在代码里并在测试中引用，不通过请求参数覆盖。
 
@@ -264,7 +282,7 @@ backend/internal/
 
 - 上传：扩展名白名单之外校验文件头；PDF 必须以 `%PDF-` 开头；DOCX/PPTX 必须是合法 ZIP，限制条目数和解压后大小；下载一律 `Content-Disposition: attachment` 和 `nosniff`。
 - Markdown 继续不渲染原始 HTML；响应增加 CSP：`default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'`。
-- 所有修改数据的请求核对 `Origin`；提问和生成练习按用户限流。
+- 所有修改数据的请求核对 `Origin`：带 `Origin` 时必须匹配本站，未带 `Origin` 的 curl/Bearer 脚本请求放行；提问和生成练习按用户限流。
 - 材料文字只作为依据交给模型；客户端传来的 `system` 消息继续丢弃。
 - 登录限流键为 `(username, trusted_ip)`；Nginx 用 `proxy_set_header X-Real-IP $remote_addr` 覆盖，Go 只在直接对端属于可信私网时采用该值，`X-Forwarded-For` 不参与计数。
 - 网页端不保存令牌；Bearer 只用于脚本，服务端仍校验会话行。
@@ -273,7 +291,7 @@ backend/internal/
 ## 11. 迁移计划
 
 1. 把 `db.Migrate` 的现有 DDL 固化为 `0001_baseline.sql`，创建 `schema_migrations`，在监听端口前执行并记录。
-2. `0002_material_library.sql` 增加 `materials`、`knowledge_entries`、`knowledge_chunks` 的新列，创建 `material_versions`、`tags`、`material_tags`、`material_reads`、`favorites`、`login_failures`。
+2. `0002_material_library.sql` 把已有切片 `index_status` 置为 `ready`、`version` 置为材料当前版本、`generation=0` 作为 legacy；为已有材料插入 v1 版本，`kind` 按 `seed_key IS NOT NULL` 判为 `seed`，否则为 `upload`，`editor_id` 取 `materials.uploader_id`，`change_note` 为 `migration backfill`。先以可空列/默认值增加 `materials`、`knowledge_entries`、`knowledge_chunks` 的新列，回填 `file_type`（由 `original_ext` 映射）和 `updated_at`（取 `created_at`），再把 NOT NULL 列改为必填；同时创建 `material_versions`、`tags`、`material_tags`、`material_reads`、`favorites`、`login_failures`。
 3. 为已有材料插入 v1 版本，`body` 取现有 `knowledge_entries.body`；`file_type` 按 `original_ext` 映射。
 4. 旧切片保留 `generation=0`，材料置 `pending`，后台重建 generation 1；重建完成前旧索引仍可检索，引用只保证摘录、不保证高亮。
 5. 迁移失败时启动退出，保留旧数据和旧索引；修复迁移后重启即可继续。
@@ -286,7 +304,7 @@ backend/internal/
 - 原文码点映射和多页抽取比现有文本切分复杂，需要覆盖 emoji、中文、页码和旧引用的 Go/前端测试。
 - 进程内队列只支持单实例；api 重启会短暂中断索引，但状态可补排，符合现有单实例部署约束。
 - 软删除保留文件和版本会占用空间；彻底删除是教师显式操作，不提供自动清理。
-- 136 个场景的验收需要角色三按 `tasks.md` 的 `verify` 分批执行；这是本 change 的主要进度风险。
+- 151 个场景的验收需要角色三按 `tasks.md` 的 `verify` 分批执行；这是本 change 的主要进度风险。
 
 ## 13. Open Questions
 

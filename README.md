@@ -15,7 +15,7 @@ CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材
 ## 当前状态
 
 - 已归档 change：`openspec/changes/archive/2026-10-28-establish-platform-foundation/`（7 条需求、19 个场景）。
-- 活动 change：`openspec/changes/2026-10-14-upgrade-material-library/`（26 条需求、136 个场景、46 条任务），尚未实现。
+- 活动 change：`openspec/changes/2026-10-14-upgrade-material-library/`（26 条需求、151 个场景、46 条任务），尚未实现。
 - 长期规约：`openspec/specs/` 下的 `platform-foundation`、`auth-upload`、`knowledge-retrieval`。
 - 标签：`v2.0.0-baseline`（骨架基线）、`v0.1.0-skeleton`（本次骨架）、`v2.0.0-stage1-spec`（规约提交）。
 
@@ -55,7 +55,7 @@ make grade     # 独立 Compose 项目 14 项验收，生成 reports/teacher-*/ 
 python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、问答
 ```
 
-`make grade` 使用独立项目名、随机端口和随机口令，不修改正式数据；报告写入 `reports/teacher-*`，证据汇总在 [`docs/framework/verification.md`](docs/framework/verification.md)。
+`make grade` 使用独立项目名、随机端口和随机口令，不修改正式数据；报告写入 `reports/teacher-*`，证据汇总在 [`docs/lesson-07/verification.md`](docs/lesson-07/verification.md)。
 
 ## 规约入口
 
@@ -74,7 +74,7 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 | --- | --- |
 | [`proposal.md`](openspec/changes/2026-10-14-upgrade-material-library/proposal.md) | 材料库、多格式、版本、回收站、阅读进度 |
 | [`design.md`](openspec/changes/2026-10-14-upgrade-material-library/design.md) | 迁移、抽取、先建后换、版本冲突、原文坐标 |
-| [`specs/`](openspec/changes/2026-10-14-upgrade-material-library/specs/) | 26 条需求、136 个场景 |
+| [`specs/`](openspec/changes/2026-10-14-upgrade-material-library/specs/) | 26 条需求、151 个场景 |
 | [`tasks.md`](openspec/changes/2026-10-14-upgrade-material-library/tasks.md) | 46 条任务，尚未勾选 |
 
 ## 接口与语义
@@ -114,8 +114,8 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 ├── docker-compose.yml          web / api / db / qdrant
 ├── .env.example                环境变量模板，只写键名和占位
 ├── LICENSE                     未选择许可证说明
-├── backend/                    Go api：cmd、httpapi、service、domain、
-│                               repository、health、logging、lifecycle、config
+├── backend/                    Go api：cmd/server、httpapi、retrieval、db、
+│                               config、auth、health、logging、lifecycle
 ├── frontend/                   React 18 + Vite 8 + Nginx
 ├── deploy 相关                 各 Dockerfile 与 Nginx 配置
 ├── scripts/

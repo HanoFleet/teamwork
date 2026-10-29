@@ -22,7 +22,7 @@ CampusClaw 已经有一个可运行的迭代 1/2 应用，但它的工程骨架�
 3. 增加单行 JSON 请求日志和 `X-Request-ID`：合法 ID 原样回写，非法/缺失时生成；日志含时间、级别、方法、路径、状态、耗时，不写 query、body、口令、令牌或 DSN。
 4. 增加优雅停机：收到 SIGTERM 后停止接受新连接，在 `SHUTDOWN_TIMEOUT_SECONDS` 内排空在途请求，再关闭数据库。
 5. 外置 `APP_VERSION` 和 `SHUTDOWN_TIMEOUT_SECONDS`；缺必填项启动失败，不取默认值。
-6. 增加 `make check`（规约、规范、strict、分层、密钥、变异、Go 测试、前端构建）和 `make grade`（独立 Compose 项目、13 项验收、HTML/JSON 报告）。
+6. 增加 `make check`（规约、规范、strict、分层、密钥、变异、Go 测试、前端构建）和 `make grade`（独立 Compose 项目、14 项验收、HTML/JSON 报告）。
 7. 增加 CI、证据记录和骨架标签，归档本 change；材料库 change 保持活动，留给下一阶段。
 
 ## Out of Scope
@@ -57,9 +57,9 @@ CampusClaw 已经有一个可运行的迭代 1/2 应用，但它的工程骨架�
 ## Evidence
 
 - `make check` 退出码 0：规约、规范、OpenSpec strict、分层、密钥、变异、Go 测试/vet、前端构建。
-- `make grade` 退出码 0：独立 Compose 项目 13 项检查，报告 `reports/teacher-*/report.html` 和 `report.json`。
+- `make grade` 退出码 0：独立 Compose 项目 14 项检查，报告 `reports/teacher-*/report.html` 和 `report.json`。
 - `python3 scripts/verify.py` 退出码 0：迭代 1/2 的登录、班级隔离、上传、检索、问答和停库场景全部通过。
-- 证据记录：`docs/framework/verification.md`；标签 `v0.1.0-skeleton`。
+- 证据记录：`docs/lesson-07/verification.md`；标签 `v0.1.0-skeleton`。
 
 ## Open Questions
 

@@ -78,10 +78,10 @@
 | Capability | 类型 | Requirement 数 | Scenario 数 | 主要失败路径 | 验收证据 |
 | --- | --- | ---: | ---: | --- | --- |
 | `platform-foundation` | 新增 | 5 | 20 | 迁移失败启动失败、缺少 `EMBEDDING_DIM`、401/503 | Go 单测、`verify.py`、Playwright、`docker compose config` |
-| `material-library` | 新增 | 9 | 42 | 400/403/404/409/413、用户伪造字段 | `verify.py`、Go 单测、Playwright、数据库查询 |
+| `material-library` | 新增 | 9 | 54 | 400/403/404/409/413、用户伪造字段 | `verify.py`、Go 单测、Playwright、数据库查询 |
 | `auth-upload` | 修改 | 7 | 44 | 400/401/403/404/413/503、重启后锁定 | `verify.py`、curl、数据库查询 |
-| `knowledge-retrieval` | 修改 | 5 | 30 | 400/403/404/503、重建失败保留旧索引 | `verify.py`、Go 单测、Qdrant 查询 |
-| **合计** |  | **26** | **136** |  |  |
+| `knowledge-retrieval` | 修改 | 5 | 33 | 400/403/404/503、重建失败保留旧索引 | `verify.py`、Go 单测、Qdrant 查询 |
+| **合计** |  | **26** | **151** |  |  |
 
 每个 Requirement 至少有一个 Scenario；没有 Scenario 的 Requirement 不允许出现。四个能力的具体条款见 `specs/<capability>/spec.md`，任务与场景的对应关系见 `tasks.md` 每条的 `verify`。
 
@@ -91,8 +91,8 @@
 | --- | --- | --- |
 | 输入非法 | 非法扩展名、伪造 PDF 头、加密/损坏 Office、非法分页、非法标签、非文本格式编辑、空查询 | 400/413；无文件、无数据库行、无版本 |
 | 无权限 | 学生上传/批量上传/编辑/删除/重建、客户端声明 `role=teacher` | 403；相关表和目录计数不变 |
-| 资源不存在或不可见 | 跨班 id、已删除材料、非法 id、永不存在的 id；同班他人的进度/收藏 | 同形 404：状态、头、body 逐字节相同；他人私有数据不可通过任何 id 读取 |
-| 外部依赖不可达 | Qdrant 停止、数据库停止、嵌入失败、迁移失败 | `keyword` 仍可用；`vector`/`hybrid` 503；`/health` 不查库、`/ready` 返回依赖状态；材料 `failed` 可重试；迁移失败启动退出 |
+| 资源不存在或不可见 | 跨班 id、已删除材料、非法 id、永不存在的 id；同班他人的进度/收藏 | 同形 404：状态码、Content-Type、body 逐字节相同（忽略 X-Request-ID/Date）；他人私有数据不可通过任何 id 读取 |
+| 外部依赖不可达 | Qdrant 停止、数据库停止、嵌入失败、迁移失败 | `keyword` 仍可用；`vector`/`hybrid` 503；`/live` 不查库、`/health` 返回依赖状态；材料 `failed` 可重试；迁移失败启动退出 |
 | 并发冲突 | 两个窗口基于同一 `base_version` 保存 | 后者 409，含 `current_version` 和最新正文，旧内容不被覆盖 |
 | 边界值 | 20/21 个文件、`page_size` 100/101、800/80 切分、0.35 阈值、`k=60`、2 秒轮询/节流 | 边界内成功，越界返回 400/413 或按规则过滤 |
 
@@ -104,7 +104,7 @@
 2. 跨班、已删除和不存在 id 都返回同形 404；响应不泄露资源是否存在；同班他人的进度和收藏不可通过任何 id 或查询参数读取。
 3. 没有依据就不生成；`/api/ask` 的非流式协议和 `citations` 顺序保持不变。
 4. Qdrant、嵌入网关、对话网关和数据库不映射宿主端口；密钥只在服务端环境变量。
-5. 只用 Docker Compose 启动，只有 web 映射端口；`/health` 不查数据库，依赖状态由 `/ready` 提供。
+5. 只用 Docker Compose 启动，只有 web 映射端口；`/live` 不查数据库，依赖状态由 `/health` 提供。
 6. 上传的文件、`materials`、`material_versions`、`knowledge_entries` 要么全部写入，要么全部不写。
 7. 不做超级管理员，不让 AI 给作业打分。
 8. 网页只依赖 HttpOnly Cookie；Bearer 令牌只为 curl 和验收脚本保留。

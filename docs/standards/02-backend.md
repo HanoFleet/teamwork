@@ -15,24 +15,24 @@
 
 ## 项目事实
 
-> 旧实现已打包到 `archive/campusclaw-baseline.zip`；实现阶段从归档恢复对应目录。本文中的 `backend/`、`frontend/`、Compose 路径指恢复后的目标结构。
+> 第 7 课已把可运行代码恢复到根目录的 `backend/`、`frontend/` 和 Compose；`archive/campusclaw-baseline.zip` 只是历史快照。本文中的 `backend/`、`frontend/` 指向当前代码。
 
-- 目录：`backend/internal/httpapi/` 是接口层；`service/`、`retrieval/` 是业务层；`repository/`、`db/` 是数据访问层；`health/`、`logging/`、`lifecycle/`、`config/` 是横切与配置包；`qdrant/`、`embed/`、`chat/` 是适配层。
+- 目录：`backend/internal/httpapi/` 是接口层；`retrieval/` 是检索业务层；`db/` 是数据访问层；`health/`、`logging/`、`lifecycle/`、`config/` 是横切与配置包；`auth/`、`chat/`、`chunk/`、`embed/`、`qdrant/`、`materials/` 是适配/工具包。材料库实现时再加 `service/`、`library/`、`repository/`。
 - 现有 legacy 例外：`httpapi/auth.go`、`materials.go`、`server.go` 里有迭代 1/2 的 SQL；新增 `httpapi` 文件不得再写 SQL，材料库 change 再迁移。例外已写入 foundation 的 `design.md`。
 - 现有接口都在 `/api/` 下，没有 `/v1` 前缀。把 `/api` 视为 v1 命名空间；新增接口继续用 `/api/...`，不为了“版本化”重命名已有路径。出现破坏性变更时另开 `/api/v2/...`，旧路径保留一个版本周期。
 - 现有成功响应是资源相关 JSON（`{materials:[]}`、`{hits:[]}`、`{answer,citations}`），错误响应是 `{"error":"<code>"}`。本 change 保留成功形状，错误体增加 `request_id` 放在响应头 `X-Request-ID`，不改已有字段名。
-- 配置全部来自环境变量；缺失即启动失败，不取默认密钥。`EMBEDDING_DIM` 必填，`SHUTDOWN_TIMEOUT` 固定 10 秒。
-- 数据库是 MySQL 8；迁移脚本在 `backend/internal/db/migrations/`，`schema_migrations` 记录版本和校验和。
+- 配置全部来自环境变量；缺失即启动失败，不取默认密钥。`APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS`（1–30）必填；`EMBEDDING_DIM` 在材料库 change 增加。
+- 数据库是 MySQL 8；当前骨架仍用 `CREATE TABLE IF NOT EXISTS`，版本化迁移（`schema_migrations` + `migrations/`）由材料库 change 引入。
 
 ## 规范条目
 
 | 条目 | 项目事实 | 为什么 | 怎么检查 |
 | --- | --- | --- | --- |
-| 分层与依赖方向 | 接口层只做参数解析、权限调用和错误映射；业务层持有事务和规则；数据访问层持有 SQL；适配层只封装外部服务。依赖方向 `httpapi → service/retrieval → repository/db`，禁止反向；`health`、`logging`、`lifecycle` 是横切包，不反向依赖业务 | 分层混乱会让权限和事务散落，无法定位缺陷 | 新增模块检查落点；`python3 scripts/layer_check.py` 通过；`python3 scripts/mutation.py` 注入 SQL 时必须失败 |
+| 分层与依赖方向 | 接口层只做参数解析、权限调用和错误映射；业务层持有事务和规则；数据访问层持有 SQL；适配层只封装外部服务。依赖方向 `httpapi → retrieval → db`，禁止反向；材料库实现时按 `httpapi → service → repository/db` 扩展；`health`、`logging`、`lifecycle` 是横切包，不反向依赖业务 | 分层混乱会让权限和事务散落，无法定位缺陷 | 新增模块检查落点；`python3 scripts/layer_check.py` 通过；`python3 scripts/mutation.py` 注入 SQL 时必须失败 |
 | 接口命名与版本 | 资源用小写复数：`/api/materials`、`/api/materials/{id}/versions`；读 GET，建 POST，改 PATCH/PUT，删 DELETE；路径不写动词。`/api` 是 v1，破坏性变更用 `/api/v2` | 同一资源多种命名会让调用方和测试不断猜 | 新接口对照命名表；出现 `/getMaterial`、`/deleteMaterial` 这类路径即缺陷 |
 | 统一响应与错误码 | 成功返回资源 JSON；失败统一 `{"error":"<code>"}`，响应头 `X-Request-ID`；错误码只从下表取，新增先登记 | 错误码散落会让前端和验收无法按码判定 | 抽查 400/401/403/404/409/413/503 各一条；出现表外 code 即缺陷 |
-| 错误码清单 | `invalid_request`、`invalid_file`、`invalid_archive`、`invalid_query`、`invalid_pagination`、`invalid_tag`、`not_editable`、`not_replaceable`、`type_mismatch`、`unauthorized`、`invalid_credentials`、`forbidden`、`not_found`、`version_conflict`、`not_deleted`、`payload_too_large`、`too_many_files`、`no_files`、`unavailable`、`embedding_dim_mismatch` | 错误码是验收和前端分支的唯一稳定标识 | 维护本表；新增错误码必须在同一提交登记 |
-| 幂等声明 | `POST /api/materials` 不幂等（每次新材料）；`POST /api/materials/batch` 不幂等；`PUT /api/materials/{id}/content` 不幂等（每次新版本）；`POST .../file` 不幂等；`POST .../versions/{v}/restore` 不幂等（每次新版本）；`PUT .../progress`、`PUT/DELETE .../favorite`、`POST .../reindex` 幂等 | 重复请求产生重复副作用是最难排查的缺陷 | 对幂等接口连发两次，行数/状态不变；对非幂等接口连发两次，得到两个明确结果而不是半条数据 |
+| 错误码清单 | `invalid_request`、`invalid_file`、`invalid_archive`、`invalid_query`、`invalid_pagination`、`invalid_tag`、`invalid_position`、`extract_timeout`、`scanned_pdf`、`not_editable`、`not_replaceable`、`type_mismatch`、`unauthorized`、`invalid_credentials`、`forbidden`、`not_found`、`version_conflict`、`not_deleted`、`payload_too_large`、`too_many_files`、`no_files`、`unavailable`、`embedding_dim_mismatch` | 错误码是验收和前端分支的唯一稳定标识 | 维护本表；新增错误码必须在同一提交登记 |
+| 幂等声明 | `POST /api/materials` 不幂等（每次新材料）；`POST /api/materials/batch` 不幂等；`PUT /api/materials/{id}/content` 不幂等（每次新版本）；`POST .../file` 不幂等；`POST .../restore` 不幂等（未删除/重复恢复 409 `not_deleted`，版本冲突 409 `version_conflict`）；`POST .../versions/{v}/restore` 不幂等（每次新版本，冲突 409 `version_conflict`）；`DELETE /api/materials/{id}` 幂等（重复删除 204）；`PUT .../progress`、`PUT/DELETE .../favorite`、`POST .../reindex` 幂等 | 重复请求产生重复副作用是最难排查的缺陷 | 对幂等接口连发两次，行数/状态不变；对非幂等接口连发两次，得到两个明确结果而不是半条数据 |
 | 唯一约束 | 版本 `(material_id, version)`、标签 `(class_id, name)`、阅读 `(user_id, material_id)`、收藏 `(user_id, material_id)` 都在数据库加唯一键 | 应用层“先查后写”存在时间窗 | `SHOW CREATE TABLE` 检查唯一键；并发请求下不出现重复行 |
 | 分页与排序 | `page` ≥1，`page_size` 1 至 100、默认 20；`sort` 只允许 `created_desc`、`created_asc`、`title_asc`、`title_desc`；同值用 `id DESC` 兜底；非法参数返回 400 | 排序不稳定会导致翻页重复或遗漏 | 构造同标题记录翻两页；非法 sort 返回 400，不退化为全量 |
 | 事务边界 | 上传：抽取在事务外，文件、`materials`、`material_versions`、`knowledge_entries` 在一个事务内；索引在提交后异步入队。事务内禁止调用嵌入、Qdrant、对话网关或写大文件 | 事务内做外部调用会长时间持锁，失败无法回滚外部副作用 | 人为让事务内插入失败，检查文件被清理、外部服务未被调用 |

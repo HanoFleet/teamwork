@@ -14,7 +14,7 @@
 
 - **GIVEN** 干净克隆的仓库、已按 `.env.example` 填好本机 `.env`、Docker Compose 可用
 - **WHEN** 执行 `docker compose up --build -d --wait`
-- **THEN** web、api、db、qdrant 全部 healthy，只有 web 发布宿主端口
+- **THEN** web、api、db healthy，qdrant 已启动，只有 web 发布宿主端口
 - **AND** 2 秒内 `GET /live` 返回 200 `{status:"ok",version,time}`
 - **AND** 响应版本等于 `.env` 的 `APP_VERSION`
 
@@ -148,13 +148,13 @@ api 收到 SIGTERM 后 MUST 停止接受新连接，等待在途请求最多 `SH
 
 ### Requirement: 验收与证据
 
-`make grade` MUST 用独立 Compose 项目、随机端口和随机口令运行当前骨架验收，至少覆盖启动、`/live`、`/health`、`/ready`、默认拒绝、日志、停库/恢复、端口边界和优雅停机；任何必测失败、缺证据或清理失败 MUST 退出非零。报告 MUST 写到 `reports/teacher-*/report.html` 和 `report.json`，不含口令或令牌。`python3 scripts/verify.py` MUST 继续通过；证据 MUST 归档到 `docs/framework/verification.md`。
+`make grade` MUST 用独立 Compose 项目、随机端口和随机口令运行当前骨架验收，至少覆盖启动、`/live`、`/health`、`/ready`、默认拒绝、日志、停库/恢复、端口边界和优雅停机；任何必测失败、缺证据或清理失败 MUST 退出非零。报告 MUST 写到 `reports/teacher-*/report.html` 和 `report.json`，不含口令或令牌。`python3 scripts/verify.py` MUST 继续通过；证据 MUST 归档到 `docs/lesson-07/verification.md`。
 
 #### Scenario: 隔离验收通过并生成报告
 
 - **GIVEN** Docker Compose 和 Python 可用
 - **WHEN** 执行 `make grade`
-- **THEN** 13 项检查全部通过，退出码 0
+- **THEN** 14 项检查全部通过，退出码 0
 - **AND** 生成自包含 `report.html` 和 `report.json`，包含提交号、逐项判据和结果
 - **AND** 报告不含 `.env` 中的秘密
 
