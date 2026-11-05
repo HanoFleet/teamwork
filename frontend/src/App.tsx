@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import remarkGfm from "remark-gfm";
+import { AssignmentsPage } from "./Assignments";
 import { AskPage } from "./Ask";
 import {
   ApiError,
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage push={push} />} />
         <Route path="/materials" element={<MaterialsGate push={push} />} />
         <Route path="/ask" element={<AskGate push={push} />} />
+        <Route path="/assignments" element={<AssignmentsGate push={push} />} />
         <Route path="*" element={<Navigate to="/materials" replace />} />
       </Routes>
       <div className="toasts" aria-live="polite">
@@ -132,6 +134,35 @@ function MaterialsGate({ push }: { push: (text: string) => void }) {
   if (me === undefined) return <p className="boot">正在确认会话…</p>;
   if (me === null) return <Navigate to="/login" replace />;
   return <MaterialsPage me={me} push={push} />;
+}
+
+function AssignmentsGate({ push }: { push: (text: string) => void }) {
+  const navigate = useNavigate();
+  const [me, setMe] = useState<Me | null | undefined>(undefined);
+  useEffect(() => {
+    getMe()
+      .then(setMe)
+      .catch(() => setMe(null));
+  }, []);
+  if (me === undefined) return <p className="boot">正在确认会话…</p>;
+  if (me === null) return <Navigate to="/login" replace />;
+  return (
+    <AssignmentsPage
+      me={me}
+      push={push}
+      onLogout={() => {
+        void (async () => {
+          try {
+            await api("/api/logout", { method: "POST" });
+          } catch {
+            /* 已失效也回登录页 */
+          }
+          clearToken();
+          navigate("/login", { replace: true });
+        })();
+      }}
+    />
+  );
 }
 
 function AskGate({ push }: { push: (text: string) => void }) {
@@ -415,6 +446,9 @@ function MaterialsPage({ me, push }: { me: Me; push: (text: string) => void }) {
           </button>
           <button type="button" onClick={toggleView}>
             {view === "list" ? "网格" : "列表"}
+          </button>
+          <button type="button" onClick={() => navigate("/assignments")}>
+            作业
           </button>
           <button type="button" className="nav-ask" onClick={() => navigate("/ask")}>
             问答
