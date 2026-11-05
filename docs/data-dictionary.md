@@ -11,7 +11,7 @@
 
 ## 当前 change 的数据影响
 
-`2026-10-28-establish-platform-foundation` 不改数据库结构，只增加 `APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS` 等运行配置。材料库的表结构变更（`material_versions`、`tags`、`material_reads` 等）属于 `2026-10-14-upgrade-material-library`，实现时按本字典一起更新。第 8 课 `2026-11-05-add-async-grading` 新增 `submissions`、`grade_tasks`、`outbox_messages`、`grade_results`，并扩展 `assignments`；实现时追加迁移 `0003`，不改已执行的 `0001`、`0002`。
+`2026-10-28-establish-platform-foundation` 不改数据库结构，只增加 `APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS` 等运行配置。材料库的表结构变更（`material_versions`、`tags`、`material_reads` 等）属于 `2026-10-14-upgrade-material-library`，实现时按本字典一起更新。第 8 课 `2026-11-05-add-async-grading` 新增 `submissions`、`grade_tasks`、`outbox_messages`、`grade_results`，并扩展 `assignments`；由 `db.Migrate` 用 `CREATE TABLE IF NOT EXISTS` 与 `ensureColumn` 幂等执行，不改已有建表语句的语义。
 
 ## 迁移与认证
 
@@ -292,4 +292,4 @@
 | 日期 | 变更 | 迁移 |
 | --- | --- | --- |
 | 2026-10-28 | 初版：现有表 + `2026-10-14-upgrade-material-library` 新增/修改 | `0001`、`0002` |
-| 2026-11-05 | 第 8 课：新增 `submissions`、`grade_tasks`、`outbox_messages`、`grade_results`，扩展 `assignments`；实现时执行 | `0003` |
+| 2026-11-05 | 第 8 课：新增 `submissions`、`grade_tasks`、`outbox_messages`、`grade_results`，扩展 `assignments` | `db.Migrate`（IF NOT EXISTS + ensureColumn） |

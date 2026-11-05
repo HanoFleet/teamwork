@@ -1,5 +1,44 @@
 name: campusclaw
 
+x-backend-env: &backend-env
+  SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET is required}
+  APP_VERSION: ${APP_VERSION:?APP_VERSION is required}
+  SHUTDOWN_TIMEOUT_SECONDS: ${SHUTDOWN_TIMEOUT_SECONDS:?SHUTDOWN_TIMEOUT_SECONDS is required}
+  DB_HOST: db
+  DB_PORT: "3306"
+  DB_USER: ${DB_USER:?DB_USER is required}
+  DB_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
+  DB_NAME: ${DB_NAME:?DB_NAME is required}
+  UPLOAD_DIR: /data/uploads
+  MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES:?MAX_UPLOAD_BYTES is required}
+  SESSION_TTL_HOURS: ${SESSION_TTL_HOURS:?SESSION_TTL_HOURS is required}
+  SEED_TEACHER_PASSWORD: ${SEED_TEACHER_PASSWORD:?SEED_TEACHER_PASSWORD is required}
+  SEED_STUDENT_A_PASSWORD: ${SEED_STUDENT_A_PASSWORD:?SEED_STUDENT_A_PASSWORD is required}
+  SEED_STUDENT_B_PASSWORD: ${SEED_STUDENT_B_PASSWORD:?SEED_STUDENT_B_PASSWORD is required}
+  LOGIN_FAIL_THRESHOLD: ${LOGIN_FAIL_THRESHOLD:?LOGIN_FAIL_THRESHOLD is required}
+  LOGIN_LOCK_MINUTES: ${LOGIN_LOCK_MINUTES:?LOGIN_LOCK_MINUTES is required}
+  API_ADDR: ":8080"
+  QDRANT_URL: ${QDRANT_URL:?QDRANT_URL is required}
+  EMBEDDING_URL: ${EMBEDDING_URL:?EMBEDDING_URL is required}
+  EMBEDDING_API_KEY: ${EMBEDDING_API_KEY:?EMBEDDING_API_KEY is required}
+  EMBEDDING_MODEL: ${EMBEDDING_MODEL:?EMBEDDING_MODEL is required}
+  CHAT_URL: ${CHAT_URL:?CHAT_URL is required}
+  CHAT_API_KEY: ${CHAT_API_KEY:?CHAT_API_KEY is required}
+  CHAT_MODEL: ${CHAT_MODEL:?CHAT_MODEL is required}
+  RABBITMQ_URL: ${RABBITMQ_URL:?RABBITMQ_URL is required}
+  QUEUE_GRADE: ${QUEUE_GRADE:?QUEUE_GRADE is required}
+  QUEUE_DEAD: ${QUEUE_DEAD:?QUEUE_DEAD is required}
+  GRADE_MAX_ATTEMPTS: ${GRADE_MAX_ATTEMPTS:?GRADE_MAX_ATTEMPTS is required}
+  GRADE_RETRY_BASE_SECONDS: ${GRADE_RETRY_BASE_SECONDS:?GRADE_RETRY_BASE_SECONDS is required}
+  GRADE_RETRY_MAX_SECONDS: ${GRADE_RETRY_MAX_SECONDS:?GRADE_RETRY_MAX_SECONDS is required}
+  GRADE_JITTER_MS: ${GRADE_JITTER_MS:?GRADE_JITTER_MS is required}
+  GRADE_VISIBILITY_TIMEOUT_SECONDS: ${GRADE_VISIBILITY_TIMEOUT_SECONDS:?GRADE_VISIBILITY_TIMEOUT_SECONDS is required}
+  GRADE_MODEL_TIMEOUT_SECONDS: ${GRADE_MODEL_TIMEOUT_SECONDS:?GRADE_MODEL_TIMEOUT_SECONDS is required}
+  GRADE_LOCAL_DELAY_MS: ${GRADE_LOCAL_DELAY_MS:?GRADE_LOCAL_DELAY_MS is required}
+  TASK_POLL_FIRST_MS: ${TASK_POLL_FIRST_MS:?TASK_POLL_FIRST_MS is required}
+  TASK_POLL_LATER_MS: ${TASK_POLL_LATER_MS:?TASK_POLL_LATER_MS is required}
+  TASK_POLL_MAX_SECONDS: ${TASK_POLL_MAX_SECONDS:?TASK_POLL_MAX_SECONDS is required}
+
 services:
   db:
     image: mysql:8.0
@@ -20,30 +59,7 @@ services:
   api:
     build: ./backend
     environment:
-      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET is required}
-      APP_VERSION: ${APP_VERSION:?APP_VERSION is required}
-      SHUTDOWN_TIMEOUT_SECONDS: ${SHUTDOWN_TIMEOUT_SECONDS:?SHUTDOWN_TIMEOUT_SECONDS is required}
-      DB_HOST: db
-      DB_PORT: "3306"
-      DB_USER: ${DB_USER:?DB_USER is required}
-      DB_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
-      DB_NAME: ${DB_NAME:?DB_NAME is required}
-      UPLOAD_DIR: /data/uploads
-      MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES:?MAX_UPLOAD_BYTES is required}
-      SESSION_TTL_HOURS: ${SESSION_TTL_HOURS:?SESSION_TTL_HOURS is required}
-      SEED_TEACHER_PASSWORD: ${SEED_TEACHER_PASSWORD:?SEED_TEACHER_PASSWORD is required}
-      SEED_STUDENT_A_PASSWORD: ${SEED_STUDENT_A_PASSWORD:?SEED_STUDENT_A_PASSWORD is required}
-      SEED_STUDENT_B_PASSWORD: ${SEED_STUDENT_B_PASSWORD:?SEED_STUDENT_B_PASSWORD is required}
-      LOGIN_FAIL_THRESHOLD: ${LOGIN_FAIL_THRESHOLD:?LOGIN_FAIL_THRESHOLD is required}
-      LOGIN_LOCK_MINUTES: ${LOGIN_LOCK_MINUTES:?LOGIN_LOCK_MINUTES is required}
-      API_ADDR: ":8080"
-      QDRANT_URL: ${QDRANT_URL:?QDRANT_URL is required}
-      EMBEDDING_URL: ${EMBEDDING_URL:?EMBEDDING_URL is required}
-      EMBEDDING_API_KEY: ${EMBEDDING_API_KEY:?EMBEDDING_API_KEY is required}
-      EMBEDDING_MODEL: ${EMBEDDING_MODEL:?EMBEDDING_MODEL is required}
-      CHAT_URL: ${CHAT_URL:?CHAT_URL is required}
-      CHAT_API_KEY: ${CHAT_API_KEY:?CHAT_API_KEY is required}
-      CHAT_MODEL: ${CHAT_MODEL:?CHAT_MODEL is required}
+      <<: *backend-env
     volumes:
       - uploads:/data/uploads
     healthcheck:
@@ -58,6 +74,41 @@ services:
         condition: service_healthy
       qdrant:
         condition: service_started
+      rabbitmq:
+        condition: service_started
+
+  worker:
+    build: ./backend
+    entrypoint: ["/worker"]
+    command: []
+    environment:
+      <<: *backend-env
+    healthcheck:
+      test: ["CMD", "test", "-f", "/worker"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    stop_grace_period: 12s
+    depends_on:
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  rabbitmq:
+    image: rabbitmq:3.13-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:?RABBITMQ_DEFAULT_USER is required}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:?RABBITMQ_DEFAULT_PASS is required}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 25s
 
   qdrant:
     image: qdrant/qdrant:v1.13.2
@@ -82,3 +133,4 @@ volumes:
   db_data:
   uploads:
   qdrant_data:
+  rabbitmq_data:

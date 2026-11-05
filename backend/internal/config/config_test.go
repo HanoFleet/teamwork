@@ -13,6 +13,10 @@ func TestLoadRejectsMissingSecret(t *testing.T) {
 		"LOGIN_FAIL_THRESHOLD", "LOGIN_LOCK_MINUTES", "SHUTDOWN_TIMEOUT_SECONDS", "API_ADDR",
 		"QDRANT_URL", "EMBEDDING_URL", "EMBEDDING_API_KEY", "EMBEDDING_MODEL",
 		"CHAT_URL", "CHAT_API_KEY", "CHAT_MODEL",
+		"RABBITMQ_URL", "QUEUE_GRADE", "QUEUE_DEAD",
+		"GRADE_MAX_ATTEMPTS", "GRADE_RETRY_BASE_SECONDS", "GRADE_RETRY_MAX_SECONDS",
+		"GRADE_JITTER_MS", "GRADE_VISIBILITY_TIMEOUT_SECONDS", "GRADE_MODEL_TIMEOUT_SECONDS",
+		"GRADE_LOCAL_DELAY_MS", "TASK_POLL_FIRST_MS", "TASK_POLL_LATER_MS", "TASK_POLL_MAX_SECONDS",
 	} {
 		t.Setenv(k, "")
 	}
@@ -46,11 +50,27 @@ func TestLoadAcceptsExplicitEnv(t *testing.T) {
 	t.Setenv("CHAT_URL", "local")
 	t.Setenv("CHAT_API_KEY", "local")
 	t.Setenv("CHAT_MODEL", "local-extractive")
+	t.Setenv("RABBITMQ_URL", "amqp://campusclaw:secret@rabbitmq:5672/")
+	t.Setenv("QUEUE_GRADE", "grade.tasks")
+	t.Setenv("QUEUE_DEAD", "grade.dead")
+	t.Setenv("GRADE_MAX_ATTEMPTS", "5")
+	t.Setenv("GRADE_RETRY_BASE_SECONDS", "1")
+	t.Setenv("GRADE_RETRY_MAX_SECONDS", "16")
+	t.Setenv("GRADE_JITTER_MS", "250")
+	t.Setenv("GRADE_VISIBILITY_TIMEOUT_SECONDS", "60")
+	t.Setenv("GRADE_MODEL_TIMEOUT_SECONDS", "30")
+	t.Setenv("GRADE_LOCAL_DELAY_MS", "0")
+	t.Setenv("TASK_POLL_FIRST_MS", "1000")
+	t.Setenv("TASK_POLL_LATER_MS", "2000")
+	t.Setenv("TASK_POLL_MAX_SECONDS", "60")
 	cfg, err := Load()
 	if err != nil {
 		t.Fatal(err)
 	}
 	if cfg.MaxUploadBytes != 1048576 || cfg.LoginFailThreshold != 5 || cfg.AppVersion != "test-version" || cfg.ShutdownTimeout != 10*time.Second {
 		t.Fatalf("parsed config = %+v", cfg)
+	}
+	if cfg.GradeMaxAttempts != 5 || cfg.QueueGrade != "grade.tasks" || cfg.TaskPollMax != 60*time.Second {
+		t.Fatalf("parsed grade config = %+v", cfg)
 	}
 }
