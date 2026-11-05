@@ -1,11 +1,11 @@
 # CampusClaw 2.0 规约
 
-> **当前提交重点：第 7 课可运行骨架 + 第 8 课异步批改规约。** 骨架已经落到根目录，`docker compose up -d --wait` 可启动；foundation 已归档，第 8 课异步批改（RabbitMQ、outbox、worker、任务状态、三条判据）只交付规约，材料库是后续 change。
+> **当前提交重点：第 7 课可运行骨架 + 第 8 课异步批改实现。** 骨架已经落到根目录；foundation 已归档。异步批改实现位于 `change/2026-11-05-add-async-grading`，待角色三验收后归档；材料库是后续 change。
 
 | 项目 | 内容 |
 | --- | --- |
 | 已归档 change | `2026-10-28-establish-platform-foundation` |
-| 当前活动 change | `2026-11-05-add-async-grading`（第 8 课规约，未实现） |
+| 当前活动 change | `2026-11-05-add-async-grading`（第 8 课，实现待验收归档） |
 | 后续 change | `2026-10-14-upgrade-material-library`（活动，未实现） |
 | 负责人 | 李斯坦（角色一：制定规约） |
 | 评审 | 韩雅慧（角色二：开发系统）、禹霖（角色三：项目验收） |
@@ -17,7 +17,7 @@
 - 仓库本身就是可运行的 CampusClaw：Go 后端、React 前端、MySQL、Qdrant、Nginx、Compose。
 - 当前骨架新增 `/live` 存活、`/health` 就绪、`/ready` 别名、单行 JSON 日志、request ID、优雅停机、配置外置。
 - `make check` 是合并前门禁；`make grade` 是独立 Compose 验收，生成 HTML/JSON 报告。
-- 第 8 课异步批改规约已补齐：提交返回 202 + `task_id`，任务持久化，outbox 投递，独立 worker 消费，失败退避/死信，重复只出一份结果；实现与证据待角色二、三。
+- 第 8 课异步批改已实现：提交返回 202 + `task_id`，任务持久化，outbox 投递，独立 worker 消费，失败退避/死信，重复只出一份结果。角色二证据见 `docs/verification.md` 与 `reports/async-grading.md`；角色三独立复跑和 SEC 自查仍待完成。
 - 材料库（PDF/Word/PPT、后台索引、版本、回收站、阅读进度）还没有实现，规约在后续 change。
 
 ## 已归档 change：platform foundation
@@ -94,7 +94,7 @@
 - **日志**：每行单行 JSON，含 `request_id`、`method`、`path`、`status`、`duration_ms`；无敏感内容。
 - **停机**：SIGTERM 后在途请求完成，日志有 `shutdown_started` 和 `shutdown_complete`；超时强制关闭。
 - **分层**：新增 `httpapi` 文件不得有 SQL；legacy 文件在 `02-backend.md` 和 `design.md` 登记。
-- **验收**：`make grade` 14 项通过；`--self-test` 退出 1，失败不会被写成通过。
+- **验收**：`make grade` 骨架 14 项加 A15 异步批改通过；`--self-test` 退出 1，失败不会被写成通过。
 
 ## 怎么校验
 
@@ -106,7 +106,7 @@ python3 scripts/verify.py
 npx -y @fission-ai/openspec@1.15.0 validate --all --strict
 ```
 
-预期：`make check` 退出 0（同时检查 material-library 与 async-grading）；`make check-security` 跑密钥扫描和前端依赖审计；`make grade` 报告 14/14 通过；`verify.py` 全部断言通过；OpenSpec strict 全部通过。证据见 [`docs/lesson-07/verification.md`](docs/lesson-07/verification.md)；第 8 课自查映射见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)。
+预期：`make check` 退出 0（同时检查 material-library 与 async-grading）；`make check-security` 跑密钥扫描和前端依赖审计；`make grade` 报告含 A15 且全部通过；`verify.py` 全部断言通过（含三条判据）；OpenSpec strict 全部通过。证据见 [`docs/lesson-07/verification.md`](docs/lesson-07/verification.md) 与 [`docs/verification.md`](docs/verification.md)；第 8 课自查映射见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)。
 
 ## 评审顺序
 

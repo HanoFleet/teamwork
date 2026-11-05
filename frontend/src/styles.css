@@ -61,13 +61,15 @@ a { color: var(--red); }
 .lede { color: var(--muted); margin-top: 0; }
 form { display: grid; gap: 14px; }
 label { display: grid; gap: 6px; font-size: 0.92rem; }
-input {
+input, select, textarea {
   border: 1px solid var(--line);
   background: transparent;
   border-radius: 10px;
   padding: 10px 12px;
+  font: inherit;
+  color: inherit;
 }
-input:focus { outline: 2px solid color-mix(in srgb, var(--red) 55%, white); }
+input:focus, select:focus, textarea:focus { outline: 2px solid color-mix(in srgb, var(--red) 55%, white); }
 .primary, .upload-btn {
   border: 0; border-radius: 999px; padding: 10px 16px;
   background: var(--red); color: #fff8f2;

@@ -1,21 +1,21 @@
 # 第 8 课异步批改自查映射
 
-> 课程自查表的 10 行目前显示“缺失”，指的是**代码、运行结果和证据**缺失，不是规约文件缺失。规约侧已逐行覆盖：10 条 Requirement、32 条 Scenario、30 条 Task。本文件把每一行钉到具体条款，角色二按 Task 实现，角色三按 Scenario 判定；在真实结果产生前，不把任何一行写成“通过”。
+> 课程自查表的 10 行原先显示“缺失”，指的是**代码、运行结果和证据**缺失，不是规约文件缺失。规约侧已逐行覆盖：10 条 Requirement、32 条 Scenario、30 条 Task。角色二已按 Task 实现并写入 `reports/` 与 `docs/verification.md`；本文件不把任何一行写成验收“通过”，角色三按 Scenario 独立复现后再更新状态列。
 
 ## 1. 十行自查表
 
 | # | 自查项 | 规约覆盖 | 实现与证据 |
 | ---: | --- | --- | --- |
-| 1 | 消息代理、持久队列 | 已覆盖 | 缺失：Compose 仍只有 web/api/db/qdrant |
-| 2 | 批改提交与评分业务 | 已覆盖 | 缺失：现有 `/api` 无提交/批改接口 |
-| 3 | 提交返回 202 + task_id | 已覆盖 | 缺失：无 202 响应 |
-| 4 | 持久化任务与状态机 | 已覆盖 | 缺失：无 `grade_tasks` 表 |
-| 5 | 事务性发件箱与可靠补投 | 已覆盖 | 缺失：无 `outbox_messages` 表与 dispatcher |
-| 6 | 独立消费者、确认与重投 | 已覆盖 | 缺失：无 `worker` 服务 |
-| 7 | 失败分类、退避、死信 | 已覆盖 | 缺失：无重试队列与 `grade.dead` |
-| 8 | 重复提交、重复投递幂等 | 已覆盖 | 缺失：无幂等键和唯一约束 |
-| 9 | 任务查询、前端轮询 | 已覆盖 | 缺失：无 `/api/tasks/{id}` 与轮询 |
-| 10 | 三条判据自动化及报告 | 已覆盖 | 缺失：无 `apitest/cases/async/` 和 `reports/` 实际结果 |
+| 1 | 消息代理、持久队列 | 已覆盖 | 角色二已实现：Compose 六服务，仅 web 映射端口；待角色三复现 |
+| 2 | 批改提交与评分业务 | 已覆盖 | 角色二已实现：提交/批改接口；待角色三复现 |
+| 3 | 提交返回 202 + task_id | 已覆盖 | 角色二已实现：首次 202；待角色三复现 |
+| 4 | 持久化任务与状态机 | 已覆盖 | 角色二已实现：`grade_tasks` 与 Go 单测；待角色三复现 |
+| 5 | 事务性发件箱与可靠补投 | 已覆盖 | 角色二已实现：outbox + dispatcher；待角色三复现 |
+| 6 | 独立消费者、确认与重投 | 已覆盖 | 角色二已实现：独立 worker；待角色三复现 |
+| 7 | 失败分类、退避、死信 | 已覆盖 | 角色二已实现：重试队列与 `grade.dead`；待角色三复现 |
+| 8 | 重复提交、重复投递幂等 | 已覆盖 | 角色二已实现：幂等键与唯一约束；待角色三复现 |
+| 9 | 任务查询、前端轮询 | 已覆盖 | 角色二已实现：`/api/tasks/{id}` 与 `/assignments`；待角色三复现 |
+| 10 | 三条判据自动化及报告 | 已覆盖 | 角色二已跑 `verify.py` 并写 `reports/`；待角色三独立复跑 |
 
 ## 2. 逐行映射
 
@@ -25,7 +25,7 @@
 - **Scenario**：`队列和 worker 从零启动`、`代理重启消息不丢`、`停止 worker 不丢任务`
 - **Task**：1.1 Compose 增加 RabbitMQ 和 worker；1.2 建立队列拓扑；3.4 独立启停/扩容
 - **判定口径**：`docker compose config` 只有 web 有宿主 `ports`；`grade.tasks`、`grade.retry.1s` 至 `grade.retry.16s`、`grade.dead` 都是 durable；重启 rabbitmq 后未消费消息仍在。
-- **当前状态**：规约已覆盖；实现与证据待角色二、三。
+- **当前状态**：规约已覆盖；角色二已实现，证据见 `docs/verification.md` 与 `reports/`；待角色三独立复现。
 
 ### 2.2 批改提交与评分业务
 
@@ -33,7 +33,7 @@
 - **Scenario**：`学生提交并获得 202`、`重复提交相同内容复用版本`、`未登录被拒绝`、`空内容和超长被拒绝`、`重复批改同一版本复用任务`、`教师和其他学生不能提交`
 - **Task**：2.1 提交接口；2.3 重复批改复用 task；2.4 无同步模型调用；4.4 权限与同形 404
 - **判定口径**：`student_a1` 提交返回 200/201；相同内容再次提交返回同一 submission/version，不新建任务；首次 `POST /api/submissions/{id}/grade` 返回 202；未登录 401；空内容/超长 400；教师 403；B 班学生同形 404；请求链路不调用模型。
-- **当前状态**：规约已覆盖；实现与证据待角色二、三。
+- **当前状态**：规约已覆盖；角色二已实现，证据见 `docs/verification.md` 与 `reports/`；待角色三独立复现。
 
 ### 2.3 提交返回 202 + task_id
 
@@ -41,7 +41,7 @@
 - **Scenario**：`202 响应形状`、`已有结果返回 200`
 - **Task**：2.2 批改入口与 202
 - **判定口径**：首次请求 202，`Content-Type: application/json`；body 恰好含 `task_id`、`status:"pending"`、`status_url`；`status_url` 为 `/api/tasks/{task_id}`；不含 `score`、`feedback`、`result`。同一版本已有结果时返回 200、同一 `task_id`、`status:"succeeded"` 和已有结果，不新建任务。
-- **当前状态**：规约已覆盖；实现与证据待角色二、三。
+- **当前状态**：规约已覆盖；角色二已实现，证据见 `docs/verification.md` 与 `reports/`；待角色三独立复现。
 
 ### 2.4 持久化任务与状态机
 
@@ -49,7 +49,7 @@
 - **Scenario**：`任务从 pending 到 succeeded`、`瞬时失败回到 pending`、`终态任务不重复执行`
 - **Task**：1.3 建表与迁移；1.4 状态字段；4.1 状态机
 - **判定口径**：`grade_tasks` 含 `task_id`、`submission_id`、`class_id`、`student_id`、`status`、`attempts`、`max_attempts`、`idempotency_key`、`error`、`next_run_at`、`started_at`、`finished_at`；状态只允许 `pending/running/succeeded/failed/dead`；终态不再调用模型。
-- **当前状态**：规约已覆盖；实现与证据待角色二、三。
+- **当前状态**：规约已覆盖；角色二已实现，证据见 `docs/verification.md` 与 `reports/`；待角色三独立复现。
 
 ### 2.5 事务性发件箱与可靠补投
 
@@ -57,7 +57,7 @@
 - **Scenario**：`事务失败没有孤儿任务`、`broker 不可用时恢复补投`、`重复发布由幂等兜底`
 - **Task**：3.1 事务性 outbox；3.2 dispatcher 补投
 - **判定口径**：submission、grade_task、outbox 同事务；事务内不调用 RabbitMQ/模型；broker 停止时提交仍 202、outbox pending；恢复后自动发布；注入 outbox 插入失败时三张表都无新增。
-- **当前状态**：规约已覆盖；实现与证据待角色二、三。
+- **当前状态**：规约已覆盖；角色二已实现，证据见 `docs/verification.md` 与 `reports/`；待角色三独立复现。
 
 ### 2.6 独立消费者、确认与重投
 
@@ -65,7 +65,7 @@
 - **Scenario**：`停止 worker 后恢复执行`、`ACK 前崩溃触发重投`
 - **Task**：3.3 worker 消费与 ACK；3.4 独立启停/扩容
 - **判定口径**：worker 可单独 stop/start；结果写库提交后才 ACK；kill 后消息重投；结果表仍只有一行；`attempts` 增加。
-- **当前状态**：规约已覆盖；实现与证据待角色二、三。
+- **当前状态**：规约已覆盖；角色二已实现，证据见 `docs/verification.md` 与 `reports/`；待角色三独立复现。
 
 ### 2.7 失败分类、退避、死信
 
@@ -73,7 +73,7 @@
 - **Scenario**：`瞬时失败按指数退避`、`永久失败不重试`、`死信保留可追查信息`、`任务日志可追溯`
 - **Task**：4.2 失败分类与退避
 - **判定口径**：429/5xx/超时最多重试 5 次，间隔 1/2/4/8/16 秒加 0–250ms 抖动；空内容、参数非法、技能未启用、密钥无效直接 `failed`；达到上限进 `grade.dead`；日志含 `task_id/submission_id/student_id/status/attempts/duration_ms`，不含正文和密钥。
-- **当前状态**：规约已覆盖；实现与证据待角色二、三。
+- **当前状态**：规约已覆盖；角色二已实现，证据见 `docs/verification.md` 与 `reports/`；待角色三独立复现。
 
 ### 2.8 重复提交、重复投递幂等
 
@@ -81,7 +81,7 @@
 - **Scenario**：`重复提交只产生一个任务`、`重复投递只产生一份结果`、`编辑后重新批改保留旧结果`
 - **Task**：2.3 重复批改复用 task；4.3 重复提交/投递幂等
 - **判定口径**：`idempotency_key = grade:<submission_id>:<version>`；`grade_tasks.idempotency_key`、`outbox_messages.idempotency_key`、`grade_results(submission_id,version)` 都有唯一约束；重复请求返回同一 `task_id`；重复消息只一行结果，`attempts` 增加而分数不变。
-- **当前状态**：规约已覆盖；实现与证据待角色二、三。
+- **当前状态**：规约已覆盖；角色二已实现，证据见 `docs/verification.md` 与 `reports/`；待角色三独立复现。
 
 ### 2.9 任务查询、前端轮询
 
@@ -89,7 +89,7 @@
 - **Scenario**：`本人和本班教师可查`、`前端轮询到终态停止`、`从作业页提交并轮询`
 - **Task**：5.1 任务查询接口；5.2 前端轮询；5.3 结果展示与错误
 - **判定口径**：`GET /api/tasks/{task_id}` 只读；本人和本班教师 200；其他学生、B 班教师、不存在 task_id 返回同形 404（状态码、body、`Content-Type` 相同，仅 `X-Request-ID`/`Date` 可不同）；学生从 `/assignments` 提交并请求批改，终态前不显示分数；前端前 10 秒每 1 秒、之后每 2 秒，终态停止，最多 60 秒；60 秒后停止并提示手动刷新；查询不改变 `attempts`；failed/dead 显示原因，不提供前端重试按钮。
-- **当前状态**：规约已覆盖；实现与证据待角色二、三。
+- **当前状态**：规约已覆盖；角色二已实现，证据见 `docs/verification.md` 与 `reports/`；待角色三独立复现。
 
 ### 2.10 三条判据自动化及报告
 
@@ -102,7 +102,7 @@
   - 判据三：重复请求、重复投递最终只有一行 `grade_results`；证据 `reports/risk-concurrency.md`。
   - 事务判据：提交与任务同事务；停消费者提交，恢复后恰好投递一次、无孤儿任务；证据 `reports/risk-transaction.md`。
   - 权限判据：跨班访问 404、跨班检索空结果，复测命令原样可跑；证据 `reports/risk-authz.md`。
-- **当前状态**：规约已覆盖；实现与证据待角色二、三。
+- **当前状态**：规约已覆盖；角色二已实现，证据见 `docs/verification.md` 与 `reports/`；待角色三独立复现。
 
 ## 3. 第 8 课安全自查（SEC-01～SEC-08）
 
@@ -125,14 +125,14 @@
 
 | 交付物 | 内容 | 责任人 | 当前状态 |
 | --- | --- | --- | --- |
-| `reports/async-grading.md` | 判据一、判据二、观测值、复跑命令 | 角色三 | 待执行 |
-| `reports/risk-concurrency.md` | 重复提交/重复投递只出一份结果 | 角色三 | 待执行 |
-| `reports/risk-transaction.md` | 提交/任务/outbox 同事务、停消费者恢复、无孤儿任务 | 角色三 | 待执行 |
+| `reports/async-grading.md` | 判据一、判据二、观测值、复跑命令 | 角色二写首次结果，角色三独立复跑 | 角色二已写；待角色三复跑 |
+| `reports/risk-concurrency.md` | 重复提交/重复投递只出一份结果 | 角色二写首次结果，角色三独立复跑 | 角色二已写；待角色三复跑 |
+| `reports/risk-transaction.md` | 提交/任务/outbox 同事务、停消费者恢复、无孤儿任务 | 角色二写首次结果，角色三独立复跑 | 角色二已写；待角色三复跑 |
 | `reports/risk-authz.md` | SEC-02 跨班一条，命令可原样复跑 | 角色三 | 待执行 |
 | `reports/security-precheck.md` | SEC-01～SEC-07 三段式记录与红/绿判定 | 角色三 | 待执行 |
 | `reports/security-baseline.md` | 密钥扫描、依赖审计基线 | 角色三 | 待执行 |
 | `reports/review-01.md` | 交叉评审“手段/查了什么/判据/结果” | 角色二或角色三 | 待执行 |
-| `apitest/cases/async/` | 三条判据自动化，随 `make check`/CI | 角色二 | 待实现 |
+| `apitest/cases/async/` | 三条判据自动化，随 `make check`/CI | 角色二 | 已实现（`scripts/async_test.py`） |
 | `git tag async-202` | 验收通过后的版本标记 | 角色三 | 待打 |
 
 ## 5. 复跑命令

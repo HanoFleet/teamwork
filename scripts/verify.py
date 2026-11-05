@@ -504,6 +504,16 @@ def main() -> None:
         fail("前端没有用 Markdown 渲染")
     note("PASS 前端使用 ReactMarkdown，没有 rehype-raw 或 dangerouslySetInnerHTML")
 
+    import importlib.util
+
+    async_path = ROOT / "scripts" / "async_test.py"
+    spec = importlib.util.spec_from_file_location("async_test", async_path)
+    if spec is None or spec.loader is None:
+        fail("无法加载 scripts/async_test.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    mod.run(note=note, fail=fail, call=call, login=login, mysql=mysql, compose=compose, ENV=ENV)
+
     note("")
     note("全部断言通过。")
     write_doc()

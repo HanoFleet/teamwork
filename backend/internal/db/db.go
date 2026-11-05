@@ -122,6 +122,9 @@ func Migrate(ctx context.Context, conn *sql.DB) error {
 			id BIGINT PRIMARY KEY AUTO_INCREMENT,
 			class_id BIGINT NOT NULL,
 			title VARCHAR(255) NOT NULL,
+			published BOOLEAN NOT NULL DEFAULT 0,
+			created_by BIGINT NULL,
+			created_at DATETIME NULL,
 			INDEX idx_assignments_class (class_id),
 			CONSTRAINT fk_assignments_class FOREIGN KEY (class_id) REFERENCES classes(id)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`,
@@ -152,13 +155,107 @@ func Migrate(ctx context.Context, conn *sql.DB) error {
 			CONSTRAINT fk_chunks_material FOREIGN KEY (material_id) REFERENCES materials(id),
 			CONSTRAINT fk_chunks_entry FOREIGN KEY (knowledge_entry_id) REFERENCES knowledge_entries(id)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`,
+		`CREATE TABLE IF NOT EXISTS submissions (
+			id BIGINT PRIMARY KEY AUTO_INCREMENT,
+			assignment_id BIGINT NOT NULL,
+			student_id BIGINT NOT NULL,
+			class_id BIGINT NOT NULL,
+			body MEDIUMTEXT NOT NULL,
+			version INT NOT NULL DEFAULT 1,
+			status ENUM('submitted','grading','graded') NOT NULL DEFAULT 'submitted',
+			created_at DATETIME NOT NULL,
+			updated_at DATETIME NOT NULL,
+			UNIQUE KEY uq_submissions_version (assignment_id, student_id, version),
+			INDEX idx_submissions_class_student (class_id, student_id),
+			CONSTRAINT fk_submissions_assignment FOREIGN KEY (assignment_id) REFERENCES assignments(id),
+			CONSTRAINT fk_submissions_student FOREIGN KEY (student_id) REFERENCES users(id),
+			CONSTRAINT fk_submissions_class FOREIGN KEY (class_id) REFERENCES classes(id)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`,
+		`CREATE TABLE IF NOT EXISTS grade_tasks (
+			id BIGINT PRIMARY KEY AUTO_INCREMENT,
+			task_id CHAR(26) NOT NULL,
+			submission_id BIGINT NOT NULL,
+			submission_version INT NOT NULL,
+			class_id BIGINT NOT NULL,
+			student_id BIGINT NOT NULL,
+			status ENUM('pending','running','succeeded','failed','dead') NOT NULL DEFAULT 'pending',
+			attempts INT NOT NULL DEFAULT 0,
+			max_attempts INT NOT NULL DEFAULT 5,
+			idempotency_key VARCHAR(128) NOT NULL,
+			error VARCHAR(512) NULL,
+			next_run_at DATETIME NULL,
+			started_at DATETIME NULL,
+			finished_at DATETIME NULL,
+			created_at DATETIME NOT NULL,
+			updated_at DATETIME NOT NULL,
+			UNIQUE KEY uq_grade_tasks_task_id (task_id),
+			UNIQUE KEY uq_grade_tasks_idempotency (idempotency_key),
+			INDEX idx_grade_tasks_status_next (status, next_run_at),
+			INDEX idx_grade_tasks_submission (submission_id),
+			CONSTRAINT fk_grade_tasks_submission FOREIGN KEY (submission_id) REFERENCES submissions(id),
+			CONSTRAINT fk_grade_tasks_class FOREIGN KEY (class_id) REFERENCES classes(id),
+			CONSTRAINT fk_grade_tasks_student FOREIGN KEY (student_id) REFERENCES users(id)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`,
+		`CREATE TABLE IF NOT EXISTS outbox_messages (
+			id BIGINT PRIMARY KEY AUTO_INCREMENT,
+			message_id CHAR(26) NOT NULL,
+			idempotency_key VARCHAR(128) NOT NULL,
+			topic VARCHAR(64) NOT NULL,
+			payload JSON NOT NULL,
+			status ENUM('pending','published') NOT NULL DEFAULT 'pending',
+			attempts INT NOT NULL DEFAULT 0,
+			next_attempt_at DATETIME NULL,
+			created_at DATETIME NOT NULL,
+			published_at DATETIME NULL,
+			UNIQUE KEY uq_outbox_message_id (message_id),
+			UNIQUE KEY uq_outbox_idempotency (idempotency_key),
+			INDEX idx_outbox_status_next (status, next_attempt_at)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`,
+		`CREATE TABLE IF NOT EXISTS grade_results (
+			id BIGINT PRIMARY KEY AUTO_INCREMENT,
+			submission_id BIGINT NOT NULL,
+			version INT NOT NULL,
+			idempotency_key VARCHAR(128) NOT NULL,
+			score DECIMAL(5,2) NOT NULL,
+			feedback TEXT NOT NULL,
+			task_id CHAR(26) NOT NULL,
+			graded_at DATETIME NOT NULL,
+			UNIQUE KEY uq_grade_results_submission_version (submission_id, version),
+			UNIQUE KEY uq_grade_results_idempotency (idempotency_key),
+			INDEX idx_grade_results_submission (submission_id),
+			CONSTRAINT fk_grade_results_submission FOREIGN KEY (submission_id) REFERENCES submissions(id)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`,
 	}
 	for _, stmt := range stmts {
 		if _, err := conn.ExecContext(ctx, stmt); err != nil {
 			return err
 		}
 	}
+	if err := ensureColumn(ctx, conn, "assignments", "published", "BOOLEAN NOT NULL DEFAULT 0"); err != nil {
+		return err
+	}
+	if err := ensureColumn(ctx, conn, "assignments", "created_by", "BIGINT NULL"); err != nil {
+		return err
+	}
+	if err := ensureColumn(ctx, conn, "assignments", "created_at", "DATETIME NULL"); err != nil {
+		return err
+	}
 	return nil
+}
+
+func ensureColumn(ctx context.Context, conn *sql.DB, table, column, definition string) error {
+	var n int
+	err := conn.QueryRowContext(ctx, `
+		SELECT COUNT(*) FROM information_schema.COLUMNS
+		WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?`, table, column).Scan(&n)
+	if err != nil {
+		return err
+	}
+	if n > 0 {
+		return nil
+	}
+	_, err = conn.ExecContext(ctx, fmt.Sprintf("ALTER TABLE %s ADD COLUMN %s %s", table, column, definition))
+	return err
 }
 
 type seedMaterial struct {
@@ -212,9 +309,26 @@ func Seed(ctx context.Context, conn *sql.DB, cfg config.Config) error {
 		AND NOT EXISTS (SELECT 1 FROM handouts)`); err != nil {
 		return err
 	}
-	if err := ensurePlaceholder(ctx, conn, `INSERT INTO assignments (class_id, title)
-		SELECT id, 'A班占位作业' FROM classes WHERE name='A'
-		AND NOT EXISTS (SELECT 1 FROM assignments)`); err != nil {
+	if _, err := conn.ExecContext(ctx, `
+		UPDATE assignments a
+		JOIN classes c ON c.id = a.class_id
+		LEFT JOIN users u ON u.username = 'teacher_a'
+		SET a.published = 1,
+		    a.created_by = COALESCE(a.created_by, u.id),
+		    a.created_at = COALESCE(a.created_at, UTC_TIMESTAMP())
+		WHERE c.name = 'A'`); err != nil {
+		return err
+	}
+	if err := ensurePlaceholder(ctx, conn, `INSERT INTO assignments (class_id, title, published, created_by, created_at)
+		SELECT c.id, 'A班课堂作业', 1, u.id, UTC_TIMESTAMP()
+		FROM classes c JOIN users u ON u.username='teacher_a'
+		WHERE c.name='A' AND NOT EXISTS (SELECT 1 FROM assignments a WHERE a.class_id=c.id)`); err != nil {
+		return err
+	}
+	if err := ensurePlaceholder(ctx, conn, `INSERT INTO assignments (class_id, title, published, created_at)
+		SELECT c.id, 'B班课堂作业', 1, UTC_TIMESTAMP()
+		FROM classes c
+		WHERE c.name='B' AND NOT EXISTS (SELECT 1 FROM assignments a WHERE a.class_id=c.id)`); err != nil {
 		return err
 	}
 	if err := ensurePlaceholder(ctx, conn, `INSERT INTO assistants (name)

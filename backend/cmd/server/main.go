@@ -16,6 +16,8 @@ import (
 	"campusclaw/internal/httpapi"
 	"campusclaw/internal/lifecycle"
 	"campusclaw/internal/logging"
+	"campusclaw/internal/outbox"
+	"campusclaw/internal/queue"
 )
 
 func main() {
@@ -58,12 +60,16 @@ func run(logger *slog.Logger) error {
 		logger.Warn("knowledge_index_backfill", "event", "backfill", "reason", err.Error())
 	}
 
+	broker := queue.New(cfg.RabbitMQURL)
+	defer broker.Close()
+
 	listener, err := net.Listen("tcp", cfg.APIAddr)
 	if err != nil {
 		return err
 	}
 	signalCtx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
+	go outbox.New(conn, broker, cfg, logger).Run(signalCtx)
 
 	srv := &http.Server{
 		Handler:           api.Handler(),
