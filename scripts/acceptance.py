@@ -18,6 +18,7 @@ import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
+from http.cookiejar import CookieJar
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -98,7 +99,24 @@ def write_env() -> None:
         "CHAT_URL": "local",
         "CHAT_API_KEY": "local",
         "CHAT_MODEL": "local-extractive",
+        "RABBITMQ_DEFAULT_USER": "campusclaw",
+        "RABBITMQ_DEFAULT_PASS": secrets.token_hex(16),
+        "QUEUE_GRADE": "grade.tasks",
+        "QUEUE_DEAD": "grade.dead",
+        "GRADE_MAX_ATTEMPTS": "5",
+        "GRADE_RETRY_BASE_SECONDS": "1",
+        "GRADE_RETRY_MAX_SECONDS": "16",
+        "GRADE_JITTER_MS": "250",
+        "GRADE_VISIBILITY_TIMEOUT_SECONDS": "60",
+        "GRADE_MODEL_TIMEOUT_SECONDS": "30",
+        "GRADE_LOCAL_DELAY_MS": "0",
+        "TASK_POLL_FIRST_MS": "1000",
+        "TASK_POLL_LATER_MS": "2000",
+        "TASK_POLL_MAX_SECONDS": "60",
     }
+    values["RABBITMQ_URL"] = (
+        f"amqp://campusclaw:{values['RABBITMQ_DEFAULT_PASS']}@rabbitmq:5672/"
+    )
     ENV_FILE.write_text("\n".join(f"{key}={value}" for key, value in values.items()) + "\n", encoding="utf-8")
     global BASE
     BASE = f"http://127.0.0.1:{values['WEB_PORT']}"
@@ -172,6 +190,82 @@ def main() -> int:
 
     check("A09", "日志契约", "单行 JSON，含 request_id/path/status，无机密", log_contract)
 
+    def async_grade_contract() -> str:
+        env = {}
+        for line in ENV_FILE.read_text().splitlines():
+            if "=" in line:
+                key, value = line.split("=", 1)
+                env[key] = value
+        opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(CookieJar()))
+
+        def call(method: str, path: str, payload: dict | None = None):
+            data = None if payload is None else json.dumps(payload).encode()
+            headers = {"Content-Type": "application/json"} if payload is not None else {}
+            req = urllib.request.Request(BASE + path, data=data, headers=headers, method=method)
+            try:
+                with opener.open(req, timeout=15) as resp:
+                    return resp.status, json.loads(resp.read().decode() or "null")
+            except urllib.error.HTTPError as err:
+                raw = err.read().decode()
+                try:
+                    body = json.loads(raw)
+                except json.JSONDecodeError:
+                    body = {"raw": raw}
+                return err.code, body
+
+        code, _ = call("POST", "/api/login", {
+            "username": "student_a1",
+            "password": env["SEED_STUDENT_A_PASSWORD"],
+        })
+        if code != 200:
+            raise AssertionError(f"学生登录失败 {code}")
+        code, listed = call("GET", "/api/assignments")
+        if code != 200 or not listed.get("assignments"):
+            raise AssertionError(f"作业列表 {code} {listed}")
+        assignment_id = listed["assignments"][0]["id"]
+        stamp = str(int(time.time()))
+        code, submitted = call("POST", f"/api/assignments/{assignment_id}/submissions", {
+            "body": f"函数单调性证明 {stamp} 实验结论分析",
+        })
+        if code not in (200, 201) or not submitted.get("submission_id"):
+            raise AssertionError(f"提交 {code} {submitted}")
+        started = time.time()
+        code, graded = call("POST", f"/api/submissions/{submitted['submission_id']}/grade", {})
+        elapsed_ms = int((time.time() - started) * 1000)
+        if code != 202:
+            raise AssertionError(f"批改应 202，实际 {code} {graded}")
+        if graded.get("status") != "pending" or not graded.get("task_id") or "score" in graded or "feedback" in graded:
+            raise AssertionError(f"202 形状不对: {graded}")
+        if elapsed_ms >= 500:
+            raise AssertionError(f"202 耗时 {elapsed_ms}ms，应远小于批改时间")
+        code, task = call("GET", graded["status_url"])
+        if code != 200 or task.get("task_id") != graded["task_id"]:
+            raise AssertionError(f"查询任务 {code} {task}")
+        teacher = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(CookieJar()))
+
+        def teacher_call(method: str, path: str, payload: dict | None = None):
+            data = None if payload is None else json.dumps(payload).encode()
+            headers = {"Content-Type": "application/json"} if payload is not None else {}
+            req = urllib.request.Request(BASE + path, data=data, headers=headers, method=method)
+            try:
+                with teacher.open(req, timeout=15) as resp:
+                    return resp.status, json.loads(resp.read().decode() or "null")
+            except urllib.error.HTTPError as err:
+                return err.code, json.loads(err.read().decode())
+
+        tcode, _ = teacher_call("POST", "/api/login", {
+            "username": "teacher_a",
+            "password": env["SEED_TEACHER_PASSWORD"],
+        })
+        if tcode != 200:
+            raise AssertionError(f"教师登录失败 {tcode}")
+        tcode, tbody = teacher_call("POST", f"/api/assignments/{assignment_id}/submissions", {"body": "教师不应提交"})
+        if tcode != 403:
+            raise AssertionError(f"教师提交应为 403，实际 {tcode} {tbody}")
+        return f"202 in {elapsed_ms}ms, task={graded['task_id']}"
+
+    check("A15", "异步批改 202", "学生提交后批改返回 202 且不含分数，教师提交 403", async_grade_contract)
+
     def db_down() -> str:
         compose("stop", "db")
         time.sleep(2)
@@ -197,12 +291,15 @@ def main() -> int:
         raw = compose("config", "--format", "json").stdout
         data = json.loads(raw)
         services = data.get("services", {})
-        for name in ["db", "qdrant", "api"]:
+        for name in ["db", "qdrant", "api", "rabbitmq", "worker"]:
             if services.get(name, {}).get("ports"):
                 raise AssertionError(f"{name} 暴露了宿主端口")
         if not services.get("web", {}).get("ports"):
             raise AssertionError("web 没有映射端口")
-        return "只有 web 映射端口"
+        for name in ["web", "api", "db", "qdrant", "rabbitmq", "worker"]:
+            if name not in services:
+                raise AssertionError(f"缺少服务 {name}")
+        return "只有 web 映射端口，六个服务都在"
 
     check("A12", "端口边界", "db/qdrant/api 无 ports，web 有 ports", config_ports)
 

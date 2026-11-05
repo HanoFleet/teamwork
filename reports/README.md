@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-第 8 课的异步批改和 SEC 自查尚未执行。目录中暂时只有本说明，没有伪造的通过记录。角色三按 [`docs/lesson-08/self-check.md`](../docs/lesson-08/self-check.md) 和 [`docs/lesson-08/security-inventory.md`](../docs/lesson-08/security-inventory.md) 执行后，再在本目录生成以下文件：
+角色二已在 2026-11-06 对实现跑过 `python3 scripts/verify.py`，三条判据的实际结果在 `async-grading.md`、`risk-concurrency.md`、`risk-transaction.md`。SEC 自查仍待角色三执行。角色三按 [`docs/lesson-08/self-check.md`](../docs/lesson-08/self-check.md) 和 [`docs/lesson-08/security-inventory.md`](../docs/lesson-08/security-inventory.md) 独立复跑后，再补以下文件：
 
 | 文件 | 内容 |
 | --- | --- |
