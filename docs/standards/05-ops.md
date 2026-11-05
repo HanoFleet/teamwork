@@ -40,7 +40,7 @@
 | 数据变更顺序 | 迁移先加列/表，代码同时兼容新旧；删除列/表放到下一个版本；`0001` 基线不改 | 先删后加会让旧实例和回滚失败 | 旧库升级后旧接口仍可用；回滚版本能读新结构 |
 | 备份与恢复 | 备份 MySQL、`uploads` 卷、Qdrant 卷；保留期 7 天；每学期演练一次恢复 | 只备份数据库会丢失文件和向量 | 在临时目录恢复一次，材料详情、文件和检索都可用 |
 | 端口与网络 | 只有 `web` 有 `ports`；`db`、`qdrant`、模型网关、`rabbitmq`、`worker` 不映射宿主；api/worker 只在 Compose 网络内 | 暴露数据库/Qdrant/消息代理等于绕过所有授权 | `docker compose config` 检查 `ports`；宿主连接 3306/6333/5672 失败 |
-| 异步任务运维 | RabbitMQ 队列 durable；重试队列按 1/2/4/8/16 秒 TTL；死信 `grade.dead` 保留 payload 和最后错误；worker 可单独 stop/start；日志按 `task_id` 可查 | 不持久化会丢任务，不隔离死信会无限重试 | 停 worker 提交仍 202；重启 rabbitmq 消息仍在；停 broker 后 outbox 补投；死信可查 |
+| 异步任务运维 | RabbitMQ 队列 durable、消息 persistent；重试队列按 1/2/4/8/16 秒 TTL；死信 `grade.dead` 保留 payload（含 submission_version）和最后错误；worker 可单独 stop/start；日志按 `task_id` 可查 | 不持久化会丢任务，不隔离死信会无限重试 | 停 worker 提交仍 202；重启 rabbitmq 消息仍在；停 broker 后 outbox 补投；死信可查；编辑后旧任务仍批改旧正文 |
 | 版本标签与记录 | 骨架基线、每次发布打标签；第 8 课验收后打 `async-202`；`docs/verification.md` 记录版本、命令、结果、负责人 | 没有标签和记录无法复现“当时验的是什么” | `git tag` 有基线标签；验证记录含提交号 |
 
 ## 本课最小集合

@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-第 8 课的异步批改和 SEC 自查尚未执行。目录中暂时只有本说明，没有伪造的通过记录。角色三按 [`docs/lesson-08/self-check.md`](../docs/lesson-08/self-check.md) 执行后，再在本目录生成以下文件：
+第 8 课的异步批改和 SEC 自查尚未执行。目录中暂时只有本说明，没有伪造的通过记录。角色三按 [`docs/lesson-08/self-check.md`](../docs/lesson-08/self-check.md) 和 [`docs/lesson-08/security-inventory.md`](../docs/lesson-08/security-inventory.md) 执行后，再在本目录生成以下文件：
 
 | 文件 | 内容 |
 | --- | --- |

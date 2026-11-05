@@ -104,11 +104,14 @@ nginx (web) ──► api (Go)
 - `created_at`、`updated_at DATETIME NOT NULL`
 - `UNIQUE(assignment_id, student_id, version)`，`INDEX(class_id, student_id)`
 
+`submissions` 是**按版本追加**的：每个版本一行，`id` 就是返回给前端的 `submission_id`；内容变化时插入新行并返回新 id，旧行、旧任务和旧结果都保留。不能更新同一行的 `body/version`，否则旧任务会读到新正文。
+
 ### `grade_tasks`
 
 - `id BIGINT PK AUTO_INCREMENT`
 - `task_id CHAR(26) NOT NULL UNIQUE`（ULID）
 - `submission_id BIGINT NOT NULL`
+- `submission_version INT NOT NULL`
 - `class_id`、`student_id BIGINT NOT NULL`
 - `status ENUM('pending','running','succeeded','failed','dead') NOT NULL DEFAULT 'pending'`
 - `attempts INT NOT NULL DEFAULT 0`
@@ -125,7 +128,7 @@ nginx (web) ──► api (Go)
 - `message_id CHAR(26) NOT NULL UNIQUE`
 - `idempotency_key VARCHAR(128) NOT NULL UNIQUE`
 - `topic VARCHAR(64) NOT NULL`
-- `payload JSON NOT NULL`
+- `payload JSON NOT NULL`（含 `task_id`、`submission_id`、`submission_version`）
 - `status ENUM('pending','published') NOT NULL DEFAULT 'pending'`
 - `attempts INT NOT NULL DEFAULT 0`
 - `next_attempt_at DATETIME NULL`
@@ -146,7 +149,7 @@ nginx (web) ──► api (Go)
 
 ### `assignments`
 
-复用现有占位表，补充 `published BOOLEAN`、`created_by BIGINT`、`created_at`；本 change 只要求能创建一个已发布作业，不做编辑和截止。
+复用现有占位表，补充 `published BOOLEAN NOT NULL DEFAULT 0`、`created_by BIGINT NULL`、`created_at DATETIME NULL`。已有数据库通过 `db.ensureColumn` 查 `information_schema.COLUMNS` 后幂等 `ALTER TABLE`，不能只改 `CREATE TABLE IF NOT EXISTS`；新库仍可直接建全。种子按 `class_id` 分别给 A/B 各插入一份 `published=1` 的作业，条件是“该班还没有作业”，不开放作业编辑接口。
 
 ## Queue Topology
 
@@ -154,7 +157,7 @@ nginx (web) ──► api (Go)
 - 主队列：`grade.tasks`（durable，`x-dead-letter-exchange=grade.dlx`）
 - 重试队列：`grade.retry.1s`、`grade.retry.2s`、`grade.retry.4s`、`grade.retry.8s`、`grade.retry.16s`（durable，TTL 到期后经 DLX 回 `grade.tasks`）
 - 死信队列：`grade.dead`（durable）
-- 发布：publisher confirm；消费：manual ack，prefetch 1
+- 发布：persistent delivery mode + publisher confirm；消费：manual ack，prefetch 1
 - 不映射 RabbitMQ 宿主端口；management 不暴露
 
 ## State Machine
@@ -178,21 +181,21 @@ pending ──worker 取走──► running
 ### 提交/批改请求
 
 1. 校验学生身份、作业和班级；去除首尾空白后内容非空且不超过 20,000 字符。
-2. `BEGIN`：按 `(assignment_id, student_id)` 找当前 submission；用去除首尾空白后的正文比较，内容相同复用版本，内容变化 `version+1`；插入/更新 submission；按 `idempotency_key` 查/插 `grade_tasks`；插入 `outbox_messages`（同一 key）。
-3. `COMMIT`；返回 202 `{task_id,status:"pending",status_url}`；不在事务内调用模型或 RabbitMQ。
+2. `BEGIN`：按 `(assignment_id, student_id)` 以 `ORDER BY version DESC LIMIT 1 FOR UPDATE` 找当前 submission；用去除首尾空白后的正文比较。内容相同复用该行；内容变化插入新行 `version+1`，得到新的 `submission_id`；旧行不改。按 `idempotency_key` 查/插 `grade_tasks`（写 `submission_id`、`submission_version`）；插入 `outbox_messages`（同一 key，payload 含 `task_id`、`submission_id`、`submission_version`）。
+3. `COMMIT`；提交接口返回 200/201，批改接口返回 202 `{task_id,status:"pending",status_url}`；不在事务内调用模型或 RabbitMQ。
 
 ### 投递器
 
 1. `SELECT ... WHERE status='pending' AND (next_attempt_at IS NULL OR next_attempt_at<=NOW()) ORDER BY id LIMIT 20 FOR UPDATE SKIP LOCKED`。
-2. 逐条 publish 到 `grade`，等 confirm；成功更新 `published`；失败 `attempts+1`、`next_attempt_at=now+backoff`，下轮继续。
+2. 逐条以 persistent 模式 publish 到 `grade`，等 confirm；成功更新 `published`；失败 `attempts+1`、`next_attempt_at=now+backoff`，下轮继续。
 3. 已 publish 但未标 published 时崩溃，重启后会重复 publish；worker 幂等。
 
 ### Worker
 
-1. 收到消息，按 `task_id` 读任务；终态直接 ACK。
-2. `attempts+1`、`status='running'`、`started_at=now`，同时把 submission 状态置为 `grading`，提交。
-3. 调模型（本地或网关），得到 0–100 分和非空评语。
-4. 同一事务：`INSERT IGNORE` 写 `grade_results`（已存在则保留首次分数/评语）；`grade_tasks.status='succeeded'`、`finished_at=now`；submission 状态置为 `graded`。
+1. 收到消息，按 `task_id` 读任务；用 `submission_id + submission_version` 定位版本行；终态直接 ACK。
+2. `attempts+1`、`status='running'`、`started_at=now`，同时把该 submission 行状态置为 `grading`，提交。
+3. 读取该版本的 `body` 调模型（本地或网关），得到 0–100 分和非空评语；MUST NOT 读取当前最新版本代替任务版本。
+4. 同一事务：`INSERT IGNORE` 写 `grade_results`（`submission_id`、`version=submission_version`；已存在则保留首次分数/评语）；`grade_tasks.status='succeeded'`、`finished_at=now`；该 submission 行状态置为 `graded`。
 5. 提交后 ACK；若中途崩溃，未 ACK 的消息被重投，结果唯一约束兜底。瞬时失败回 `pending` 时 submission 状态回 `submitted`；永久失败或 dead 时 task 记录失败原因，submission 也回 `submitted`，不产生结果。
 
 ## Interfaces
@@ -205,14 +208,24 @@ pending ──worker 取走──► running
 
 - 202 的 `status_url` 固定为 `/api/tasks/{task_id}`；响应体 MUST NOT 含 `score`/`feedback`。
 - 重复 `POST grade` 对同一版本 MUST 返回同一 `task_id`，不新建任务或 outbox。
+- 内容变化时 `POST submissions` 返回新的 `submission_id`；前端必须用新 id 请求批改，不能复用旧 id 猜测当前版本。
 - `GET /api/tasks/{task_id}` 只读，不触发任何任务。
 - 任务/结果查询的访问权：跨班、他人、不存在 task_id 统一同形 404；教师只能看本班。
+
+## Frontend
+
+- 新增学生页面 `/assignments`：列出本班已发布作业，提供正文输入、提交、请求批改和状态区；不实现教师布置/编辑作业页面。
+- 提交成功后保存响应里的 `submission_id`；请求批改后按 1 秒/2 秒轮询 `/api/tasks/{task_id}`，终态停止。
+- `pending/running` 不显示分数；`succeeded` 显示分数/评语/出处；`failed/dead` 显示原因和“已停止处理，请联系教师”，不提供前端重试按钮。
+- 60 秒仍未终态时停止轮询并显示手动刷新按钮；401 回登录页，403/404/503 显示可读文案。
 
 ## Configuration
 
 | 变量 | 示例 | 说明 |
 | --- | --- | --- |
 | `RABBITMQ_URL` | `amqp://campusclaw:...@rabbitmq:5672/` | broker 连接 |
+| `RABBITMQ_DEFAULT_USER` | `campusclaw` | broker 初始账号，仅容器使用 |
+| `RABBITMQ_DEFAULT_PASS` | 空 | broker 初始口令，只在本机 `.env` |
 | `QUEUE_GRADE` | `grade.tasks` | 主队列 |
 | `QUEUE_DEAD` | `grade.dead` | 死信队列 |
 | `GRADE_MAX_ATTEMPTS` | `5` | 重试上限 |
@@ -221,6 +234,7 @@ pending ──worker 取走──► running
 | `GRADE_JITTER_MS` | `250` | 抖动上限 |
 | `GRADE_VISIBILITY_TIMEOUT_SECONDS` | `60` | 消息可见性/在途超时 |
 | `GRADE_MODEL_TIMEOUT_SECONDS` | `30` | 单次模型调用超时 |
+| `GRADE_LOCAL_DELAY_MS` | `0` | 本地验收设 2000，固定每次批改 2 秒；生产为 0 |
 | `TASK_POLL_FIRST_MS` | `1000` | 前 10 秒轮询间隔 |
 | `TASK_POLL_LATER_MS` | `2000` | 之后轮询间隔 |
 | `TASK_POLL_MAX_SECONDS` | `60` | 前端停止轮询上限 |
@@ -230,8 +244,8 @@ pending ──worker 取走──► running
 
 ## Migration Plan
 
-1. 在现有 `db.Migrate` 中追加 `CREATE TABLE IF NOT EXISTS` 的 `submissions`、`grade_tasks`、`outbox_messages`、`grade_results` 和 `assignments` 补充列；重复启动不重复建表。
-2. 种子增加 A 班、B 班各一份已发布作业，带 `class_id`、`created_by`，幂等；本 change 不开放作业编辑接口，种子只用于提交/批改和跨班 404 验收。
+1. 在现有 `db.Migrate` 中追加 `CREATE TABLE IF NOT EXISTS` 的 `submissions`、`grade_tasks`、`outbox_messages`、`grade_results`；`assignments` 用 `ensureColumn` 查 `information_schema.COLUMNS`，缺列时幂等 `ALTER TABLE` 补 `published`、`created_by`、`created_at`，重复启动不重复。
+2. 种子按 `class_id` 分别判断，给 A/B 各一份 `published=1` 的作业，带 `created_by`；本 change 不开放作业编辑接口，种子只用于提交/批改和跨班 404 验收。
 3. 材料库 change 落地版本化迁移后，把这组 DDL 折叠为 `0003_async_grading.sql`，不修改已执行版本。
 4. 先启动 RabbitMQ 和表，再改提交接口，最后启动 worker；顺序不可颠倒。
 5. 本地模式跑三条判据；外部网关模式再跑一次失败分类和死信。

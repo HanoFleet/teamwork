@@ -138,6 +138,11 @@ def main() -> int:
         if row not in lesson8:
             fail(f"第 8 课自查映射缺少行：{row}")
 
+    inventory = read(ROOT / "docs" / "lesson-08" / "security-inventory.md")
+    for phrase in ["受保护接口", "写入类接口", "SEC-01", "SEC-07"]:
+        if phrase not in inventory:
+            fail(f"第 8 课接口清单缺少内容：{phrase}")
+
     readme = read(ROOT / "README.md")
     for filename, _ in STANDARDS_LIST:
         if f"docs/standards/{filename}" not in readme:

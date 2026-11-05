@@ -47,7 +47,7 @@
 | --- | --- |
 | Go 单元 | 迁移执行/校验和、文件头与 ZIP 限制、PDF/DOCX/PPTX 抽取、码点映射、generation 切换、409 冲突、分页边界、限流键、日志字段、`/health` 与 `/ready`；第 8 课再加状态机、失败分类、幂等键、outbox 重试 |
 | `verify.py` / `apitest` | 登录/锁定、跨班同形 404、上传失败无残留、批量 20/21、异步索引 failed→retry、先建后换、版本冲突、回收站、标签分页、进度/收藏、学生 403、`/live` 200、`/health` 503；第 8 课再加 P95、停 worker、重复投递、broker 恢复补投 |
-| Playwright | ① 上传 PDF → 等 ready → 检索 → 引用高亮；② 编辑 → 旧引用“原文已更新” → 恢复；③ 删除 → 撤销/回收站 → 彻底删除；第 8 课加提交 → 轮询 pending/running/succeeded |
+| Playwright | ① 上传 PDF → 等 ready → 检索 → 引用高亮；② 编辑 → 旧引用“原文已更新” → 恢复；③ 删除 → 撤销/回收站 → 彻底删除；第 8 课加 `/assignments` 提交 → 轮询 pending/running/succeeded |
 | 手动 | 390×844、深色主题、纯键盘各走一遍登录、列表、详情、编辑、版本、回收站 |
 
 ## 本课最小集合

@@ -37,10 +37,10 @@
 | --- | --- |
 | [`proposal.md`](openspec/changes/2026-11-05-add-async-grading/proposal.md) | RabbitMQ、outbox、worker、202 + task_id、三条判据 |
 | [`design.md`](openspec/changes/2026-11-05-add-async-grading/design.md) | 队列拓扑、状态机、事务序列、幂等键、失败分类 |
-| [`specs/async-grading/spec.md`](openspec/changes/2026-11-05-add-async-grading/specs/async-grading/spec.md) | 10 条需求、31 个场景 |
+| [`specs/async-grading/spec.md`](openspec/changes/2026-11-05-add-async-grading/specs/async-grading/spec.md) | 10 条需求、32 个场景 |
 | [`tasks.md`](openspec/changes/2026-11-05-add-async-grading/tasks.md) | 30 条任务，未勾选 |
 
-范围：只做“提交 → 异步批改 → 查询结果”的最小链路。不做完整作业模块、教师手工评分、SSE/WebSocket、技能/提示词配置和 SEC 自查本身的实现。逐行自查见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)。
+范围：只做“提交 → 异步批改 → 查询结果”的最小链路。不做完整作业模块、教师手工评分、SSE/WebSocket、技能/提示词配置和 SEC 自查本身的实现。逐行自查见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)，接口清单见 [`docs/lesson-08/security-inventory.md`](docs/lesson-08/security-inventory.md)。
 
 ## 后续 change：material library
 
@@ -74,8 +74,8 @@
 **第 8 课规约做：**
 
 - RabbitMQ durable exchange/queue、重试队列、死信队列；独立 worker；Compose 只有 web 对外。
-- `submissions`、`grade_tasks`、`outbox_messages`、`grade_results`；提交、任务、outbox 同事务。
-- `POST /api/submissions/{id}/grade` 返回 202 + `task_id`；`GET /api/tasks/{task_id}` 只读查询；前端轮询到终态。
+- `submissions` 按版本追加，`grade_tasks` 带 `submission_version`；提交、任务、outbox 同事务。
+- `POST /api/submissions/{id}/grade` 首次 202 + `task_id`，已有结果 200；`GET /api/tasks/{task_id}` 只读；学生从 `/assignments` 页面轮询到终态。
 - 至少一次投递 + 幂等键/唯一约束；瞬时失败 1/2/4/8/16 秒退避，永久失败直接 failed，5 次后 dead。
 - 三条判据落 `reports/` 和 `apitest/cases/async/`，验收后打 `async-202`。
 

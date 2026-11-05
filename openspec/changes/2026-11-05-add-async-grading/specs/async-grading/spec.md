@@ -8,7 +8,7 @@
 
 ### Requirement: 消息代理与持久队列
 
-系统 MUST 在 Compose 中增加 RabbitMQ 和独立 worker；只有 web MUST 映射宿主端口，RabbitMQ 与 worker MUST NOT 映射宿主端口。队列 MUST 持久化：exchange `grade`、主队列 `grade.tasks`、重试队列 `grade.retry.1s` 至 `grade.retry.16s`、死信队列 `grade.dead` 都是 durable；发布 MUST 等 publisher confirm，消费 MUST 手动 ACK。代理重启后未确认消息 MUST 仍可投递；没有消费者时消息 MUST 留在队列，不得丢失。
+系统 MUST 在 Compose 中增加 RabbitMQ 和独立 worker；只有 web MUST 映射宿主端口，RabbitMQ 与 worker MUST NOT 映射宿主端口。队列 MUST 持久化：exchange `grade`、主队列 `grade.tasks`、重试队列 `grade.retry.1s` 至 `grade.retry.16s`、死信队列 `grade.dead` 都是 durable；发布 MUST 以 persistent delivery mode 发送并等 publisher confirm，消费 MUST 手动 ACK。代理重启后未确认消息 MUST 仍可投递；没有消费者时消息 MUST 留在队列，不得丢失。
 
 #### Scenario: 队列和 worker 从零启动
 
@@ -34,7 +34,7 @@
 
 ### Requirement: 提交与批改业务
 
-系统 MUST 提供 `POST /api/assignments/{id}/submissions`（本班学生本人）和 `POST /api/submissions/{id}/grade`（提交本人）。提交内容去除首尾空白后 MUST 为 1 至 20,000 字符，保存和比较也 MUST 使用去除首尾空白后的正文；内容不变复用当前版本，内容变化 `version+1`。首次批改请求 MUST 在提交记录、任务记录和 outbox 事务提交后返回 202，响应 MUST NOT 含 `score` 或 `feedback`；同一版本已有结果时按 202 契约返回 200。未登录访问提交、批改和任务查询 MUST 返回 401，响应体 MUST NOT 含提交正文、分数或评语。教师 MUST NOT 以学生身份提交；同班其他学生和跨班访问 MUST 返回同形 404。
+系统 MUST 提供 `POST /api/assignments/{id}/submissions`（本班学生本人）和 `POST /api/submissions/{id}/grade`（提交本人）。提交内容去除首尾空白后 MUST 为 1 至 20,000 字符，保存和比较也 MUST 使用去除首尾空白后的正文；内容不变复用当前 submission 行；内容变化 MUST 插入新的 submission 行，`version+1`，并返回新的 `submission_id`，旧行和旧任务 MUST 保留。首次批改请求 MUST 在提交记录、任务记录和 outbox 事务提交后返回 202，响应 MUST NOT 含 `score` 或 `feedback`；同一版本已有结果时按 202 契约返回 200。未登录访问提交、批改和任务查询 MUST 返回 401，响应体 MUST NOT 含提交正文、分数或评语。教师 MUST NOT 以学生身份提交；其他学生（包括跨班）MUST 返回同形 404。
 
 #### Scenario: 学生提交并获得 202
 
@@ -74,9 +74,9 @@
 
 #### Scenario: 教师和其他学生不能提交
 
-- **GIVEN** `teacher_a`、`student_a2` 和 `student_b1` 已登录
-- **WHEN** 分别对 A 班作业提交，或对 `student_a1` 的 submission 请求批改
-- **THEN** 教师返回 403，其他学生和跨班返回同形 404
+- **GIVEN** `teacher_a` 和 `student_b1` 已登录
+- **WHEN** 教师对 A 班作业提交，`student_b1` 对 A 班作业提交或对 `student_a1` 的 submission 请求批改
+- **THEN** 教师返回 403，`student_b1` 返回同形 404
 - **AND** 不创建 submission、task 或 outbox
 
 ### Requirement: 202 与 task_id 契约
@@ -100,7 +100,7 @@
 
 ### Requirement: 持久化任务与状态机
 
-系统 MUST 在 `grade_tasks` 中保存 `task_id`、`submission_id`、`class_id`、`student_id`、`status`、`attempts`、`max_attempts`、`idempotency_key`、`error`、`next_run_at`、`started_at`、`finished_at` 和时间戳。允许状态为 `pending`、`running`、`succeeded`、`failed`、`dead`；终态 MUST NOT 再次调用模型。每次执行 MUST 增加 `attempts` 并写 `started_at`，成功写 `finished_at`；成功结果 MUST 含 0–100 的 `score` 和非空 `feedback`。
+系统 MUST 在 `grade_tasks` 中保存 `task_id`、`submission_id`、`submission_version`、`class_id`、`student_id`、`status`、`attempts`、`max_attempts`、`idempotency_key`、`error`、`next_run_at`、`started_at`、`finished_at` 和时间戳。允许状态为 `pending`、`running`、`succeeded`、`failed`、`dead`；终态 MUST NOT 再次调用模型。每次执行 MUST 增加 `attempts` 并写 `started_at`，成功写 `finished_at`；成功结果 MUST 含 0–100 的 `score` 和非空 `feedback`。
 
 #### Scenario: 任务从 pending 到 succeeded
 
@@ -189,7 +189,7 @@ worker MUST 区分瞬时失败（模型超时、429、5xx、网络抖动）和�
 
 - **GIVEN** 一条达到上限的任务
 - **WHEN** 查看 `grade.dead`
-- **THEN** payload 含 task_id、submission_id 和最后错误
+- **THEN** payload 含 task_id、submission_id、submission_version 和最后错误
 - **AND** `attempts` 为 5，队列长度可查询
 
 #### Scenario: 任务日志可追溯
@@ -219,14 +219,14 @@ worker MUST 区分瞬时失败（模型超时、429、5xx、网络抖动）和�
 
 #### Scenario: 编辑后重新批改保留旧结果
 
-- **GIVEN** submission/version 1 已 succeeded
+- **GIVEN** submission/version 1 已 succeeded，记录其 `submission_id`
 - **WHEN** 学生修改内容生成 version 2 并再次批改
-- **THEN** 产生 version 2 的新 task 和结果
-- **AND** version 1 结果仍保留，查询按当前版本返回
+- **THEN** `submissions` 新增一行、返回新的 `submission_id`，产生 version 2 的新 task 和结果
+- **AND** version 1 的 submission 行、task 和结果仍保留，查询旧 task_id 返回旧结果
 
 ### Requirement: 任务查询与前端轮询
 
-`GET /api/tasks/{task_id}` MUST 只读，返回 `task_id`、`type`、`status`、`attempts`、`result`（succeeded 时含 score/feedback）、`error`（failed/dead 时）、`created_at`、`started_at`、`finished_at`。提交本人和本班教师 MUST 可查；跨班、他人和不存在 task_id MUST 返回同形 404：状态码、body 和 `Content-Type` 相同，仅 `X-Request-ID` 和 `Date` 可不同。查询 MUST NOT 触发任务或修改状态。前端 MUST 前 10 秒每 1 秒轮询，之后每 2 秒，终态停止，最多 60 秒；达到 60 秒仍非终态 MUST 停止轮询并提示可手动刷新，MUST NOT 无限请求。pending/running/succeeded/failed/dead 都要有可读状态。
+`GET /api/tasks/{task_id}` MUST 只读返回任务状态、次数、结果/错误和时间；提交本人和本班教师 MUST 可查；跨班、他人和不存在 task_id MUST 返回同形 404（状态码、body、`Content-Type` 相同，仅 `X-Request-ID`/`Date` 可不同）；查询 MUST NOT 触发任务。学生 MUST 能从 `/assignments` 提交并请求批改，终态前 MUST NOT 显示分数；前端 MUST 前 10 秒每 1 秒、之后每 2 秒轮询，终态停止，最多 60 秒；60 秒仍非终态 MUST 停止并提示手动刷新，MUST NOT 无限请求。
 
 #### Scenario: 本人和本班教师可查
 
@@ -243,13 +243,20 @@ worker MUST 区分瞬时失败（模型超时、429、5xx、网络抖动）和�
 - **AND** 页面显示 pending、running、succeeded 的可读状态
 - **AND** 查询本身不改变 attempts 或任务状态
 
+#### Scenario: 从作业页提交并轮询
+
+- **GIVEN** `student_a1` 已登录，A 班有一份已发布作业
+- **WHEN** 打开 `/assignments`，选择作业，提交并请求批改
+- **THEN** 页面显示 pending 或 running，且不显示分数
+- **AND** 轮询到 succeeded 后显示分数、评语和出处，并停止请求
+
 ### Requirement: 三条判据自动化与报告
 
 验收 MUST 落三条判据：① 连续提交 20 份不同内容，P95 响应时间显著小于一次批改执行时间，且响应不含分数；② 停止 worker 后提交返回 202、任务 pending，启动 worker 后自动 succeeded，无需重新提交；③ 同一提交重复请求、同一消息重复投递，最终只有一份结果。三条判据 MUST 转为 `apitest/cases/async/` 用例并随 `make check`/CI 运行；证据 MUST 写入 `reports/async-grading.md`、`reports/risk-concurrency.md`、`reports/risk-transaction.md`；发布 MUST 打 `async-202` 标签。
 
 #### Scenario: 请求时间不随批改时间增长
 
-- **GIVEN** 本地批改执行固定耗时 2 秒
+- **GIVEN** 本地模式通过 `GRADE_LOCAL_DELAY_MS=2000` 固定每次批改耗时 2 秒
 - **WHEN** 连续提交 20 份不同内容并各请求一次批改，记录 `time_total`
 - **THEN** 提交响应 P95 小于 500ms
 - **AND** 每次响应都是 202 且不含分数

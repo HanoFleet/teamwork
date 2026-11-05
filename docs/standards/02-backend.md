@@ -32,10 +32,10 @@
 | 接口命名与版本 | 资源用小写复数：`/api/materials`、`/api/materials/{id}/versions`；读 GET，建 POST，改 PATCH/PUT，删 DELETE；路径不写动词。`/api` 是 v1，破坏性变更用 `/api/v2` | 同一资源多种命名会让调用方和测试不断猜 | 新接口对照命名表；出现 `/getMaterial`、`/deleteMaterial` 这类路径即缺陷 |
 | 统一响应与错误码 | 成功返回资源 JSON；失败统一 `{"error":"<code>"}`，响应头 `X-Request-ID`；错误码只从下表取，新增先登记 | 错误码散落会让前端和验收无法按码判定 | 抽查 400/401/403/404/409/413/503 各一条；出现表外 code 即缺陷 |
 | 错误码清单 | `invalid_request`、`invalid_file`、`invalid_archive`、`invalid_query`、`invalid_pagination`、`invalid_tag`、`invalid_position`、`extract_timeout`、`scanned_pdf`、`not_editable`、`not_replaceable`、`type_mismatch`、`unauthorized`、`invalid_credentials`、`forbidden`、`not_found`、`version_conflict`、`not_deleted`、`payload_too_large`、`too_many_files`、`no_files`、`unavailable`、`embedding_dim_mismatch` | 错误码是验收和前端分支的唯一稳定标识 | 维护本表；新增错误码必须在同一提交登记 |
-| 幂等声明 | `POST /api/materials` 不幂等（每次新材料）；`POST /api/materials/batch` 不幂等；`PUT /api/materials/{id}/content` 不幂等（每次新版本）；`POST .../file` 不幂等；`POST .../restore` 不幂等（未删除/重复恢复 409 `not_deleted`，版本冲突 409 `version_conflict`）；`POST .../versions/{v}/restore` 不幂等（每次新版本，冲突 409 `version_conflict`）；`DELETE /api/materials/{id}` 幂等（重复删除 204）；`PUT .../progress`、`PUT/DELETE .../favorite`、`POST .../reindex` 幂等；`POST /api/assignments/{id}/submissions` 不幂等（内容变化升 version，内容不变复用当前版本）；`POST /api/submissions/{id}/grade` 幂等（同一 submission/version 返回同一 `task_id`）；`GET /api/tasks/{id}` 只读 | 重复请求产生重复副作用是最难排查的缺陷 | 对幂等接口连发两次，行数/状态不变；对非幂等接口连发两次，得到两个明确结果而不是半条数据 |
+| 幂等声明 | `POST /api/materials` 不幂等（每次新材料）；`POST /api/materials/batch` 不幂等；`PUT /api/materials/{id}/content` 不幂等（每次新版本）；`POST .../file` 不幂等；`POST .../restore` 不幂等（未删除/重复恢复 409 `not_deleted`，版本冲突 409 `version_conflict`）；`POST .../versions/{v}/restore` 不幂等（每次新版本，冲突 409 `version_conflict`）；`DELETE /api/materials/{id}` 幂等（重复删除 204）；`PUT .../progress`、`PUT/DELETE .../favorite`、`POST .../reindex` 幂等；`POST /api/assignments/{id}/submissions` 不幂等（内容变化追加新版本行并返回新 `submission_id`，内容不变复用当前行）；`POST /api/submissions/{id}/grade` 幂等（同一 submission/version 返回同一 `task_id`）；`GET /api/tasks/{id}` 只读 | 重复请求产生重复副作用是最难排查的缺陷 | 对幂等接口连发两次，行数/状态不变；对非幂等接口连发两次，得到两个明确结果而不是半条数据 |
 | 唯一约束 | 版本 `(material_id, version)`、标签 `(class_id, name)`、阅读 `(user_id, material_id)`、收藏 `(user_id, material_id)` 都在数据库加唯一键；第 8 课再加 `submissions(assignment_id, student_id, version)`、`grade_tasks.task_id`、`grade_tasks.idempotency_key`、`outbox_messages.message_id`、`outbox_messages.idempotency_key`、`grade_results(submission_id, version)`、`grade_results.idempotency_key` | 应用层“先查后写”存在时间窗 | `SHOW CREATE TABLE` 检查唯一键；并发请求下不出现重复行 |
 | 分页与排序 | `page` ≥1，`page_size` 1 至 100、默认 20；`sort` 只允许 `created_desc`、`created_asc`、`title_asc`、`title_desc`；同值用 `id DESC` 兜底；非法参数返回 400 | 排序不稳定会导致翻页重复或遗漏 | 构造同标题记录翻两页；非法 sort 返回 400，不退化为全量 |
-| 事务边界 | 上传：抽取在事务外，文件、`materials`、`material_versions`、`knowledge_entries` 在一个事务内；索引在提交后异步入队。第 8 课：submission、grade_task、outbox 在一个事务内，事务内禁止 publish、调用模型或写大文件；worker 先提交结果和状态，再 ACK | 事务内做外部调用会长时间持锁，失败无法回滚外部副作用；先 ACK 再写库会丢任务 | 人为让事务内插入/发布失败，检查三张表无半截记录；kill worker 后消息重投且结果仍只有一行 |
+| 事务边界 | 上传：抽取在事务外，文件、`materials`、`material_versions`、`knowledge_entries` 在一个事务内；索引在提交后异步入队。第 8 课：submission 按版本追加，grade_task 带 `submission_version`，submission/grade_task/outbox 在一个事务内，事务内禁止 publish、调用模型或写大文件；worker 按任务版本读正文，先提交结果和状态，再 ACK | 事务内做外部调用会长时间持锁，失败无法回滚外部副作用；先 ACK 再写库会丢任务；不按版本读会批改错正文 | 人为让事务内插入/发布失败，检查三张表无半截记录；编辑后旧任务仍批改旧正文；kill worker 后消息重投且结果仍只有一行 |
 | 迁移纪律 | 迁移文件只增不改；每个版本记录 SHA-256；回滚动作写在同一版本的说明里；空库和旧库各跑一次 | 改历史迁移会让不同环境结构不一致 | 修改已执行的 `0002`，启动应因 checksum 失败；按说明执行回滚可回到上一版 |
 | 配置外置 | 地址、密钥、开关只从环境变量读取；缺任何必填项启动失败，不取默认值；`.env.example` 只写键名或占位 | 默认值会让生产静默连到错误地址 | 删一个必填变量启动，应非零退出；源码中搜不到真实地址或密钥 |
 | 错误与日志分离 | 响应给用户的是固定 code 和可读文案；日志给开发者的是 request_id、路径、状态和错误原因；日志不写正文、口令、令牌、DSN | 把堆栈或 SQL 返回给用户会泄露结构，日志缺上下文无法排障 | 触发 503 和 400，检查响应无堆栈、日志有 request_id 且无机密 |
@@ -63,7 +63,7 @@ GET    /api/tasks/{task_id}                  # 只读查询
 4. 幂等声明：上表覆盖本 change 全部写接口；第 8 课的 `POST /grade` 必须按 submission/version 幂等。
 5. 配置外置：`APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS` 和现有必填项缺失即启动失败；`EMBEDDING_DIM` 在材料库 change 增加；第 8 课的 `RABBITMQ_URL`、`GRADE_MAX_ATTEMPTS` 等同样缺失即失败。
 6. 分页与排序：`page/page_size/sort` 白名单和 `id` 兜底。
-7. 异步任务：提交/任务/outbox 同事务；事务内不 publish、不调模型；worker 先写结果和状态再 ACK；重复投递靠唯一约束/upsert 收敛。
+7. 异步任务：submission 按版本追加，grade_task 带 `submission_version`；提交/任务/outbox 同事务；事务内不 publish、不调模型；worker 按版本读正文，先写结果和状态再 ACK；重复投递靠唯一约束收敛，保留首次结果。
 
 ## 违反时怎么处理
 

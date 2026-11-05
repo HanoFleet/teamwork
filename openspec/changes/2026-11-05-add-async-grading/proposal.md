@@ -25,14 +25,14 @@
 ## What Changes
 
 1. **增加消息代理和 worker 服务**：Compose 新增 RabbitMQ 和独立 worker，队列持久化，只有 web 映射宿主端口。
-2. **建立最小提交/批改业务**：新增 `assignments`（复用既有占位表）、`submissions`、`grade_results`，提供提交和批改入口。
+2. **建立最小提交/批改业务**：新增 `assignments`（复用既有占位表）、`submissions`、`grade_results`，提供提交和批改入口；`submissions` 按版本追加，内容变化返回新的 `submission_id`。
 3. **提交返回 202 + task_id**：`POST /api/submissions/{id}/grade` 首次立即返回 202、`task_id`、`status:"pending"` 和 `status_url`，响应体不含分数；同一版本已有结果时返回 200、同一 `task_id` 和已有结果。
-4. **持久化任务与状态机**：`grade_tasks` 记录 `task_id`、`submission_id`、状态、`attempts`、`idempotency_key`、错误、起止时间、下次重试时间。
-5. **事务性发件箱**：提交记录、任务记录、outbox 记录在同一事务写入；独立投递器扫描 pending 并发布，失败下轮继续，保证“有提交就有任务”。
-6. **独立消费者与确认重投**：worker 取消息、调用模型、写入结果、确认；崩溃未确认时由代理重投，靠幂等兜底。
+4. **持久化任务与状态机**：`grade_tasks` 记录 `task_id`、`submission_id`、`submission_version`、状态、`attempts`、`idempotency_key`、错误、起止时间、下次重试时间。
+5. **事务性发件箱**：提交记录、任务记录、outbox 记录在同一事务写入；outbox payload 带 `task_id`、`submission_id`、`submission_version`；独立投递器扫描 pending 并发布，失败下轮继续，保证“有提交就有任务”。
+6. **独立消费者与确认重投**：worker 按任务中的 `submission_version` 读对应正文、调用模型、写入结果、确认；崩溃未确认时由代理重投，靠幂等兜底。
 7. **失败分类、退避与死信**：瞬时失败按 1/2/4/8/16 秒加抖动重试，最多 5 次；永久失败不重试；达到上限进入死信并保留原因。
 8. **重复提交/重复投递幂等**：幂等键由 `submission_id + version` 派生，任务、outbox 和结果表都落唯一约束；同一提交最终只有一份结果。
-9. **任务查询与前端轮询**：`GET /api/tasks/{task_id}` 只读返回状态、次数、结果/错误；前端按 1 秒（前 10 秒）再 2 秒轮询，终态停止，最多 60 秒。
+9. **任务查询与前端轮询**：`GET /api/tasks/{task_id}` 只读返回状态、次数、结果/错误；学生从 `/assignments` 页面提交，前端按 1 秒（前 10 秒）再 2 秒轮询，终态停止，最多 60 秒。
 10. **三条判据自动化**：提交 P95 不随批改耗时增长、停 worker 任务不丢、重复提交/投递只出一份结果；落 `apitest/cases/async/`、`reports/` 和 `git tag async-202`。
 
 ## Out of Scope（本次不做）
@@ -70,7 +70,7 @@
 
 | Capability | 类型 | Requirement 数 | Scenario 数 | 主要失败路径 | 验收证据 |
 | --- | --- | ---: | ---: | --- | --- |
-| `async-grading` | 新增 | 10 | 31 | 未登录 401、教师/他人 403、跨班同形 404、数据库不可达 503、broker 不可达 202+pending、瞬时失败重试、永久失败与死信 | `reports/async-grading.md`、`reports/risk-concurrency.md`、`reports/risk-transaction.md`、`apitest/cases/async/`、`make check`、CI |
+| `async-grading` | 新增 | 10 | 32 | 未登录 401、教师/他人 403、跨班同形 404、数据库不可达 503、broker 不可达 202+pending、瞬时失败重试、永久失败与死信 | `reports/async-grading.md`、`reports/risk-concurrency.md`、`reports/risk-transaction.md`、`apitest/cases/async/`、`make check`、CI |
 
 ## Failure Path Coverage（失败路径覆盖）
 

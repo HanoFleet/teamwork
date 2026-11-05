@@ -15,10 +15,10 @@ CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材
 ## 当前状态
 
 - 已归档 change：`openspec/changes/archive/2026-10-28-establish-platform-foundation/`（7 条需求、19 个场景）。
-- 活动 change：`openspec/changes/2026-11-05-add-async-grading/`（10 条需求、31 个场景、30 条任务），第 8 课异步批改规约，尚未实现。
+- 活动 change：`openspec/changes/2026-11-05-add-async-grading/`（10 条需求、32 个场景、30 条任务），第 8 课异步批改规约，尚未实现。
 - 活动 change：`openspec/changes/2026-10-14-upgrade-material-library/`（26 条需求、151 个场景、46 条任务），后续材料库，尚未实现。
 - 长期规约：`openspec/specs/` 下的 `platform-foundation`、`auth-upload`、`knowledge-retrieval`。
-- 第 8 课自查映射：[`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)（10 行全部有规约，实现与证据待角色二、三）。
+- 第 8 课自查映射：[`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)（10 行全部有规约，实现与证据待角色二、三）；受保护/写入接口清单见 [`docs/lesson-08/security-inventory.md`](docs/lesson-08/security-inventory.md)。
 - 标签：`v2.0.0-baseline`（骨架基线）、`v0.1.0-skeleton`（本次骨架）、`v2.0.0-stage1-spec`（规约提交）。
 
 ## 项目启动四步
@@ -79,7 +79,7 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 | --- | --- |
 | [`proposal.md`](openspec/changes/2026-11-05-add-async-grading/proposal.md) | RabbitMQ、outbox、worker、202 + task_id、三条判据 |
 | [`design.md`](openspec/changes/2026-11-05-add-async-grading/design.md) | 队列拓扑、状态机、事务序列、幂等键、失败分类 |
-| [`specs/async-grading/spec.md`](openspec/changes/2026-11-05-add-async-grading/specs/async-grading/spec.md) | 10 条需求、31 个场景 |
+| [`specs/async-grading/spec.md`](openspec/changes/2026-11-05-add-async-grading/specs/async-grading/spec.md) | 10 条需求、32 个场景 |
 | [`tasks.md`](openspec/changes/2026-11-05-add-async-grading/tasks.md) | 30 条任务，尚未勾选 |
 
 本 change 只交付规约；Compose 目前仍是 web/api/db/qdrant，`rabbitmq`、`worker`、`grade_tasks`、`outbox_messages` 和 `/api/tasks/{id}` 都要等角色二按任务实现。逐行自查见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)。
@@ -149,6 +149,7 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 ├── docs/
 │   ├── lesson-07/verification.md + teacher-report.html/json
 │   ├── lesson-08/self-check.md  第 8 课 10 行自查映射
+│   ├── lesson-08/security-inventory.md  受保护/写入接口清单
 │   ├── standards/01-08
 │   ├── data-dictionary.md
 │   ├── 阶段一-交付说明.md

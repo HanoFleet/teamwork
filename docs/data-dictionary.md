@@ -208,6 +208,8 @@
 | `created_by` | BIGINT | NULL, FK users | 创建教师 | 内部 |
 | `created_at` | DATETIME | NULL | 创建时间 | 内部 |
 
+迁移：已有数据库通过 `information_schema.COLUMNS` 检查后幂等 `ALTER TABLE` 补列，不能只改 `CREATE TABLE IF NOT EXISTS`；种子按 `class_id` 给 A/B 各一份 `published=1` 的作业。
+
 删除规则：本 change 不提供删除接口；已有提交时不得物理删除。
 
 ### `submissions`
@@ -224,7 +226,7 @@
 | `created_at` | DATETIME | NOT NULL | 创建时间 | 内部 |
 | `updated_at` | DATETIME | NOT NULL | 更新时间 | 内部 |
 
-约束：`UNIQUE(assignment_id, student_id, version)`，`INDEX(class_id, student_id)`。状态流转：创建为 `submitted`，worker 开始为 `grading`，成功为 `graded`；瞬时失败回 `submitted`，永久失败/dead 也回 `submitted`，失败原因只记在 `grade_tasks`。删除规则：保留；不提供删除接口。
+约束：`UNIQUE(assignment_id, student_id, version)`，`INDEX(class_id, student_id)`。`submissions` 按版本追加：每个版本一行，`id` 就是返回给前端的 `submission_id`；内容变化插入新行并返回新 id，旧行、旧任务和旧结果都保留。状态流转：创建为 `submitted`，worker 开始为 `grading`，成功为 `graded`；瞬时失败回 `submitted`，永久失败/dead 也回 `submitted`，失败原因只记在 `grade_tasks`。删除规则：保留；不提供删除接口。
 
 ### `grade_tasks`
 
@@ -232,7 +234,8 @@
 | --- | --- | --- | --- | --- |
 | `id` | BIGINT | PK | 任务行 id | 内部 |
 | `task_id` | CHAR(26) | NOT NULL, UNIQUE | 对外任务标识（ULID） | 内部 |
-| `submission_id` | BIGINT | NOT NULL, FK submissions, INDEX | 提交 | 内部 |
+| `submission_id` | BIGINT | NOT NULL, FK submissions, INDEX | 提交版本行 | 内部 |
+| `submission_version` | INT | NOT NULL | 任务对应的提交版本 | 内部 |
 | `class_id` | BIGINT | NOT NULL, FK classes | 班级 | 内部 |
 | `student_id` | BIGINT | NOT NULL, FK users | 学生 | 个人信息 |
 | `status` | ENUM('pending','running','succeeded','failed','dead') | NOT NULL DEFAULT 'pending' | 任务状态 | 内部 |
@@ -256,7 +259,7 @@
 | `message_id` | CHAR(26) | NOT NULL, UNIQUE | 消息标识（ULID） | 内部 |
 | `idempotency_key` | VARCHAR(128) | NOT NULL, UNIQUE | 与任务相同的幂等键 | 内部 |
 | `topic` | VARCHAR(64) | NOT NULL | 目标队列/主题 | 内部 |
-| `payload` | JSON | NOT NULL | 消息体（task_id/submission_id） | 内部 |
+| `payload` | JSON | NOT NULL | 消息体（task_id/submission_id/submission_version） | 内部 |
 | `status` | ENUM('pending','published') | NOT NULL DEFAULT 'pending' | 投递状态 | 内部 |
 | `attempts` | INT | NOT NULL DEFAULT 0 | 发布尝试次数 | 内部 |
 | `next_attempt_at` | DATETIME | NULL | 下次重试时间 | 内部 |
@@ -278,7 +281,7 @@
 | `task_id` | CHAR(26) | NOT NULL | 产出结果的任务 | 内部 |
 | `graded_at` | DATETIME | NOT NULL | 完成时间 | 内部 |
 
-约束：`UNIQUE(submission_id, version)`；结果写入使用唯一约束/upsert，重复投递不新增第二行。删除规则：随 submission 保留；不提供删除接口。
+约束：`UNIQUE(submission_id, version)`；结果写入使用 `INSERT IGNORE`/`ON DUPLICATE KEY UPDATE id=id`，重复投递保留首次分数/评语，不新增第二行。删除规则：随 submission 保留；不提供删除接口。
 
 ## 占位表（本 change 不提供业务接口）
 
