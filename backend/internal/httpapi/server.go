@@ -14,6 +14,7 @@ import (
 	"campusclaw/internal/chat"
 	"campusclaw/internal/config"
 	"campusclaw/internal/embed"
+	"campusclaw/internal/grading"
 	"campusclaw/internal/health"
 	"campusclaw/internal/logging"
 	"campusclaw/internal/qdrant"
@@ -36,6 +37,7 @@ type Server struct {
 	limiter *auth.Limiter
 	mux     *http.ServeMux
 	retr    *retrieval.Service
+	grades  *grading.Service
 	health  *health.Checker
 	logger  *slog.Logger
 }
@@ -49,6 +51,7 @@ func New(cfg config.Config, db *sql.DB, logger *slog.Logger) *Server {
 		limiter: auth.NewLimiter(),
 		mux:     http.NewServeMux(),
 		retr:    retrieval.New(db, emb, qd, chat.New(cfg.ChatURL, cfg.ChatAPIKey, cfg.ChatModel)),
+		grades:  grading.NewService(db, cfg),
 		logger:  logger,
 		health: &health.Checker{
 			PingDB:      func(ctx context.Context) error { return db.PingContext(ctx) },
@@ -72,6 +75,10 @@ func New(cfg config.Config, db *sql.DB, logger *slog.Logger) *Server {
 	s.mux.HandleFunc("POST /api/materials/{id}/reindex", s.reindex)
 	s.mux.HandleFunc("POST /api/search", s.search)
 	s.mux.HandleFunc("POST /api/ask", s.ask)
+	s.mux.HandleFunc("GET /api/assignments", s.listAssignments)
+	s.mux.HandleFunc("POST /api/assignments/{id}/submissions", s.createSubmission)
+	s.mux.HandleFunc("POST /api/submissions/{id}/grade", s.gradeSubmission)
+	s.mux.HandleFunc("GET /api/tasks/{task_id}", s.getTask)
 	return s
 }
 
