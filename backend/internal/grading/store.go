@@ -188,6 +188,10 @@ func (s *Store) EnqueueGrade(ctx context.Context, sub Submission) (Task, *Result
 		messageID, key, s.cfg.QueueGrade, payload); err != nil {
 		return Task{}, nil, false, err
 	}
+	if _, err := tx.ExecContext(ctx, `
+		UPDATE submissions SET status='submitted', updated_at=UTC_TIMESTAMP() WHERE id=?`, locked.ID); err != nil {
+		return Task{}, nil, false, err
+	}
 	if err := tx.Commit(); err != nil {
 		return Task{}, nil, false, err
 	}

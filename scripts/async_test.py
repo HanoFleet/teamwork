@@ -15,7 +15,11 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
     for token in ("TASK_POLL_FIRST_MS = 1000", "TASK_POLL_LATER_MS = 2000", "TASK_POLL_MAX_SECONDS = 60"):
         if token not in src:
             fail(f"前端轮询常量缺失: {token}")
-    note("PASS 前端轮询常量 1000/2000/60")
+    if "已停止处理，请联系教师" not in src:
+        fail("failed/dead 缺少规定说明文案")
+    if "重新批改" in src or "再试一次" in src:
+        fail("前端不得提供失败重试按钮")
+    note("PASS 前端轮询常量 1000/2000/60，failed/dead 无重试")
 
     cfg = compose("config", "--format", "json")
     services = json.loads(cfg.stdout).get("services", {})
@@ -50,7 +54,10 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
     code, raw, _ = call(anon, "POST", "/api/assignments/1/submissions", b'{"body":"x"}', {"Content-Type": "application/json"})
     if code != 401:
         fail(f"未登录提交应为 401，实际 {code}")
-    note("PASS 未登录提交 401")
+    code, raw, _ = call(anon, "GET", "/api/assignments")
+    if code != 401:
+        fail(f"未登录作业列表应为 401，实际 {code}")
+    note("PASS 未登录提交/列表 401")
 
     code, raw, _ = call(student_a, "GET", "/api/assignments")
     listed = json.loads(raw)
@@ -71,10 +78,12 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
             fail(f"非法正文应为 400 且无新行: {code} {before}->{after} {raw!r}")
     note("PASS 空内容和超长 400")
 
-    code, raw, _ = call(student_b, "POST", f"/api/assignments/{assignment_id}/submissions", json.dumps({"body": "跨班提交"}).encode(), {"Content-Type": "application/json"})
+    code, raw, headers_cross = call(student_b, "POST", f"/api/assignments/{assignment_id}/submissions", json.dumps({"body": "跨班提交"}).encode(), {"Content-Type": "application/json"})
     missing = call(student_b, "POST", "/api/assignments/999999/submissions", json.dumps({"body": "不存在"}).encode(), {"Content-Type": "application/json"})
     if code != 404 or missing[0] != 404 or raw != missing[1]:
         fail(f"跨班提交 404 不同形 {code} {raw!r} vs {missing[0]} {missing[1]!r}")
+    if headers_cross.get("Content-Type") != missing[2].get("Content-Type"):
+        fail("跨班与不存在作业 404 的 Content-Type 不同")
     note("PASS 跨班提交与不存在作业同形 404")
 
     stamp = str(int(time.time() * 1000))
@@ -152,14 +161,22 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
         fail(f"重复批改应复用任务 {repeated} tasks={tasks_n} outbox={outbox_n}")
     note("PASS 重复批改复用同一 task_id")
 
-    code_b, raw_b, _ = call(student_b, "GET", f"/api/tasks/{accepted['task_id']}")
-    code_missing, raw_missing, _ = call(student_b, "GET", "/api/tasks/01ARZ3NDEKTSV4RRFFQ69G5FAV")
+    code_b, raw_b, headers_b = call(student_b, "GET", f"/api/tasks/{accepted['task_id']}")
+    code_missing, raw_missing, headers_missing = call(student_b, "GET", "/api/tasks/01ARZ3NDEKTSV4RRFFQ69G5FAV")
     code_bad, raw_bad, _ = call(student_a, "GET", "/api/tasks/not-a-valid-ulid-id")
     if code_b != 404 or code_missing != 404 or code_bad != 404:
         fail(f"任务 404 状态码 {code_b}/{code_missing}/{code_bad}")
     if raw_b != raw_missing:
         fail(f"跨班与不存在任务 404 不同形 {raw_b!r} vs {raw_missing!r}")
-    note("PASS 任务查询跨班/不存在同形 404")
+    if headers_b.get("Content-Type") != headers_missing.get("Content-Type"):
+        fail("跨班与不存在任务 404 的 Content-Type 不同")
+    code_t, raw_t, _ = call(teacher, "GET", f"/api/tasks/{accepted['task_id']}")
+    if code_t != 200 or json.loads(raw_t).get("task_id") != accepted["task_id"]:
+        fail(f"本班教师查询任务应为 200，实际 {code_t} {raw_t!r}")
+    code_tg, raw_tg, _ = call(teacher, "POST", f"/api/submissions/{injected_id}/grade", b"{}", {"Content-Type": "application/json"})
+    if code_tg != 404:
+        fail(f"教师批改他人提交应为 404，实际 {code_tg} {raw_tg!r}")
+    note("PASS 任务查询跨班/不存在同形 404，本班教师可查，教师批改 404")
 
     compose("stop", "worker")
     time.sleep(2)
@@ -186,7 +203,11 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
         time.sleep(1)
     else:
         fail(f"启动 worker 后任务未 succeeded: {last}")
-    note("PASS 停 worker 提交仍 202，恢复后自动 succeeded")
+    code, raw, _ = call(student_a, "POST", f"/api/submissions/{stopped_sub}/grade", b"{}", {"Content-Type": "application/json"})
+    reused = json.loads(raw)
+    if code != 200 or reused.get("task_id") != stopped_task or reused.get("status") != "succeeded" or "result" not in reused:
+        fail(f"已有结果应 200 带 result，实际 {code} {reused}")
+    note("PASS 停 worker 提交仍 202，恢复后自动 succeeded；再次批改 200")
 
     times = []
     delay = ENV.get("GRADE_LOCAL_DELAY_MS", "0")
@@ -202,11 +223,13 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
         body_obj = json.loads(raw)
         if code != 202 or "score" in body_obj or "feedback" in body_obj:
             fail(f"P95 响应不是无分数的 202: {code} {body_obj}")
+    ordered = list(times)
     times.sort()
     p95 = times[int(math.ceil(0.95 * len(times)) - 1)]
+    rendered = ",".join(f"{x:.1f}" for x in ordered)
     if p95 >= 500:
-        fail(f"P95={p95:.1f}ms times={['%.1f' % x for x in times]} delay={delay}")
-    note(f"PASS 20 次批改 P95={p95:.1f}ms < 500ms，响应不含分数")
+        fail(f"P95={p95:.1f}ms times=[{rendered}] delay={delay}")
+    note(f"PASS 20 次批改 P95={p95:.1f}ms < 500ms，响应不含分数 times=[{rendered}]")
 
     dup_body = f"幂等正文 {stamp} 函数定理"
     code, raw, _ = call(student_a, "POST", f"/api/assignments/{assignment_id}/submissions", json.dumps({"body": dup_body}).encode(), {"Content-Type": "application/json"})
@@ -227,6 +250,8 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
     tasks = mysql(f"SELECT COUNT(*) FROM grade_tasks WHERE submission_id={dup_id}")
     if results != "1" or tasks != "1":
         fail(f"重复批改应一份结果: results={results} tasks={tasks}")
+    score_before = mysql(f"SELECT score FROM grade_results WHERE submission_id={dup_id}")
+    attempts_before = mysql(f"SELECT attempts FROM grade_tasks WHERE submission_id={dup_id}")
     mysql(
         "INSERT INTO outbox_messages (message_id, idempotency_key, topic, payload, status, attempts, created_at) "
         "SELECT CONCAT('dup', SUBSTR(message_id,1,22)), CONCAT(idempotency_key,'-dup'), topic, payload, 'pending', 0, UTC_TIMESTAMP() "
@@ -234,9 +259,76 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
     )
     time.sleep(4)
     results_after = mysql(f"SELECT COUNT(*) FROM grade_results WHERE submission_id={dup_id}")
-    if results_after != "1":
-        fail(f"重复投递后结果行数 {results_after}")
-    note("PASS 重复请求和重复投递只有一份结果")
+    score_after = mysql(f"SELECT score FROM grade_results WHERE submission_id={dup_id}")
+    if results_after != "1" or score_after != score_before:
+        fail(f"重复投递后结果行数 {results_after} score {score_before}->{score_after}")
+    note(f"PASS 重复请求和重复投递只有一份结果 score={score_after} attempts={attempts_before}")
+
+    perm_body = f"GRADE_PERMANENT_FAIL 永久失败 {stamp}"
+    code, raw, _ = call(student_a, "POST", f"/api/assignments/{assignment_id}/submissions", json.dumps({"body": perm_body}).encode(), {"Content-Type": "application/json"})
+    perm_id = json.loads(raw)["submission_id"]
+    code, raw, _ = call(student_a, "POST", f"/api/submissions/{perm_id}/grade", b"{}", {"Content-Type": "application/json"})
+    if code != 202:
+        fail(f"永久失败首次仍应 202，实际 {code} {raw!r}")
+    perm_task = json.loads(raw)["task_id"]
+    deadline = time.time() + 30
+    perm_status = ""
+    while time.time() < deadline:
+        perm_status = mysql(f"SELECT status FROM grade_tasks WHERE task_id='{perm_task}'")
+        if perm_status == "failed":
+            break
+        time.sleep(1)
+    else:
+        fail(f"永久失败应变 failed，实际 {perm_status}")
+    perm_results = mysql(f"SELECT COUNT(*) FROM grade_results WHERE submission_id={perm_id}")
+    if perm_results != "0":
+        fail(f"永久失败不应写结果，实际 {perm_results}")
+    note("PASS 永久失败进入 failed 且无结果行")
+
+    trans_body = f"GRADE_TRANSIENT_FAIL 瞬时失败 {stamp}"
+    code, raw, _ = call(student_a, "POST", f"/api/assignments/{assignment_id}/submissions", json.dumps({"body": trans_body}).encode(), {"Content-Type": "application/json"})
+    trans_id = json.loads(raw)["submission_id"]
+    code, raw, _ = call(student_a, "POST", f"/api/submissions/{trans_id}/grade", b"{}", {"Content-Type": "application/json"})
+    trans_task = json.loads(raw)["task_id"]
+    deadline = time.time() + 20
+    trans_row = ""
+    while time.time() < deadline:
+        trans_row = mysql(f"SELECT CONCAT(status, ':', attempts) FROM grade_tasks WHERE task_id='{trans_task}'")
+        status, _, attempts = trans_row.partition(":")
+        if status == "pending" and attempts not in ("", "0"):
+            break
+        time.sleep(1)
+    else:
+        fail(f"瞬时失败应回到 pending 且 attempts>0，实际 {trans_row}")
+    note(f"PASS 瞬时失败回到 pending attempts={trans_row}")
+
+    compose("stop", "rabbitmq")
+    time.sleep(2)
+    broker_body = f"停 broker 补投 {stamp} 函数结论"
+    code, raw, _ = call(student_a, "POST", f"/api/assignments/{assignment_id}/submissions", json.dumps({"body": broker_body}).encode(), {"Content-Type": "application/json"})
+    broker_sub = json.loads(raw)["submission_id"]
+    code, raw, _ = call(student_a, "POST", f"/api/submissions/{broker_sub}/grade", b"{}", {"Content-Type": "application/json"})
+    if code != 202:
+        compose("start", "rabbitmq")
+        fail(f"停 RabbitMQ 后批改应为 202，实际 {code} {raw!r}")
+    broker_task = json.loads(raw)["task_id"]
+    key = mysql(f"SELECT idempotency_key FROM grade_tasks WHERE task_id='{broker_task}'")
+    outbox_status = mysql(f"SELECT status FROM outbox_messages WHERE idempotency_key='{key}'")
+    if outbox_status != "pending":
+        compose("start", "rabbitmq")
+        fail(f"停 RabbitMQ 后 outbox 应为 pending，实际 {outbox_status}")
+    compose("start", "rabbitmq")
+    deadline = time.time() + 90
+    last = ""
+    while time.time() < deadline:
+        code, raw, _ = call(student_a, "GET", f"/api/tasks/{broker_task}")
+        last = raw.decode()
+        if code == 200 and json.loads(raw).get("status") == "succeeded":
+            break
+        time.sleep(2)
+    else:
+        fail(f"恢复 RabbitMQ 后任务未 succeeded: {last}")
+    note("PASS 停 RabbitMQ 仍 202/pending，恢复后自动 succeeded")
 
     code, raw, _ = call(student_a, "GET", "/assignments")
     if code != 200 or b"html" not in raw.lower():
