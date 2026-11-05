@@ -4,11 +4,11 @@
 
 ## 当前阶段
 
-- 第 7 课骨架已完成、归档并合并到 `main`；`change/platform-foundation` 分支保留历史。第 8 课异步批改 change `openspec/changes/2026-11-05-add-async-grading/` 是当前活动规约，尚未实现；材料库 change `openspec/changes/2026-10-14-upgrade-material-library/` 是后续活动规约，也尚未实现。
+- 第 7 课骨架已完成、归档并合并到 `main`；`change/platform-foundation` 分支保留历史。第 8 课异步批改 change `openspec/changes/2026-11-05-add-async-grading/` 是当前活动规约，实现位于分支 `change/2026-11-05-add-async-grading`，待角色三验收后归档；材料库 change `openspec/changes/2026-10-14-upgrade-material-library/` 是后续活动规约，尚未实现。
 - 根目录的 `backend/`、`frontend/`、Compose 是可运行工程；`archive/campusclaw-baseline.zip` 只是历史快照，不用它代替当前代码。
 - 第一眼入口是 `SPEC.md`；骨架入口是归档的 foundation change，第 8 课入口是 async-grading change，后续入口是 material-library change。第 8 课 10 行自查映射在 `docs/lesson-08/self-check.md`。
 - 门禁：`make check`、`make check-security`、`make grade`、`python3 scripts/verify.py`；`openspec validate --all --strict` 和两个结构自查也必须 0。
-- 骨架的 1.8/1.9 已完成（CI 运行成功、证据归档 `docs/lesson-07/`、标签 `v0.1.0-skeleton`）；async-grading 的 30 条任务和 material-library 的 46 条任务一条都未勾选。只有在对应 verify 通过后才勾选。
+- 骨架的 1.8/1.9 已完成（CI 运行成功、证据归档 `docs/lesson-07/`、标签 `v0.1.0-skeleton`）；async-grading 的实现已按 tasks 0–6 落地，勾选仍须角色三按各条 verify 复现后由角色一执行；material-library 的 46 条任务一条都未勾选。
 - 现有 `httpapi/auth.go`、`materials.go`、`server.go` 的 SQL 是 legacy 例外；新增 `httpapi` 文件不得写 SQL，材料库 change 再迁移。第 8 课的提交/任务/结果写入放 `grading/` 与 `worker/`，不得直接写进 `httpapi`。
 
 ## 工程规范（必读）

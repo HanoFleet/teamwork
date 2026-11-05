@@ -50,6 +50,7 @@ PUT    /api/materials/{id}/content           # body, change_note, base_version
 POST   /api/materials/{id}/versions/{v}/restore
 DELETE /api/materials/{id}/purge             # 仅已删除材料
 GET    /ready                                # 无需登录，返回依赖状态
+GET    /api/assignments                      # 本班已发布作业，只读
 POST   /api/assignments/{id}/submissions     # body, version
 POST   /api/submissions/{id}/grade           # 202 + task_id
 GET    /api/tasks/{task_id}                  # 只读查询

@@ -1,6 +1,6 @@
 # CampusClaw 2.0 · 小组项目仓库
 
-> **当前提交重点：第 7 课可运行骨架 + 第 8 课异步批改规约。** 第一眼入口是 [`SPEC.md`](SPEC.md)。骨架已从基线恢复并加固，`docker compose up -d --wait` 可启动；第 8 课的 RabbitMQ、事务性 outbox、独立 worker、任务状态机和三条判据目前只交付了规约，尚未实现；材料库是后续 change。
+> **当前提交重点：第 7 课可运行骨架 + 第 8 课异步批改实现。** 第一眼入口是 [`SPEC.md`](SPEC.md)。骨架已从基线恢复并加固，`docker compose up -d --wait` 可启动；第 8 课的 RabbitMQ、事务性 outbox、独立 worker、任务状态机和三条判据已在 `change/2026-11-05-add-async-grading` 实现，待角色三验收归档；材料库是后续 change。
 
 CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材料，本班学生只读；正文切成切片后，本班可以用关键字、向量或混合检索，命中能回到原文；没有依据时不生成回答。
 
@@ -9,16 +9,16 @@ CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材
 | 姓名 | 学号 | 角色 | 阶段一交付 |
 | --- | --- | --- | --- |
 | 李斯坦 | 2601210362 | 角色一：制定规约 | 规约、八类规范、可运行骨架、验收证据 |
-| 韩雅慧 | 2601210643 | 角色二：开发系统 | 评审；后续按 `tasks.md` 实现材料库 |
+| 韩雅慧 | 2601210643 | 角色二：开发系统 | 第 8 课异步批改实现（待角色三验收）；后续材料库 |
 | 禹霖 | 2601210536 | 角色三：项目验收 | 评审；逐条验收并写 `docs/verification.md` |
 
 ## 当前状态
 
 - 已归档 change：`openspec/changes/archive/2026-10-28-establish-platform-foundation/`（7 条需求、19 个场景）。
-- 活动 change：`openspec/changes/2026-11-05-add-async-grading/`（10 条需求、32 个场景、30 条任务），第 8 课异步批改规约，尚未实现。
+- 活动 change：`openspec/changes/2026-11-05-add-async-grading/`（10 条需求、32 个场景、30 条任务），第 8 课异步批改已实现，待角色三验收后归档。
 - 活动 change：`openspec/changes/2026-10-14-upgrade-material-library/`（26 条需求、151 个场景、46 条任务），后续材料库，尚未实现。
 - 长期规约：`openspec/specs/` 下的 `platform-foundation`、`auth-upload`、`knowledge-retrieval`。
-- 第 8 课自查映射：[`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)（10 行全部有规约，实现与证据待角色二、三）；受保护/写入接口清单见 [`docs/lesson-08/security-inventory.md`](docs/lesson-08/security-inventory.md)。
+- 第 8 课自查映射：[`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)（10 行全部有规约；角色二已实现并写入 `reports/` 与 `docs/verification.md`，角色三独立复现和 SEC 仍待执行）；受保护/写入接口清单见 [`docs/lesson-08/security-inventory.md`](docs/lesson-08/security-inventory.md)。
 - 标签：`v2.0.0-baseline`（骨架基线）、`v0.1.0-skeleton`（本次骨架）、`v2.0.0-stage1-spec`（规约提交）。
 
 ## 项目启动四步
@@ -45,15 +45,17 @@ curl -fsS http://localhost:8080/health
 - `/live`：存活，不查依赖。
 - `/health`：就绪，检查 MySQL、Qdrant、嵌入配置；依赖不可用返回 503。
 - `/ready`：`/health` 的别名。
-- 只有 web 映射宿主端口；db、qdrant、api 不对外。
+- 只有 web 映射宿主端口；db、qdrant、api、rabbitmq、worker 不对外。
+- 作业页：`http://localhost:8080/assignments`（学生提交后轮询批改状态）。
+- `.env` 还需填写 `RABBITMQ_DEFAULT_PASS` 和 `RABBITMQ_URL`（与 broker 口令一致）。
 
 ## 门禁
 
 ```bash
 make check            # 规约、规范、strict、分层、密钥、变异、Go 测试/vet、前端构建
 make check-security   # SEC-05 密钥扫描 + SEC-06 前端依赖审计
-make grade            # 独立 Compose 项目 14 项验收，生成 reports/teacher-*/ 报告
-python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、问答
+make grade            # 独立 Compose 项目骨架 14 项 + A15 异步批改，生成 reports/teacher-*/ 报告
+python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、问答，以及第 8 课异步批改三条判据
 ```
 
 `.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check-security`、`make check` 与 `make grade`；首次 [run 40647071837](https://github.com/HanoFleet/teamwork/actions/runs/40647071837) 的 check/grade 均成功；第 8 课规约推送后的 [run 41978412834](https://github.com/HanoFleet/teamwork/actions/runs/41978412834) 两个 job 也均成功。
@@ -82,7 +84,7 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 | [`specs/async-grading/spec.md`](openspec/changes/2026-11-05-add-async-grading/specs/async-grading/spec.md) | 10 条需求、32 个场景 |
 | [`tasks.md`](openspec/changes/2026-11-05-add-async-grading/tasks.md) | 30 条任务，尚未勾选 |
 
-本 change 只交付规约；Compose 目前仍是 web/api/db/qdrant，`rabbitmq`、`worker`、`grade_tasks`、`outbox_messages` 和 `/api/tasks/{id}` 都要等角色二按任务实现。逐行自查见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)。
+实现位于分支 `change/2026-11-05-add-async-grading`。Compose 含 web/api/db/qdrant/rabbitmq/worker；`tasks.md` 勾选、SEC 报告和 `async-202` 标签仍待角色三验收。逐行自查见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)。
 
 ### 后续：material library（活动规约）
 
@@ -101,7 +103,7 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 | `GET /health` | 就绪；检查 MySQL、Qdrant、嵌入，200 `ready` / 503 `not_ready` |
 | `GET /ready` | `/health` 别名 |
 | 现有 `/api/login`、`/api/materials`、`/api/search`、`/api/ask` | 保持迭代 1/2 行为；本阶段不改业务 |
-| 第 8 课规约接口（未实现） | `POST /api/assignments/{id}/submissions`、`POST /api/submissions/{id}/grade` 返回 202 + `task_id`、`GET /api/tasks/{task_id}` 只读查询 |
+| 第 8 课异步批改 | `GET /api/assignments`、`POST /api/assignments/{id}/submissions`、`POST /api/submissions/{id}/grade` 返回 202 + `task_id`、`GET /api/tasks/{task_id}` 只读查询 |
 
 `/health` 和 `/ready` 拒绝 query 参数（400），非 GET 返回 405；未知 `/api/*` 返回 404；未登录业务接口返回 401。
 
@@ -128,11 +130,12 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 ├── README.md                   本文件
 ├── AGENTS.md                   项目规则
 ├── Makefile                    up / check / check-security / grade
-├── docker-compose.yml          web / api / db / qdrant（第 8 课规约将增加 rabbitmq / worker）
+├── docker-compose.yml          web / api / db / qdrant / rabbitmq / worker（仅 web 映射宿主端口）
 ├── .env.example                环境变量模板，只写键名和占位
 ├── LICENSE                     未选择许可证说明
-├── backend/                    Go api：cmd/server、httpapi、retrieval、db、
-│                               config、auth、health、logging、lifecycle
+├── backend/                    Go api 与 worker：cmd/server、cmd/worker、
+│                               httpapi、grading、queue、outbox、worker、
+│                               retrieval、db、config、auth、health、logging、lifecycle
 ├── frontend/                   React 18 + Vite 8 + Nginx
 ├── deploy 相关                 各 Dockerfile 与 Nginx 配置
 ├── scripts/
@@ -144,8 +147,10 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 │   ├── mutation.py             分层门禁变异验证
 │   ├── spec_check.py           规约结构自查
 │   ├── standards_check.py      八类规范自查
-│   └── verify.py               迭代 1/2 验收
-├── reports/                    第 8 课证据目录；当前只有说明，实际报告待角色三
+│   ├── verify.py               迭代 1/2 与第 8 课异步批改验收
+│   └── async_test.py           第 8 课三条判据
+├── apitest/cases/async/        第 8 课三条判据用例说明
+├── reports/                    角色二三条判据首次结果；SEC 报告待角色三
 ├── docs/
 │   ├── lesson-07/verification.md + teacher-report.html/json
 │   ├── lesson-08/self-check.md  第 8 课 10 行自查映射
@@ -177,7 +182,7 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 | `.env.example` 只写键名和占位 | 有 |
 | 变更目录按 `YYYY-MM-DD-英文名` 命名 | 有；foundation、material-library、async-grading 都带日期 |
 | 归档后的规约能在主干检索到 | 有；`openspec/specs/` 和 `openspec/changes/archive/` |
-| 第 8 课 10 行自查有规约映射 | 有；`docs/lesson-08/self-check.md`，实现与证据待角色二、三 |
+| 第 8 课 10 行自查有规约映射 | 有；`docs/lesson-08/self-check.md`；角色二已实现，角色三验收待执行 |
 | 全部提交历史检索不到密钥 | `make check` 的 `secret_scan.py` 已扫描工作树和历史 |
 | 主干保护、直接推送被拒绝 | 需在 GitHub 仓库设置中开启；功能开发走 `change/<change-name>` |
 | 每位成员独立克隆跑通 | 待组员按 README 各自执行一次 |
