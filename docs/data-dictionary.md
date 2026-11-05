@@ -11,7 +11,7 @@
 
 ## 当前 change 的数据影响
 
-`2026-10-28-establish-platform-foundation` 不改数据库结构，只增加 `APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS` 等运行配置。材料库的表结构变更（`material_versions`、`tags`、`material_reads` 等）属于 `2026-10-14-upgrade-material-library`，实现时按本字典一起更新。
+`2026-10-28-establish-platform-foundation` 不改数据库结构，只增加 `APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS` 等运行配置。材料库的表结构变更（`material_versions`、`tags`、`material_reads` 等）属于 `2026-10-14-upgrade-material-library`，实现时按本字典一起更新。第 8 课 `2026-11-05-add-async-grading` 新增 `submissions`、`grade_tasks`、`outbox_messages`、`grade_results`，并扩展 `assignments`；实现时追加迁移 `0003`，不改已执行的 `0001`、`0002`。
 
 ## 迁移与认证
 
@@ -196,12 +196,97 @@
 
 约束：`PRIMARY KEY(user_id, material_id)`。删除规则：随材料彻底删除。
 
+## 异步批改（第 8 课）
+
+### `assignments`（扩展）
+
+复用现有占位表，第 8 课补充以下列；本 change 只要求能创建一份已发布作业，不做编辑和截止。
+
+| 字段 | 类型 | 约束 | 说明 | 敏感 |
+| --- | --- | --- | --- | --- |
+| `published` | BOOLEAN | NOT NULL DEFAULT 0 | 是否已发布，只有已发布作业可提交 | 内部 |
+| `created_by` | BIGINT | NULL, FK users | 创建教师 | 内部 |
+| `created_at` | DATETIME | NULL | 创建时间 | 内部 |
+
+删除规则：本 change 不提供删除接口；已有提交时不得物理删除。
+
+### `submissions`
+
+| 字段 | 类型 | 约束 | 说明 | 敏感 |
+| --- | --- | --- | --- | --- |
+| `id` | BIGINT | PK | 提交 id | 内部 |
+| `assignment_id` | BIGINT | NOT NULL, FK assignments, INDEX | 作业 | 内部 |
+| `student_id` | BIGINT | NOT NULL, FK users | 提交学生 | 个人信息 |
+| `class_id` | BIGINT | NOT NULL, FK classes | 会话班级 | 内部 |
+| `body` | MEDIUMTEXT | NOT NULL | 提交正文 | 敏感 |
+| `version` | INT | NOT NULL DEFAULT 1 | 内容版本，从 1 递增 | 内部 |
+| `status` | ENUM('submitted','grading','graded') | NOT NULL DEFAULT 'submitted' | 提交状态 | 内部 |
+| `created_at` | DATETIME | NOT NULL | 创建时间 | 内部 |
+| `updated_at` | DATETIME | NOT NULL | 更新时间 | 内部 |
+
+约束：`UNIQUE(assignment_id, student_id, version)`，`INDEX(class_id, student_id)`。状态流转：创建为 `submitted`，worker 开始为 `grading`，成功为 `graded`；瞬时失败回 `submitted`，永久失败/dead 也回 `submitted`，失败原因只记在 `grade_tasks`。删除规则：保留；不提供删除接口。
+
+### `grade_tasks`
+
+| 字段 | 类型 | 约束 | 说明 | 敏感 |
+| --- | --- | --- | --- | --- |
+| `id` | BIGINT | PK | 任务行 id | 内部 |
+| `task_id` | CHAR(26) | NOT NULL, UNIQUE | 对外任务标识（ULID） | 内部 |
+| `submission_id` | BIGINT | NOT NULL, FK submissions, INDEX | 提交 | 内部 |
+| `class_id` | BIGINT | NOT NULL, FK classes | 班级 | 内部 |
+| `student_id` | BIGINT | NOT NULL, FK users | 学生 | 个人信息 |
+| `status` | ENUM('pending','running','succeeded','failed','dead') | NOT NULL DEFAULT 'pending' | 任务状态 | 内部 |
+| `attempts` | INT | NOT NULL DEFAULT 0 | 已执行次数 | 内部 |
+| `max_attempts` | INT | NOT NULL DEFAULT 5 | 重试上限 | 内部 |
+| `idempotency_key` | VARCHAR(128) | NOT NULL, UNIQUE | `grade:<submission_id>:<version>` | 内部 |
+| `error` | VARCHAR(512) | NULL | 最后错误（脱敏） | 内部 |
+| `next_run_at` | DATETIME | NULL | 下次可执行时间 | 内部 |
+| `started_at` | DATETIME | NULL | 最近一次开始时间 | 内部 |
+| `finished_at` | DATETIME | NULL | 终态时间 | 内部 |
+| `created_at` | DATETIME | NOT NULL | 创建时间 | 内部 |
+| `updated_at` | DATETIME | NOT NULL | 更新时间 | 内部 |
+
+约束：`INDEX(status, next_run_at)`。删除规则：不自动删除；`dead` 任务保留用于排障，清理策略在实现时另行定义。
+
+### `outbox_messages`
+
+| 字段 | 类型 | 约束 | 说明 | 敏感 |
+| --- | --- | --- | --- | --- |
+| `id` | BIGINT | PK | 发件箱行 id | 内部 |
+| `message_id` | CHAR(26) | NOT NULL, UNIQUE | 消息标识（ULID） | 内部 |
+| `idempotency_key` | VARCHAR(128) | NOT NULL, UNIQUE | 与任务相同的幂等键 | 内部 |
+| `topic` | VARCHAR(64) | NOT NULL | 目标队列/主题 | 内部 |
+| `payload` | JSON | NOT NULL | 消息体（task_id/submission_id） | 内部 |
+| `status` | ENUM('pending','published') | NOT NULL DEFAULT 'pending' | 投递状态 | 内部 |
+| `attempts` | INT | NOT NULL DEFAULT 0 | 发布尝试次数 | 内部 |
+| `next_attempt_at` | DATETIME | NULL | 下次重试时间 | 内部 |
+| `created_at` | DATETIME | NOT NULL | 创建时间 | 内部 |
+| `published_at` | DATETIME | NULL | 确认发布时间 | 内部 |
+
+约束：`INDEX(status, next_attempt_at)`。删除规则：`pending` 不得删除；只允许清理已发布且超过运维保留期的行。
+
+### `grade_results`
+
+| 字段 | 类型 | 约束 | 说明 | 敏感 |
+| --- | --- | --- | --- | --- |
+| `id` | BIGINT | PK | 结果行 id | 内部 |
+| `submission_id` | BIGINT | NOT NULL, FK submissions, INDEX | 提交 | 内部 |
+| `version` | INT | NOT NULL | 提交版本 | 内部 |
+| `idempotency_key` | VARCHAR(128) | NOT NULL, UNIQUE | 幂等键 | 内部 |
+| `score` | DECIMAL(5,2) | NOT NULL | 0–100 分 | 个人信息 |
+| `feedback` | TEXT | NOT NULL | 评语 | 个人信息 |
+| `task_id` | CHAR(26) | NOT NULL | 产出结果的任务 | 内部 |
+| `graded_at` | DATETIME | NOT NULL | 完成时间 | 内部 |
+
+约束：`UNIQUE(submission_id, version)`；结果写入使用唯一约束/upsert，重复投递不新增第二行。删除规则：随 submission 保留；不提供删除接口。
+
 ## 占位表（本 change 不提供业务接口）
 
-`handouts`、`assignments`、`assistants`、`skills` 保持现有结构；后续模块使用前必须先补数据字典、迁移和规约。当前只允许占位数据，不新增业务字段。
+`assignments` 已被第 8 课最小使用；`handouts`、`assistants`、`skills` 仍保持现有结构，后续模块使用前必须先补数据字典、迁移和规约。当前只允许占位数据，不新增业务字段。
 
 ## 变更记录
 
 | 日期 | 变更 | 迁移 |
 | --- | --- | --- |
 | 2026-10-28 | 初版：现有表 + `2026-10-14-upgrade-material-library` 新增/修改 | `0001`、`0002` |
+| 2026-11-05 | 第 8 课：新增 `submissions`、`grade_tasks`、`outbox_messages`、`grade_results`，扩展 `assignments`；实现时执行 | `0003` |

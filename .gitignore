@@ -9,4 +9,5 @@ campusclaw-baseline/
 __pycache__/
 *.pyc
 .env.acceptance
-reports/
+reports/teacher-*/
+reports/*.tmp

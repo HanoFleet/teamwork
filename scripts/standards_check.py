@@ -109,6 +109,10 @@ def main() -> int:
         "tags",
         "material_reads",
         "favorites",
+        "submissions",
+        "grade_tasks",
+        "outbox_messages",
+        "grade_results",
     ]:
         if f"`{table}`" not in data_dict:
             fail(f"数据字典缺少表：{table}")
@@ -117,6 +121,22 @@ def main() -> int:
     for step in ["建仓库", "定规约", "立规范", "落骨架"]:
         if step not in four_steps:
             fail(f"四步核对缺少步骤：{step}")
+
+    lesson8 = read(ROOT / "docs" / "lesson-08" / "self-check.md")
+    for row in [
+        "消息代理、持久队列",
+        "批改提交与评分业务",
+        "提交返回 202 + task_id",
+        "持久化任务与状态机",
+        "事务性发件箱与可靠补投",
+        "独立消费者、确认与重投",
+        "失败分类、退避、死信",
+        "重复提交、重复投递幂等",
+        "任务查询、前端轮询",
+        "三条判据自动化及报告",
+    ]:
+        if row not in lesson8:
+            fail(f"第 8 课自查映射缺少行：{row}")
 
     readme = read(ROOT / "README.md")
     for filename, _ in STANDARDS_LIST:

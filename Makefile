@@ -1,4 +1,4 @@
-.PHONY: up down logs check acceptance grade
+.PHONY: up down logs check check-security acceptance grade
 
 up:
 	docker compose up --build -d --wait
@@ -11,6 +11,10 @@ logs:
 
 check:
 	sh scripts/check.sh
+
+check-security:
+	python3 scripts/secret_scan.py
+	cd frontend && npm audit --audit-level=high
 
 acceptance:
 	python3 scripts/acceptance.py

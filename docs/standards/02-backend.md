@@ -17,8 +17,8 @@
 
 > 第 7 课已把可运行代码恢复到根目录的 `backend/`、`frontend/` 和 Compose；`archive/campusclaw-baseline.zip` 只是历史快照。本文中的 `backend/`、`frontend/` 指向当前代码。
 
-- 目录：`backend/internal/httpapi/` 是接口层；`retrieval/` 是检索业务层；`db/` 是数据访问层；`health/`、`logging/`、`lifecycle/`、`config/` 是横切与配置包；`auth/`、`chat/`、`chunk/`、`embed/`、`qdrant/`、`materials/` 是适配/工具包。材料库实现时再加 `service/`、`library/`、`repository/`。
-- 现有 legacy 例外：`httpapi/auth.go`、`materials.go`、`server.go` 里有迭代 1/2 的 SQL；新增 `httpapi` 文件不得再写 SQL，材料库 change 再迁移。例外已写入 foundation 的 `design.md`。
+- 目录：`backend/internal/httpapi/` 是接口层；`retrieval/` 是检索业务层；`db/` 是数据访问层；`health/`、`logging/`、`lifecycle/`、`config/` 是横切与配置包；`auth/`、`chat/`、`chunk/`、`embed/`、`qdrant/`、`materials/` 是适配/工具包。材料库实现时再加 `service/`、`library/`、`repository/`；第 8 课再加 `grading/`、`queue/`、`outbox/`、`worker/`，`cmd/worker` 是独立进程。
+- 现有 legacy 例外：`httpapi/auth.go`、`materials.go`、`server.go` 里有迭代 1/2 的 SQL；新增 `httpapi` 文件不得再写 SQL，材料库 change 再迁移。例外已写入 foundation 的 `design.md`。第 8 课的提交、任务、outbox 和结果写入放业务层/worker，handler 只做参数与错误映射。
 - 现有接口都在 `/api/` 下，没有 `/v1` 前缀。把 `/api` 视为 v1 命名空间；新增接口继续用 `/api/...`，不为了“版本化”重命名已有路径。出现破坏性变更时另开 `/api/v2/...`，旧路径保留一个版本周期。
 - 现有成功响应是资源相关 JSON（`{materials:[]}`、`{hits:[]}`、`{answer,citations}`），错误响应是 `{"error":"<code>"}`。本 change 保留成功形状，错误体增加 `request_id` 放在响应头 `X-Request-ID`，不改已有字段名。
 - 配置全部来自环境变量；缺失即启动失败，不取默认密钥。`APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS`（1–30）必填；`EMBEDDING_DIM` 在材料库 change 增加。
@@ -32,10 +32,10 @@
 | 接口命名与版本 | 资源用小写复数：`/api/materials`、`/api/materials/{id}/versions`；读 GET，建 POST，改 PATCH/PUT，删 DELETE；路径不写动词。`/api` 是 v1，破坏性变更用 `/api/v2` | 同一资源多种命名会让调用方和测试不断猜 | 新接口对照命名表；出现 `/getMaterial`、`/deleteMaterial` 这类路径即缺陷 |
 | 统一响应与错误码 | 成功返回资源 JSON；失败统一 `{"error":"<code>"}`，响应头 `X-Request-ID`；错误码只从下表取，新增先登记 | 错误码散落会让前端和验收无法按码判定 | 抽查 400/401/403/404/409/413/503 各一条；出现表外 code 即缺陷 |
 | 错误码清单 | `invalid_request`、`invalid_file`、`invalid_archive`、`invalid_query`、`invalid_pagination`、`invalid_tag`、`invalid_position`、`extract_timeout`、`scanned_pdf`、`not_editable`、`not_replaceable`、`type_mismatch`、`unauthorized`、`invalid_credentials`、`forbidden`、`not_found`、`version_conflict`、`not_deleted`、`payload_too_large`、`too_many_files`、`no_files`、`unavailable`、`embedding_dim_mismatch` | 错误码是验收和前端分支的唯一稳定标识 | 维护本表；新增错误码必须在同一提交登记 |
-| 幂等声明 | `POST /api/materials` 不幂等（每次新材料）；`POST /api/materials/batch` 不幂等；`PUT /api/materials/{id}/content` 不幂等（每次新版本）；`POST .../file` 不幂等；`POST .../restore` 不幂等（未删除/重复恢复 409 `not_deleted`，版本冲突 409 `version_conflict`）；`POST .../versions/{v}/restore` 不幂等（每次新版本，冲突 409 `version_conflict`）；`DELETE /api/materials/{id}` 幂等（重复删除 204）；`PUT .../progress`、`PUT/DELETE .../favorite`、`POST .../reindex` 幂等 | 重复请求产生重复副作用是最难排查的缺陷 | 对幂等接口连发两次，行数/状态不变；对非幂等接口连发两次，得到两个明确结果而不是半条数据 |
-| 唯一约束 | 版本 `(material_id, version)`、标签 `(class_id, name)`、阅读 `(user_id, material_id)`、收藏 `(user_id, material_id)` 都在数据库加唯一键 | 应用层“先查后写”存在时间窗 | `SHOW CREATE TABLE` 检查唯一键；并发请求下不出现重复行 |
+| 幂等声明 | `POST /api/materials` 不幂等（每次新材料）；`POST /api/materials/batch` 不幂等；`PUT /api/materials/{id}/content` 不幂等（每次新版本）；`POST .../file` 不幂等；`POST .../restore` 不幂等（未删除/重复恢复 409 `not_deleted`，版本冲突 409 `version_conflict`）；`POST .../versions/{v}/restore` 不幂等（每次新版本，冲突 409 `version_conflict`）；`DELETE /api/materials/{id}` 幂等（重复删除 204）；`PUT .../progress`、`PUT/DELETE .../favorite`、`POST .../reindex` 幂等；`POST /api/assignments/{id}/submissions` 不幂等（内容变化升 version，内容不变复用当前版本）；`POST /api/submissions/{id}/grade` 幂等（同一 submission/version 返回同一 `task_id`）；`GET /api/tasks/{id}` 只读 | 重复请求产生重复副作用是最难排查的缺陷 | 对幂等接口连发两次，行数/状态不变；对非幂等接口连发两次，得到两个明确结果而不是半条数据 |
+| 唯一约束 | 版本 `(material_id, version)`、标签 `(class_id, name)`、阅读 `(user_id, material_id)`、收藏 `(user_id, material_id)` 都在数据库加唯一键；第 8 课再加 `submissions(assignment_id, student_id, version)`、`grade_tasks.task_id`、`grade_tasks.idempotency_key`、`outbox_messages.message_id`、`outbox_messages.idempotency_key`、`grade_results(submission_id, version)`、`grade_results.idempotency_key` | 应用层“先查后写”存在时间窗 | `SHOW CREATE TABLE` 检查唯一键；并发请求下不出现重复行 |
 | 分页与排序 | `page` ≥1，`page_size` 1 至 100、默认 20；`sort` 只允许 `created_desc`、`created_asc`、`title_asc`、`title_desc`；同值用 `id DESC` 兜底；非法参数返回 400 | 排序不稳定会导致翻页重复或遗漏 | 构造同标题记录翻两页；非法 sort 返回 400，不退化为全量 |
-| 事务边界 | 上传：抽取在事务外，文件、`materials`、`material_versions`、`knowledge_entries` 在一个事务内；索引在提交后异步入队。事务内禁止调用嵌入、Qdrant、对话网关或写大文件 | 事务内做外部调用会长时间持锁，失败无法回滚外部副作用 | 人为让事务内插入失败，检查文件被清理、外部服务未被调用 |
+| 事务边界 | 上传：抽取在事务外，文件、`materials`、`material_versions`、`knowledge_entries` 在一个事务内；索引在提交后异步入队。第 8 课：submission、grade_task、outbox 在一个事务内，事务内禁止 publish、调用模型或写大文件；worker 先提交结果和状态，再 ACK | 事务内做外部调用会长时间持锁，失败无法回滚外部副作用；先 ACK 再写库会丢任务 | 人为让事务内插入/发布失败，检查三张表无半截记录；kill worker 后消息重投且结果仍只有一行 |
 | 迁移纪律 | 迁移文件只增不改；每个版本记录 SHA-256；回滚动作写在同一版本的说明里；空库和旧库各跑一次 | 改历史迁移会让不同环境结构不一致 | 修改已执行的 `0002`，启动应因 checksum 失败；按说明执行回滚可回到上一版 |
 | 配置外置 | 地址、密钥、开关只从环境变量读取；缺任何必填项启动失败，不取默认值；`.env.example` 只写键名或占位 | 默认值会让生产静默连到错误地址 | 删一个必填变量启动，应非零退出；源码中搜不到真实地址或密钥 |
 | 错误与日志分离 | 响应给用户的是固定 code 和可读文案；日志给开发者的是 request_id、路径、状态和错误原因；日志不写正文、口令、令牌、DSN | 把堆栈或 SQL 返回给用户会泄露结构，日志缺上下文无法排障 | 触发 503 和 400，检查响应无堆栈、日志有 request_id 且无机密 |
@@ -50,6 +50,9 @@ PUT    /api/materials/{id}/content           # body, change_note, base_version
 POST   /api/materials/{id}/versions/{v}/restore
 DELETE /api/materials/{id}/purge             # 仅已删除材料
 GET    /ready                                # 无需登录，返回依赖状态
+POST   /api/assignments/{id}/submissions     # body, version
+POST   /api/submissions/{id}/grade           # 202 + task_id
+GET    /api/tasks/{task_id}                  # 只读查询
 ```
 
 ## 本课最小集合
@@ -57,14 +60,16 @@ GET    /ready                                # 无需登录，返回依赖状态
 1. 分层与依赖方向：新增 `extract/`、`indexer/`、`library/` 落在规定层，handler 不写 SQL。
 2. 接口命名与版本：本 change 的 15 个新路径全部符合资源命名；不改已有路径。
 3. 统一错误结构与错误码清单：本文件维护唯一清单。
-4. 幂等声明：上表覆盖本 change 全部写接口。
-5. 配置外置：`APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS` 和现有必填项缺失即启动失败；`EMBEDDING_DIM` 在材料库 change 增加。
+4. 幂等声明：上表覆盖本 change 全部写接口；第 8 课的 `POST /grade` 必须按 submission/version 幂等。
+5. 配置外置：`APP_VERSION`、`SHUTDOWN_TIMEOUT_SECONDS` 和现有必填项缺失即启动失败；`EMBEDDING_DIM` 在材料库 change 增加；第 8 课的 `RABBITMQ_URL`、`GRADE_MAX_ATTEMPTS` 等同样缺失即失败。
 6. 分页与排序：`page/page_size/sort` 白名单和 `id` 兜底。
+7. 异步任务：提交/任务/outbox 同事务；事务内不 publish、不调模型；worker 先写结果和状态再 ACK；重复投递靠唯一约束/upsert 收敛。
 
 ## 违反时怎么处理
 
 - 新接口在 handler 里写 SQL：退回，把查询移到 `library/` 或 `db/`。
 - 出现表外错误码：先登记到本文件，再合并。
 - 写接口没有幂等声明：视为未完成，补声明和重复请求用例。
+- 在事务内 publish 消息或调用模型：退回，改成 outbox/worker；worker 在结果提交前 ACK 也退回。
 - 迁移脚本被修改：停止合并，补新迁移或恢复原文件；不得用 `--force` 绕过 checksum。
 - 例外（例如某个历史接口暂时无法改响应形状）：写进本文件的“项目事实/例外”，并在 `tasks.md` 留迁移任务，不做口头豁免。

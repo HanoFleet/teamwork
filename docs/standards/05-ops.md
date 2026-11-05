@@ -17,11 +17,11 @@
 
 > 第 7 课已把可运行代码恢复到根目录的 `backend/`、`frontend/` 和 Compose；`archive/campusclaw-baseline.zip` 只是历史快照。本文中的 `backend/`、`frontend/` 指向当前代码。
 
-- Compose 服务：`web`（Nginx）、`api`（Go）、`db`（MySQL 8）、`qdrant`；只有 `web` 映射宿主端口 `WEB_PORT`（默认 8080）。
-- 卷：`db_data`、`uploads`、`qdrant_data`；`docker compose down` 不带 `-v` 保留数据。
-- `api` 镜像分两阶段：`golang:1.25-alpine` 构建，`alpine:3.21` 运行；运行镜像当前包含 `ca-certificates`；`poppler-utils` 由材料库 change 加入。
+- Compose 服务：`web`（Nginx）、`api`（Go）、`db`（MySQL 8）、`qdrant`；第 8 课规约再增加 `rabbitmq` 和 `worker`，两者都不映射宿主端口；只有 `web` 映射宿主端口 `WEB_PORT`（默认 8080）。
+- 卷：`db_data`、`uploads`、`qdrant_data`；第 8 课 RabbitMQ 数据卷；`docker compose down` 不带 `-v` 保留数据。
+- `api` 镜像分两阶段：`golang:1.25-alpine` 构建，`alpine:3.21` 运行；运行镜像当前包含 `ca-certificates`；`poppler-utils` 由材料库 change 加入；`worker` 复用 api 镜像或单独多阶段镜像。
 - 健康检查：`/live` 是存活检查，不查依赖；`/health` 是就绪检查，查 MySQL、Qdrant、嵌入配置；`/ready` 是 `/health` 的别名。
-- 日志：stdout 单行 JSON，字段 `ts/level/msg/request_id`，请求日志加 `method/path/status/duration_ms`。
+- 日志：stdout 单行 JSON，字段 `ts/level/msg/request_id`，请求日志加 `method/path/status/duration_ms`；worker 日志加 `task_id/submission_id/student_id/status/attempts/duration_ms`。
 - 配置：全部来自 `.env`；`.env.example` 只保留键名/占位；密钥不入库。
 - 数据迁移：`schema_migrations` 按版本执行，先加后删，保持旧版本可读。
 
@@ -39,8 +39,9 @@
 | 回滚 | 保留上一版本镜像标签；回滚只切回上一标签，不反向执行迁移；步骤写进 README 并演练 | 没演练的回滚在故障时不可用 | 执行一次回滚，记录耗时；回滚后 `/ready` 通过 |
 | 数据变更顺序 | 迁移先加列/表，代码同时兼容新旧；删除列/表放到下一个版本；`0001` 基线不改 | 先删后加会让旧实例和回滚失败 | 旧库升级后旧接口仍可用；回滚版本能读新结构 |
 | 备份与恢复 | 备份 MySQL、`uploads` 卷、Qdrant 卷；保留期 7 天；每学期演练一次恢复 | 只备份数据库会丢失文件和向量 | 在临时目录恢复一次，材料详情、文件和检索都可用 |
-| 端口与网络 | 只有 `web` 有 `ports`；`db`、`qdrant`、模型网关不映射宿主；api 只在 Compose 网络内 | 暴露数据库/Qdrant 等于绕过所有授权 | `docker compose config` 检查 `ports`；宿主连接 3306/6333 失败 |
-| 版本标签与记录 | 骨架基线、每次发布打标签；`docs/verification.md` 记录版本、命令、结果、负责人 | 没有标签和记录无法复现“当时验的是什么” | `git tag` 有基线标签；验证记录含提交号 |
+| 端口与网络 | 只有 `web` 有 `ports`；`db`、`qdrant`、模型网关、`rabbitmq`、`worker` 不映射宿主；api/worker 只在 Compose 网络内 | 暴露数据库/Qdrant/消息代理等于绕过所有授权 | `docker compose config` 检查 `ports`；宿主连接 3306/6333/5672 失败 |
+| 异步任务运维 | RabbitMQ 队列 durable；重试队列按 1/2/4/8/16 秒 TTL；死信 `grade.dead` 保留 payload 和最后错误；worker 可单独 stop/start；日志按 `task_id` 可查 | 不持久化会丢任务，不隔离死信会无限重试 | 停 worker 提交仍 202；重启 rabbitmq 消息仍在；停 broker 后 outbox 补投；死信可查 |
+| 版本标签与记录 | 骨架基线、每次发布打标签；第 8 课验收后打 `async-202`；`docs/verification.md` 记录版本、命令、结果、负责人 | 没有标签和记录无法复现“当时验的是什么” | `git tag` 有基线标签；验证记录含提交号 |
 
 ## 本课最小集合
 
@@ -49,12 +50,14 @@
 3. 单行 JSON 日志 + request ID。
 4. 镜像/提交号标签和回滚路径。
 5. 端口最小暴露：只有 `web`。
-6. 备份清单：MySQL、`uploads`、Qdrant。
+6. 备份清单：MySQL、`uploads`、Qdrant；第 8 课再加 RabbitMQ durable 队列。
+7. 异步任务：worker 可独立启停；停 broker 提交仍 202；恢复后 outbox 补投；死信可查。
 
 ## 违反时怎么处理
 
 - `/health` 只报存活：改为 `/live` 只报存活，`/health` 报依赖；这是本项目的明确语义。
 - 日志多行或没有 request_id：补日志中间件，补单测。
 - Compose 暴露 db/qdrant 端口：删除 `ports`，重新跑 `docker compose config`。
+- worker 在写结果前 ACK、或提交事务内 publish：退回，按 `02-backend.md` 的 outbox/worker 规则改。
 - 没有回滚标签或步骤：阻断发布，补标签和演练记录。
 - 例外（例如本地 HTTP 下 Cookie 不加 `Secure`）：写进本规范，注明只在本地生效。

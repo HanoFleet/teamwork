@@ -1,6 +1,6 @@
 # CampusClaw 2.0 · 小组项目仓库
 
-> **本次提交重点：第 7 课可运行骨架 + 规约。** 第一眼入口是 [`SPEC.md`](SPEC.md)。当前骨架已从基线恢复并加固，`docker compose up -d --wait` 可启动；材料库是下一个 change。
+> **当前提交重点：第 7 课可运行骨架 + 第 8 课异步批改规约。** 第一眼入口是 [`SPEC.md`](SPEC.md)。骨架已从基线恢复并加固，`docker compose up -d --wait` 可启动；第 8 课的 RabbitMQ、事务性 outbox、独立 worker、任务状态机和三条判据目前只交付了规约，尚未实现；材料库是后续 change。
 
 CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材料，本班学生只读；正文切成切片后，本班可以用关键字、向量或混合检索，命中能回到原文；没有依据时不生成回答。
 
@@ -15,8 +15,10 @@ CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材
 ## 当前状态
 
 - 已归档 change：`openspec/changes/archive/2026-10-28-establish-platform-foundation/`（7 条需求、19 个场景）。
-- 活动 change：`openspec/changes/2026-10-14-upgrade-material-library/`（26 条需求、151 个场景、46 条任务），尚未实现。
+- 活动 change：`openspec/changes/2026-11-05-add-async-grading/`（10 条需求、31 个场景、30 条任务），第 8 课异步批改规约，尚未实现。
+- 活动 change：`openspec/changes/2026-10-14-upgrade-material-library/`（26 条需求、151 个场景、46 条任务），后续材料库，尚未实现。
 - 长期规约：`openspec/specs/` 下的 `platform-foundation`、`auth-upload`、`knowledge-retrieval`。
+- 第 8 课自查映射：[`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)（10 行全部有规约，实现与证据待角色二、三）。
 - 标签：`v2.0.0-baseline`（骨架基线）、`v0.1.0-skeleton`（本次骨架）、`v2.0.0-stage1-spec`（规约提交）。
 
 ## 项目启动四步
@@ -24,7 +26,7 @@ CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材
 | 步骤 | 交付物 | 当前状态 |
 | --- | --- | --- |
 | 1 建仓库 | README、`.gitignore`、LICENSE、`.env.example`、协作约定 | 已完成 |
-| 2 定规约 | foundation 四份文件（已归档）+ material-library 四份文件（活动） | 已完成 |
+| 2 定规约 | foundation 四份文件（已归档）+ material-library、async-grading 四份文件（活动） | 已完成 |
 | 3 立规范 | 八类规范、常驻规则、技能、`make check` 门禁 | 已完成 |
 | 4 落骨架 | Compose 一条命令、`/live`/`/health`、JSON 日志、优雅停机、`v0.1.0-skeleton` | 已完成 |
 
@@ -48,12 +50,15 @@ curl -fsS http://localhost:8080/health
 ## 门禁
 
 ```bash
-make check     # 规约、规范、strict、分层、密钥、变异、Go 测试/vet、前端构建
-make grade     # 独立 Compose 项目 14 项验收，生成 reports/teacher-*/ 报告
-
-`.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check` 与 `make grade`；首次 [run 40647071837](https://github.com/HanoFleet/teamwork/actions/runs/40647071837) 两个 job 均成功；后续 push 由同一工作流运行。
+make check            # 规约、规范、strict、分层、密钥、变异、Go 测试/vet、前端构建
+make check-security   # SEC-05 密钥扫描 + SEC-06 前端依赖审计
+make grade            # 独立 Compose 项目 14 项验收，生成 reports/teacher-*/ 报告
 python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、问答
 ```
+
+`.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check-security`、`make check` 与 `make grade`；首次 [run 40647071837](https://github.com/HanoFleet/teamwork/actions/runs/40647071837) 的 check/grade 均成功；后续 push 由同一工作流运行。
+
+`make check` 的 `spec_check.py` 会同时检查 material-library 和 async-grading 两个活动 change。`make check-security` 只覆盖 SEC-05、SEC-06；SEC-01～SEC-04、SEC-07 仍需角色三按 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md) 执行。
 
 `make grade` 使用独立项目名、随机端口和随机口令，不修改正式数据；报告写入 `reports/teacher-*`，证据汇总在 [`docs/lesson-07/verification.md`](docs/lesson-07/verification.md)。
 
@@ -68,7 +73,18 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 | [`specs/`](openspec/changes/archive/2026-10-28-establish-platform-foundation/specs/) | 7 条需求、19 个场景 |
 | [`tasks.md`](openspec/changes/archive/2026-10-28-establish-platform-foundation/tasks.md) | 9 条任务和验证证据 |
 
-### 后续：material library（活动）
+### 当前活动：async grading（第 8 课规约）
+
+| 文件 | 内容 |
+| --- | --- |
+| [`proposal.md`](openspec/changes/2026-11-05-add-async-grading/proposal.md) | RabbitMQ、outbox、worker、202 + task_id、三条判据 |
+| [`design.md`](openspec/changes/2026-11-05-add-async-grading/design.md) | 队列拓扑、状态机、事务序列、幂等键、失败分类 |
+| [`specs/async-grading/spec.md`](openspec/changes/2026-11-05-add-async-grading/specs/async-grading/spec.md) | 10 条需求、31 个场景 |
+| [`tasks.md`](openspec/changes/2026-11-05-add-async-grading/tasks.md) | 30 条任务，尚未勾选 |
+
+本 change 只交付规约；Compose 目前仍是 web/api/db/qdrant，`rabbitmq`、`worker`、`grade_tasks`、`outbox_messages` 和 `/api/tasks/{id}` 都要等角色二按任务实现。逐行自查见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)。
+
+### 后续：material library（活动规约）
 
 | 文件 | 内容 |
 | --- | --- |
@@ -85,6 +101,7 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 | `GET /health` | 就绪；检查 MySQL、Qdrant、嵌入，200 `ready` / 503 `not_ready` |
 | `GET /ready` | `/health` 别名 |
 | 现有 `/api/login`、`/api/materials`、`/api/search`、`/api/ask` | 保持迭代 1/2 行为；本阶段不改业务 |
+| 第 8 课规约接口（未实现） | `POST /api/assignments/{id}/submissions`、`POST /api/submissions/{id}/grade` 返回 202 + `task_id`、`GET /api/tasks/{task_id}` 只读查询 |
 
 `/health` 和 `/ready` 拒绝 query 参数（400），非 GET 返回 405；未知 `/api/*` 返回 404；未登录业务接口返回 401。
 
@@ -110,8 +127,8 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 ├── SPEC.md                     本次提交的一页入口
 ├── README.md                   本文件
 ├── AGENTS.md                   项目规则
-├── Makefile                    up / check / grade
-├── docker-compose.yml          web / api / db / qdrant
+├── Makefile                    up / check / check-security / grade
+├── docker-compose.yml          web / api / db / qdrant（第 8 课规约将增加 rabbitmq / worker）
 ├── .env.example                环境变量模板，只写键名和占位
 ├── LICENSE                     未选择许可证说明
 ├── backend/                    Go api：cmd/server、httpapi、retrieval、db、
@@ -128,8 +145,10 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 │   ├── spec_check.py           规约结构自查
 │   ├── standards_check.py      八类规范自查
 │   └── verify.py               迭代 1/2 验收
+├── reports/                    第 8 课证据目录；当前只有说明，实际报告待角色三
 ├── docs/
-│   ├── framework/verification.md + teacher-report.html/json
+│   ├── lesson-07/verification.md + teacher-report.html/json
+│   ├── lesson-08/self-check.md  第 8 课 10 行自查映射
 │   ├── standards/01-08
 │   ├── data-dictionary.md
 │   ├── 阶段一-交付说明.md
@@ -139,7 +158,8 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 │   ├── specs/                  platform-foundation、auth-upload、knowledge-retrieval
 │   └── changes/
 │       ├── archive/            历史 change（含本次 foundation）
-│       └── 2026-10-14-upgrade-material-library/  后续材料库
+│       ├── 2026-10-14-upgrade-material-library/  后续材料库
+│       └── 2026-11-05-add-async-grading/         第 8 课异步批改
 └── archive/
     ├── campusclaw-baseline.zip 基线历史快照
     └── README.md               归档说明
@@ -150,12 +170,13 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 | 检查项 | 现状 |
 | --- | --- |
 | README 有项目定位和克隆到启动步骤 | 有；`docker compose up --build -d --wait` |
-| `.gitignore` 过滤依赖、构建产物、密钥、临时文件 | 有；含 `node_modules`、`dist`、`.env`、`reports`、`.env.acceptance` |
+| `.gitignore` 过滤依赖、构建产物、密钥、临时文件 | 有；含 `node_modules`、`dist`、`.env`、`reports/teacher-*`、`.env.acceptance` |
 | LICENSE 或“未选择”说明 | 有；见下面“许可证” |
 | 协作约定写进 README | 有；主干唯一、变更命名、提交依据、每人跑通、密钥边界 |
 | `.env.example` 只写键名和占位 | 有 |
-| 变更目录按 `YYYY-MM-DD-英文名` 命名 | 有；foundation 和 material-library 都带日期 |
+| 变更目录按 `YYYY-MM-DD-英文名` 命名 | 有；foundation、material-library、async-grading 都带日期 |
 | 归档后的规约能在主干检索到 | 有；`openspec/specs/` 和 `openspec/changes/archive/` |
+| 第 8 课 10 行自查有规约映射 | 有；`docs/lesson-08/self-check.md`，实现与证据待角色二、三 |
 | 全部提交历史检索不到密钥 | `make check` 的 `secret_scan.py` 已扫描工作树和历史 |
 | 主干保护、直接推送被拒绝 | 需在 GitHub 仓库设置中开启；功能开发走 `change/<change-name>` |
 | 每位成员独立克隆跑通 | 待组员按 README 各自执行一次 |
@@ -177,4 +198,5 @@ python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、
 ## 链接
 
 - 团队仓库：https://github.com/HanoFleet/teamwork
-- 课程案例：https://devops.hello1023.com/课件/第7课-课件-小组项目启动/pages/case.html
+- 第 7 课案例：https://devops.hello1023.com/课件/第7课-课件-小组项目启动/pages/case.html
+- 第 8 课任务清单：https://devops.hello1023.com/课程任务清单-第8课.html
