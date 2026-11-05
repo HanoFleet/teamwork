@@ -56,7 +56,7 @@ make grade            # 独立 Compose 项目 14 项验收，生成 reports/teac
 python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、问答
 ```
 
-`.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check-security`、`make check` 与 `make grade`；首次 [run 40647071837](https://github.com/HanoFleet/teamwork/actions/runs/40647071837) 的 check/grade 均成功；后续 push 由同一工作流运行。
+`.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check-security`、`make check` 与 `make grade`；首次 [run 40647071837](https://github.com/HanoFleet/teamwork/actions/runs/40647071837) 的 check/grade 均成功；第 8 课规约推送后的 [run 41978412834](https://github.com/HanoFleet/teamwork/actions/runs/41978412834) 两个 job 也均成功。
 
 `make check` 的 `spec_check.py` 会同时检查 material-library 和 async-grading 两个活动 change。`make check-security` 只覆盖 SEC-05、SEC-06；SEC-01～SEC-04、SEC-07 仍需角色三按 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md) 执行。
 
