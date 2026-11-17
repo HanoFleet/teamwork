@@ -4,17 +4,23 @@
 from __future__ import annotations
 
 import json
+import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from security_cases import load_cases  # noqa: E402
 
 
 def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
     note("## 安全回归（第 9 课）")
+    cases = {item["kind"]: item for item in load_cases()}
+    note("注入反例：" + "、".join(item["path"] for item in cases.values()))
 
     student = login("student_a1", ENV["SEED_STUDENT_A_PASSWORD"])
     student_b = login("student_b1", ENV["SEED_STUDENT_B_PASSWORD"])
@@ -102,11 +108,49 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
     note("PASS CSRF 无 token/跨源 403，正确 token 200")
 
     # SEC-03：学生写配置 403 且数据不变；教师写成功；跨班助手 404。
+    # 拒绝记录按该学生加时间窗从审计接口回查，不靠直接数表。
+    student_id = jcall(student, "GET", "/api/me")[1]["id"]
+    window_start = datetime.now(timezone.utc) - timedelta(minutes=2)
     before = mysql("SELECT description FROM skills WHERE skill_key='grade'")
     code, body, _ = jcall(student, "PATCH", "/api/skills/grade", json.dumps({"description": "student-must-not"}).encode(), {"Content-Type": "application/json"})
+    window_end = datetime.now(timezone.utc) + timedelta(minutes=2)
     after = mysql("SELECT description FROM skills WHERE skill_key='grade'")
     if code != 403 or before != after:
         fail(f"学生改技能应 403 且不变：{code} {before!r}->{after!r}")
+    def audit_stamp(value: datetime) -> str:
+        return value.strftime("%Y-%m-%dT%H:%M:%SZ")
+    code, body, _ = jcall(
+        teacher,
+        "GET",
+        "/api/audit-logs?operator_id="
+        + str(student_id)
+        + "&from="
+        + urllib.parse.quote(audit_stamp(window_start))
+        + "&to="
+        + urllib.parse.quote(audit_stamp(window_end))
+        + "&limit=20",
+    )
+    logs = body.get("logs") if isinstance(body, dict) else None
+    matched = [
+        row
+        for row in (logs or [])
+        if row.get("operator_username") == "student_a1"
+        and row.get("operation") == "config.change"
+        and row.get("result_status") == "denied"
+        and row.get("error_code") == "forbidden"
+    ]
+    if code != 200 or not matched:
+        fail(f"按学生和时间窗应查到 403 审计：{code} {body}")
+    code, old, _ = jcall(
+        teacher,
+        "GET",
+        "/api/audit-logs?operator_id="
+        + str(student_id)
+        + "&from=2000-01-01T00:00:00Z&to=2000-01-02T00:00:00Z&limit=20",
+    )
+    old_logs = old.get("logs") if isinstance(old, dict) else None
+    if code != 200 or old_logs:
+        fail(f"过去时间窗不应返回审计行：{code} {old}")
     code, body, _ = jcall(teacher, "PATCH", "/api/skills/grade", json.dumps({"description": original_desc}).encode(), {"Content-Type": "application/json"})
     if code != 200:
         fail(f"教师恢复技能描述失败：{code} {body}")
@@ -116,10 +160,7 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
     code, body, _ = jcall(teacher, "PATCH", f"/api/assistants/{b_assistants[0]['id']}", json.dumps({"name": "cross-class"}).encode(), {"Content-Type": "application/json"})
     if code != 404:
         fail(f"跨班助手应 404，实际 {code} {body}")
-    denied = mysql("SELECT COUNT(*) FROM audit_logs WHERE operation='config.change' AND result_status='denied' AND operator_username='student_a1'")
-    if denied == "0":
-        fail("学生配置拒绝没有审计行")
-    note("PASS SEC-03 学生 403/数据不变，教师成功，跨班 404，拒绝留痕")
+    note("PASS SEC-03 学生 403/数据不变，教师成功，跨班 404，时间窗查到 denied")
 
     # SEC-04：技能入口只能操作自己的提交；他人/教师 404 且无 task/outbox/result。
     assignments = jcall(student, "GET", "/api/assignments")[1]["assignments"]

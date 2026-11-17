@@ -51,8 +51,8 @@ curl -fsS http://localhost:8080/health
 ## 门禁
 
 ```bash
-make check            # 规约、规范、strict、分层、密钥、变异、Go 测试/vet、前端构建
-make check-security   # security_gate：SEC-05 密钥 + SEC-06 依赖，命中非 0
+make check            # 规约、规范、strict、分层、密钥、变异、Go 测试/vet、前端构建、注入反例文件
+make check-security   # security_gate：SEC-05 密钥 + SEC-06 npm/govulncheck，命中非 0
 make grade            # 独立 Compose 项目 18 项（含 A15 异步、A16-A18 安全），生成 reports/teacher-*/ 报告
 python3 scripts/verify.py   # 迭代 1/2、第 8 课三条判据、第 9 课安全回归
 cd frontend/e2e && npx playwright test   # /assignments 提交并轮询
@@ -60,7 +60,7 @@ cd frontend/e2e && npx playwright test   # /assignments 提交并轮询
 
 `.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check-security`、`make check`、`make grade` 和 `verify`（Compose + 三条异步判据 + 安全回归 + Playwright）；main 上 [run 44044051264](https://github.com/HanoFleet/teamwork/actions/runs/44044051264) 的 check/grade/verify 三个 job 均成功。
 
-`make check` 的 `spec_check.py` 检查活动 change `material-library`；归档的 async-grading/security-hardening 由 `openspec validate --all --strict` 和长期 specs 检查。`make check-security` 是真实门禁：假密钥 self-test 退出 1，正常仓库退出 0；SEC-01～SEC-04、SEC-07/SEC-08 由 `verify.py` 和 `reports/` 复测。
+`make check` 的 `spec_check.py` 检查活动 change `material-library`；归档的 async-grading/security-hardening 由 `openspec validate --all --strict` 和长期 specs 检查。`make check-security` 是真实门禁：假密钥 self-test 退出 1，正常仓库退出 0；Go 依赖由 `govulncheck` v1.9.0 在 Go 1.26.11 上复扫，有通报则退出 1。SEC-01～SEC-04、SEC-07/SEC-08 由 `verify.py` 和 `reports/` 复测。注入反例文件在 `make check` 的 `security_cases.py` 里检查。
 
 `make grade` 使用独立项目名、随机端口和随机口令，不修改正式数据；报告写入 `reports/teacher-*`，证据汇总在 [`docs/verification.md`](docs/verification.md) 与 [`docs/lesson-09/checklist.md`](docs/lesson-09/checklist.md)。
 

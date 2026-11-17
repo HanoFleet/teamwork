@@ -1,0 +1,8 @@
+{
+  "id": "csrf-skill",
+  "kind": "csrf",
+  "title": "CSRF 反例",
+  "precondition": "教师已登录。会话 Cookie 为 HttpOnly、SameSite=Lax。Cookie 写请求必须带 X-CSRF-Token。",
+  "operation": "PATCH /api/skills/grade：不带令牌一次，带令牌但 Origin 为 https://evil.example 一次，带正确令牌且 Origin 为本站一次。",
+  "expected": "缺令牌和跨源都返回 403，技能描述不变。正确令牌且同源返回 200。"
+}

@@ -19,7 +19,7 @@
 
 - Compose 服务：`web`（Nginx）、`api`（Go）、`db`（MySQL 8）、`qdrant`；第 8 课规约再增加 `rabbitmq` 和 `worker`，两者都不映射宿主端口；只有 `web` 映射宿主端口 `WEB_PORT`（默认 8080）。
 - 卷：`db_data`、`uploads`、`qdrant_data`；第 8 课 RabbitMQ 数据卷；`docker compose down` 不带 `-v` 保留数据。
-- `api` 镜像分两阶段：`golang:1.25-alpine` 构建，`alpine:3.21` 运行；运行镜像当前包含 `ca-certificates`；`poppler-utils` 由材料库 change 加入；`worker` 复用 api 镜像或单独多阶段镜像。
+- `api` 镜像分两阶段：`golang:1.26.11-alpine` 构建，`alpine:3.21` 运行；运行镜像当前包含 `ca-certificates`；`poppler-utils` 由材料库 change 加入；`worker` 复用 api 镜像或单独多阶段镜像。Go 1.26.11 是第 9 课依赖清零后的工具链，`backend/go.mod` 的 `toolchain` 与镜像补丁版本一致。
 - 健康检查：`/live` 是存活检查，不查依赖；`/health` 是就绪检查，查 MySQL、Qdrant、嵌入配置；`/ready` 是 `/health` 的别名。
 - 日志：stdout 单行 JSON，字段 `ts/level/msg/request_id`，请求日志加 `method/path/status/duration_ms`；worker 日志加 `task_id/submission_id/student_id/status/attempts/duration_ms`。
 - 配置：全部来自 `.env`；`.env.example` 只保留键名/占位；密钥不入库。

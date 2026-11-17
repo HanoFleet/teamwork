@@ -20,6 +20,8 @@
 | `sec08-experiment.md` | SEC-08 四步实验实际现象 |
 | `review-02.md`、`review-03.md` | AI 自审/脚本复现记录（不冒充人工） |
 | `e2e-playwright.md` | `/assignments` 提交并轮询到 succeeded |
+| `govuln-disposition.md` | 第 9 课 Go 依赖升级和清零后的扫描 |
+| `xss-page-source.md` | `/materials` 列表页脚本标题的页面源码 |
 
 ## 目录规则
 
