@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-角色二已在 2026-11-06 跑过第 8 课三条判据；2026-11-17 已完成第 9 课安全加固并跑了 `verify.py`、`make grade` 18/18、Playwright 和 `security_gate` 红绿；CI run 44042564926 的 check/grade/verify 全绿。人工独立复评仍待角色三。当前证据：
+角色二已在 2026-11-06 跑过第 8 课三条判据；2026-11-17 已完成第 9 课安全加固并跑了 `verify.py`、`make grade` 18/18、Playwright 和 `security_gate` 红绿；CI run 44044051264 的 check/grade/verify 全绿。人工独立复评仍待角色三。当前证据：
 
 | 文件 | 内容 |
 | --- | --- |

@@ -58,7 +58,7 @@ python3 scripts/verify.py   # 迭代 1/2、第 8 课三条判据、第 9 课安�
 cd frontend/e2e && npx playwright test   # /assignments 提交并轮询
 ```
 
-`.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check-security`、`make check`、`make grade` 和 `verify`（Compose + 三条异步判据 + 安全回归 + Playwright）；第 9 课分支 [run 44042564926](https://github.com/HanoFleet/teamwork/actions/runs/44042564926) 的 check/grade/verify 三个 job 均成功。
+`.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check-security`、`make check`、`make grade` 和 `verify`（Compose + 三条异步判据 + 安全回归 + Playwright）；main 上 [run 44044051264](https://github.com/HanoFleet/teamwork/actions/runs/44044051264) 的 check/grade/verify 三个 job 均成功。
 
 `make check` 的 `spec_check.py` 检查活动 change `material-library`；归档的 async-grading/security-hardening 由 `openspec validate --all --strict` 和长期 specs 检查。`make check-security` 是真实门禁：假密钥 self-test 退出 1，正常仓库退出 0；SEC-01～SEC-04、SEC-07/SEC-08 由 `verify.py` 和 `reports/` 复测。
 
