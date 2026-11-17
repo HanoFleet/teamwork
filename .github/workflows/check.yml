@@ -48,9 +48,11 @@ jobs:
         run: docker compose up --build -d --wait
       - name: Full verify (three async judgments + security)
         run: python3 scripts/verify.py
-      - name: Install Playwright browser
-        run: cd frontend/e2e && npm ci && npx playwright install --with-deps chromium
+      - name: Install e2e dependencies
+        run: cd frontend/e2e && npm ci
       - name: Playwright assignments page
+        env:
+          PLAYWRIGHT_CHANNEL: chrome
         run: cd frontend/e2e && npx playwright test
       - name: Upload E2E artifacts
         if: always()
