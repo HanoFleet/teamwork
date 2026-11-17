@@ -7,7 +7,7 @@
 | 三、注入反例 | `scripts/security_test.py`、`apitest/cases/security/README.md`；SQLi/XSS/CSRF 均 PASS | 绿 |
 | 四、资产处置 SEC-05～06 | `scripts/security_gate.py`、`reports/gate-red-green.md`、`reports/security-baseline.md` | 门禁红绿；npm 0；密钥 0 |
 | 五、日志与 SEC-08 | `audit_logs`、`GET /api/audit-logs`、`docs/lesson-09/sec08/`、`reports/sec08-experiment.md` | 七列可查；第四步绿 |
-| 六、回归与归档 | `make check`、`make grade`、`verify.py`、Playwright、`async-202`、async change 归档 | 代码/回归完成；归档见 README/提交记录 |
+| 六、回归与归档 | `make check`、`make grade`、`verify.py`、Playwright、`async-202`、async change 归档 | 已完成；async 与 harden change 均已归档 |
 | 七、核查清单 | `reports/security-fix-log.md`、`reports/review-02.md`、`review-03.md` | 脚本/AI 自审完成；人工复评待角色三 |
 
 ## 未完成/待人工

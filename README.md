@@ -1,6 +1,6 @@
 # CampusClaw 2.0 · 小组项目仓库
 
-> **当前提交重点：第 7 课骨架 + 第 8 课异步批改 + 第 9 课安全加固。** 第一眼入口是 [`SPEC.md`](SPEC.md)。Compose 六服务可启动；第 8 课异步判据、第 9 课 CSRF/配置权限/审计/SQLi-XSS-CSRF 反例和 SEC-08 实验均已在本地验证。证据见 [`reports/`](reports/)。材料库是后续 change。
+> **当前提交重点：第 7 课骨架 + 第 8 课异步批改（已归档）+ 第 9 课安全加固（已归档）。** 第一眼入口是 [`SPEC.md`](SPEC.md)。Compose 六服务可启动；第 8 课异步判据、第 9 课 CSRF/配置权限/审计/SQLi-XSS-CSRF 反例和 SEC-08 实验均已通过本地、隔离验收和 CI。证据见 [`reports/`](reports/)。材料库是后续 change。
 
 CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材料，本班学生只读；正文切成切片后，本班可以用关键字、向量或混合检索，命中能回到原文；没有依据时不生成回答。
 
@@ -14,20 +14,18 @@ CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材
 
 ## 当前状态
 
-- 已归档 change：`openspec/changes/archive/2026-10-28-establish-platform-foundation/`（7 条需求、19 个场景）。
-- 活动 change：`openspec/changes/2026-11-05-add-async-grading/`（10 条需求、32 个场景、30 条任务），第 8 课异步批改已实现；任务和归档见 `tasks.md`/提交记录。
-- 活动 change：`openspec/changes/2026-11-17-harden-security/`（6 条需求、29 个场景、40 条任务），第 9 课 CSRF、配置权限、技能入口、审计和注入反例已实现。
+- 已归档 change：`2026-10-28-establish-platform-foundation`（7 需求/19 场景）、`2026-11-05-add-async-grading`（10/32/30）、`2026-11-17-harden-security`（6/29/40）。
 - 活动 change：`openspec/changes/2026-10-14-upgrade-material-library/`（26 条需求、151 个场景、46 条任务），后续材料库，尚未实现。
-- 长期规约：`openspec/specs/` 下的 `platform-foundation`、`auth-upload`、`knowledge-retrieval`。
+- 长期规约：`openspec/specs/` 下的 `platform-foundation`、`auth-upload`、`knowledge-retrieval`、`async-grading`、`security-hardening`。
 - 第 8 课自查映射：[`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)；第 9 课逐节对照：[`docs/lesson-09/checklist.md`](docs/lesson-09/checklist.md)。安全报告在 [`reports/security-fix-log.md`](reports/security-fix-log.md)、[`reports/gate-red-green.md`](reports/gate-red-green.md)、[`reports/sec08-experiment.md`](reports/sec08-experiment.md)。
-- 标签：`v2.0.0-baseline`（骨架基线）、`v0.1.0-skeleton`（本次骨架）、`v2.0.0-stage1-spec`（规约提交）。
+- 标签：`v2.0.0-baseline`、`v0.1.0-skeleton`、`v2.0.0-stage1-spec`、`async-202`（第 8 课验收）。
 
 ## 项目启动四步
 
 | 步骤 | 交付物 | 当前状态 |
 | --- | --- | --- |
 | 1 建仓库 | README、`.gitignore`、LICENSE、`.env.example`、协作约定 | 已完成 |
-| 2 定规约 | foundation 四份文件（已归档）+ material-library、async-grading 四份文件（活动） | 已完成 |
+| 2 定规约 | foundation、async-grading、security-hardening 四份文件（已归档）+ material-library 四份文件（活动） | 已完成 |
 | 3 立规范 | 八类规范、常驻规则、技能、`make check` 门禁 | 已完成 |
 | 4 落骨架 | Compose 一条命令、`/live`/`/health`、JSON 日志、优雅停机、`v0.1.0-skeleton` | 已完成 |
 
@@ -60,9 +58,9 @@ python3 scripts/verify.py   # 迭代 1/2、第 8 课三条判据、第 9 课安�
 cd frontend/e2e && npx playwright test   # /assignments 提交并轮询
 ```
 
-`.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check-security`、`make check` 与 `make grade`；首次 [run 40647071837](https://github.com/HanoFleet/teamwork/actions/runs/40647071837) 的 check/grade 均成功；第 8 课规约推送后的 [run 41978412834](https://github.com/HanoFleet/teamwork/actions/runs/41978412834) 两个 job 也均成功。
+`.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check-security`、`make check`、`make grade` 和 `verify`（Compose + 三条异步判据 + 安全回归 + Playwright）；第 9 课分支 [run 44042564926](https://github.com/HanoFleet/teamwork/actions/runs/44042564926) 的 check/grade/verify 三个 job 均成功。
 
-`make check` 的 `spec_check.py` 会同时检查 material-library、async-grading 和 security-hardening 三个活动 change。`make check-security` 现在是真实门禁：假密钥 self-test 退出 1，正常仓库退出 0；SEC-01～SEC-04、SEC-07/SEC-08 由 `verify.py` 和 `reports/` 复测。
+`make check` 的 `spec_check.py` 检查活动 change `material-library`；归档的 async-grading/security-hardening 由 `openspec validate --all --strict` 和长期 specs 检查。`make check-security` 是真实门禁：假密钥 self-test 退出 1，正常仓库退出 0；SEC-01～SEC-04、SEC-07/SEC-08 由 `verify.py` 和 `reports/` 复测。
 
 `make grade` 使用独立项目名、随机端口和随机口令，不修改正式数据；报告写入 `reports/teacher-*`，证据汇总在 [`docs/verification.md`](docs/verification.md) 与 [`docs/lesson-09/checklist.md`](docs/lesson-09/checklist.md)。
 
@@ -77,16 +75,25 @@ cd frontend/e2e && npx playwright test   # /assignments 提交并轮询
 | [`specs/`](openspec/changes/archive/2026-10-28-establish-platform-foundation/specs/) | 7 条需求、19 个场景 |
 | [`tasks.md`](openspec/changes/archive/2026-10-28-establish-platform-foundation/tasks.md) | 9 条任务和验证证据 |
 
-### 当前活动：async grading（第 8 课规约）
+### 已归档：async grading（第 8 课）
 
 | 文件 | 内容 |
 | --- | --- |
-| [`proposal.md`](openspec/changes/2026-11-05-add-async-grading/proposal.md) | RabbitMQ、outbox、worker、202 + task_id、三条判据 |
-| [`design.md`](openspec/changes/2026-11-05-add-async-grading/design.md) | 队列拓扑、状态机、事务序列、幂等键、失败分类 |
-| [`specs/async-grading/spec.md`](openspec/changes/2026-11-05-add-async-grading/specs/async-grading/spec.md) | 10 条需求、32 个场景 |
-| [`tasks.md`](openspec/changes/2026-11-05-add-async-grading/tasks.md) | 30 条任务，尚未勾选 |
+| [`proposal.md`](openspec/changes/archive/2026-11-05-add-async-grading/proposal.md) | RabbitMQ、outbox、worker、202 + task_id、三条判据 |
+| [`design.md`](openspec/changes/archive/2026-11-05-add-async-grading/design.md) | 队列拓扑、状态机、事务序列、幂等键、失败分类 |
+| [`specs/async-grading/spec.md`](openspec/specs/async-grading/spec.md) | 10 条需求、32 个场景，已并入长期 spec |
+| [`tasks.md`](openspec/changes/archive/2026-11-05-add-async-grading/tasks.md) | 30 条任务全部勾选，`async-202` |
 
-实现位于分支 `change/2026-11-05-add-async-grading`。Compose 含 web/api/db/qdrant/rabbitmq/worker；`tasks.md` 勾选、SEC 报告和 `async-202` 标签仍待角色三验收。逐行自查见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)。
+### 已归档：security hardening（第 9 课）
+
+| 文件 | 内容 |
+| --- | --- |
+| [`proposal.md`](openspec/changes/archive/2026-11-17-harden-security/proposal.md) | CSRF、配置权限、技能入口、审计、注入反例、门禁和 SEC-08 |
+| [`design.md`](openspec/changes/archive/2026-11-17-harden-security/design.md) | 会话 token、审计表、catalog、技能包装、安全测试 |
+| [`specs/security-hardening/spec.md`](openspec/specs/security-hardening/spec.md) | 6 条需求、29 个场景，已并入长期 spec |
+| [`tasks.md`](openspec/changes/archive/2026-11-17-harden-security/tasks.md) | 40 条任务全部勾选 |
+
+逐节对照见 [`docs/lesson-09/checklist.md`](docs/lesson-09/checklist.md)。
 
 ### 后续：material library（活动规约）
 
@@ -106,6 +113,7 @@ cd frontend/e2e && npx playwright test   # /assignments 提交并轮询
 | `GET /ready` | `/health` 别名 |
 | 现有 `/api/login`、`/api/materials`、`/api/search`、`/api/ask` | 保持迭代 1/2 行为；本阶段不改业务 |
 | 第 8 课异步批改 | `GET /api/assignments`、`POST /api/assignments/{id}/submissions`、`POST /api/submissions/{id}/grade` 返回 202 + `task_id`、`GET /api/tasks/{task_id}` 只读查询 |
+| 第 9 课安全配置 | `GET/PATCH /api/skills`、`GET/PATCH /api/assistants`、`POST /api/skills/{key}/run`、`GET /api/audit-logs`（教师） |
 
 `/health` 和 `/ready` 拒绝 query 参数（400），非 GET 返回 405；未知 `/api/*` 返回 404；未登录业务接口返回 401。
 
@@ -149,25 +157,34 @@ cd frontend/e2e && npx playwright test   # /assignments 提交并轮询
 │   ├── mutation.py             分层门禁变异验证
 │   ├── spec_check.py           规约结构自查
 │   ├── standards_check.py      八类规范自查
-│   ├── verify.py               迭代 1/2 与第 8 课异步批改验收
-│   └── async_test.py           第 8 课三条判据
+│   ├── verify.py               迭代 1/2、第 8 课判据、第 9 课安全回归
+│   ├── async_test.py           第 8 课三条判据
+│   ├── security_test.py        第 9 课 SQLi/XSS/CSRF/配置/审计
+│   ├── security_gate.py        SEC-05/06 门禁与红绿自测
+│   ├── security_static.py      前端 token/raw HTML 静态检查
+│   ├── sec08_experiment.py     SEC-08 四步实验
+│   └── ci_env.py               CI verify job 隔离环境
 ├── apitest/cases/async/        第 8 课三条判据用例说明
-├── reports/                    角色二三条判据首次结果；SEC 报告待角色三
+├── apitest/cases/security/     第 9 课安全反例说明
+├── frontend/e2e/               Playwright /assignments 测试
+├── reports/                    第 8/9 课实际证据与复评记录
 ├── docs/
 │   ├── lesson-07/verification.md + teacher-report.html/json
 │   ├── lesson-08/self-check.md  第 8 课 10 行自查映射
 │   ├── lesson-08/security-inventory.md  受保护/写入接口清单
+│   ├── lesson-09/checklist.md  第 9 课七节对照
+│   ├── lesson-09/sec08/        SEC-08 素材
 │   ├── standards/01-08
 │   ├── data-dictionary.md
 │   ├── 阶段一-交付说明.md
 │   ├── 项目启动-四步核对.md
 │   └── 个人贡献记录.md
 ├── openspec/
-│   ├── specs/                  platform-foundation、auth-upload、knowledge-retrieval
+│   ├── specs/                  platform-foundation、auth-upload、knowledge-retrieval、
+│   │                           async-grading、security-hardening
 │   └── changes/
-│       ├── archive/            历史 change（含本次 foundation）
-│       ├── 2026-10-14-upgrade-material-library/  后续材料库
-│       └── 2026-11-05-add-async-grading/         第 8 课异步批改
+│       ├── archive/            foundation、async-grading、security-hardening
+│       └── 2026-10-14-upgrade-material-library/  后续材料库
 └── archive/
     ├── campusclaw-baseline.zip 基线历史快照
     └── README.md               归档说明

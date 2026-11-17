@@ -47,8 +47,8 @@
 - [x] **6.1 判据一：P95 不随批改增长** — 涉及：`scripts/`、`reports/async-grading.md`。本地模式设 `GRADE_LOCAL_DELAY_MS=2000`，连续提交 20 份不同内容，记录 `time_total`；P95 < 500ms，响应无分数。verify: 报告含命令、20 个数值、P95 和结论。
 - [x] **6.2 判据二：停 worker 不丢任务** — 涉及：`reports/async-grading.md`。停 worker 提交，查 pending；启动 worker，轮询到 succeeded。verify: 报告含 stop/start 命令、状态序列、耗时。
 - [x] **6.3 判据三：重复只有一份结果** — 涉及：`reports/risk-concurrency.md`、`reports/risk-transaction.md`。重复请求+重复投递；结果一行，attempts 增加，score 不变；记录事务/孤儿检查。verify: 报告含 SQL/接口输出和结论。
-- [ ] **6.4 自动化** — 涉及：`apitest/cases/async/`、`make check`、`.github/workflows/check.yml`。三条判据转为用例，CI 运行。verify: `make check` 全绿；CI run 成功。
-- [ ] **6.5 观测与标签** — 涉及：`reports/`、Git。记录队列长度、执行耗时、attempts、死信数量；打 `async-202` 标签。verify: `git tag -l`；报告含观测值。
+- [x] **6.4 自动化** — 涉及：`apitest/cases/async/`、`make check`、`.github/workflows/check.yml`。三条判据转为用例，CI 运行。verify: `make check` 全绿；CI run 成功。
+- [x] **6.5 观测与标签** — 涉及：`reports/`、Git。记录队列长度、执行耗时、attempts、死信数量；打 `async-202` 标签。verify: `git tag -l`；报告含观测值。
 
 ## 7. 第 8 课安全自查（角色三）
 

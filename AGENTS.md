@@ -4,11 +4,11 @@
 
 ## 当前阶段
 
-- 第 7 课骨架已完成、归档并合并到 `main`。第 8 课异步批改 `openspec/changes/2026-11-05-add-async-grading/` 已实现并完成本地/隔离验收；第 9 课安全加固 `openspec/changes/2026-11-17-harden-security/` 已实现，含 CSRF、配置权限、技能入口、审计和注入反例。材料库 `2026-10-14-upgrade-material-library/` 是后续活动规约，尚未实现。
+- 第 7 课骨架、第 8 课异步批改（`async-202`）、第 9 课安全加固均已实现、验收并归档；材料库 `2026-10-14-upgrade-material-library/` 是当前活动规约，尚未实现。
 - 根目录的 `backend/`、`frontend/`、Compose 是可运行工程；`archive/campusclaw-baseline.zip` 只是历史快照，不用它代替当前代码。
-- 第一眼入口是 `SPEC.md`；第 8 课入口是 async-grading change，第 9 课入口是 harden-security change，后续入口是 material-library change。第 8 课自查在 `docs/lesson-08/self-check.md`，第 9 课逐节对照在 `docs/lesson-09/checklist.md`。
+- 第一眼入口是 `SPEC.md`；已归档入口在 `openspec/changes/archive/`，当前入口是 material-library change。第 8 课自查在 `docs/lesson-08/self-check.md`，第 9 课逐节对照在 `docs/lesson-09/checklist.md`。
 - 门禁：`make check`、`make check-security`、`make grade`、`python3 scripts/verify.py`、`cd frontend/e2e && npx playwright test`；`openspec validate --all --strict` 和两个结构自查也必须 0。
-- 骨架的 1.8/1.9 已完成（CI 运行成功、证据归档 `docs/lesson-07/`、标签 `v0.1.0-skeleton`）；async-grading 与 harden-security 的实现和证据已落地；material-library 的 46 条任务一条都未勾选。任务勾选以 `docs/verification.md`、`reports/` 的实际输出为准。
+- 骨架、async-grading、harden-security 的 CI 和证据已完成；material-library 的 46 条任务一条都未勾选。任务勾选以 `docs/verification.md`、`reports/` 的实际输出为准。
 - 现有 `httpapi/auth.go`、`materials.go`、`server.go` 的 SQL 是 legacy 例外；新增 `httpapi` 文件不得写 SQL，SQL 放 `catalog`/`grading`/`audit` 等包。第 8 课提交/任务/结果写入放 `grading`/`worker`；第 9 课配置/审计写入放 `catalog`/`audit`，技能入口只包装既有服务。
 
 ## 工程规范（必读）
@@ -54,7 +54,7 @@
 
 - 完成定义五项：对应场景全部满足、用例通过、门禁通过、文档同步、验证记录归档；缺一即未完成。
 - 合并前门禁：`npx -y @fission-ai/openspec@1.15.0 validate --all --strict`、`python3 scripts/spec_check.py`、`python3 scripts/standards_check.py`、`make check`、`make check-security`、`make grade`、`python3 scripts/verify.py`、Playwright e2e。任一非零退出即阻断。
-- 变化规模：一次 change 不超过一个 capability 或一组任务；foundation 已归档，async-grading 与 harden-security 已实现，material-library 是后续大 change，后续功能必须再拆。
+- 变化规模：一次 change 不超过一个 capability 或一组任务；foundation、async-grading、harden-security 已归档，material-library 是当前大 change，后续功能必须再拆。
 - 评审检查表：先看边界和失败路径，再看接口和数据模型，最后看任务顺序和证据；工具检查格式、错误码、密钥、依赖和测试结果。
 - 证据归档：变更说明、验证记录、评审结论放进 `docs/`，按 change 名可查；不接受“已实现”这类口头结论。
 - 提交信息：`<type>(<capability>): <task-id> <一句话>`，正文写 `Change:`、`Task:`、`Spec:`、`Verify:` 四字段；`Spec:` 写依据的 capability/Requirement，至少能对应到 `specs/` 里的标题。

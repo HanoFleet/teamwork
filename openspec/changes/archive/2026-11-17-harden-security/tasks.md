@@ -64,10 +64,10 @@
 - [x] **8.2 修复证据** — 涉及：`reports/security-fix-log.md`、`reports/security-precheck.md`、`reports/security-baseline.md`。SEC-03/04/07/08 修复前后对照；更新基线命令，删除不存在的 `week8_security.py` 说明。verify: 每个红项有修复后实际值；基线与当前仓库命令一致。
 - [x] **8.3 复评记录** — 涉及：`reports/review-02.md`、`reports/review-03.md`。至少两份来自 AI 自审/脚本输出，写清手段/查了什么/判据/结果；不冒充人工签字。verify: 记录可检索；引用实际命令和输出。
 - [x] **8.4 Playwright 第 8 课 5.2** — 涉及：`frontend/e2e/`（含 `playwright.config.ts`、`package.json`）。从 `/assignments` 提交并轮询到 succeeded；失败/dead 显示原因。verify: 本地 Compose 下 Playwright 通过；截图/报告归档。
-- [ ] **8.5 CI full verify** — 涉及：`.github/workflows/check.yml`、`scripts/ci_env.py`。新增 verify job：生成隔离 env，起 Compose，跑 verify.py（三条判据）和 Playwright，失败也清理。verify: CI run 成功；日志可查。
-- [ ] **8.6 第 8 课任务勾选** — 涉及：`openspec/changes/2026-11-05-add-async-grading/tasks.md`。30 条任务逐条对照证据；有 verify 的勾选，缺证据的保留并写原因；不把代码存在当验收。verify: 勾选数与证据表一致。
-- [ ] **8.7 async-202 与归档** — 涉及：Git tag、`openspec/changes/archive/`、`openspec/specs/async-grading/`。全部通过后打 `async-202`；归档 change 并同步长期 specs；更新 README/SPEC/AGENTS。verify: `git tag -l` 有 async-202；archive 目录可查；strict 通过。
-- [ ] **8.8 第 9 课归档判断** — 涉及：`reports/`、`openspec/changes/2026-11-17-harden-security/`。所有 Requirement 有实际证据后勾选本 change；未通过项保留红并阻塞归档。verify: 任务勾选、报告路径、CI 结果三者一致。
+- [x] **8.5 CI full verify** — 涉及：`.github/workflows/check.yml`、`scripts/ci_env.py`。新增 verify job：生成隔离 env，起 Compose，跑 verify.py（三条判据）和 Playwright，失败也清理。verify: CI run 成功；日志可查。
+- [x] **8.6 第 8 课任务勾选** — 涉及：`openspec/changes/2026-11-05-add-async-grading/tasks.md`。30 条任务逐条对照证据；有 verify 的勾选，缺证据的保留并写原因；不把代码存在当验收。verify: 勾选数与证据表一致。
+- [x] **8.7 async-202 与归档** — 涉及：Git tag、`openspec/changes/archive/`、`openspec/specs/async-grading/`。全部通过后打 `async-202`；归档 change 并同步长期 specs；更新 README/SPEC/AGENTS。verify: `git tag -l` 有 async-202；archive 目录可查；strict 通过。
+- [x] **8.8 第 9 课归档判断** — 涉及：`reports/`、`openspec/changes/2026-11-17-harden-security/`。所有 Requirement 有实际证据后勾选本 change；未通过项保留红并阻塞归档。verify: 任务勾选、报告路径、CI 结果三者一致。
 
 ## 完成定义
 

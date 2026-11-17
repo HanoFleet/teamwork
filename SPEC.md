@@ -1,13 +1,13 @@
 # CampusClaw 2.0 规约
 
-> **当前提交重点：第 7 课骨架 + 第 8 课异步批改 + 第 9 课安全加固。** foundation 已归档；异步批改与安全加固均已实现并通过本地/隔离验收。安全证据见 `reports/security-fix-log.md`、`reports/gate-red-green.md`、`reports/sec08-experiment.md`；材料库是后续 change。
+> **当前提交重点：第 7 课骨架 + 第 8 课异步批改（已归档）+ 第 9 课安全加固（已归档）。** 三者均通过本地、隔离验收和 CI；安全证据见 `reports/security-fix-log.md`、`reports/gate-red-green.md`、`reports/sec08-experiment.md`；材料库是当前活动 change。
 
 | 项目 | 内容 |
 | --- | --- |
 | 已归档 change | `2026-10-28-establish-platform-foundation` |
-| 第 8 课 change | `2026-11-05-add-async-grading`（实现与证据已齐） |
-| 当前活动 change | `2026-11-17-harden-security`（第 9 课，实现与证据已齐） |
-| 后续 change | `2026-10-14-upgrade-material-library`（活动，未实现） |
+| 第 8 课 change | `2026-11-05-add-async-grading`（已归档，`async-202`） |
+| 第 9 课 change | `2026-11-17-harden-security`（已归档） |
+| 当前活动 change | `2026-10-14-upgrade-material-library`（未实现） |
 | 负责人 | 李斯坦（角色一：制定规约） |
 | 评审 | 韩雅慧（角色二：开发系统）、禹霖（角色三：项目验收） |
 | 骨架标签 | `v0.1.0-skeleton` |
@@ -33,29 +33,29 @@
 
 范围：只做骨架，不做材料库新功能。现有登录、材料、检索、问答接口保持原状。
 
-## 当前活动 change：async grading（第 8 课）
+## 已归档 change：async grading（第 8 课）
 
 | 文件 | 内容 |
 | --- | --- |
-| [`proposal.md`](openspec/changes/2026-11-05-add-async-grading/proposal.md) | RabbitMQ、outbox、worker、202 + task_id、三条判据 |
-| [`design.md`](openspec/changes/2026-11-05-add-async-grading/design.md) | 队列拓扑、状态机、事务序列、幂等键、失败分类 |
-| [`specs/async-grading/spec.md`](openspec/changes/2026-11-05-add-async-grading/specs/async-grading/spec.md) | 10 条需求、32 个场景 |
-| [`tasks.md`](openspec/changes/2026-11-05-add-async-grading/tasks.md) | 30 条任务，未勾选 |
+| [`proposal.md`](openspec/changes/archive/2026-11-05-add-async-grading/proposal.md) | RabbitMQ、outbox、worker、202 + task_id、三条判据 |
+| [`design.md`](openspec/changes/archive/2026-11-05-add-async-grading/design.md) | 队列拓扑、状态机、事务序列、幂等键、失败分类 |
+| [`specs/async-grading/spec.md`](openspec/specs/async-grading/spec.md) | 10 条需求、32 个场景 |
+| [`tasks.md`](openspec/changes/archive/2026-11-05-add-async-grading/tasks.md) | 30 条任务，全部勾选 |
 
 范围：只做“提交 → 异步批改 → 查询结果”的最小链路。不做完整作业模块、教师手工评分、SSE/WebSocket、技能/提示词配置和 SEC 自查本身的实现。逐行自查见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)，接口清单见 [`docs/lesson-08/security-inventory.md`](docs/lesson-08/security-inventory.md)。
 
-## 当前活动 change：security hardening（第 9 课）
+## 已归档 change：security hardening（第 9 课）
 
 | 文件 | 内容 |
 | --- | --- |
-| [`proposal.md`](openspec/changes/2026-11-17-harden-security/proposal.md) | CSRF、配置权限、技能入口、审计、注入反例、门禁和 SEC-08 |
-| [`design.md`](openspec/changes/2026-11-17-harden-security/design.md) | 会话 token、审计表、catalog、技能包装、安全测试 |
-| [`specs/security-hardening/spec.md`](openspec/changes/2026-11-17-harden-security/specs/security-hardening/spec.md) | 6 条需求、29 个场景 |
-| [`tasks.md`](openspec/changes/2026-11-17-harden-security/tasks.md) | 40 条任务，按证据勾选 |
+| [`proposal.md`](openspec/changes/archive/2026-11-17-harden-security/proposal.md) | CSRF、配置权限、技能入口、审计、注入反例、门禁和 SEC-08 |
+| [`design.md`](openspec/changes/archive/2026-11-17-harden-security/design.md) | 会话 token、审计表、catalog、技能包装、安全测试 |
+| [`specs/security-hardening/spec.md`](openspec/specs/security-hardening/spec.md) | 6 条需求、29 个场景 |
+| [`tasks.md`](openspec/changes/archive/2026-11-17-harden-security/tasks.md) | 40 条任务，全部勾选 |
 
 范围：只做最小安全链路，不做设置页 UI、真实外部工具调用、生产 HTTPS 或 schema_migrations。第 9 课逐节对照见 [`docs/lesson-09/checklist.md`](docs/lesson-09/checklist.md)。
 
-## 后续 change：material library
+## 当前活动 change：material library
 
 | 文件 | 内容 |
 | --- | --- |
