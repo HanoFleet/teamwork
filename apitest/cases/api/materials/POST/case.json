@@ -3,6 +3,6 @@
   "kind": "xss",
   "title": "XSS 反例",
   "precondition": "教师已登录。列表页用 React 文本节点渲染标题，正文用 ReactMarkdown，不启用 rehype-raw。",
-  "operation": "上传标题和正文都含 <script>alert(1)</script> 的 Markdown，再打开 /materials 查看页面源码。",
+  "operation": "上传文件名含 <script>alert(1) 且不含 / 的 Markdown（显示标题按最后一段路径取值，</script> 会被截断），正文含 <script>alert(1)</script>，再打开 /materials 查看页面源码。",
   "expected": "详情 JSON 把 <script> 写成 \\u003cscript\\u003e。列表页源码包含 &lt;script&gt;，不存在可执行的 <script>alert(1)</script>。"
 }

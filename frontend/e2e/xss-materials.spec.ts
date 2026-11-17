@@ -3,8 +3,9 @@ import { writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const title = "<script>alert(1)</script>.md";
-const escaped = "&lt;script&gt;alert(1)&lt;/script&gt;";
+// DisplayTitle 用 path.Base，闭合标签里的 / 会把标题切成 script>.md。
+const title = "<script>alert(1).md";
+const escaped = "&lt;script&gt;alert(1).md";
 const reportPath = resolve(dirname(fileURLToPath(import.meta.url)), "../../reports/xss-page-source.md");
 
 test("材料列表页源码转义脚本标题", async ({ page }) => {
@@ -73,8 +74,9 @@ test("材料列表页源码转义脚本标题", async ({ page }) => {
   }
 
   await page.goto("/materials");
-  await expect(page.getByText(title, { exact: true })).toBeVisible();
+  await expect(page.getByText(title, { exact: true }).first()).toBeVisible();
   const html = await page.content();
+  expect(html).not.toContain(title);
   expect(html).not.toContain("<script>alert(1)</script>");
   expect(html).toContain(escaped);
   const at = html.indexOf(escaped);
@@ -88,7 +90,7 @@ test("材料列表页源码转义脚本标题", async ({ page }) => {
       "- 执行时间：2026-11-17",
       "- 页面：`/materials`",
       `- 方式：${mode}`,
-      "- 判定：页面源码包含转义后的标题，不包含可执行的 `<script>alert(1)</script>`，也没有弹出对话框。",
+      "- 判定：页面源码包含转义后的标题，不包含原始 `<script>` 文本，也没有弹出对话框。",
       "",
       "源码摘录：",
       "",
