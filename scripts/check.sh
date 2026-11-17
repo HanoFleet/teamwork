@@ -22,7 +22,7 @@ docker run --rm \
   -v campusclaw-go-cache:/go/pkg/mod \
   -w /work \
   -e GOPROXY=https://goproxy.cn,direct \
-  golang:1.25-alpine \
+  golang:1.26.11-alpine \
   sh -c 'test -z "$(gofmt -l .)" && go test ./... && go vet ./...'
 
 echo "== 前端构建"
