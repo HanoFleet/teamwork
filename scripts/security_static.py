@@ -30,7 +30,14 @@ else:
     if "X-CSRF-Token" not in text:
         failures.append("api.ts 没有发送 X-CSRF-Token")
 
-for rel in ("scripts/security_test.py", "apitest/cases/security/README.md"):
+for rel in (
+    "scripts/security_test.py",
+    "scripts/security_cases.py",
+    "apitest/cases/security/README.md",
+    "apitest/cases/api/search/POST/case.json",
+    "apitest/cases/api/materials/POST/case.json",
+    "apitest/cases/api/skills/grade/PATCH/case.json",
+):
     if not (ROOT / rel).is_file():
         failures.append(f"缺少 {rel}")
 

@@ -1,6 +1,12 @@
 # 安全反例用例（第 9 课）
 
-由 `python3 scripts/security_test.py` 执行，`scripts/verify.py` 负责加载；CI 的 `verify` job 也会跑完整套。
+三条注入反例的三段式在：
+
+- `apitest/cases/api/search/POST/case.json`
+- `apitest/cases/api/materials/POST/case.json`
+- `apitest/cases/api/skills/grade/PATCH/case.json`
+
+`make check` 执行 `python3 scripts/security_cases.py`，检查这三份文件并做 XSS 静态断言。在线请求由 `python3 scripts/security_test.py` 执行，`scripts/verify.py` 负责加载；CI 的 `verify` job 也会跑完整套。
 
 | 用例 | 判据 | 入口 |
 | --- | --- | --- |
