@@ -84,4 +84,11 @@ make check-security
   - `npm audit --audit-level=high`：0 vulnerabilities；
   - 假密钥 self-test：退出 1；干净临时仓库：退出 0。
 - 详见 `reports/gate-red-green.md`。
-- Go `govulncheck` 历史基线仍保留在上文（46 条通报、20 条多帧路径、部署二进制 45 条）；本轮未把 Go 通报纳入阻断门禁，不能把“npm 0”理解为 Go 依赖也 0 风险。
+- Go `govulncheck` 历史基线仍保留在上文（46 条通报、20 条多帧路径、部署二进制 45 条）。2026-11-17 已用升级清零，不再把这组数字当作当前风险。
+
+## 2026-11-17 复扫
+
+- 工具链：Go 1.26.11。命令：`GOTOOLCHAIN=go1.26.11 go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./...`
+- 实际输出：`No vulnerabilities found.`，退出码 0。
+- 升级记录和升级前的 47 个编号见 `reports/govuln-disposition.md`。
+- 门禁：`python3 scripts/govuln_check.py`。有 Go 或 Docker 时现场重扫；否则核对 `reports/govuln-snapshot.txt` 与 `backend/go.sum`。

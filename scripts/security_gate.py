@@ -83,6 +83,11 @@ def main() -> int:
     if audit.returncode != 0:
         print("SECURITY GATE FAILED: 前端依赖存在高危/严重漏洞或审计失败")
         return 1
+    govuln = run([sys.executable, "scripts/govuln_check.py"])
+    print_result("python3 scripts/govuln_check.py", govuln)
+    if govuln.returncode != 0:
+        print("SECURITY GATE FAILED: Go 依赖扫描发现未清零通报，或快照与 go.sum 不一致")
+        return 1
     print("SECURITY GATE PASSED")
     return 0
 

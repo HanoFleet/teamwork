@@ -1,0 +1,4 @@
+toolchain=go1.26.11
+govulncheck=v1.9.0
+gosum_sha256=848534fb84d64bfb17ad4579a3a26679f21ddb865abe2a66b2aebadb8f910b6a
+result=No vulnerabilities found.
