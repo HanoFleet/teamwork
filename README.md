@@ -1,6 +1,6 @@
 # CampusClaw 2.0 · 小组项目仓库
 
-> **当前提交重点：第 7 课可运行骨架 + 第 8 课异步批改实现。** 第一眼入口是 [`SPEC.md`](SPEC.md)。骨架已从基线恢复并加固，`docker compose up -d --wait` 可启动；第 8 课的 RabbitMQ、事务性 outbox、独立 worker、任务状态机和三条判据已在 `change/2026-11-05-add-async-grading` 实现，待角色三验收归档；材料库是后续 change。
+> **当前提交重点：第 7 课骨架 + 第 8 课异步批改 + 第 9 课安全加固。** 第一眼入口是 [`SPEC.md`](SPEC.md)。Compose 六服务可启动；第 8 课异步判据、第 9 课 CSRF/配置权限/审计/SQLi-XSS-CSRF 反例和 SEC-08 实验均已在本地验证。证据见 [`reports/`](reports/)。材料库是后续 change。
 
 CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材料，本班学生只读；正文切成切片后，本班可以用关键字、向量或混合检索，命中能回到原文；没有依据时不生成回答。
 
@@ -9,16 +9,17 @@ CampusClaw 把教研材料按班级放进可登录的知识库。教师上传材
 | 姓名 | 学号 | 角色 | 阶段一交付 |
 | --- | --- | --- | --- |
 | 李斯坦 | 2601210362 | 角色一：制定规约 | 规约、八类规范、可运行骨架、验收证据 |
-| 韩雅慧 | 2601210643 | 角色二：开发系统 | 第 8 课异步批改实现（待角色三验收）；后续材料库 |
-| 禹霖 | 2601210536 | 角色三：项目验收 | 评审；逐条验收并写 `docs/verification.md` |
+| 韩雅慧 | 2601210643 | 角色二：开发系统 | 第 8 课异步批改、第 9 课安全加固实现；后续材料库 |
+| 禹霖 | 2601210536 | 角色三：项目验收 | 第 8 课安全报告、第 9 课复评；逐条验收并写 `docs/verification.md` |
 
 ## 当前状态
 
 - 已归档 change：`openspec/changes/archive/2026-10-28-establish-platform-foundation/`（7 条需求、19 个场景）。
-- 活动 change：`openspec/changes/2026-11-05-add-async-grading/`（10 条需求、32 个场景、30 条任务），第 8 课异步批改已实现，待角色三验收后归档。
+- 活动 change：`openspec/changes/2026-11-05-add-async-grading/`（10 条需求、32 个场景、30 条任务），第 8 课异步批改已实现；任务和归档见 `tasks.md`/提交记录。
+- 活动 change：`openspec/changes/2026-11-17-harden-security/`（6 条需求、29 个场景、40 条任务），第 9 课 CSRF、配置权限、技能入口、审计和注入反例已实现。
 - 活动 change：`openspec/changes/2026-10-14-upgrade-material-library/`（26 条需求、151 个场景、46 条任务），后续材料库，尚未实现。
 - 长期规约：`openspec/specs/` 下的 `platform-foundation`、`auth-upload`、`knowledge-retrieval`。
-- 第 8 课自查映射：[`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)（10 行全部有规约；角色二已实现并写入 `reports/` 与 `docs/verification.md`，角色三独立复现和 SEC 仍待执行）；受保护/写入接口清单见 [`docs/lesson-08/security-inventory.md`](docs/lesson-08/security-inventory.md)。
+- 第 8 课自查映射：[`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)；第 9 课逐节对照：[`docs/lesson-09/checklist.md`](docs/lesson-09/checklist.md)。安全报告在 [`reports/security-fix-log.md`](reports/security-fix-log.md)、[`reports/gate-red-green.md`](reports/gate-red-green.md)、[`reports/sec08-experiment.md`](reports/sec08-experiment.md)。
 - 标签：`v2.0.0-baseline`（骨架基线）、`v0.1.0-skeleton`（本次骨架）、`v2.0.0-stage1-spec`（规约提交）。
 
 ## 项目启动四步
@@ -53,16 +54,17 @@ curl -fsS http://localhost:8080/health
 
 ```bash
 make check            # 规约、规范、strict、分层、密钥、变异、Go 测试/vet、前端构建
-make check-security   # SEC-05 密钥扫描 + SEC-06 前端依赖审计
-make grade            # 独立 Compose 项目骨架 14 项 + A15 异步批改，生成 reports/teacher-*/ 报告
-python3 scripts/verify.py   # 迭代 1/2 的登录、隔离、上传、检索、问答，以及第 8 课异步批改三条判据
+make check-security   # security_gate：SEC-05 密钥 + SEC-06 依赖，命中非 0
+make grade            # 独立 Compose 项目 18 项（含 A15 异步、A16-A18 安全），生成 reports/teacher-*/ 报告
+python3 scripts/verify.py   # 迭代 1/2、第 8 课三条判据、第 9 课安全回归
+cd frontend/e2e && npx playwright test   # /assignments 提交并轮询
 ```
 
 `.github/workflows/check.yml` 在每次 push 和 PR 上跑 `make check-security`、`make check` 与 `make grade`；首次 [run 40647071837](https://github.com/HanoFleet/teamwork/actions/runs/40647071837) 的 check/grade 均成功；第 8 课规约推送后的 [run 41978412834](https://github.com/HanoFleet/teamwork/actions/runs/41978412834) 两个 job 也均成功。
 
-`make check` 的 `spec_check.py` 会同时检查 material-library 和 async-grading 两个活动 change。`make check-security` 只覆盖 SEC-05、SEC-06；SEC-01～SEC-04、SEC-07 仍需角色三按 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md) 执行。
+`make check` 的 `spec_check.py` 会同时检查 material-library、async-grading 和 security-hardening 三个活动 change。`make check-security` 现在是真实门禁：假密钥 self-test 退出 1，正常仓库退出 0；SEC-01～SEC-04、SEC-07/SEC-08 由 `verify.py` 和 `reports/` 复测。
 
-`make grade` 使用独立项目名、随机端口和随机口令，不修改正式数据；报告写入 `reports/teacher-*`，证据汇总在 [`docs/lesson-07/verification.md`](docs/lesson-07/verification.md)。
+`make grade` 使用独立项目名、随机端口和随机口令，不修改正式数据；报告写入 `reports/teacher-*`，证据汇总在 [`docs/verification.md`](docs/verification.md) 与 [`docs/lesson-09/checklist.md`](docs/lesson-09/checklist.md)。
 
 ## 规约入口
 

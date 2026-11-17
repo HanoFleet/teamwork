@@ -61,3 +61,19 @@
 - **SEC-07**：当前任务日志尚不能完整对应技能审计要求。下一次change拟在技能执行链补齐操作人、技能标识、结果状态、耗时和用量记录，并通过一次真实技能调用核验。
 
 以上为后续计划，本次未实施修复。
+
+## 第 9 课复测（修复后）
+
+- 执行时间：2026-11-17
+- 命令：`python3 scripts/verify.py`（含 `scripts/security_test.py`）
+- 实际输出：`docs/verification.md` 的“安全回归（第 9 课）”段
+
+| 编号 | 修复后实际 | 判定 |
+| --- | --- | --- |
+| SEC-03 | 学生 `PATCH /api/skills/grade` → 403 且描述不变；教师同请求 → 200；A 教师改 B 助手 → 404；审计 denied 行存在 | 绿 |
+| SEC-04 | 学生本人 `POST /api/skills/grade/run` → 202；对 B 班提交 → 404；教师对 A 提交 → 404；task/outbox 无残留；请求 `score` 被忽略 | 绿 |
+| SEC-07 | 教师按 `skill_key=grade&operator_id=...` 查到七列审计行；学生 `GET /api/audit-logs` → 403 | 绿 |
+| SEC-08 | 恶意讲义 + 3 条提问；四步记录见 `reports/sec08-experiment.md`；第四步 404 且审计 denied | 绿（第四步） |
+
+- SEC-01/02/05/06 沿用第 8 课绿项；本轮未降低要求。
+- 本段是修复后复测，不覆盖上面的第 8 课历史红项。

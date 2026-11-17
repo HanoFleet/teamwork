@@ -6,10 +6,10 @@ import { AssignmentsPage } from "./Assignments";
 import { AskPage } from "./Ask";
 import {
   ApiError,
-  clearToken,
+  clearCSRFToken,
+  getCSRFToken,
   getMe,
-  getToken,
-  setToken,
+  setCSRFToken,
   type AskResult,
   type MaterialDetail,
   type MaterialItem,
@@ -73,11 +73,11 @@ function LoginPage({ push }: { push: (text: string) => void }) {
     setBusy(true);
     setError("");
     try {
-      const logged = await api<{ status: string; token?: string }>("/api/login", {
+      const logged = await api<{ status: string; csrf_token?: string }>("/api/login", {
         method: "POST",
         body: JSON.stringify({ username, password }),
       });
-      if (logged.token) setToken(logged.token);
+      if (logged.csrf_token) setCSRFToken(logged.csrf_token);
       push("已登录");
       navigate("/materials", { replace: true });
     } catch (err) {
@@ -157,7 +157,7 @@ function AssignmentsGate({ push }: { push: (text: string) => void }) {
           } catch {
             /* 已失效也回登录页 */
           }
-          clearToken();
+          clearCSRFToken();
           navigate("/login", { replace: true });
         })();
       }}
@@ -186,7 +186,7 @@ function AskGate({ push }: { push: (text: string) => void }) {
           } catch {
             /* 已失效也回登录页 */
           }
-          clearToken();
+          clearCSRFToken();
           navigate("/login", { replace: true });
         })();
       }}
@@ -279,7 +279,7 @@ function MaterialsPage({ me, push }: { me: Me; push: (text: string) => void }) {
     } catch {
       /* 会话已经失效时直接回登录页 */
     }
-    clearToken();
+    clearCSRFToken();
     navigate("/login", { replace: true });
   }
 
@@ -290,8 +290,8 @@ function MaterialsPage({ me, push }: { me: Me; push: (text: string) => void }) {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/materials");
     xhr.withCredentials = true;
-    const token = getToken();
-    if (token) xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    const csrf = getCSRFToken();
+    if (csrf) xhr.setRequestHeader("X-CSRF-Token", csrf);
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable) setProgress(event.loaded / event.total);
     };

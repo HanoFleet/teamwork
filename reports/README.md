@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-角色二已在 2026-11-06 对实现跑过 `python3 scripts/verify.py`，三条判据的实际结果在 `async-grading.md`、`risk-concurrency.md`、`risk-transaction.md`。SEC 自查仍待角色三执行。角色三按 [`docs/lesson-08/self-check.md`](../docs/lesson-08/self-check.md) 和 [`docs/lesson-08/security-inventory.md`](../docs/lesson-08/security-inventory.md) 独立复跑后，再补以下文件：
+角色二已在 2026-11-06 跑过第 8 课三条判据；2026-11-17 已完成第 9 课安全加固并跑了 `verify.py`、`make grade` 18/18、Playwright 和 `security_gate` 红绿。人工独立复评仍待角色三。当前证据：
 
 | 文件 | 内容 |
 | --- | --- |
@@ -14,7 +14,12 @@
 | `risk-authz.md` | SEC-02 跨班一条，命令可原样复跑 |
 | `security-precheck.md` | SEC-01～SEC-07 三段式记录与红/绿判定 |
 | `security-baseline.md` | 密钥扫描、依赖审计基线 |
-| `review-01.md` | 交叉评审“手段/查了什么/判据/结果” |
+| `review-01.md` | 第 8 课交叉评审“手段/查了什么/判据/结果” |
+| `security-fix-log.md` | 第 9 课 SEC-03/04/07/08 红→绿对照 |
+| `gate-red-green.md` | `security_gate.py` 假密钥红项与正常绿项 |
+| `sec08-experiment.md` | SEC-08 四步实验实际现象 |
+| `review-02.md`、`review-03.md` | AI 自审/脚本复现记录（不冒充人工） |
+| `e2e-playwright.md` | `/assignments` 提交并轮询到 succeeded |
 
 ## 目录规则
 

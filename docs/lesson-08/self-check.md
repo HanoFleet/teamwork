@@ -1,6 +1,6 @@
 # 第 8 课异步批改自查映射
 
-> 课程自查表的 10 行原先显示“缺失”，指的是**代码、运行结果和证据**缺失，不是规约文件缺失。规约侧已逐行覆盖：10 条 Requirement、32 条 Scenario、30 条 Task。角色二已按 Task 实现并写入 `reports/` 与 `docs/verification.md`；本文件不把任何一行写成验收“通过”，角色三按 Scenario 独立复现后再更新状态列。
+> 课程自查表的 10 行原先显示“缺失”，指的是**代码、运行结果和证据**缺失，不是规约文件缺失。规约侧已逐行覆盖：10 条 Requirement、32 条 Scenario、30 条 Task。角色二已按 Task 实现并写入 `reports/` 与 `docs/verification.md`；第 9 课又对 SEC-03/04/07/08 做了修复复测，见 `reports/security-fix-log.md` 和 `docs/lesson-09/checklist.md`。本文件保留第 8 课历史状态，不把历史红项伪造成当时已绿。
 
 ## 1. 十行自查表
 

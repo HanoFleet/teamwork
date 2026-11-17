@@ -4,6 +4,7 @@ export type Me = {
   role: "teacher" | "student";
   class_id: number;
   class_name: string;
+  csrf_token: string;
 };
 
 export type MaterialItem = {
@@ -28,19 +29,18 @@ export class ApiError extends Error {
   }
 }
 
-const tokenKey = "campusclaw_token";
+let csrfToken = "";
 
-export function getToken() {
-  return localStorage.getItem(tokenKey) ?? "";
+export function getCSRFToken() {
+  return csrfToken;
 }
 
-export function setToken(token: string) {
-  if (token) localStorage.setItem(tokenKey, token);
-  else localStorage.removeItem(tokenKey);
+export function setCSRFToken(token: string) {
+  csrfToken = token;
 }
 
-export function clearToken() {
-  localStorage.removeItem(tokenKey);
+export function clearCSRFToken() {
+  csrfToken = "";
 }
 
 export async function api<T>(path: string, init?: RequestInit): Promise<T> {
@@ -48,13 +48,13 @@ export async function api<T>(path: string, init?: RequestInit): Promise<T> {
   if (init?.body && !(init.body instanceof FormData) && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
-  const token = getToken();
-  if (token && !headers.has("Authorization")) {
-    headers.set("Authorization", `Bearer ${token}`);
+  const method = (init?.method ?? "GET").toUpperCase();
+  if (!["GET", "HEAD", "OPTIONS"].includes(method) && csrfToken && !headers.has("X-CSRF-Token")) {
+    headers.set("X-CSRF-Token", csrfToken);
   }
   const res = await fetch(path, { ...init, headers, credentials: "include" });
   if (res.status === 401) {
-    clearToken();
+    clearCSRFToken();
   }
   const text = await res.text();
   if (!res.ok) {
@@ -92,6 +92,8 @@ export type AskResult = {
   citations: SearchHit[];
 };
 
-export function getMe() {
-  return api<Me>("/api/me");
+export async function getMe() {
+  const me = await api<Me>("/api/me");
+  if (me.csrf_token) setCSRFToken(me.csrf_token);
+  return me;
 }

@@ -13,8 +13,7 @@ check:
 	sh scripts/check.sh
 
 check-security:
-	python3 scripts/secret_scan.py
-	cd frontend && npm audit --audit-level=high
+	python3 scripts/security_gate.py
 
 acceptance:
 	python3 scripts/acceptance.py

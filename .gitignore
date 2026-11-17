@@ -11,3 +11,7 @@ __pycache__/
 .env.acceptance
 reports/teacher-*/
 reports/*.tmp
+frontend/e2e/test-results/
+frontend/e2e/playwright-report/
+frontend/e2e/.last-run.json
+frontend/e2e/node_modules/

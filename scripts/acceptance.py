@@ -16,6 +16,7 @@ import subprocess
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from http.cookiejar import CookieJar
@@ -197,10 +198,13 @@ def main() -> int:
                 key, value = line.split("=", 1)
                 env[key] = value
         opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(CookieJar()))
+        state = {"csrf": ""}
 
         def call(method: str, path: str, payload: dict | None = None):
             data = None if payload is None else json.dumps(payload).encode()
             headers = {"Content-Type": "application/json"} if payload is not None else {}
+            if method.upper() in {"POST", "PUT", "PATCH", "DELETE"} and state["csrf"]:
+                headers["X-CSRF-Token"] = state["csrf"]
             req = urllib.request.Request(BASE + path, data=data, headers=headers, method=method)
             try:
                 with opener.open(req, timeout=15) as resp:
@@ -213,12 +217,15 @@ def main() -> int:
                     body = {"raw": raw}
                 return err.code, body
 
-        code, _ = call("POST", "/api/login", {
+        code, logged = call("POST", "/api/login", {
             "username": "student_a1",
             "password": env["SEED_STUDENT_A_PASSWORD"],
         })
         if code != 200:
             raise AssertionError(f"学生登录失败 {code}")
+        state["csrf"] = logged.get("csrf_token", "")
+        if not state["csrf"]:
+            raise AssertionError("学生登录缺少 csrf_token")
         code, listed = call("GET", "/api/assignments")
         if code != 200 or not listed.get("assignments"):
             raise AssertionError(f"作业列表 {code} {listed}")
@@ -242,10 +249,13 @@ def main() -> int:
         if code != 200 or task.get("task_id") != graded["task_id"]:
             raise AssertionError(f"查询任务 {code} {task}")
         teacher = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(CookieJar()))
+        tstate = {"csrf": ""}
 
         def teacher_call(method: str, path: str, payload: dict | None = None):
             data = None if payload is None else json.dumps(payload).encode()
             headers = {"Content-Type": "application/json"} if payload is not None else {}
+            if method.upper() in {"POST", "PUT", "PATCH", "DELETE"} and tstate["csrf"]:
+                headers["X-CSRF-Token"] = tstate["csrf"]
             req = urllib.request.Request(BASE + path, data=data, headers=headers, method=method)
             try:
                 with teacher.open(req, timeout=15) as resp:
@@ -253,18 +263,120 @@ def main() -> int:
             except urllib.error.HTTPError as err:
                 return err.code, json.loads(err.read().decode())
 
-        tcode, _ = teacher_call("POST", "/api/login", {
+        tcode, tlogged = teacher_call("POST", "/api/login", {
             "username": "teacher_a",
             "password": env["SEED_TEACHER_PASSWORD"],
         })
         if tcode != 200:
             raise AssertionError(f"教师登录失败 {tcode}")
+        tstate["csrf"] = tlogged.get("csrf_token", "")
+        if not tstate["csrf"]:
+            raise AssertionError("教师登录缺少 csrf_token")
         tcode, tbody = teacher_call("POST", f"/api/assignments/{assignment_id}/submissions", {"body": "教师不应提交"})
         if tcode != 403:
             raise AssertionError(f"教师提交应为 403，实际 {tcode} {tbody}")
         return f"202 in {elapsed_ms}ms, task={graded['task_id']}"
 
     check("A15", "异步批改 202", "学生提交后批改返回 202 且不含分数，教师提交 403", async_grade_contract)
+
+    sec_cache: dict[str, object] = {}
+
+    def security_setup():
+        if sec_cache:
+            return sec_cache
+        env = {}
+        for line in ENV_FILE.read_text().splitlines():
+            if "=" in line:
+                key, value = line.split("=", 1)
+                env[key] = value
+
+        def sec_opener():
+            return urllib.request.build_opener(urllib.request.HTTPCookieProcessor(CookieJar()))
+
+        def sec_call(op, method: str, path: str, payload: dict | None = None, headers: dict[str, str] | None = None):
+            data = None if payload is None else json.dumps(payload).encode()
+            h = dict(headers or {})
+            if payload is not None:
+                h.setdefault("Content-Type", "application/json")
+            token = getattr(op, "csrf_token", "")
+            if method.upper() in {"POST", "PUT", "PATCH", "DELETE"} and token and "X-CSRF-Token" not in h:
+                h["X-CSRF-Token"] = token
+            req = urllib.request.Request(BASE + path, data=data, headers=h, method=method)
+            try:
+                with op.open(req, timeout=15) as resp:
+                    return resp.status, json.loads(resp.read().decode() or "null")
+            except urllib.error.HTTPError as err:
+                raw = err.read().decode()
+                try:
+                    return err.code, json.loads(raw or "null")
+                except json.JSONDecodeError:
+                    return err.code, {"raw": raw}
+
+        def sec_login(user: str, password: str):
+            op = sec_opener()
+            code, body = sec_call(op, "POST", "/api/login", {"username": user, "password": password})
+            if code != 200:
+                raise AssertionError(f"安全测试登录 {user} 失败 {code} {body}")
+            op.csrf_token = body.get("csrf_token", "")
+            if not op.csrf_token:
+                raise AssertionError("登录缺少 csrf_token")
+            return op
+
+        sec_cache.update({
+            "call": sec_call,
+            "student": sec_login("student_a1", env["SEED_STUDENT_A_PASSWORD"]),
+            "teacher": sec_login("teacher_a", env["SEED_TEACHER_PASSWORD"]),
+        })
+        return sec_cache
+
+    def security_sqli() -> str:
+        c = security_setup()
+        call, student = c["call"], c["student"]
+        for query in ("' OR '1'='1", "%", "_"):
+            code, body = call(student, "GET", "/api/materials?q=" + urllib.parse.quote(query))
+            if code != 200 or "B班-牛顿定律笔记" in json.dumps(body, ensure_ascii=False):
+                raise AssertionError(f"SQLi 材料查询失败 {query} {code} {body}")
+            code, body = call(student, "POST", "/api/search", {"query": query, "mode": "keyword"})
+            if code != 200 or "B班-牛顿定律笔记" in json.dumps(body, ensure_ascii=False):
+                raise AssertionError(f"SQLi 检索失败 {query} {code} {body}")
+        return "3 组 SQLi 载荷均未泄露 B 班"
+
+    def security_csrf() -> str:
+        c = security_setup()
+        call, teacher = c["call"], c["teacher"]
+        token = getattr(teacher, "csrf_token", "")
+        code, body = call(teacher, "PATCH", "/api/skills/grade", {"description": "csrf"}, {"X-CSRF-Token": ""})
+        if code != 403:
+            raise AssertionError(f"无 CSRF token 应 403，实际 {code} {body}")
+        code, body = call(teacher, "PATCH", "/api/skills/grade", {"description": "csrf"}, {"X-CSRF-Token": token, "Origin": "https://evil.example"})
+        if code != 403:
+            raise AssertionError(f"跨源 Origin 应 403，实际 {code} {body}")
+        code, body = call(teacher, "PATCH", "/api/skills/grade", {"description": "按本地规则评分"}, {"X-CSRF-Token": token, "Origin": BASE})
+        if code != 200:
+            raise AssertionError(f"同源 CSRF 应 200，实际 {code} {body}")
+        return "无 token/跨源 403，同源 200"
+
+    def security_config_audit() -> str:
+        c = security_setup()
+        call, student, teacher = c["call"], c["student"], c["teacher"]
+        code, body = call(student, "PATCH", "/api/skills/grade", {"description": "student"})
+        if code != 403:
+            raise AssertionError(f"学生改技能应 403，实际 {code} {body}")
+        code, body = call(teacher, "GET", "/api/audit-logs?limit=10")
+        if code != 200 or not body.get("logs"):
+            raise AssertionError(f"教师审计查询失败 {code} {body}")
+        row = body["logs"][0]
+        for key in ("operator_username", "occurred_at", "operation", "object_type", "object_id", "result_status", "skill_key"):
+            if key not in row:
+                raise AssertionError(f"审计缺字段 {key}: {row}")
+        code, body = call(student, "GET", "/api/audit-logs")
+        if code != 403:
+            raise AssertionError(f"学生查审计应 403，实际 {code} {body}")
+        return "学生 403，教师七列可查"
+
+    check("A16", "SQLi 反例", "登录/材料/检索的注入载荷不泄露 B 班", security_sqli)
+    check("A17", "CSRF 反例", "无 token/跨源 403，同源正确 token 200", security_csrf)
+    check("A18", "配置与审计", "学生配置 403，教师审计七列，学生审计 403", security_config_audit)
 
     def db_down() -> str:
         compose("stop", "db")

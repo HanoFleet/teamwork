@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
       - run: make check-security
       - run: make check
 
@@ -33,3 +33,33 @@ jobs:
           name: teacher-report
           path: reports/teacher-*/
           retention-days: 7
+
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Prepare isolated env
+        run: python3 scripts/ci_env.py
+      - name: Start Compose
+        run: docker compose up --build -d --wait
+      - name: Full verify (three async judgments + security)
+        run: python3 scripts/verify.py
+      - name: Install Playwright browser
+        run: cd frontend/e2e && npm ci && npx playwright install --with-deps chromium
+      - name: Playwright assignments page
+        run: cd frontend/e2e && npx playwright test
+      - name: Upload E2E artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: frontend/e2e/test-results/
+          retention-days: 7
+      - name: Cleanup
+        if: always()
+        run: docker compose down -v
+

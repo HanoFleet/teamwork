@@ -209,6 +209,28 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
         fail(f"已有结果应 200 带 result，实际 {code} {reused}")
     note("PASS 停 worker 提交仍 202，恢复后自动 succeeded；再次批改 200")
 
+    crash_body = f"函数单调性 证明 崩溃重投 {stamp}"
+    code, raw, _ = call(student_a, "POST", f"/api/assignments/{assignment_id}/submissions", json.dumps({"body": crash_body}).encode(), {"Content-Type": "application/json"})
+    crash_id = json.loads(raw)["submission_id"]
+    code, raw, _ = call(student_a, "POST", f"/api/submissions/{crash_id}/grade", b"{}", {"Content-Type": "application/json"})
+    crash_task = json.loads(raw)["task_id"]
+    time.sleep(0.5)
+    compose("kill", "worker")
+    compose("start", "worker")
+    deadline = time.time() + 60
+    last = ""
+    while time.time() < deadline:
+        code, raw, _ = call(student_a, "GET", f"/api/tasks/{crash_task}")
+        last = raw.decode()
+        if code == 200 and json.loads(raw).get("status") == "succeeded":
+            break
+        time.sleep(1)
+    else:
+        fail(f"kill worker 后任务未 succeeded: {last}")
+    if mysql(f"SELECT COUNT(*) FROM grade_results WHERE submission_id={crash_id}") != "1":
+        fail("kill worker 后结果不是一行")
+    note("PASS kill worker 后重投，结果仍只有一行")
+
     times = []
     delay = ENV.get("GRADE_LOCAL_DELAY_MS", "0")
     for i in range(20):
@@ -301,6 +323,24 @@ def run(*, note, fail, call, login, mysql, compose, ENV) -> None:
     else:
         fail(f"瞬时失败应回到 pending 且 attempts>0，实际 {trans_row}")
     note(f"PASS 瞬时失败回到 pending attempts={trans_row}")
+
+    dead_body = f"GRADE_TRANSIENT_FAIL 死信 {stamp}"
+    code, raw, _ = call(student_a, "POST", f"/api/assignments/{assignment_id}/submissions", json.dumps({"body": dead_body}).encode(), {"Content-Type": "application/json"})
+    dead_id = json.loads(raw)["submission_id"]
+    code, raw, _ = call(student_a, "POST", f"/api/submissions/{dead_id}/grade", b"{}", {"Content-Type": "application/json"})
+    dead_task = json.loads(raw)["task_id"]
+    deadline = time.time() + 60
+    dead_row = ""
+    while time.time() < deadline:
+        dead_row = mysql(f"SELECT CONCAT(status, ':', attempts) FROM grade_tasks WHERE task_id='{dead_task}'")
+        if dead_row.startswith("dead:"):
+            break
+        time.sleep(2)
+    else:
+        fail(f"瞬时失败达到上限后应变 dead，实际 {dead_row}")
+    if mysql(f"SELECT COUNT(*) FROM grade_results WHERE submission_id={dead_id}") != "0":
+        fail("dead 任务不应有结果行")
+    note(f"PASS 瞬时失败达到上限进入 dead attempts={dead_row}")
 
     compose("stop", "rabbitmq")
     time.sleep(2)

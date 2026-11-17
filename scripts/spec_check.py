@@ -29,6 +29,11 @@ CHANGE_RULES: dict[str, dict[str, object]] = {
         "anchors": ["20", "800", "80", "0.35", "k=60", "409", "413", "503"],
         "min_tasks": 20,
     },
+    "2026-11-17-harden-security": {
+        "capabilities": ["security-hardening"],
+        "anchors": ["CSRF", "audit_logs", "skill_key", "csrf_token", "security_gate", "SEC-08"],
+        "min_tasks": 20,
+    },
     "2026-11-05-add-async-grading": {
         "capabilities": ["async-grading"],
         "anchors": ["202", "task_id", "P95", "500ms", "async-202", "20,000", "GRADE_MAX_ATTEMPTS=5"],
@@ -239,13 +244,13 @@ def check_specs(change: Path, change_name: str, rules: dict[str, object]) -> tup
 
 
 def check_tasks(tasks: str, change_name: str, rules: dict[str, object]) -> int:
-    task_lines = re.findall(r"^- \[ \].+$", tasks, re.MULTILINE)
+    task_lines = re.findall(r"^- \[[ x]\].+$", tasks, re.MULTILINE)
     min_tasks = int(rules["min_tasks"])
     if len(task_lines) < min_tasks:
         fail(f"{change_name}/tasks.md 只有 {len(task_lines)} 条任务，至少需要 {min_tasks} 条")
     if "## 完成定义" not in tasks:
         fail(f"{change_name}/tasks.md 缺少“完成定义”")
-    first_task = re.search(r"^- \[ \].+$", tasks, re.MULTILINE)
+    first_task = re.search(r"^- \[[ x]\].+$", tasks, re.MULTILINE)
     if first_task:
         before = tasks[: first_task.start()]
         headings = re.findall(r"^##\s+(.+)$", before, re.MULTILINE)

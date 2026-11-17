@@ -69,3 +69,19 @@
   ```
 
   说明：历史环境因未安装make，未执行原生入口；该入口尚不包含运行日志、部署前端产物的采集及部署二进制审计。运行会重新生成六份报告，复跑前需备份手工修改稿。
+## 第 9 课修正与复测
+
+- 上文提到的 `scripts/week8_security.py` **不存在于本仓库**；第 9 课已把入口改为 `scripts/security_gate.py`，由 `make check-security` 调用。
+- 当前实际命令：
+
+```bash
+make check-security
+# 等价：python3 scripts/security_gate.py
+```
+
+- 实际输出：
+  - `python3 scripts/secret_scan.py`：工作树和提交历史 0 个非空密钥赋值；
+  - `npm audit --audit-level=high`：0 vulnerabilities；
+  - 假密钥 self-test：退出 1；干净临时仓库：退出 0。
+- 详见 `reports/gate-red-green.md`。
+- Go `govulncheck` 历史基线仍保留在上文（46 条通报、20 条多帧路径、部署二进制 45 条）；本轮未把 Go 通报纳入阻断门禁，不能把“npm 0”理解为 Go 依赖也 0 风险。

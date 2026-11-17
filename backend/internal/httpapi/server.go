@@ -2,15 +2,19 @@ package httpapi
 
 import (
 	"context"
+	"crypto/subtle"
 	"database/sql"
 	"errors"
 	"log/slog"
 	"net"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 
+	"campusclaw/internal/audit"
 	"campusclaw/internal/auth"
+	"campusclaw/internal/catalog"
 	"campusclaw/internal/chat"
 	"campusclaw/internal/config"
 	"campusclaw/internal/embed"
@@ -29,6 +33,7 @@ type User struct {
 	Role      string
 	ClassID   int64
 	ClassName string
+	CSRFToken string
 }
 
 type Server struct {
@@ -38,6 +43,8 @@ type Server struct {
 	mux     *http.ServeMux
 	retr    *retrieval.Service
 	grades  *grading.Service
+	catalog *catalog.Store
+	audit   *audit.Store
 	health  *health.Checker
 	logger  *slog.Logger
 }
@@ -52,6 +59,8 @@ func New(cfg config.Config, db *sql.DB, logger *slog.Logger) *Server {
 		mux:     http.NewServeMux(),
 		retr:    retrieval.New(db, emb, qd, chat.New(cfg.ChatURL, cfg.ChatAPIKey, cfg.ChatModel)),
 		grades:  grading.NewService(db, cfg),
+		catalog: catalog.NewStore(db),
+		audit:   audit.NewStore(db),
 		logger:  logger,
 		health: &health.Checker{
 			PingDB:      func(ctx context.Context) error { return db.PingContext(ctx) },
@@ -79,6 +88,12 @@ func New(cfg config.Config, db *sql.DB, logger *slog.Logger) *Server {
 	s.mux.HandleFunc("POST /api/assignments/{id}/submissions", s.createSubmission)
 	s.mux.HandleFunc("POST /api/submissions/{id}/grade", s.gradeSubmission)
 	s.mux.HandleFunc("GET /api/tasks/{task_id}", s.getTask)
+	s.mux.HandleFunc("GET /api/skills", s.listSkills)
+	s.mux.HandleFunc("PATCH /api/skills/{key}", s.patchSkill)
+	s.mux.HandleFunc("GET /api/assistants", s.listAssistants)
+	s.mux.HandleFunc("PATCH /api/assistants/{id}", s.patchAssistant)
+	s.mux.HandleFunc("POST /api/skills/{key}/run", s.runSkill)
+	s.mux.HandleFunc("GET /api/audit-logs", s.listAuditLogs)
 	return s
 }
 
@@ -112,45 +127,46 @@ func (s *Server) ready(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, status, result)
 }
 
-func sessionIDFromRequest(secret string, r *http.Request) (string, bool) {
+func sessionIDFromRequest(secret string, r *http.Request) (string, bool, bool) {
 	if raw := strings.TrimSpace(r.Header.Get("Authorization")); raw != "" {
 		scheme, token, ok := strings.Cut(raw, " ")
 		if ok && strings.EqualFold(scheme, "Bearer") && token != "" {
 			if sessionID, parsed := auth.ParseJWT(secret, token); parsed {
-				return sessionID, true
+				return sessionID, true, true
 			}
 		}
 	}
 	c, err := r.Cookie(cookieName)
 	if err != nil || c.Value == "" {
-		return "", false
+		return "", false, false
 	}
-	return auth.Open(secret, c.Value)
+	sessionID, ok := auth.Open(secret, c.Value)
+	return sessionID, false, ok
 }
 
-func (s *Server) currentUser(r *http.Request) (*User, error) {
-	sessionID, ok := sessionIDFromRequest(s.cfg.SessionSecret, r)
+func (s *Server) currentUser(r *http.Request) (*User, bool, error) {
+	sessionID, viaBearer, ok := sessionIDFromRequest(s.cfg.SessionSecret, r)
 	if !ok {
-		return nil, errNoSession
+		return nil, false, errNoSession
 	}
 	var u User
 	var expires time.Time
-	err := s.db.QueryRowContext(r.Context(), `SELECT u.id, u.username, u.role, u.class_id, c.name, s.expires_at
+	err := s.db.QueryRowContext(r.Context(), `SELECT u.id, u.username, u.role, u.class_id, c.name, COALESCE(s.csrf_token,''), s.expires_at
 		FROM sessions s
 		JOIN users u ON u.id = s.user_id
 		JOIN classes c ON c.id = u.class_id
-		WHERE s.id = ?`, sessionID).Scan(&u.ID, &u.Username, &u.Role, &u.ClassID, &u.ClassName, &expires)
+		WHERE s.id = ?`, sessionID).Scan(&u.ID, &u.Username, &u.Role, &u.ClassID, &u.ClassName, &u.CSRFToken, &expires)
 	if errors.Is(err, sql.ErrNoRows) {
-		return nil, errNoSession
+		return nil, viaBearer, errNoSession
 	}
 	if err != nil {
-		return nil, err
+		return nil, viaBearer, err
 	}
 	if !expires.After(time.Now().UTC()) {
 		_, _ = s.db.ExecContext(r.Context(), `DELETE FROM sessions WHERE id=?`, sessionID)
-		return nil, errNoSession
+		return nil, viaBearer, errNoSession
 	}
-	return &u, nil
+	return &u, viaBearer, nil
 }
 
 func (s *Server) requireUser(w http.ResponseWriter, r *http.Request) (*User, bool) {
@@ -158,16 +174,53 @@ func (s *Server) requireUser(w http.ResponseWriter, r *http.Request) (*User, boo
 		writeError(w, http.StatusServiceUnavailable, "unavailable")
 		return nil, false
 	}
-	u, err := s.currentUser(r)
-	if err == nil {
-		return u, true
-	}
-	if errors.Is(err, errNoSession) {
-		writeError(w, http.StatusUnauthorized, "unauthorized")
+	u, viaBearer, err := s.currentUser(r)
+	if err != nil {
+		if errors.Is(err, errNoSession) {
+			writeError(w, http.StatusUnauthorized, "unauthorized")
+			return nil, false
+		}
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
 		return nil, false
 	}
-	writeError(w, http.StatusServiceUnavailable, "unavailable")
-	return nil, false
+	if !viaBearer && isUnsafeMethod(r.Method) {
+		if !sameOrigin(r) {
+			s.recordAudit(r, u, "csrf.check", "request", r.URL.Path, audit.StatusDenied, "", nil, nil, "origin_rejected")
+			writeError(w, http.StatusForbidden, "csrf_invalid")
+			return nil, false
+		}
+		token := r.Header.Get("X-CSRF-Token")
+		if u.CSRFToken == "" || subtle.ConstantTimeCompare([]byte(token), []byte(u.CSRFToken)) != 1 {
+			s.recordAudit(r, u, "csrf.check", "request", r.URL.Path, audit.StatusDenied, "", nil, nil, "csrf_invalid")
+			writeError(w, http.StatusForbidden, "csrf_invalid")
+			return nil, false
+		}
+	}
+	return u, true
+}
+
+func isUnsafeMethod(method string) bool {
+	switch method {
+	case http.MethodPost, http.MethodPut, http.MethodPatch, http.MethodDelete:
+		return true
+	default:
+		return false
+	}
+}
+
+func sameOrigin(r *http.Request) bool {
+	raw := strings.TrimSpace(r.Header.Get("Origin"))
+	if raw == "" {
+		raw = strings.TrimSpace(r.Header.Get("Referer"))
+	}
+	if raw == "" {
+		return true
+	}
+	u, err := url.Parse(raw)
+	if err != nil {
+		return false
+	}
+	return strings.EqualFold(u.Host, r.Host)
 }
 
 func (s *Server) setSessionCookie(w http.ResponseWriter, sealed string) {

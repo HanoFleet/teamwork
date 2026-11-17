@@ -53,7 +53,12 @@ def opener() -> urllib.request.OpenerDirector:
 
 
 def call(op: urllib.request.OpenerDirector, method: str, path: str, body: bytes | None = None, headers: dict[str, str] | None = None):
-    req = urllib.request.Request(BASE + path, data=body, headers=headers or {}, method=method)
+    headers = dict(headers or {})
+    if method.upper() in {"POST", "PUT", "PATCH", "DELETE"}:
+        token = getattr(op, "csrf_token", "")
+        if token and "X-CSRF-Token" not in headers:
+            headers["X-CSRF-Token"] = token
+    req = urllib.request.Request(BASE + path, data=body, headers=headers, method=method)
     try:
         with op.open(req, timeout=30) as resp:
             raw = resp.read()
@@ -91,6 +96,12 @@ def wait_login(username: str, password: str) -> urllib.request.OpenerDirector:
             cookie = headers.get("Set-Cookie") or ""
             if "HttpOnly" not in cookie or "SameSite=Lax" not in cookie:
                 fail(f"Cookie 缺少 HttpOnly 或 SameSite=Lax: {cookie}")
+            try:
+                op.csrf_token = json.loads(raw).get("csrf_token", "")
+            except json.JSONDecodeError:
+                op.csrf_token = ""
+            if not op.csrf_token:
+                fail("登录响应缺少 csrf_token")
             return op
         last = f"{code} {raw[:120]!r}"
         time.sleep(2)
@@ -106,6 +117,12 @@ def login(username: str, password: str) -> urllib.request.OpenerDirector:
     cookie = headers.get("Set-Cookie") or ""
     if "HttpOnly" not in cookie or "SameSite=Lax" not in cookie:
         fail(f"Cookie 缺少 HttpOnly 或 SameSite=Lax: {cookie}")
+    try:
+        op.csrf_token = json.loads(raw).get("csrf_token", "")
+    except json.JSONDecodeError:
+        op.csrf_token = ""
+    if not op.csrf_token:
+        fail("登录响应缺少 csrf_token")
     return op
 
 
@@ -513,6 +530,14 @@ def main() -> None:
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     mod.run(note=note, fail=fail, call=call, login=login, mysql=mysql, compose=compose, ENV=ENV)
+
+    security_path = ROOT / "scripts" / "security_test.py"
+    security_spec = importlib.util.spec_from_file_location("security_test", security_path)
+    if security_spec is None or security_spec.loader is None:
+        fail("无法加载 scripts/security_test.py")
+    security_mod = importlib.util.module_from_spec(security_spec)
+    security_spec.loader.exec_module(security_mod)
+    security_mod.run(note=note, fail=fail, call=call, login=login, mysql=mysql, compose=compose, ENV=ENV)
 
     note("")
     note("全部断言通过。")

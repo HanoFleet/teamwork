@@ -18,6 +18,7 @@
 - 数据库：MySQL 8，库名 `campusclaw`，字符集 `utf8mb4`，时间统一 UTC `DATETIME`。
 - 现有表：`classes`、`users`、`sessions`、`materials`、`knowledge_entries`、`knowledge_chunks`、`handouts`、`assignments`、`assistants`、`skills`。
 - 本 change 新增：`schema_migrations`、`login_failures`、`material_versions`、`tags`、`material_tags`、`material_reads`、`favorites`；并给 `materials`、`knowledge_entries`、`knowledge_chunks` 加列。
+- 第 9 课新增：`sessions.csrf_token`、`audit_logs`，并扩展 `assistants`/`skills`；审计行保留，不提供删除接口，`usage_json` 不含正文/提示词/密钥。
 - 跨存储：切片正文在 MySQL `knowledge_chunks`，向量在 Qdrant，原文件在 `uploads` 卷；三者的关联键是 `material_id`、`chunk_id`。
 - 敏感数据：`users.password_hash`、`sessions.id`、`login_failures`、学生 `material_reads.position`、`favorites`、材料正文和原文件。
 - 数据字典：`docs/data-dictionary.md` 是字段含义的唯一来源；本文件只写规则。

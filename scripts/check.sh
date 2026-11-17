@@ -5,7 +5,8 @@ cd "$(dirname "$0")/.."
 echo "== 规约与规范"
 python3 scripts/spec_check.py
 python3 scripts/standards_check.py
-python3 -m py_compile scripts/async_test.py
+python3 -m py_compile scripts/async_test.py scripts/security_test.py scripts/security_gate.py scripts/sec08_experiment.py
+python3 scripts/security_static.py
 
 echo "== OpenSpec strict"
 npx -y @fission-ai/openspec@1.15.0 validate --all --strict
@@ -25,11 +26,8 @@ docker run --rm \
   sh -c 'test -z "$(gofmt -l .)" && go test ./... && go vet ./...'
 
 echo "== 前端构建"
-docker run --rm \
-  -v "$PWD/frontend:/work" \
-  -v campusclaw-frontend-modules:/work/node_modules \
-  -w /work \
-  node:22-alpine \
-  sh -c 'npm ci --include=optional && npm run build'
+docker build --target build --tag campusclaw-frontend-check frontend >/dev/null
+docker image rm -f campusclaw-frontend-check >/dev/null 2>&1 || true
+echo "前端 npm ci + build：通过"
 
 echo "check 全部通过"

@@ -19,6 +19,10 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusServiceUnavailable, "unavailable")
 		return
 	}
+	if !sameOrigin(r) {
+		writeError(w, http.StatusForbidden, "csrf_invalid")
+		return
+	}
 	var req loginRequest
 	dec := json.NewDecoder(r.Body)
 	dec.DisallowUnknownFields()
@@ -73,9 +77,14 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusServiceUnavailable, "unavailable")
 		return
 	}
+	csrfToken, err := auth.NewSessionID()
+	if err != nil {
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
 	expires := now.Add(s.cfg.SessionTTL)
-	if _, err := s.db.ExecContext(r.Context(), `INSERT INTO sessions (id, user_id, expires_at, created_at) VALUES (?, ?, ?, ?)`,
-		sessionID, userID, expires, now); err != nil {
+	if _, err := s.db.ExecContext(r.Context(), `INSERT INTO sessions (id, user_id, csrf_token, expires_at, created_at) VALUES (?, ?, ?, ?, ?)`,
+		sessionID, userID, csrfToken, expires, now); err != nil {
 		writeError(w, http.StatusServiceUnavailable, "unavailable")
 		return
 	}
@@ -89,6 +98,7 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 		"status":     "ok",
 		"token":      token,
 		"token_type": "Bearer",
+		"csrf_token": csrfToken,
 	})
 }
 
@@ -97,7 +107,7 @@ func (s *Server) logout(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		return
 	}
-	if sessionID, ok := sessionIDFromRequest(s.cfg.SessionSecret, r); ok {
+	if sessionID, _, ok := sessionIDFromRequest(s.cfg.SessionSecret, r); ok {
 		_, _ = s.db.ExecContext(r.Context(), `DELETE FROM sessions WHERE id=?`, sessionID)
 	}
 	_, _ = s.db.ExecContext(r.Context(), `DELETE FROM sessions WHERE user_id=?`, u.ID)
@@ -116,6 +126,7 @@ func (s *Server) me(w http.ResponseWriter, r *http.Request) {
 		"role":       u.Role,
 		"class_id":   u.ClassID,
 		"class_name": u.ClassName,
+		"csrf_token": u.CSRFToken,
 	})
 }
 

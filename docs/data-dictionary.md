@@ -56,6 +56,7 @@
 | --- | --- | --- | --- | --- |
 | `id` | CHAR(64) | PK | 会话 id | 敏感 |
 | `user_id` | BIGINT | NOT NULL, FK users | 用户 | 内部 |
+| `csrf_token` | CHAR(64) | NULL | 会话级一次性 CSRF token；旧 session 为空 | 敏感 |
 | `expires_at` | DATETIME | NOT NULL | 过期时间 | 内部 |
 | `created_at` | DATETIME | NOT NULL | 创建时间 | 内部 |
 
@@ -283,9 +284,55 @@
 
 约束：`UNIQUE(submission_id, version)`；结果写入使用 `INSERT IGNORE`/`ON DUPLICATE KEY UPDATE id=id`，重复投递保留首次分数/评语，不新增第二行。删除规则：随 submission 保留；不提供删除接口。
 
+## 安全配置（第 9 课）
+
+### `audit_logs`
+
+| 字段 | 类型 | 约束 | 说明 | 敏感 |
+| --- | --- | --- | --- | --- |
+| `id` | BIGINT | PK | 审计行 id | 内部 |
+| `occurred_at` | DATETIME(6) | NOT NULL | UTC 操作时间 | 内部 |
+| `operator_id` | BIGINT | NULL, FK users | 操作人 id；系统事件为空 | 内部 |
+| `operator_username` | VARCHAR(64) | NOT NULL | 操作人快照 | 个人信息 |
+| `operator_role` | ENUM('teacher','student','system') | NOT NULL | 操作人角色 | 内部 |
+| `class_id` | BIGINT | NULL, FK classes | 班级；系统事件为空 | 内部 |
+| `operation` | VARCHAR(64) | NOT NULL | 操作类型，如 `config.change`、`skill.run`、`csrf.check` | 内部 |
+| `object_type` | VARCHAR(32) | NOT NULL | 对象类型 | 内部 |
+| `object_id` | VARCHAR(64) | NOT NULL | 对象标识 | 内部 |
+| `result_status` | ENUM('success','failure','denied','accepted') | NOT NULL | 结果 | 内部 |
+| `skill_key` | VARCHAR(64) | NULL | 技能标识 | 内部 |
+| `duration_ms` | INT | NULL | 耗时 | 内部 |
+| `usage_json` | JSON | NULL | 模型/token 用量元数据，不含正文/提示词/密钥 | 内部 |
+| `error_code` | VARCHAR(64) | NULL | 错误码 | 内部 |
+| `request_id` | VARCHAR(64) | NULL | 关联请求 id | 内部 |
+
+索引：`(occurred_at)`、`(operator_id, occurred_at)`、`(skill_key, occurred_at)`、`(object_type, object_id)`。删除规则：保留；不提供删除接口，清理策略后续定义。
+
+### `assistants`（扩展）
+
+| 字段 | 类型 | 约束 | 说明 | 敏感 |
+| --- | --- | --- | --- | --- |
+| `class_id` | BIGINT | NULL, FK classes, INDEX | 班级；旧占位行为空 | 内部 |
+| `system_prompt` | TEXT | NULL | 教师可配置的助手提示词 | 敏感 |
+| `enabled` | BOOLEAN | NOT NULL DEFAULT 1 | 是否启用 | 内部 |
+| `updated_at` | DATETIME | NULL | 最近更新时间 | 内部 |
+
+删除规则：本 change 不提供删除接口；已有引用时不得物理删除。
+
+### `skills`（扩展）
+
+| 字段 | 类型 | 约束 | 说明 | 敏感 |
+| --- | --- | --- | --- | --- |
+| `skill_key` | VARCHAR(64) | NULL, UNIQUE | 稳定标识，如 `grade`、`ask` | 内部 |
+| `description` | TEXT | NULL | 描述 | 内部 |
+| `enabled` | BOOLEAN | NOT NULL DEFAULT 1 | 是否启用 | 内部 |
+| `updated_at` | DATETIME | NULL | 最近更新时间 | 内部 |
+
+删除规则：本 change 不提供删除接口；按 key 查询，旧占位行 key 为空不参与技能运行。
+
 ## 占位表（本 change 不提供业务接口）
 
-`assignments` 已被第 8 课最小使用；`handouts`、`assistants`、`skills` 仍保持现有结构，后续模块使用前必须先补数据字典、迁移和规约。当前只允许占位数据，不新增业务字段。
+`handouts` 仍为占位；`assignments`、`assistants`、`skills` 已被第 8/9 课最小使用。后续模块扩展前必须先补数据字典、迁移和规约。
 
 ## 变更记录
 
@@ -293,3 +340,4 @@
 | --- | --- | --- |
 | 2026-10-28 | 初版：现有表 + `2026-10-14-upgrade-material-library` 新增/修改 | `0001`、`0002` |
 | 2026-11-05 | 第 8 课：新增 `submissions`、`grade_tasks`、`outbox_messages`、`grade_results`，扩展 `assignments` | `db.Migrate`（IF NOT EXISTS + ensureColumn） |
+| 2026-11-17 | 第 9 课：`sessions.csrf_token`、`audit_logs`，扩展 `assistants`/`skills` | `db.Migrate`（IF NOT EXISTS + ensureColumn + ensureIndex） |

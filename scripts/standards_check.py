@@ -113,6 +113,9 @@ def main() -> int:
         "grade_tasks",
         "outbox_messages",
         "grade_results",
+        "audit_logs",
+        "assistants",
+        "skills",
     ]:
         if f"`{table}`" not in data_dict:
             fail(f"数据字典缺少表：{table}")

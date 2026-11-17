@@ -84,6 +84,10 @@ func (s *Server) gradeSubmission(w http.ResponseWriter, r *http.Request) {
 	if mapGradeErr(w, err) {
 		return
 	}
+	writeGradeTaskResponse(w, task, result)
+}
+
+func writeGradeTaskResponse(w http.ResponseWriter, task grading.Task, result *grading.Result) {
 	if result != nil {
 		writeJSON(w, http.StatusOK, map[string]any{
 			"task_id": task.TaskID,

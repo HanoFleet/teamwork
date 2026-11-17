@@ -1,11 +1,12 @@
 # CampusClaw 2.0 规约
 
-> **当前提交重点：第 7 课可运行骨架 + 第 8 课异步批改实现。** 骨架已经落到根目录；foundation 已归档。异步批改实现位于 `change/2026-11-05-add-async-grading`，待角色三验收后归档；材料库是后续 change。
+> **当前提交重点：第 7 课骨架 + 第 8 课异步批改 + 第 9 课安全加固。** foundation 已归档；异步批改与安全加固均已实现并通过本地/隔离验收。安全证据见 `reports/security-fix-log.md`、`reports/gate-red-green.md`、`reports/sec08-experiment.md`；材料库是后续 change。
 
 | 项目 | 内容 |
 | --- | --- |
 | 已归档 change | `2026-10-28-establish-platform-foundation` |
-| 当前活动 change | `2026-11-05-add-async-grading`（第 8 课，实现待验收归档） |
+| 第 8 课 change | `2026-11-05-add-async-grading`（实现与证据已齐） |
+| 当前活动 change | `2026-11-17-harden-security`（第 9 课，实现与证据已齐） |
 | 后续 change | `2026-10-14-upgrade-material-library`（活动，未实现） |
 | 负责人 | 李斯坦（角色一：制定规约） |
 | 评审 | 韩雅慧（角色二：开发系统）、禹霖（角色三：项目验收） |
@@ -17,7 +18,8 @@
 - 仓库本身就是可运行的 CampusClaw：Go 后端、React 前端、MySQL、Qdrant、Nginx、Compose。
 - 当前骨架新增 `/live` 存活、`/health` 就绪、`/ready` 别名、单行 JSON 日志、request ID、优雅停机、配置外置。
 - `make check` 是合并前门禁；`make grade` 是独立 Compose 验收，生成 HTML/JSON 报告。
-- 第 8 课异步批改已实现：提交返回 202 + `task_id`，任务持久化，outbox 投递，独立 worker 消费，失败退避/死信，重复只出一份结果。角色二证据见 `docs/verification.md` 与 `reports/async-grading.md`；角色三独立复跑和 SEC 自查仍待完成。
+- 第 8 课异步批改已实现：提交返回 202 + `task_id`，任务持久化，outbox 投递，独立 worker 消费，失败退避/死信，重复只出一份结果；`verify.py` 含 P95、停 worker、kill 重投、5 次死信。
+- 第 9 课安全加固已实现：CSRF/Origin、教师配置权限、受控技能入口、`audit_logs` 七列、SQLi/XSS/CSRF 反例、`security_gate` 红绿和 SEC-08 四步实验。
 - 材料库（PDF/Word/PPT、后台索引、版本、回收站、阅读进度）还没有实现，规约在后续 change。
 
 ## 已归档 change：platform foundation
@@ -41,6 +43,17 @@
 | [`tasks.md`](openspec/changes/2026-11-05-add-async-grading/tasks.md) | 30 条任务，未勾选 |
 
 范围：只做“提交 → 异步批改 → 查询结果”的最小链路。不做完整作业模块、教师手工评分、SSE/WebSocket、技能/提示词配置和 SEC 自查本身的实现。逐行自查见 [`docs/lesson-08/self-check.md`](docs/lesson-08/self-check.md)，接口清单见 [`docs/lesson-08/security-inventory.md`](docs/lesson-08/security-inventory.md)。
+
+## 当前活动 change：security hardening（第 9 课）
+
+| 文件 | 内容 |
+| --- | --- |
+| [`proposal.md`](openspec/changes/2026-11-17-harden-security/proposal.md) | CSRF、配置权限、技能入口、审计、注入反例、门禁和 SEC-08 |
+| [`design.md`](openspec/changes/2026-11-17-harden-security/design.md) | 会话 token、审计表、catalog、技能包装、安全测试 |
+| [`specs/security-hardening/spec.md`](openspec/changes/2026-11-17-harden-security/specs/security-hardening/spec.md) | 6 条需求、29 个场景 |
+| [`tasks.md`](openspec/changes/2026-11-17-harden-security/tasks.md) | 40 条任务，按证据勾选 |
+
+范围：只做最小安全链路，不做设置页 UI、真实外部工具调用、生产 HTTPS 或 schema_migrations。第 9 课逐节对照见 [`docs/lesson-09/checklist.md`](docs/lesson-09/checklist.md)。
 
 ## 后续 change：material library
 
