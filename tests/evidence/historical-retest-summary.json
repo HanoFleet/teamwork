@@ -1,0 +1,64 @@
+{
+  "version": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "recorded_at": "2026-11-18T10:09:16.944903+08:00",
+  "round": "第二轮环境恢复补跑",
+  "new_check_rows": {
+    "通过": 13,
+    "失败": 1
+  },
+  "latest_defects": {
+    "复测通过": 3,
+    "待确认修复版本": 1
+  },
+  "acceptance": "18/18",
+  "verify": 0,
+  "security_prioritized": 0,
+  "supplement": {
+    "SEC04_direct": {
+      "code": 404,
+      "nonexistent_code": 404,
+      "same_body": true,
+      "before": {
+        "grade_tasks": "0",
+        "grade_results": "0",
+        "outbox": "0"
+      },
+      "after": {
+        "grade_tasks": "0",
+        "grade_results": "0",
+        "outbox": "0"
+      },
+      "passed": true
+    },
+    "SEC08": 0
+  },
+  "dependency": "high5 critical0; retained audit, no dependency fix located",
+  "performance_observation": {
+    "p95_ms": 55.7,
+    "max_ms": 179.6,
+    "default_single_request_limit_ms": 100,
+    "over_limit_count": 1,
+    "samples_ms": [
+      30.1,
+      31.0,
+      28.7,
+      26.6,
+      32.1,
+      29.1,
+      25.0,
+      35.4,
+      55.7,
+      49.2,
+      179.6,
+      35.4,
+      30.8,
+      39.4,
+      23.2,
+      27.0,
+      23.7,
+      24.9,
+      27.3,
+      26.8
+    ]
+  }
+}
