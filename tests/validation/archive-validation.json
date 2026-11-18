@@ -1,0 +1,217 @@
+[
+
+  {
+
+    "name": "latency-gate-contract",
+
+    "command": [
+
+      "python",
+
+      "tests/performance/latency_gate_contract.py"
+
+    ],
+
+    "exit": 0,
+
+    "stdout": "",
+
+    "stderr": "....\r\n----------------------------------------------------------------------\r\nRan 4 tests in 0.494s\r\n\r\nOK\r\n",
+
+    "time": "2026-11-18T11:26:22.343126+08:00"
+
+  },
+
+  {
+
+    "name": "historical-limit-round1",
+
+    "command": [
+
+      "python",
+
+      "tests/performance/check_single_request_limit.py",
+
+      "tests/evidence/enqueue-latency-round-1.json"
+
+    ],
+
+    "exit": 1,
+
+    "stdout": "tests/evidence/enqueue-latency-round-1.json: samples=20 over100=2 max_ms=253.720 valid=True\r\n",
+
+    "stderr": "",
+
+    "time": "2026-11-18T11:26:22.484269+08:00"
+
+  },
+
+  {
+
+    "name": "historical-limit-round2",
+
+    "command": [
+
+      "python",
+
+      "tests/performance/check_single_request_limit.py",
+
+      "tests/evidence/enqueue-latency-round-2.json"
+
+    ],
+
+    "exit": 1,
+
+    "stdout": "tests/evidence/enqueue-latency-round-2.json: samples=20 over100=1 max_ms=349.701 valid=True\r\n",
+
+    "stderr": "",
+
+    "time": "2026-11-18T11:26:22.656645+08:00"
+
+  },
+
+  {
+
+    "name": "business_workflows-help",
+
+    "command": [
+
+      "python",
+
+      "tests\\regression\\business_workflows.py",
+
+      "--help"
+
+    ],
+
+    "exit": 0,
+
+    "stdout": "usage: business_workflows.py [-h] [--subnet SUBNET]\r\n                             [--build-proxy BUILD_PROXY]\r\n\r\nRun unchanged verify.py: business, failure recovery, async and security cases.\r\n\r\noption<LOCAL_PATH>  -h, --help            show this help message and exit\r\n  --subnet SUBNET       Optional unused Docker subnet; omitted uses daemon\r\n                        default\r\n  --build-proxy BUILD_PROXY\r\n                        Optional download proxy for build args only\r\n",
+
+    "stderr": "",
+
+    "time": "2026-11-18T11:26:22.873020+08:00"
+
+  },
+
+  {
+
+    "name": "isolated_acceptance-help",
+
+    "command": [
+
+      "python",
+
+      "tests\\regression\\isolated_acceptance.py",
+
+      "--help"
+
+    ],
+
+    "exit": 0,
+
+    "stdout": "usage: isolated_acceptance.py [-h] [--subnet SUBNET]\r\n                              [--build-proxy BUILD_PROXY]\r\n\r\nExecute the repository's unchanged 18-case acceptance suite in an owned\r\nproject.\r\n\r\noption<LOCAL_PATH>  -h, --help            show this help message and exit\r\n  --subnet SUBNET       Optional unused Docker subnet; omitted uses daemon\r\n                        default\r\n  --build-proxy BUILD_PROXY\r\n                        Optional download proxy for build args only\r\n",
+
+    "stderr": "",
+
+    "time": "2026-11-18T11:26:23.029604+08:00"
+
+  },
+
+  {
+
+    "name": "cross_class_grading-help",
+
+    "command": [
+
+      "python",
+
+      "tests\\security\\cross_class_grading.py",
+
+      "--help"
+
+    ],
+
+    "exit": 0,
+
+    "stdout": "usage: cross_class_grading.py [-h] [--subnet SUBNET]\r\n                              [--build-proxy BUILD_PROXY]\r\n\r\nSEC-04: direct grade entry returns same 404 and makes no cross-class writes.\r\n\r\noption<LOCAL_PATH>  -h, --help            show this help message and exit\r\n  --subnet SUBNET       Optional unused Docker subnet; omitted uses daemon\r\n                        default\r\n  --build-proxy BUILD_PROXY\r\n                        Optional download proxy for build args only\r\n",
+
+    "stderr": "",
+
+    "time": "2026-11-18T11:26:23.188643+08:00"
+
+  },
+
+  {
+
+    "name": "read_only_class_review-help",
+
+    "command": [
+
+      "python",
+
+      "tests\\security\\read_only_class_review.py",
+
+      "--help"
+
+    ],
+
+    "exit": 0,
+
+    "stdout": "usage: read_only_class_review.py [-h] --base-url BASE_URL --compose-project\r\n                                 COMPOSE_PROJECT --historical-evidence\r\n                                 HISTORICAL_EVIDENCE --env-file ENV_FILE\r\n\r\nHistorical read-only SEC01/SEC02 cross-review; requires original fixture\r\nmetadata\r\n\r\noption<LOCAL_PATH>  -h, --help            show this help message and exit\r\n  --base-url BASE_URL\r\n  --compose-project COMPOSE_PROJECT\r\n  --historical-evidence HISTORICAL_EVIDENCE\r\n  --env-file ENV_FILE\r\n",
+
+    "stderr": "",
+
+    "time": "2026-11-18T11:26:23.318645+08:00"
+
+  },
+
+  {
+
+    "name": "security_precheck-help",
+
+    "command": [
+
+      "python",
+
+      "tests\\security\\security_precheck.py",
+
+      "--help"
+
+    ],
+
+    "exit": 0,
+
+    "stdout": "usage: security_precheck.py [-h] [--baseline-only] [--gates]\r\n\r\noption<LOCAL_PATH>  -h, --help       show this help message and exit\r\n  --baseline-only\r\n  --gates\r\n",
+
+    "stderr": "",
+
+    "time": "2026-11-18T11:26:23.557720+08:00"
+
+  },
+
+  {
+
+    "name": "grade_enqueue_latency-help",
+
+    "command": [
+
+      "python",
+
+      "tests\\performance\\grade_enqueue_latency.py",
+
+      "--help"
+
+    ],
+
+    "exit": 0,
+
+    "stdout": "usage: grade_enqueue_latency.py [-h] [--subnet SUBNET]\r\n                                [--build-proxy BUILD_PROXY]\r\n\r\n20 sequential grade enqueue samples; retain all values; 100ms limit\r\n\r\noption<LOCAL_PATH>  -h, --help            show this help message and exit\r\n  --subnet SUBNET       Optional unused Docker subnet; omitted uses daemon\r\n                        default\r\n  --build-proxy BUILD_PROXY\r\n                        Optional download proxy for build args only\r\n",
+
+    "stderr": "",
+
+    "time": "2026-11-18T11:26:23.693119+08:00"
+
+  }
+
+]

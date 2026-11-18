@@ -1,0 +1,16 @@
+{
+  "status": 404,
+  "missing_status": 404,
+  "same_body": true,
+  "before": {
+    "grade_tasks": "0",
+    "grade_results": "0",
+    "outbox": "0"
+  },
+  "after": {
+    "grade_tasks": "0",
+    "grade_results": "0",
+    "outbox": "0"
+  },
+  "passed": true
+}

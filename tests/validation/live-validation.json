@@ -1,0 +1,67 @@
+{
+
+  "acceptance-run": {
+
+    "exit": 0,
+
+    "classification": "live-test"
+
+  },
+
+  "business-run": {
+
+    "exit": 0,
+
+    "classification": "live-test"
+
+  },
+
+  "cross-class-run": {
+
+    "exit": 0,
+
+    "classification": "live-test"
+
+  },
+
+  "performance-run": {
+
+    "exit": 1,
+
+    "classification": "expected-performance-failure"
+
+  },
+
+  "legacy-report-fixture-check": {
+
+    "exit": 1,
+
+    "classification": "fixture-blocked"
+
+  },
+
+  "latency_gate_contract": {
+
+    "passed": 4
+
+  },
+
+  "redaction_contract": {
+
+    "passed": 2
+
+  },
+
+  "historical_samples": {
+
+    "round1_exit": 1,
+
+    "round2_exit": 1
+
+  },
+
+  "full_legacy_review": "not rerun; original fixture metadata required",
+
+  "time": "2026-11-18T11:43:45.809868+08:00"
+
+}

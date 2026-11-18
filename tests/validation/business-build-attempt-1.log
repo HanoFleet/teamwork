@@ -1,0 +1,71 @@
+python : Traceback (most recent call last):
+
+所在位置 行:2 字符: 22
+
++ ... ONUTF8='1'; python -u tests/regression/business_workflows.py --subnet ...
+
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+
+  File "<ARCHIVE_WORKTREE>\tests\regression\business_workflows.py
+
+", line 19, in <module>
+
+    sys.exit(main())
+
+             ^^^^^^
+
+  File "<ARCHIVE_WORKTREE>\tests\regression\business_workflows.py
+
+", line 9, in main
+
+    project.start()
+
+  File "<ARCHIVE_WORKTREE>\tests\support\isolated_project.py", li
+
+ne 69, in start
+
+    self.a.compose('build', timeout=600)
+
+  File "<ARCHIVE_WORKTREE>\tests\support\isolated_project.py", li
+
+ne 62, in compose
+
+    return original(*args, **kwargs)
+
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "<ARCHIVE_WORKTREE>\scripts\acceptance.py", line 48, in co
+
+mpose
+
+    return run(
+
+           ^^^^
+
+  File "<ARCHIVE_WORKTREE>\scripts\acceptance.py", line 43, in ru
+
+n
+
+    raise RuntimeError(f"{' '.join(cmd)} -> {result.returncode}\n{result.stderr[-2000:]}")
+
+RuntimeError: docker compose -p teamwork-tests-business-16624501 --env-file <LOCAL_PATH>
+
+-test-archive-review-20261118\tests\.runtime\teamwork-tests-business-16624501\generated.env build --build-arg HTTP_PROX
+
+Y=<BUILD_PROXY> --build-arg HTTPS_PROXY=<BUILD_PROXY> -> 1
+
+ Image teamwork-tests-business-16624501-api Building
+
+ Image teamwork-tests-business-16624501-worker Building
+
+ Image teamwork-tests-business-16624501-worker Building
+
+ Image teamwork-tests-business-16624501-api Building
+
+The command '/bin/sh -c go mod download' returned a non-zero code: 1

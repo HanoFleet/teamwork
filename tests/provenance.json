@@ -1,0 +1,202 @@
+{
+  "sources": {
+    "A": "teamwork-main (no .git)",
+    "B": "teamwork-main-latest (including qa worktrees)"
+  },
+  "archives": [
+    {
+      "source": "B/qa/lesson9/fix-worktree/scripts/qa/lesson9/performance_probe.py",
+      "source_sha256": "19d86e9c983c51818e78e073e92918f2a1d1ac3134e5847e46fa10498d50d196",
+      "archive": "tests/performance/grade_enqueue_latency.py",
+      "archive_sha256": "41c33f35c8deadc7b05fff4d94b26628c95d350ea48c087dd68590cee637508e",
+      "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "adapted": true
+    },
+    {
+      "source": "B/qa/lesson9/fix-worktree/scripts/qa/lesson9/check_performance.py",
+      "source_sha256": "84e551e0e1c40ccf0fd16defb01a304e55b8b82e2087e15958ea96f6856d51d7",
+      "archive": "tests/performance/check_single_request_limit.py",
+      "archive_sha256": "84e551e0e1c40ccf0fd16defb01a304e55b8b82e2087e15958ea96f6856d51d7",
+      "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "adapted": false
+    },
+    {
+      "source": "B/scripts/week8_security.py",
+      "source_sha256": "40d646fbfc0181bfdeb0d353cbe5a75353d69bb99ba8609329246269fa7d62d4",
+      "archive": "tests/security/security_precheck.py",
+      "archive_sha256": "2cfd4a3c431cf4fc29ac62a24ad0c9e96976cd0dcaecb351e83647c16485c675",
+      "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "adapted": true,
+      "changes": [
+        "root adjusted from scripts to tests/security",
+        "CSRF token added to existing secret-value redaction"
+      ]
+    },
+    {
+      "source": "B/scripts/week8_validate.py",
+      "source_sha256": "732682108cb4b4140db8e18c79fc94a29d65f8539e2bbee5f70e25cce00d828b",
+      "archive": "tests/security/precheck_report_consistency.py",
+      "archive_sha256": "af80124907336c4bdfed17de1d3077c061546f4bbea1b73c20e30e9401169cd4",
+      "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "adapted": true
+    },
+    {
+      "source": "B/qa/lesson9/fix-worktree/scripts/qa/lesson9/Dockerfile.tools",
+      "source_sha256": "0a9495e8d96fc4523643f7b7560ad79e14e97b9ab03143f1742af6d0587d3825",
+      "archive": "tests/environment/Dockerfile.validation-tools",
+      "archive_sha256": "0a9495e8d96fc4523643f7b7560ad79e14e97b9ab03143f1742af6d0587d3825",
+      "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "adapted": false
+    },
+    {
+      "source": "B/qa/lesson9/retest-02/recovery/summary.json",
+      "source_sha256": "871bf58a5b3e0bff901d953f511a3e743b9f0a6b632cd2605cc543f3db771480",
+      "archive": "tests/evidence/historical-retest-summary.json",
+      "archive_sha256": "77aa0166b358d8880be09d5f4907642c941c2ef6d370873597bcfaf6e656cd47",
+      "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "adapted": true
+    },
+    {
+      "source": "B/qa/lesson9/fix-worktree/reports/lesson9-20261118/retest-02/fix-round/performance-1.json",
+      "source_sha256": "773f6159ff5c81920f863c01798a8214ac00f5e7cc57d43e17d2d94e63d77d13",
+      "archive": "tests/evidence/enqueue-latency-round-1.json",
+      "archive_sha256": "7388f97148d06773551c0da4e4b2dc88a4c49e0de9b78065711bf3e66abd5353",
+      "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "adapted": true
+    },
+    {
+      "source": "B/qa/lesson9/fix-worktree/reports/lesson9-20261118/retest-02/fix-round/performance-2.json",
+      "source_sha256": "1f8e6a4d9283c48d0e31b59c9066dcea288146f8f67ab14077e5bda541d2915a",
+      "archive": "tests/evidence/enqueue-latency-round-2.json",
+      "archive_sha256": "655067c7454d50ee0f0da69d2d14c2831121394c482785824037f72184db990a",
+      "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "adapted": true
+    },
+    {
+      "source": "B/qa/lesson9/fix-worktree/reports/lesson9-20261118/retest-02/fix-round/validation.json",
+      "source_sha256": "fc606931e0fe0abbc047a9c14dc0f8520b01075730818eba21c850b196431f08",
+      "archive": "tests/evidence/historical-business-validation.json",
+      "archive_sha256": "d15badf270a8da12788f1774ed29c58ae20c6c68aef0a37312b48e72bba06d12",
+      "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "adapted": true
+    },
+    {
+      "source": "B/reports/evidence/week8-cross-review/20261106T201036-9a5cfc/runner.py",
+      "archive": "tests/security/read_only_class_review.py",
+      "source_sha256": "7e9552e04d7f9885a8bcf2870529c36d8084292c9e8c4e8604b59549f0bc25e2",
+      "changes": [
+        "repository-relative root/output",
+        "explicit CLI base URL, project, fixture path, credential file; removed machine config",
+        "redact sensitive JSON response fields before storing evidence"
+      ],
+      "historical_version": "292eaaff plus working-tree changes",
+      "validation": "compile and --help; full historical fixture review not rerun",
+      "archive_sha256": "54d90ccbf9a5e932f303189f6c1e81d27e6c55ccf4d3a74d27bef1192190bf9d",
+      "adapted": true
+    },
+    {
+      "source": "B/qa/lesson9/retest-02/recovery/run_online.py",
+      "source_sha256": "43552df8751d6ab8528af7c6ef78a41cf3f68990241e693d99e3885b4144974f",
+      "adapted_outputs": [
+        "tests/support/isolated_project.py",
+        "tests/regression/business_workflows.py"
+      ],
+      "changes": [
+        "root/output relocated under tests",
+        "random owned Compose projects; no reuse of named images or existing env",
+        "optional CLI subnet/build proxy instead of host-specific constants",
+        "verify env injected in memory; no overwrite of root .env",
+        "existing assertions delegated unchanged; RabbitMQ readiness wait retained"
+      ]
+    },
+    {
+      "source": "B/qa/lesson9/retest-02/acceptance_run.py",
+      "source_sha256": "1669a4a75f73ba6412219b848e2f600241b5975755a31dabcc933faab67a0698",
+      "adapted_outputs": [
+        "tests/regression/isolated_acceptance.py"
+      ],
+      "changes": [
+        "root/output relocated under tests",
+        "random owned Compose projects; no reuse of named images or existing env",
+        "optional CLI subnet/build proxy instead of host-specific constants",
+        "verify env injected in memory; no overwrite of root .env",
+        "existing assertions delegated unchanged; RabbitMQ readiness wait retained"
+      ]
+    },
+    {
+      "source": "B/qa/lesson9/retest-02/recovery/supplement.py",
+      "source_sha256": "62421ac27e74d086417e9c13439e8956032751e79f4fa55c3b32391470e779d1",
+      "adapted_outputs": [
+        "tests/security/cross_class_grading.py"
+      ],
+      "changes": [
+        "root/output relocated under tests",
+        "random owned Compose projects; no reuse of named images or existing env",
+        "optional CLI subnet/build proxy instead of host-specific constants",
+        "verify env injected in memory; no overwrite of root .env",
+        "existing assertions delegated unchanged; RabbitMQ readiness wait retained"
+      ]
+    },
+    {
+      "source": "B/qa/lesson9/fix-worktree/scripts/qa/lesson9/run_make.sh",
+      "source_sha256": "0d866df3b97cee4fcbb3637a3759dcd45856171e874ab561c43e7b744f88108c",
+      "adapted_outputs": [
+        "tests/environment/run_project_gates.sh"
+      ],
+      "changes": [
+        "repository-relative root/output",
+        "external QA_BUILD_PROXY and QA_TEST_SUBNET instead of fixed host settings",
+        "explicit runtime proxy clearing; refuse existing grade project",
+        "aggregate nonzero gate results instead of shell final-command status"
+      ],
+      "validation": "shell syntax only; no claim that original make targets were rerun for this PR"
+    },
+    {
+      "source": "B/qa/lesson9/fix-worktree/scripts/qa/lesson9/run_grade_buildproxy.sh",
+      "source_sha256": "955fe18294927efbf0415c9dd7c40b31e3625190f004cd10578987c1a9e3c26a",
+      "adapted_outputs": [
+        "tests/environment/run_project_gates.sh"
+      ],
+      "changes": [
+        "repository-relative root/output",
+        "external QA_BUILD_PROXY and QA_TEST_SUBNET instead of fixed host settings",
+        "explicit runtime proxy clearing; refuse existing grade project",
+        "aggregate nonzero gate results instead of shell final-command status"
+      ],
+      "validation": "shell syntax only; no claim that original make targets were rerun for this PR"
+    }
+  ],
+  "tracked_history_references": [
+    {
+      "source": "A/scripts/verify.py",
+      "sha256": "0f75bd30e80accb9e2224913bae6a26119b37de373b6ecd601e3f8bc0609e204",
+      "reference": "scripts/verify.py",
+      "matching_git_commit": "635d4651f55807a0e12fbfa79e04d6db413f539d",
+      "current_reference_commit": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "historical_execution": "docs/verification.md 2026-10-28; not lesson9"
+    },
+    {
+      "source": "A/scripts/acceptance.py",
+      "sha256": "e3317ebf8f222380542c1ef42d6e0685cd3609f63ec4a2ca350b604e19db030e",
+      "reference": "scripts/acceptance.py",
+      "matching_git_commit": "635d4651f55807a0e12fbfa79e04d6db413f539d",
+      "current_reference_commit": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "historical_execution": "docs/verification.md 2026-10-28; not lesson9"
+    },
+    {
+      "source": "A/scripts/check.sh",
+      "sha256": "69d7e32e4b98b4dcfda489f44a1c8ee20458434bbe4aa8ed48d53878c1d4adb5",
+      "reference": "scripts/check.sh",
+      "matching_git_commit": "635d4651f55807a0e12fbfa79e04d6db413f539d",
+      "current_reference_commit": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+      "historical_execution": "docs/verification.md 2026-10-28; not lesson9"
+    }
+  ],
+  "missing": [
+    "Earlier overwritten acceptance/run_online wrapper revisions; final source exists, exact earlier revisions unavailable",
+    "One-off inline environment probes were not saved as scripts"
+  ],
+  "not_reconstructed": true,
+  "archive_baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "archive_text_normalization": "UTF-8/LF; trailing whitespace removed; original source SHA256 retained independently"
+}

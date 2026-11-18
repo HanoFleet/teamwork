@@ -783,7 +783,7 @@ Windows使用python；Linux/macOS可用python3。退出码0=所选全部有效�
 给出自己的意见、证据路径、复跑命令、剩余限制和是否建议用户接受。不要伪造真人复测、签字或最终验收。
 当前限制：技能/提示词写接口和真实技能调用未实现；模型只用local，前端浏览器链路和外部模型未验证；扫描限制见资产报告。
 尚未满足：独立LLM审查、本人确认、另一位真人组员至少2条复测；其他阻塞和失败以result.json为准。
-~~~ 
+~~~
 
 本轮文件清单（生成时）：
 
@@ -964,4 +964,3 @@ if __name__ == "__main__":
     if os.name == "nt" and not sys.flags.utf8_mode:
         sys.exit(subprocess.call([sys.executable, "-X", "utf8", *sys.argv]))
     sys.exit(main())
-

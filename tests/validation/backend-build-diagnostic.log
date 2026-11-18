@@ -1,0 +1,155 @@
+docker : #0 building with "desktop-linux" instance using docker driver
+
+所在位置 行:2 字符: 144
+
++ ... og -Tail 6; docker build --pull=false --build-arg HTTP_PROXY=htt<LOCAL_PATH> ...
+
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    + CategoryInfo          : NotSpecified: (#0 building wit...g docker driver:String) [], RemoteException
+
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+
+
+
+#1 [internal] load build definition from Dockerfile
+
+#1 transferring dockerfile: 468B done
+
+#1 DONE 0.1s
+
+
+
+#2 [internal] load metadata for docker.io/library/golang:1.26.11-alpine
+
+#2 DONE 0.1s
+
+
+
+#3 [internal] load metadata for docker.io/library/alpine:3.21
+
+#3 DONE 0.1s
+
+
+
+#4 [internal] load .dockerignore
+
+#4 transferring context: 54B done
+
+#4 DONE 0.1s
+
+
+
+#5 [internal] load build context
+
+#5 DONE 0.0s
+
+
+
+#6 [stage-1 1/4] FROM docker.io/library/alpine:3.21@sha256:be821edd173bd3110cc852c507f4d37b710a7e33cf20b7327a84fb34dd01
+
+923d
+
+#6 resolve docker.io/library/alpine:3.21@sha256:be821edd173bd3110cc852c507f4d37b710a7e33cf20b7327a84fb34dd01923d 0.1s d
+
+one
+
+#6 DONE 0.2s
+
+
+
+#7 [build 1/6] FROM docker.io/library/golang:1.26.11-alpine@sha256:3cd4009543b6995c36819599c61d8996d79ae20e6685ddc693e1
+
+208c600a8ef6
+
+#7 resolve docker.io/library/golang:1.26.11-alpine@sha256:3cd4009543b6995c36819599c61d8996d79ae20e6685ddc693e1208c600a8
+
+ef6 0.1s done
+
+#7 DONE 0.2s
+
+
+
+#5 [internal] load build context
+
+#5 transferring context: 183.52kB 0.0s done
+
+#5 DONE 0.1s
+
+
+
+#8 [build 5/6] COPY . .
+
+#8 CACHED
+
+
+
+#9 [stage-1 3/4] COPY --from=build /out/server /server
+
+#9 CACHED
+
+
+
+#10 [build 2/6] WORKDIR /src
+
+#10 CACHED
+
+
+
+#11 [build 3/6] COPY go.mod go.sum ./
+
+#11 CACHED
+
+
+
+#12 [build 4/6] RUN go mod download
+
+#12 CACHED
+
+
+
+#13 [build 6/6] RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -o /out/server ./cmd/server  && CGO_ENABLED=0 GOOS=linu
+
+x go build -trimpath -o /out/worker ./cmd/worker
+
+#13 CACHED
+
+
+
+#14 [stage-1 2/4] RUN apk add --no-cache ca-certificates
+
+#14 CACHED
+
+
+
+#15 [stage-1 4/4] COPY --from=build /out/worker /worker
+
+#15 CACHED
+
+
+
+#16 exporting to image
+
+#16 exporting layers done
+
+#16 exporting manifest sha256:e05c27bcd97c0afe1c3b0e0a3ab0b0091324b76af004d5bec7df50b2a31246f4 0.0s done
+
+#16 exporting config sha256:cf5116fac77ebd8106316268ae786e3c6d41b9d7d6d87c3cc7893595f46f8dca 0.0s done
+
+#16 exporting attestation manifest sha256:27f85c4f69827d326f2643813969a211463f2afe4cd4bc2fba0d1d9f93983c8d
+
+#16 exporting attestation manifest sha256:27f85c4f69827d326f2643813969a211463f2afe4cd4bc2fba0d1d9f93983c8d 0.2s done
+
+#16 exporting manifest list sha256:fe37b366d70bfb14b0e6e2ec5d62a3950196c62a7ed91575d0b68e9b9d7ff2e9
+
+#16 exporting manifest list sha256:fe37b366d70bfb14b0e6e2ec5d62a3950196c62a7ed91575d0b68e9b9d7ff2e9 0.2s done
+
+#16 naming to docker.io/library/teamwork-tests-archive-backend:latest
+
+#16 naming to docker.io/library/teamwork-tests-archive-backend:latest 0.0s done
+
+#16 unpacking to docker.io/library/teamwork-tests-archive-backend:latest 0.0s done
+
+#16 DONE 0.6s
