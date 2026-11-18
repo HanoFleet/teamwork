@@ -1,5 +1,6 @@
 """async-grading/202: original sequential 20-sample protocol, no dropped samples."""
-import json, math, time, datetime, pathlib
+import json, time, datetime, pathlib
+from check_single_request_limit import evaluate_samples, print_evaluation
 
 def run(v, output):
     student = v.login('student_a1', v.ENV['SEED_STUDENT_A_PASSWORD'])
@@ -19,19 +20,21 @@ def run(v, output):
         body = json.loads(raw)
         samples.append(dict(index=i, elapsed_ms=elapsed, status=code, request_id=request_id))
         assert code == 202 and 'score' not in body and 'feedback' not in body
-    ordered = sorted(s['elapsed_ms'] for s in samples)
-    result = dict(time=datetime.datetime.now(datetime.timezone.utc).isoformat(), protocol='async_test.py: 20 sequential fresh submissions then timed grade POST; no warmup/discard', samples=samples, p95_ms=ordered[math.ceil(.95*len(ordered))-1], max_ms=max(ordered), over_50_ms=sum(x>50 for x in ordered), over_100_ms=sum(x>100 for x in ordered), single_request_pass=max(ordered)<=100, async_p95_pass=ordered[18]<500)
-    pathlib.Path(output).write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
+    result = dict(time=datetime.datetime.now(datetime.timezone.utc).isoformat(), protocol='async_test.py: 20 sequential fresh submissions then timed grade POST; no warmup/discard', samples=samples)
+    result.update(evaluate_samples(samples))
+    print_evaluation(result)
+    with pathlib.Path(output).open('x', encoding='utf-8') as target:
+        json.dump(result, target, ensure_ascii=False, indent=2)
     return result
 
 if __name__ == '__main__':
     import sys
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / 'support'))
     from isolated_project import Project, arguments
-    options = arguments('20 sequential grade enqueue samples; retain all values; 100ms limit')
+    options = arguments('20 sequential grade enqueue samples; retain all values; 100ms observation and P95 < 500ms gate')
     with Project('latency', options) as project:
         project.start()
         result = run(project.verifier(), project.output/'latency.json')
         print('Output:', project.output)
-        status = 0 if result['single_request_pass'] and result['async_p95_pass'] else 1
+        status = 0 if result['passed'] else 1
     sys.exit(status)

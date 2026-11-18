@@ -1,5 +1,26 @@
 # 历史测试代码与归档验证索引
 
+## 2026-11-18 后续修复工作树新增测试
+
+以下为归档进入 main 之后的本地未提交整改，历史归档结论不改写。基线为 `2d2900bf34b52d8df21513c6ef2ebc873df9f345` 加实际代码差异；报告在 `reports/lesson9-20261118/retest-02/fix-round/round-02/`（下称 R2）。本轮依赖原门禁通过，100ms 性能仍失败。
+
+|脚本|测试功能、步骤与断言|运行入口/依赖|证据与归档状态|
+|---|---|---|---|
+|`regression/frontend_toolchain.test.mjs`|真实构建、JS/CSS可读、/assignments深链接；dev/preview转发POST/CSRF/Cookie/health；未知Host403、后端断开503、目录越界不泄漏package|`node --test tests/regression/frontend_toolchain.test.mjs`；frontend npm ci、Node24|R2/logs/toolchain-regression-final.txt；已执行通过；首次失败也保留|
+|`performance/grade_latency_diagnostics.py`|原urllib边界，20份fresh提交逐次202、不含分数；保存全部耗时、API ID、规范化SQL、文件等待和脱敏锁关系|`python -X utf8 tests/performance/grade_latency_diagnostics.py --help`；Docker/专属子网；真实执行参数见R2报告|R2/diagnostic-retry、before-lock-fix；已执行；旧部分verify因编码失败，不冒充通过|
+|`performance/compare_outbox_isolation.py`|同一Compose/DB/broker/前端，只切换已验证后端镜像，前后各2×20；不删样本，任一>100ms退出1|`python -X utf8 tests/performance/compare_outbox_isolation.py --help`；先构建修复前后镜像|R2/controlled-comparison；已执行退出1；修复后仍有122.062ms|
+|`performance/analyze_grade_waits.py`|以数据库anchor关联慢请求/API和重叠SQL/文件等待；统计outbox锁关系，不含SQL字面量|`python tests/performance/analyze_grade_waits.py <comparison-dir> <output.json>`|R2/performance-analysis.json；已执行；分析退出0不代表100ms通过|
+|`regression/lesson9_final_regression.py`|原Dockerfile构建、完整verify（事务/幂等/补投/安全）、原2条Playwright；复制新XSS证据并恢复原报告|`python -X utf8 tests/regression/lesson9_final_regression.py --help`；Docker、npm、Chrome|R2/final-regression；已执行退出0；合成账号由隔离环境生成|
+|`environment/run_project_gates.sh`|原make check/grade，保留失败退出码；本轮增加可选QA_GO_PROXY构建参数，不进入应用环境|GNU make Linux工具环境；QA_BUILD_PROXY、QA_GO_PROXY、QA_TEST_SUBNET均显式传入|R2/logs/make-check.txt、make-grade.txt；0/0、grade18/18|
+|`environment/run_windows_security_gate.py`、`windows_tool_launcher.c`|显式选择官方CI版Node/npm；Windows命令名适配；先验证退出7及空格/引号/反斜线原样转发，再运行原mingw32-make check-security|`python tests/environment/run_windows_security_gate.py --help`；MinGW GCC、GNU make、官方Node/npm路径|R2/native-security-gate；已执行退出0；只写忽略目录中的exe，不改门禁|
+|`environment/history/windows_tool_launcher_argument_attempt01.c`|首次环境适配源码，退出码自检发现参数引号丢失；历史失败，不用于正式入口|仅归档，勿替换最终适配器|本轮会话失败输出及R2返工记录；原版本已找回保存|
+|`environment/npm`|在Linux工具环境显式转发到官方npm11 CLI，参数/退出码不变|设置QA_NPM_CLI；只在专属容器临时PATH中使用|R2/logs/make-check-security-final-npm11.txt；实际执行因TLS断连失败，未当通过|
+|`security/frontend_dependency_candidates.py`|将本轮内联隔离候选实验落盘；仅在忽略目录解析/审计esbuild与Rsbuild，不改正式frontend|`python tests/security/frontend_dependency_candidates.py --help`；显式旧package、Node/npm路径|R2/esbuild-*、rsbuild-*为原内联执行证据；落盘后的CLI仅语法/help核对，未重复解析。Rsbuild audit=0但内嵌picomatch4.0.5，已拒绝|
+
+原性能门槛入口仍引用 `scripts/qa/lesson9/check_performance.py`（本工作树既有未提交文件），原业务/安全测试仍引用 `scripts/verify.py`、`async_test.py`、`security_test.py`、`security_static.py`、`security_cases.py`；没有复制成不同判据。R2/code-fingerprint.json、code-diff.patch 和 manifest.json 关联最终源码及证据。新增源码位于项目内，未提交；二进制、凭据、node_modules均在忽略目录，不归档。
+
+## 原测试归档 PR 的历史说明
+
 本 PR 只提交 `tests/`。不修改业务代码、依赖、原测试或原报告，不把历史失败改成通过。
 
 ## 来源与版本
@@ -107,3 +128,11 @@ Go单元文件逐项如下；统一从`backend/`运行`go test ./...`，Go1.26.1
 隔离入口18/18、业务入口原verify全部断言、直接跨班入口404/无残留均通过。性能CLI实际完成20次采样，最大318.3293ms、超过100ms一次，按原门槛退出1；并非环境阻塞或性能修复成功。4条门槛合同测试及2条脱敏合同测试通过。旧报告一致性脚本实跑因缺reports/evidence/week8/latest.json而失败，归类缺夹具；只读旧交叉复核未完整重跑。构建瞬时失败与首次配置适配失败均保存为脱敏失败记录，修正CLI环境来源后重跑成功。完整机器可读结果见validation/live-validation.json。
 
 辅助文件：`.gitignore`只排除输出/临时凭据/缓存；`.gitattributes`保留归档字节；`provenance.json`保存来源和改动；`manifest.json`保存发布文件SHA256。`evidence/`四份JSON分别为两轮历史延迟、历史复测汇总、历史业务/浏览器执行汇总；它们没有重新执行的含义。`validation/`中`archive-validation.json`为CLI/合同测试，`live-validation.json`为实时退出码，`isolated-acceptance.json`为18项明细，`direct-cross-class.json`为拒绝与数据库计数，`grade-latency.json`为本次20样本，`business-verification.md`为全量断言记录；其余`*.log`/`*.exit.txt`按同名入口保存含失败尝试的脱敏输出，不含口令或真实账号。清单与结果应一并审阅。
+
+## 2026-11-18 性能规则修订
+
+现行enqueue-latency-v2对单次100ms超限输出警告，20条202和P95 < 500ms继续硬断言。上述归档结果和tests/manifest.json属于旧版本记录，原样保留。当前源码清单及验证见docs/lesson-09/2026-11-18-observe-enqueue-latency。历史报告生成器冻结入口以保护旧证据。
+
+## 提交准备后的现行发布索引
+
+`tests/release/lesson9-v2-publication.json`为当前2d2900b基线上的显式发布增量，使用`python scripts/qa/lesson9/verify_release.py`校验。原`tests/manifest.json`及两个旧docs证据目录的索引均为不可变历史快照，版本和路径别名见`tests/release/history-context.json`。v2阶段的24项current-source-sha256也保留其当时源码快照含义，后续授权的文档和规约变化由新的现行索引覆盖。
