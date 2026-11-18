@@ -1,0 +1,19 @@
+ .gitattributes                                  |   5 +
+ .gitignore                                      |   2 +
+ backend/Dockerfile                              |   3 +-
+ backend/internal/outbox/dispatcher.go           |   3 +-
+ docs/standards/04-testing.md                    |   8 +-
+ frontend/package-lock.json                      | 964 ++++++++----------------
+ frontend/package.json                           |   9 +-
+ frontend/src/vite-env.d.ts                      |   1 -
+ frontend/vite.config.ts                         |  12 -
+ reports/xss-page-source.md                      |   2 +-
+ scripts/check.sh                                |   1 +
+ scripts/spec_check.py                           |  10 +
+ tests/README.md                                 |  25 +
+ tests/environment/run_project_gates.sh          |   4 +
+ tests/manifest.json                             |  17 +-
+ tests/performance/check_single_request_limit.py |  75 +-
+ tests/performance/grade_enqueue_latency.py      |  15 +-
+ tests/performance/latency_gate_contract.py      | 126 +++-
+ 18 files changed, 565 insertions(+), 717 deletions(-)

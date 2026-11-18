@@ -1,0 +1,8 @@
+{
+  "host_proxy_variables_present": {
+    "HTTP_PROXY": false,
+    "HTTPS_PROXY": false,
+    "ALL_PROXY": false
+  },
+  "build_containers": []
+}

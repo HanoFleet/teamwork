@@ -1,0 +1,15 @@
+
+Running 2 tests using 2 workers
+
+  ok 1 xss-materials.spec.ts:10:1 › 材料列表页源码转义脚本标题 (2.9s)
+  ok 2 assignments.spec.ts:2:1 › 学生从 /assignments 提交并轮询到 succeeded (4.0s)
+
+  2 passed (7.4s)
+(node:52852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:54516) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:54516) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 9 课 · 任务清单 · 从红到绿</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #1c2530;
+            background: #f5f6f8;
+        }
+        a { color: #94070a; font-weight: 600; }
+        .wrap { max-width: 960px; margin: 0 auto; padding: 24px 32px 64px; }
+        .back { font-size: 14px; margin-bottom: 20px; }
+        .back a { color: rgba(28, 37, 48, 0.65); text-decoration: none; }
+        .back a:hover { color: #94070a; }
+        h1 {
+            font-size: 26px; font-weight: 800; color: #94070a; margin-bottom: 8px;
+        }
+        .subtitle { font-size: 15px; color: rgba(28, 37, 48, 0.65); margin-bottom: 28px; }
+        .block {
+            background: #fff; border: 1px solid #e6e8ec; border-radius: 12px;
+            padding: 18px 20px; margin-bottom: 16px;
+        }
+        .block h2 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+        .block p.note { font-size: 14.5px; color: rgba(28, 37, 48, 0.8); margin-bottom: 12px; }
+        .checklist { list-style: none; font-size: 15px; }
+        .checklist li {
+            position: relative; padding-left: 28px; margin-bottom: 10px;
+            color: rgba(28, 37, 48, 0.85);
+        }
+        .checklist li::before {
+            content: "□"; position: absolute; left: 0; color: #94070a; font-weight: 700;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin-bottom: 6px; }
+        th, td { border: 1px solid #e6e8ec; padding: 9px 10px; text-align: left; vertical-align: top; }
+        th { background: #faf3f3; color: #94070a; font-weight: 700; font-size: 14px; }
+        td.id { white-space: nowrap; font-weight: 700; }
+        .callout {
+            background: #fdf6f6; border-left: 3px solid #94070a; border-radius: 0 8px 8px 0;
+            padding: 12px 14px; font-size: 14.5px; margin-bottom: 12px;
+        }
+        .hint {
+            font-size: 13px; color: rgba(28, 37, 48, 0.55); margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <p class="back"><a href="index.html#schedule">← 返回课程入口</a></p>
+        <h1>第 9 课任务清单 · 从红到绿</h1>
+        <p class="subtitle">小组任务 · 上一课自查出的红条目（SEC-01 ～ 08），这一课逐条修复、用同一条三段式复测、归档前后证据。<strong>修复完成的标志是复测变绿，不是「看起来好了」</strong></p>
+
+        <div class="block">
+            <h2>一、开工前：把基线钉住</h2>
+            <ul class="checklist">
+                <li>重放上一课自查的每一条记录，确认红还是红（改过代码的条目先复测再修）。复测必须沿用同一条三段式：前置条件 / 操作 / 可观测结果，只更新「当前实际」。</li>
+                <li>每条红标注缺口类别：<strong>授权 / 注入 / 资产 / 日志</strong>，按类别定修复顺序（先红后盲区，先授权后注入）。</li>
+                <li>跑一遍 <code>make check</code> 记下当前全绿状态——这是修复后判定「没带来回归」的对照基线。</li>
+                <li>建议分工：一人修授权与注入（改动在接口与查询），一人做资产处置与日志（改动在配置与落库），复测互相交叉执行。</li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <h2>二、修授权（SEC-01 ～ SEC-04）</h2>
+            <p class="note">修复位置只有两层：应用层逐次校验角色（403），数据层把归属并进查询与写入条件（404 或空）。页面隐藏与路由判定都不算修复。</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 76px;">编号</th>
+                        <th>修复动作</th>
+                        <th>复测（同一条三段式重放）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="id">SEC-01</td>
+                        <td>入口中间件统一做登录检查，未通过返回 401</td>
+                        <td>不带令牌逐个重放受保护接口清单，全部 401</td>
+                    </tr>
+                    <tr>
+                        <td class="id">SEC-02</td>
+                        <td>检索并入班级过滤（单侧过滤）；讲义取数 fetch-then-check，跨班一律 404</td>
+                        <td>学生 A1 换 id 访问班级 B 讲义得 404；班级 B 身份检索班级 A 知识库得空结果</td>
+                    </tr>
+                    <tr>
+                        <td class="id">SEC-03</td>
+                        <td>技能与提示词等写入类接口逐次校验角色，非教师返回 403</td>
+                        <td>学生令牌重放配置写接口，403 且数据无变化</td>
+                    </tr>
+                    <tr>
+                        <td class="id">SEC-04</td>
+                        <td>底层批改写入接口同样校验身份与归属，技能调用不免检</td>
+                        <td>不走技能路由直调批改写入接口，被拒且库里无残留</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="callout">
+                <strong>注意删除旧路径：</strong>并入归属条件后，检查是否还留着「先查全表再在内存里过滤」的旧代码；检索侧的班级过滤要在向量库与 SQL 两侧同时生效，只改一侧等于留了另一条路。
+            </div>
+        </div>
+
+        <div class="block">
+            <h2>三、补注入反例（三条，上一课的盲区）</h2>
+            <ul class="checklist">
+                <li><strong>SQL 注入反例</strong>：检索词提交 <code>' OR '1'='1</code>，期望正常返回空结果或格式报错，而非返回不该返回的行。修复＝全部查询参数化；排序列名这类没法占位符化的位置用白名单枚举。</li>
+                <li><strong>XSS 反例</strong>：讲义标题提交 <code>&lt;script&gt;alert(1)&lt;/script&gt;</code>，打开列表页查看源码，内容已转义、无脚本执行。判定看源码不看「有没有弹窗」。</li>
+                <li><strong>CSRF 反例</strong>：从另一个页面伪造表单提交配置修改，期望因缺少一次性令牌被拒；同时确认会话 Cookie 已标记 SameSite。两道开关各留一条记录。</li>
+                <li>三条反例都按三段式写进 <code>apitest/cases/</code> 目录，随 <code>make check</code> 常驻回归——修复后防退化。</li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <h2>四、资产处置（SEC-05 ～ SEC-06）</h2>
+            <ul class="checklist">
+                <li><strong>密钥</strong>：扫描仍有命中的，<strong>先轮换</strong>（旧值作废，用旧值调一次外部服务应得 401 留证），再重写提交历史清除明文，然后通知全组重新克隆。</li>
+                <li>数据库里必须落库的凭证字段（如助手绑定的模型密钥）：确认存的是密文，解密口令外置于环境变量，两者不放同一处。</li>
+                <li><strong>依赖</strong>：跑依赖审计命令留基线报告；每条高危要么升级清零，要么写成可检查的登记条目（哪个包、哪个漏洞编号、为什么暂不修、靠什么降险）。</li>
+                <li>把密钥扫描与依赖审计接进 <code>make check-security</code>：有命中或高危时命令退出码非 0，<code>README.md</code> 里注明这个入口。接通后留一组先红后绿的证据：一次必红运行的输出（退出码非 0）、修复后一次变绿运行的输出，连同提交号一起归档 <code>reports/gate-red-green.md</code>——这是最终报告「门禁与演示」一节要当场出示的证据。</li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <h2>五、补日志与当堂实验（SEC-07 ～ SEC-08）</h2>
+            <ul class="checklist">
+                <li>按七列补齐操作日志：操作人、操作时间、操作类型、操作对象、结果状态、技能标识、用量与耗时；单行 JSON 落库，内容经转义与截断。</li>
+                <li><strong>被拒绝的请求同样记一条</strong>：重放一次 SEC-03 的越权请求，随后按该学生加时间窗能查到一条 403 记录。</li>
+                <li><strong>SEC-08 四步实验</strong>当堂做完并记录现象：恶意文档（评分是否被带偏）、索要提示词（吐了什么）、改规则（结果是否变宽）、绕权限（模型是否尝试调写工具、工具层是否放行）。<strong>唯一必须为绿的是第四步工具执行层</strong>：无论模型怎么被诱导，写入不放行且留日志。</li>
+                <li>日志查询接口本身加授权判定：教师可查，学生不可见。</li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <h2>六、回归与归档</h2>
+            <ul class="checklist">
+                <li>回归三组全跑：<code>make check</code> 全量功能用例；上一课的三条异步判据（授权收紧最容易误伤任务提交与查询）；本课新增注入反例三件套。再把最终验收的四步演示连起来走一遍：登录取令牌 → 提交任务返回 202 → 轮询看 pending → running → succeeded → 换另一班账号查别班讲义拿 404——四步全绿即通过，这组四步就是最终演示录屏的走查路径。</li>
+                <li>任何一组出红先修回归再继续——带着回归的修复不算完成。</li>
+                <li>证据归档仓库根目录 <code>reports/</code>：修复前后对照表 <code>reports/security-fix-log.md</code>（编号 / 修复前实际 / 修复后实际 / 判定）、反例用例三件套的三段式记录（用例本体在 <code>apitest/cases/</code>）、SEC-08 实验记录 <code>reports/sec08-experiment.md</code>、密钥与依赖的当日基线报告 <code>reports/security-baseline.md</code>。最终验收当场按这些路径打开，打不开即无法复核。</li>
+                <li>记录一次返工：修复过程中代价最大的一次（哪条修复引入了什么回归、定位与修复各花了多久），写清「当时怎么错的 + 一条能执行的改法」，归入 <code>reports/</code>——这是最终报告「复盘」一节的素材。</li>
+                <li>安全修复逐条单独提交，提交信息写清依据哪一条 SEC 编号。</li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <h2>七、核查清单（提交前逐条打勾）</h2>
+            <ul class="checklist">
+                <li><strong>复测</strong>：SEC-01 ～ 08 每条都用同一条三段式重放过，「当前实际」填了修复后的具体值，没有「已修复」三个字糊过去。</li>
+                <li><strong>判定位置</strong>：授权修复落在应用层与数据层，没有只改页面或路由；旧的内存过滤路径已删。</li>
+                <li><strong>注入</strong>：三条反例进了 <code>apitest/cases/</code> 且为绿；XSS 判定看了页面源码，不是只看有没有弹窗。</li>
+                <li><strong>资产</strong>：密钥扫描 0 命中；命中过的已先轮换再清历史；依赖高危清零或登记条目可检查。</li>
+                <li><strong>日志与实验</strong>：一次技能调用按技能标识能回查七列；越权重放留下了 403 记录；SEC-08 四步各有现象记录，第四步工具层为绿。</li>
+                <li><strong>回归</strong>：三组全绿；换一台机器按 <code>README.md</code> 从零启动能跑通（配置外置的证据）。</li>
+                <li><strong>交付</strong>：证据齐、门禁接好；<strong>交叉评审（peer review）</strong>——组内另一人照对照表独立复现至少 2 条修复，判定一致才算过。每条评审写一份记录，固定四件事（用什么手段查 / 查了什么 / 判据 / 结果），命名 <code>reports/review-02.md</code>、<code>review-03.md</code> 依次递增；其中至少两份来自 AI 自审（Harness 对照规则文件）或脚本输出（<code>make check</code> / <code>make check-security</code>），人工评审只做机器判不了的项，并为其补一条用例或一条规则。</li>
+            </ul>
+        </div>
+
+        <p class="hint">密钥明文只存在于各人本机的 <code>.env</code>，不进代码、不进镜像层、不进前端、不进提交历史，也不进运行日志。发现命中的第一反应是轮换，不是删除。</p>
+    </div>
+</body>
+</html>

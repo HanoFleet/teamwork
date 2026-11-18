@@ -1,0 +1,8 @@
+{
+  "changed_sources": [
+    ".gitignore",
+    "tests/release/history-context.json"
+  ],
+  "prior_manifest": "validation-02/publication-manifest-before-metadata-finalization.json",
+  "historical_manifest_modified": false
+}

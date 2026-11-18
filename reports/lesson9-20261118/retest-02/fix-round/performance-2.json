@@ -1,0 +1,132 @@
+{
+  "time": "2026-11-18T02:29:41.735452+00:00",
+  "protocol": "async_test.py: 20 sequential fresh submissions then timed grade POST; no warmup/discard",
+  "samples": [
+    {
+      "index": 0,
+      "elapsed_ms": 27.575399999477668,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-0"
+    },
+    {
+      "index": 1,
+      "elapsed_ms": 27.94759999960661,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-1"
+    },
+    {
+      "index": 2,
+      "elapsed_ms": 25.9102999989409,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-2"
+    },
+    {
+      "index": 3,
+      "elapsed_ms": 58.986000000004424,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-3"
+    },
+    {
+      "index": 4,
+      "elapsed_ms": 31.91769999830285,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-4"
+    },
+    {
+      "index": 5,
+      "elapsed_ms": 47.47320000024047,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-5"
+    },
+    {
+      "index": 6,
+      "elapsed_ms": 31.568999998853542,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-6"
+    },
+    {
+      "index": 7,
+      "elapsed_ms": 27.777100000093924,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-7"
+    },
+    {
+      "index": 8,
+      "elapsed_ms": 27.774899999712943,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-8"
+    },
+    {
+      "index": 9,
+      "elapsed_ms": 32.020900000134134,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-9"
+    },
+    {
+      "index": 10,
+      "elapsed_ms": 25.359000001117238,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-10"
+    },
+    {
+      "index": 11,
+      "elapsed_ms": 26.966900000843452,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-11"
+    },
+    {
+      "index": 12,
+      "elapsed_ms": 26.581600001009065,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-12"
+    },
+    {
+      "index": 13,
+      "elapsed_ms": 28.882200000225566,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-13"
+    },
+    {
+      "index": 14,
+      "elapsed_ms": 30.14940000139177,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-14"
+    },
+    {
+      "index": 15,
+      "elapsed_ms": 28.014699999403092,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-15"
+    },
+    {
+      "index": 16,
+      "elapsed_ms": 34.84349999962433,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-16"
+    },
+    {
+      "index": 17,
+      "elapsed_ms": 349.701000001005,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-17"
+    },
+    {
+      "index": 18,
+      "elapsed_ms": 30.600199999753386,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-18"
+    },
+    {
+      "index": 19,
+      "elapsed_ms": 37.56170000087877,
+      "status": 202,
+      "request_id": "lesson9-perf-1794968980240578000-19"
+    }
+  ],
+  "p95_ms": 58.986000000004424,
+  "max_ms": 349.701000001005,
+  "over_50_ms": 2,
+  "over_100_ms": 1,
+  "single_request_pass": false,
+  "async_p95_pass": true
+}

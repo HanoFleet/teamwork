@@ -14,6 +14,10 @@ if proxy:
     overlay['services']={name:{'build':{'args':{'HTTP_PROXY':proxy,'HTTPS_PROXY':proxy}},
         'environment':{'HTTP_PROXY':'','HTTPS_PROXY':'','http_proxy':'','https_proxy':''}}
         for name in ['api','worker','web']}
+goproxy=os.environ.get('QA_GO_PROXY')
+if goproxy:
+    for name in ['api','worker']:
+        overlay.setdefault('services',{}).setdefault(name,{}).setdefault('build',{}).setdefault('args',{})['GOPROXY']=goproxy
 subnet=os.environ.get('QA_TEST_SUBNET')
 if subnet:
     ipaddress.ip_network(subnet,strict=True)

@@ -1,0 +1,57 @@
+[
+  {
+    "name": "lock-update",
+    "args": [
+      "C:\\Users\\Kugeln\\AppData\\Local\\Temp\\teamwork-test-archive-review-20261118\\tests\\.runtime\\node-ci-registry\\package\\bin\\node.exe",
+      "C:\\Users\\Kugeln\\AppData\\Local\\Temp\\teamwork-test-archive-review-20261118\\tests\\.runtime\\npm-ci-registry\\package\\bin\\npm-cli.js",
+      "install",
+      "--package-lock-only",
+      "--ignore-scripts"
+    ],
+    "exit": 0,
+    "time": "2026-11-18T16:11:16.272953+08:00"
+  },
+  {
+    "name": "npm-ci",
+    "args": [
+      "C:\\Users\\Kugeln\\AppData\\Local\\Temp\\teamwork-test-archive-review-20261118\\tests\\.runtime\\node-ci-registry\\package\\bin\\node.exe",
+      "C:\\Users\\Kugeln\\AppData\\Local\\Temp\\teamwork-test-archive-review-20261118\\tests\\.runtime\\npm-ci-registry\\package\\bin\\npm-cli.js",
+      "ci"
+    ],
+    "exit": 0,
+    "time": "2026-11-18T16:11:25.213378+08:00"
+  },
+  {
+    "name": "audit-after",
+    "args": [
+      "C:\\Users\\Kugeln\\AppData\\Local\\Temp\\teamwork-test-archive-review-20261118\\tests\\.runtime\\node-ci-registry\\package\\bin\\node.exe",
+      "C:\\Users\\Kugeln\\AppData\\Local\\Temp\\teamwork-test-archive-review-20261118\\tests\\.runtime\\npm-ci-registry\\package\\bin\\npm-cli.js",
+      "audit",
+      "--json",
+      "--audit-level=high"
+    ],
+    "exit": 0,
+    "time": "2026-11-18T16:11:27.436610+08:00"
+  },
+  {
+    "name": "frontend-build",
+    "args": [
+      "C:\\Users\\Kugeln\\AppData\\Local\\Temp\\teamwork-test-archive-review-20261118\\tests\\.runtime\\node-ci-registry\\package\\bin\\node.exe",
+      "C:\\Users\\Kugeln\\AppData\\Local\\Temp\\teamwork-test-archive-review-20261118\\tests\\.runtime\\npm-ci-registry\\package\\bin\\npm-cli.js",
+      "run",
+      "build"
+    ],
+    "exit": 1,
+    "time": "2026-11-18T16:11:28.587706+08:00"
+  },
+  {
+    "name": "toolchain-regression",
+    "args": [
+      "C:\\Users\\Kugeln\\AppData\\Local\\Temp\\teamwork-test-archive-review-20261118\\tests\\.runtime\\node-ci-registry\\package\\bin\\node.exe",
+      "--test",
+      "tests/regression/frontend_toolchain.test.mjs"
+    ],
+    "exit": 1,
+    "time": "2026-11-18T16:11:29.578842+08:00"
+  }
+]

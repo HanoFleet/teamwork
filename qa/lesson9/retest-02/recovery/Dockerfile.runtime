@@ -1,0 +1,6 @@
+FROM alpine:3.21
+COPY server /server
+COPY worker /worker
+COPY ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+EXPOSE 8080
+CMD ["/server"]

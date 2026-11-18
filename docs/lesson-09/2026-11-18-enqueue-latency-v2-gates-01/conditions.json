@@ -1,0 +1,7 @@
+{
+  "env_exists": false,
+  "acceptance_env_exists": false,
+  "mutation_path_exists": false,
+  "chrome_exists": true,
+  "shell_exists": true
+}

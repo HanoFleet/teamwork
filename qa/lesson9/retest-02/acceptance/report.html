@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8"><title>CampusClaw 验收报告</title>
+<style>body{font-family:system-ui,sans-serif;margin:32px;line-height:1.5}table{border-collapse:collapse;width:100%}
+td,th{border:1px solid #ccc;padding:6px;vertical-align:top}code{white-space:pre-wrap}.passed{color:#0a7a2f}.failed{color:#b00020}</style>
+<h1>CampusClaw 2.0 platform foundation 验收报告</h1>
+<p>状态：<b>failed</b>；通过 0，失败 1；提交 <code>bd42a6149e975c1ed217fb9349621443a3be53d5</code>。</p>
+<table><thead><tr><th>ID</th><th>检查</th><th>判据</th><th>结果</th><th>证据</th></tr></thead><tbody><tr><td>ENV</td><td>隔离验收环境</td><td>构建并启动被测提交</td><td class="failed">failed</td><td><code>docker compose -p campusclaw-l9-retest02 --env-file E:\proj\teamwork-main-latest\qa\lesson9\test-main\.env.retest02 build -&gt; 1
+ Image campusclaw-l9-retest02-worker Building 
+ Image campusclaw-l9-retest02-api Building 
+ Image campusclaw-l9-retest02-api Building 
+ Image campusclaw-l9-retest02-worker Building 
+failed to resolve reference &quot;docker.io/library/golang:1.26.11-alpine&quot;: failed to do request: Head &quot;https://registry-1.docker.io/v2/library/golang/manifests/1.26.11-alpine&quot;: dialing registry-1.docker.io:443 container via direct connection because Docker Desktop has no HTTPS proxy: connecting to registry-1.docker.io:443: dial tcp [2a03:2880:f12c:183:face:b00c:0:25de]:443: connectex: A connection attempt failed because the connected party did not properly respond aft</code></td></tr></tbody></table>

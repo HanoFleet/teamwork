@@ -1,0 +1,50 @@
+{
+  "started": "2026-11-18T16:39:51.180426+08:00",
+  "head": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+  "uncommitted": true,
+  "phases": {
+    "before": {
+      "image": "campusclaw-l9-official-backend",
+      "id": "sha256:79ca1cdfab9e7c18827129f1e9c24a72cc048b83a08b63937dff1b400a0f347e",
+      "rounds": [
+        {
+          "sample_count": 20,
+          "max_ms": 317.57329999891226,
+          "p95_ms": 89.64259999993374,
+          "over_100_ms": 1,
+          "passed": false
+        },
+        {
+          "sample_count": 20,
+          "max_ms": 109.24380000142264,
+          "p95_ms": 50.71989999851212,
+          "over_100_ms": 1,
+          "passed": false
+        }
+      ]
+    },
+    "after": {
+      "image": "campusclaw-l9-round02-backend",
+      "id": "sha256:f70098b0df6567a404e9c45404c5cf14eac57397778ef1beea3c930f69cf0e37",
+      "rounds": [
+        {
+          "sample_count": 20,
+          "max_ms": 122.06220000007306,
+          "p95_ms": 64.5362000032037,
+          "over_100_ms": 1,
+          "passed": false
+        },
+        {
+          "sample_count": 20,
+          "max_ms": 77.58109999849694,
+          "p95_ms": 50.45669999890379,
+          "over_100_ms": 0,
+          "passed": true
+        }
+      ]
+    }
+  },
+  "project": "teamwork-tests-outbox-comparison-b38437b3",
+  "after_passed": false,
+  "finished": "2026-11-18T16:42:10.185360+08:00"
+}

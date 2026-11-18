@@ -1,0 +1,26 @@
+{
+  "started": "2026-11-18T16:28:10.184921+08:00",
+  "label": "before-lock-fix",
+  "head": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+  "uncommitted": true,
+  "project": "teamwork-tests-latency-diagnosis-b407415e",
+  "backend_image": "sha256:79ca1cdfab9e7c18827129f1e9c24a72cc048b83a08b63937dff1b400a0f347e",
+  "backend_tree": "6d10025587460ba22a7f840124b54b64b3088c25",
+  "rounds": [
+    {
+      "sample_count": 20,
+      "max_ms": 256.77839999843854,
+      "p95_ms": 232.15089999939664,
+      "over_100_ms": 7,
+      "passed": false
+    },
+    {
+      "sample_count": 20,
+      "max_ms": 183.92630000016652,
+      "p95_ms": 82.13899999827845,
+      "over_100_ms": 1,
+      "passed": false
+    }
+  ],
+  "finished": "2026-11-18T16:30:07.708888+08:00"
+}

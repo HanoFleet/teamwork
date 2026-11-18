@@ -1,0 +1,67 @@
+name: check
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: make check-security
+      - run: make check
+
+  grade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - run: sh scripts/grade.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: teacher-report
+          path: reports/teacher-*/
+          retention-days: 7
+
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Prepare isolated env
+        run: python3 scripts/ci_env.py
+      - name: Start Compose
+        run: docker compose up --build -d --wait
+      - name: Full verify (three async judgments + security)
+        run: python3 scripts/verify.py
+      - name: Install e2e dependencies
+        run: cd frontend/e2e && npm ci
+      - name: Playwright assignments page
+        env:
+          PLAYWRIGHT_CHANNEL: chrome
+        run: cd frontend/e2e && npx playwright test
+      - name: Upload E2E artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: frontend/e2e/test-results/
+          retention-days: 7
+      - name: Cleanup
+        if: always()
+        run: docker compose down -v
+

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 8 课 · 任务清单 · 安全检测清单</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #1c2530;
+            background: #f5f6f8;
+        }
+        a { color: #94070a; font-weight: 600; }
+        .wrap { max-width: 960px; margin: 0 auto; padding: 24px 32px 64px; }
+        .back { font-size: 14px; margin-bottom: 20px; }
+        .back a { color: rgba(28, 37, 48, 0.65); text-decoration: none; }
+        .back a:hover { color: #94070a; }
+        h1 {
+            font-size: 26px; font-weight: 800; color: #94070a; margin-bottom: 8px;
+        }
+        .subtitle { font-size: 15px; color: rgba(28, 37, 48, 0.65); margin-bottom: 28px; }
+        .block {
+            background: #fff; border: 1px solid #e6e8ec; border-radius: 12px;
+            padding: 18px 20px; margin-bottom: 16px;
+        }
+        .block h2 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+        .block p.note { font-size: 14.5px; color: rgba(28, 37, 48, 0.8); margin-bottom: 12px; }
+        .checklist { list-style: none; font-size: 15px; }
+        .checklist li {
+            position: relative; padding-left: 28px; margin-bottom: 10px;
+            color: rgba(28, 37, 48, 0.85);
+        }
+        .checklist li::before {
+            content: "□"; position: absolute; left: 0; color: #94070a; font-weight: 700;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin-bottom: 6px; }
+        th, td { border: 1px solid #e6e8ec; padding: 9px 10px; text-align: left; vertical-align: top; }
+        th { background: #faf3f3; color: #94070a; font-weight: 700; font-size: 14px; }
+        td.id { white-space: nowrap; font-weight: 700; }
+        .callout {
+            background: #fdf6f6; border-left: 3px solid #94070a; border-radius: 0 8px 8px 0;
+            padding: 12px 14px; font-size: 14.5px; margin-bottom: 12px;
+        }
+        pre {
+            background: #1c2530; color: #e6e8ec; border-radius: 8px; padding: 14px 16px;
+            font-size: 13.5px; line-height: 1.75; overflow-x: auto; margin-bottom: 6px;
+            font-family: "SFMono-Regular", Menlo, Consolas, "PingFang SC", monospace;
+        }
+        .hint {
+            font-size: 13px; color: rgba(28, 37, 48, 0.55); margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <p class="back"><a href="index.html#schedule">← 返回课程入口</a></p>
+        <h1>第 8 课任务清单 · 安全检测清单</h1>
+        <p class="subtitle">小组任务 · 异步任务收尾后，用一次安全自查为后续课次（安全检查与审计）备料。<strong>本课只记录现象，不提前修复</strong>——密钥明文命中是唯一例外，必须立刻轮换</p>
+
+        <div class="block">
+            <h2>一、准备：把验证用的身份与数据备齐</h2>
+            <ul class="checklist">
+                <li>确认预置数据还在且能登录：班级 A、班级 B、教师 A、学生 A1、学生 B1。缺哪一类就先补齐，否则后面七项无从判定。</li>
+                <li>按 <code>README.md</code> 从零启动一次，确认本机环境可复现；<strong>自查结果必须是在可复现的环境里跑出来的</strong>。</li>
+                <li>列一份<strong>受保护接口清单</strong>（需要登录才能访问的接口，至少 5 个），写清方法与路径。</li>
+                <li>列一份<strong>写入类接口清单</strong>（批改写入、技能与提示词配置、助手配置等），这些是越权检测的重点。</li>
+                <li>建议分工：一人跑权限类（SEC-01 ～ SEC-04），一人跑资产类（SEC-05 ～ SEC-07），结果合并进同一份文件，署名写清谁做的哪几条。</li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <h2>二、逐项自查：七项安全检测</h2>
+            <p class="note">每一项都要落到具体身份、具体数据、具体命令或操作。判定只有两种：<strong>红</strong>（与期望不符）或<strong>绿</strong>（与期望一致）。本课的任务是问出真实的红或绿，不是把红的改掉。</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 76px;">编号</th>
+                        <th>检查项</th>
+                        <th>用什么身份与数据</th>
+                        <th>期望</th>
+                        <th>本课只做</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="id">SEC-01</td>
+                        <td>未登录访问受保护接口</td>
+                        <td>不带令牌，逐个调用受保护接口清单里的接口</td>
+                        <td>401</td>
+                        <td>记下每个接口的实际返回码</td>
+                    </tr>
+                    <tr>
+                        <td class="id">SEC-02</td>
+                        <td>跨班访问与跨班检索</td>
+                        <td>学生 A1 访问班级 B 的讲义；用班级 B 的身份检索班级 A 的知识库</td>
+                        <td>访问得 404；检索得空结果</td>
+                        <td>记下实际返回了什么、返回几条</td>
+                    </tr>
+                    <tr>
+                        <td class="id">SEC-03</td>
+                        <td>学生修改技能与提示词</td>
+                        <td>学生身份调用技能、提示词、助手配置类接口</td>
+                        <td>403</td>
+                        <td>记下实际返回码；若写成功了，记下被改掉的是哪条数据</td>
+                    </tr>
+                    <tr>
+                        <td class="id">SEC-04</td>
+                        <td>技能工具绕过鉴权</td>
+                        <td>学生身份直接调用批改写入接口，不走技能路由</td>
+                        <td>被拒绝</td>
+                        <td>记下是否被执行、库里留下了什么</td>
+                    </tr>
+                    <tr>
+                        <td class="id">SEC-05</td>
+                        <td>密钥明文泄漏扫描</td>
+                        <td>全量提交历史、前端产物、运行日志</td>
+                        <td>0 命中</td>
+                        <td>跑一遍扫描并记命中数；<strong>有命中立刻轮换，并把明文从历史中清掉</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="id">SEC-06</td>
+                        <td>依赖漏洞基线</td>
+                        <td>本机跑依赖审计命令（如 <code>npm audit</code> 或 <code>pip-audit</code>）</td>
+                        <td>高危清零，或书面登记处置方式</td>
+                        <td>保存基线报告，记下高危与严重各几条</td>
+                    </tr>
+                    <tr>
+                        <td class="id">SEC-07</td>
+                        <td>审计日志可追溯</td>
+                        <td>任选一次技能调用，事后回查日志</td>
+                        <td>能查到操作人、技能标识、结果状态、耗时、用量</td>
+                        <td>列出当前日志实际有哪些字段，缺哪几个</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="callout">
+                <strong>选做 SEC-08 · 恶意文档与提示词注入：</strong>只准备素材，不试。备 1 份含指令覆盖内容的文档（例如写着"忽略以上指令"的讲义），再备 3 条诱导提问（索要提示词原文、要求改变评分规则、要求绕过权限）。这些素材留给后续课次当堂试，本课提前试会破坏"先观察失败"的顺序。
+            </div>
+        </div>
+
+        <div class="block">
+            <h2>三、每条怎么写：用规约的三段式记</h2>
+            <p class="note">与第 2 课起写规约的格式保持一致，后续课次可以直接把这些条目转成可重复运行的检查，不用返工。写法参照<a href="课件/第8课-课件-异步任务与消息队列/security-precheck-example.html" target="_blank" rel="noopener">安全自查记录示例</a>（以 CampusClaw 为例写完的一份，含五份归档文件）。</p>
+            <pre>SEC-0X 名称
+前置条件：身份、数据、环境（谁登录、哪条数据存在）
+操作：    可执行的一条命令或一组点击，不写"检查一下"
+可观测结果：期望是什么（返回码、条数、字段）
+当前实际：本课填，写具体值，不写"好像没问题"
+当前判定：红 / 绿</pre>
+        </div>
+
+        <div class="block">
+            <h2>四、产出与归档</h2>
+            <p class="note">所有证据统一归档到仓库根目录 <code>reports/</code>，文件名从本课起就固定。最终项目报告会直接引用这些路径当场打开，路径打不开即无法复核——所以从本课起就写对位置。</p>
+            <ul class="checklist">
+                <li>七项结果写进 <code>reports/security-precheck.md</code>：接口清单、身份与数据、每条的三段式记录、当前判定。</li>
+                <li>权限类（SEC-01 ～ SEC-04）每条按四件事写清：用什么手段查 / 查了什么 / 判据 / 结果；其中跨班一条（SEC-02）单独整理成 <code>reports/risk-authz.md</code>——它是最终项目报告「高风险三查 · 权限」的直接素材，复测命令要能在演示机器上原样再跑。</li>
+                <li>异步改造三条判据的复现记录同样归档：并发一条（判据三，重复提交 / 重复投递只出一份结果）整理成 <code>reports/risk-concurrency.md</code>，事务一条（写入提交记录与任务记录同事务，停消费者提交 → 恢复后恰好投递一次、无孤儿任务）整理成 <code>reports/risk-transaction.md</code>——这两条是「高风险三查」的并发与事务来源。</li>
+                <li>把能自动化的先接成一条命令（如 <code>make check-security</code>），至少覆盖 SEC-05 与 SEC-06；<code>README.md</code> 里注明这个入口。</li>
+                <li>密钥扫描结果与依赖审计基线报告归档为 <code>reports/security-baseline.md</code>，不要只写结论。</li>
+                <li>日志字段的缺口（SEC-07）单独记一行：缺什么字段、准备加在哪一层。后续课次的监控指标要用这些字段。</li>
+                <li>交叉评审落盘为 <code>reports/review-01.md</code>：写清「用什么手段查 / 查了什么 / 判据 / 结果」四件事。这份记录是最终报告「审核记录」一节的第一份。</li>
+                <li>本次自查单独开一条变更提交，提交信息写清"依据哪一条检查项"。</li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <h2>五、交给后续课次的料（同时也是最终验收的素材）</h2>
+            <ul class="checklist">
+                <li><strong>至少保留 1 条判定为红的条目</strong>，后续课次当堂从红改到绿，并留下修复前后的证据（先红后绿输出连同提交号归档到 <code>reports/</code>——这是最终报告「门禁与演示」一节要当场出示的素材）。</li>
+                <li>受保护接口清单与写入类接口清单，后续课次会直接拿来做权限收紧的对照表。</li>
+                <li>知识库测试问题集草稿：分有答案、无答案、跨班三类，先各写若干条，后续课次的评测会扩成完整问题集。</li>
+                <li>SEC-08 的素材（恶意文档与 3 条诱导提问）打包进目录，后续课次当堂用。</li>
+                <li>演示链路素材：本课改造的提交接口要能走通「登录取令牌 → 提交作业返回 202 与任务标识 → 轮询状态看 pending → running → succeeded」，最终验收的演示录屏会原样用这条链路。</li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <h2>六、核查清单（提交前逐条打勾）</h2>
+            <ul class="checklist">
+                <li><strong>身份与数据</strong>：预置账号全部可用；受保护接口清单不少于 5 个；写入类接口清单已列出。</li>
+                <li><strong>七项检测</strong>：每条都填了具体的"当前实际"，没有"没问题""应该是好的"这类判断；至少 1 条判定为红。</li>
+                <li><strong>资产类</strong>：密钥扫描 0 命中，或命中项已轮换并从历史清除；依赖基线报告已归档并写明高危数量。</li>
+                <li><strong>日志</strong>：一次技能调用后能按技能标识回查到记录；字段缺口已写进文件。</li>
+                <li><strong>可重复</strong>：一键命令能跑通；换一台机器按 <code>README.md</code> 走一遍，同样的条目得到同样的判定。</li>
+                <li><strong>交付</strong>：文件归档到仓库根目录 <code>reports/</code>；<strong>交叉评审（peer review）</strong>——组内另一人照清单独立复现至少 2 条，判定一致才算过。</li>
+            </ul>
+        </div>
+
+        <p class="hint">密钥明文只存在于各人本机的 <code>.env</code>，不进代码、不进镜像层、不进前端，也不进提交历史。发现命中不要等，先轮换再继续。</p>
+    </div>
+</body>
+</html>

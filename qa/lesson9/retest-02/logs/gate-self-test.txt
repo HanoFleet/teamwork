@@ -1,0 +1,8 @@
+$ 临时仓库：带假 SESSION_SECRET
+密钥边界检查失败：
+  ✗ leak.env: SESSION_SECRET 有非空值
+exit=1
+$ 临时仓库：干净
+密钥边界检查通过：工作树和提交历史都没有非空密钥赋值。
+exit=0
+SELF-TEST PASSED: 先红后绿

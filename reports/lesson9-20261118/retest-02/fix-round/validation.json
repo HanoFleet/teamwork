@@ -1,0 +1,17 @@
+{
+  "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "started": "2026-11-18T10:26:57.206445+08:00",
+  "frontend_build": 0,
+  "performance_1": {
+    "max_ms": 253.71959999938554,
+    "over_100_ms": 2
+  },
+  "performance_2": {
+    "max_ms": 349.701000001005,
+    "over_100_ms": 1
+  },
+  "verify": 0,
+  "e2e_install": 0,
+  "playwright": 0,
+  "finished": "2026-11-18T10:33:12.969722+08:00"
+}

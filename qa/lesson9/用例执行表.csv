@@ -1,0 +1,31 @@
+﻿用例编号,关联需求,前置条件,输入与操作,预期结果,实际结果,状态,证据位置,执行时间,被测提交
+G-spec,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,python scripts/spec_check.py,退出0,退出0；见原始输出,通过,logs/spec.txt,2026-11-18T08:31:01.803505+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-standards,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,python scripts/standards_check.py,退出0,退出0；见原始输出,通过,logs/standards.txt,2026-11-18T08:31:01.945587+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-layer,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,python scripts/layer_check.py,退出0,退出0；见原始输出,通过,logs/layer.txt,2026-11-18T08:31:02.072936+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-security-static,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,python scripts/security_static.py,退出0,退出0；见原始输出,通过,logs/security-static.txt,2026-11-18T08:31:02.176366+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-injection-cases,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,python scripts/security_cases.py,退出0,退出0；见原始输出,通过,logs/injection-cases.txt,2026-11-18T08:31:02.290004+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-secret,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,python scripts/secret_scan.py,退出0,退出0；见原始输出,通过,logs/secret.txt,2026-11-18T08:31:02.404748+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-make-check,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,make check,退出0,退出127；见原始输出,阻塞,logs/make-check.txt,2026-11-18T08:31:08.640933+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-make-security,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,make check-security,退出0,退出127；见原始输出,阻塞,logs/make-security.txt,2026-11-18T08:31:08.649933+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-make-grade,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,make grade,退出0,退出127；见原始输出,阻塞,logs/make-grade.txt,2026-11-18T08:31:08.659843+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-verify,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,python scripts/verify.py,退出0,退出1；见原始输出,阻塞,logs/verify.txt,2026-11-18T08:31:08.669842+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-docker,项目门禁,独立工作树；Windows；Python/Node/Go 已安装,docker info --format {{.ServerVersion}},退出0,退出1；见原始输出,阻塞,logs/docker.txt,2026-11-18T08:31:08.913745+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-openspec,规约严格验证,允许读取工具缓存,见日志；权限重试,整体退出0,6 items passed,通过,logs/openspec-retry.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-gate-selftest,security-hardening/门禁先红后绿,允许读取工具缓存,见日志；权限重试,整体退出0,退出0；自测红项1、绿项0,通过,logs/gate-selftest-retry.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+G-go,backend 单元回归,"GOPROXY=https://goproxy.cn,direct",go test -json ./...,退出0，无失败,退出0；32个测试终态；包结果{'pass': 11},通过,logs/go-retry.jsonl,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+SEC-06,资产/依赖审计,最新 main 的 frontend/package-lock.json,npm audit --json --audit-level=high --package-lock-only --registry=https://registry.npmjs.org,高危0、严重0，退出0,"{'info': 0, 'low': 0, 'moderate': 0, 'high': 5, 'critical': 0, 'total': 5}",失败,logs/npm-audit-retry.json,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+SEC-01,授权,隔离Compose健康；A/B班测试账号和测试数据,无认证逐个请求受保护接口,全部401,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+SEC-02,授权,隔离Compose健康；A/B班测试账号和测试数据,A1读取B材料；B检索A关键词；同班对照,跨班404/空；同班正常,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+SEC-03,授权,隔离Compose健康；A/B班测试账号和测试数据,学生持有效token PATCH skills/assistants；前后核对数据,403且数据不变,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+SEC-04,授权,隔离Compose健康；A/B班测试账号和测试数据,绕过技能入口直接调用批改入口操作他人提交；核对task/outbox/result,拒绝且无残留,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+SEC-07,日志,隔离Compose健康；A/B班测试账号和测试数据,运行技能；教师按技能标识、学生与时间窗查日志；学生查询,七列齐全；拒绝有记录；学生403,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+SEC-08,日志/提示词注入,隔离Compose健康；A/B班测试账号和测试数据,恶意讲义、索要提示词、改规则、绕权限四步,记录前三步现象；第四步拒绝且有审计,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+SQLI,注入,隔离Compose健康；A/B班测试账号和测试数据,搜索提交 OR 恒真、%与_,不泄漏跨班数据，不返回500,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+XSS,注入,隔离Compose健康；A/B班测试账号和测试数据,标题含script上传；打开列表查看页面源码,源码转义无执行,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+CSRF,注入,隔离Compose健康；A/B班测试账号和测试数据,恶意Origin/缺token伪造配置写；检查SameSite,403且数据不变；Cookie属性正确,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+ASYNC,异步回归,隔离Compose健康；A/B班测试账号和测试数据,执行第8课三条异步判据,202/P95、停worker、重复投递和恢复符合规约,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+DEMO,四步演示,隔离Compose健康；A/B班测试账号和测试数据,登录→202→轮询终态→跨班404,四步全绿并留录屏,未发送业务请求：Docker daemon 管道不存在；独立工作树无.env,阻塞,logs/docker.txt；logs/verify.txt,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+BUILD,完整回归,依赖与隔离运行环境可用,前端npm ci及npm run build,按项目规范通过,本轮未运行；需依赖下载、浏览器或Docker环境,未执行,测试与复测报告.md,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+E2E,完整回归,依赖与隔离运行环境可用,Playwright桌面与移动端,按项目规范通过,本轮未运行；需依赖下载、浏览器或Docker环境,未执行,测试与复测报告.md,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+GOVULN,完整回归,依赖与隔离运行环境可用,当日govulncheck源码与部署二进制审计,按项目规范通过,本轮未运行；需依赖下载、浏览器或Docker环境,未执行,测试与复测报告.md,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5
+FAULT,完整回归,依赖与隔离运行环境可用,依赖故障和恢复集成回归,按项目规范通过,本轮未运行；需依赖下载、浏览器或Docker环境,未执行,测试与复测报告.md,2026-11-18T08:36:58.262214+08:00,bd42a6149e975c1ed217fb9349621443a3be53d5

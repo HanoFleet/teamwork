@@ -1,0 +1,5 @@
+8.0.46	1	1	fsync	1
+Innodb_log_waits	0
+Innodb_os_log_fsyncs	502
+Threads_running	2
+10000	10000

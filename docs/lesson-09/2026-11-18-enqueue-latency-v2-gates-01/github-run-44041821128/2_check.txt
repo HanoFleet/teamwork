@@ -1,0 +1,345 @@
+﻿2026-11-17T07:50:42.8132107Z Current runner version: '2.338.2'
+2026-11-17T07:50:42.8167948Z ##[group]Runner Image Provisioner
+2026-11-17T07:50:42.8169371Z Hosted Compute Agent
+2026-11-17T07:50:42.8170287Z Version: 20261103.629
+2026-11-17T07:50:42.8171466Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-17T07:50:42.8172739Z Build Date: 2026-11-03T17:26:59Z
+2026-11-17T07:50:42.8173808Z Worker ID: {63a298ee-066b-4fec-a6b5-3ef63e77e466}
+2026-11-17T07:50:42.8175025Z Region: centralus
+2026-11-17T07:50:42.8175981Z Cloud: Azure
+2026-11-17T07:50:42.8176805Z ##[endgroup]
+2026-11-17T07:50:42.8179160Z ##[group]Operating System
+2026-11-17T07:50:42.8180338Z Ubuntu
+2026-11-17T07:50:42.8181712Z 26.04.1
+2026-11-17T07:50:42.8182617Z LTS
+2026-11-17T07:50:42.8183471Z ##[endgroup]
+2026-11-17T07:50:42.8184587Z ##[group]Runner Image
+2026-11-17T07:50:42.8185701Z Image: ubuntu-26.04
+2026-11-17T07:50:42.8186663Z Version: 20261111.196.1
+2026-11-17T07:50:42.8189054Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261111.196/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-17T07:50:42.8194393Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261111.196
+2026-11-17T07:50:42.8196182Z ##[endgroup]
+2026-11-17T07:50:42.8198303Z ##[group]GITHUB_TOKEN Permissions
+2026-11-17T07:50:42.8201526Z Contents: read
+2026-11-17T07:50:42.8202673Z Metadata: read
+2026-11-17T07:50:42.8203628Z ##[endgroup]
+2026-11-17T07:50:42.8206493Z Secret source: Actions
+2026-11-17T07:50:42.8208085Z Cache mode: write
+2026-11-17T07:50:42.8209583Z Prepare workflow directory
+2026-11-17T07:50:42.8568731Z Prepare all required actions
+2026-11-17T07:50:42.8616691Z Getting action download info
+2026-11-17T07:50:43.1005416Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-17T07:50:43.2974041Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-17T07:50:43.5338997Z Complete job name: check
+2026-11-17T07:50:43.6234591Z ##[group]Run actions/checkout@v4
+2026-11-17T07:50:43.6235543Z with:
+2026-11-17T07:50:43.6236045Z   repository: HanoFleet/teamwork
+2026-11-17T07:50:43.6239861Z   token: ***
+2026-11-17T07:50:43.6240338Z   ssh-strict: true
+2026-11-17T07:50:43.6240830Z   ssh-user: git
+2026-11-17T07:50:43.6241674Z   persist-credentials: true
+2026-11-17T07:50:43.6242250Z   clean: true
+2026-11-17T07:50:43.6242737Z   sparse-checkout-cone-mode: true
+2026-11-17T07:50:43.6243305Z   fetch-depth: 1
+2026-11-17T07:50:43.6243776Z   fetch-tags: false
+2026-11-17T07:50:43.6244264Z   show-progress: true
+2026-11-17T07:50:43.6244743Z   lfs: false
+2026-11-17T07:50:43.6245193Z   submodules: false
+2026-11-17T07:50:43.6245674Z   set-safe-directory: true
+2026-11-17T07:50:43.6246206Z   allow-unsafe-pr-checkout: false
+2026-11-17T07:50:43.6247062Z ##[endgroup]
+2026-11-17T07:50:44.1011093Z Syncing repository: HanoFleet/teamwork
+2026-11-17T07:50:44.1012925Z ##[group]Getting Git version info
+2026-11-17T07:50:44.1013882Z Working directory is '/home/runner/work/teamwork/teamwork'
+2026-11-17T07:50:44.1139707Z [command]/usr/bin/git version
+2026-11-17T07:50:44.1192039Z git version 2.56.1
+2026-11-17T07:50:44.1215188Z ##[endgroup]
+2026-11-17T07:50:44.1234003Z Temporarily overriding HOME='/home/runner/work/_temp/50cec2fe-20a9-4b45-8e79-423dd88e0642' before making global git config changes
+2026-11-17T07:50:44.1236487Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-17T07:50:44.1238387Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/teamwork/teamwork
+2026-11-17T07:50:44.1310319Z Deleting the contents of '/home/runner/work/teamwork/teamwork'
+2026-11-17T07:50:44.1319774Z ##[group]Initializing the repository
+2026-11-17T07:50:44.1321568Z [command]/usr/bin/git init /home/runner/work/teamwork/teamwork
+2026-11-17T07:50:44.1744067Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-17T07:50:44.1746719Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-17T07:50:44.1749698Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-17T07:50:44.1751949Z hint: call:
+2026-11-17T07:50:44.1753130Z hint:
+2026-11-17T07:50:44.1754434Z hint: 	git config --global init.defaultBranch <name>
+2026-11-17T07:50:44.1755619Z hint:
+2026-11-17T07:50:44.1756731Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-17T07:50:44.1758345Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-17T07:50:44.1759684Z hint:
+2026-11-17T07:50:44.1760758Z hint: 	git branch -m <name>
+2026-11-17T07:50:44.1762059Z hint:
+2026-11-17T07:50:44.1763384Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-17T07:50:44.1765356Z Initialized empty Git repository in /home/runner/work/teamwork/teamwork/.git/
+2026-11-17T07:50:44.1771465Z [command]/usr/bin/git remote add origin https://github.com/HanoFleet/teamwork
+2026-11-17T07:50:44.1827658Z ##[endgroup]
+2026-11-17T07:50:44.1829270Z ##[group]Disabling automatic garbage collection
+2026-11-17T07:50:44.1831378Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-17T07:50:44.1869017Z ##[endgroup]
+2026-11-17T07:50:44.1870618Z ##[group]Setting up auth
+2026-11-17T07:50:44.1878038Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-17T07:50:44.1916850Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-17T07:50:44.2526242Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-17T07:50:44.2561959Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-17T07:50:44.2833208Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-17T07:50:44.2871162Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-17T07:50:44.3143593Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-17T07:50:44.3200368Z ##[endgroup]
+2026-11-17T07:50:44.3201749Z ##[group]Fetching the repository
+2026-11-17T07:50:44.3211184Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +5f4fd5795f404a1cd575cef3b5375c51bcda71d9:refs/remotes/origin/change/2026-11-17-harden-security
+2026-11-17T07:50:44.8394463Z From https://github.com/HanoFleet/teamwork
+2026-11-17T07:50:44.8397893Z  * [new ref]         5f4fd5795f404a1cd575cef3b5375c51bcda71d9 -> origin/change/2026-11-17-harden-security
+2026-11-17T07:50:44.8403637Z ##[endgroup]
+2026-11-17T07:50:44.8405680Z ##[group]Determining the checkout info
+2026-11-17T07:50:44.8408113Z ##[endgroup]
+2026-11-17T07:50:44.8410005Z [command]/usr/bin/git sparse-checkout disable
+2026-11-17T07:50:44.8463909Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-17T07:50:44.8498404Z ##[group]Checking out the ref
+2026-11-17T07:50:44.8505546Z [command]/usr/bin/git checkout --progress --force -B change/2026-11-17-harden-security refs/remotes/origin/change/2026-11-17-harden-security
+2026-11-17T07:50:44.8934356Z Switched to a new branch 'change/2026-11-17-harden-security'
+2026-11-17T07:50:44.8944551Z branch 'change/2026-11-17-harden-security' set up to track 'origin/change/2026-11-17-harden-security'.
+2026-11-17T07:50:44.8953742Z ##[endgroup]
+2026-11-17T07:50:44.8998969Z [command]/usr/bin/git log -1 --format=%H
+2026-11-17T07:50:44.9025007Z 5f4fd5795f404a1cd575cef3b5375c51bcda71d9
+2026-11-17T07:50:44.9499964Z ##[group]Run actions/setup-node@v4
+2026-11-17T07:50:44.9501315Z with:
+2026-11-17T07:50:44.9502119Z   node-version: 24
+2026-11-17T07:50:44.9503027Z   always-auth: false
+2026-11-17T07:50:44.9503959Z   check-latest: false
+2026-11-17T07:50:44.9514584Z   token: ***
+2026-11-17T07:50:44.9515426Z ##[endgroup]
+2026-11-17T07:50:45.1285019Z (node:2391) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-17T07:50:45.1287861Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-17T07:50:45.1292883Z Found in cache @ /opt/hostedtoolcache/node/24.22.2/x64
+2026-11-17T07:50:45.1296002Z ##[group]Environment details
+2026-11-17T07:50:45.7907255Z node: v24.22.2
+2026-11-17T07:50:45.7907915Z npm: 11.19.1
+2026-11-17T07:50:45.7908463Z yarn: 1.22.22
+2026-11-17T07:50:45.7909722Z ##[endgroup]
+2026-11-17T07:50:45.8143628Z ##[group]Run make check-security
+2026-11-17T07:50:45.8144304Z [36;1mmake check-security[0m
+2026-11-17T07:50:45.8242144Z shell: /usr/bin/bash -e {0}
+2026-11-17T07:50:45.8242889Z ##[endgroup]
+2026-11-17T07:50:46.0304703Z python3 scripts/security_gate.py
+2026-11-17T07:50:47.2331268Z $ python3 scripts/secret_scan.py
+2026-11-17T07:50:47.2332257Z 密钥边界检查通过：工作树和提交历史都没有非空密钥赋值。
+2026-11-17T07:50:47.2332719Z exit=0
+2026-11-17T07:50:47.2333211Z $ npm audit --audit-level=high
+2026-11-17T07:50:47.2333732Z found 0 vulnerabilities
+2026-11-17T07:50:47.2334247Z exit=0
+2026-11-17T07:50:47.2334763Z SECURITY GATE PASSED
+2026-11-17T07:50:47.2431832Z ##[group]Run make check
+2026-11-17T07:50:47.2432147Z [36;1mmake check[0m
+2026-11-17T07:50:47.2484033Z shell: /usr/bin/bash -e {0}
+2026-11-17T07:50:47.2484309Z ##[endgroup]
+2026-11-17T07:50:47.2569272Z sh scripts/check.sh
+2026-11-17T07:50:47.2602761Z == 规约与规范
+2026-11-17T07:50:47.2977849Z 活动 change 规约自查
+2026-11-17T07:50:47.2978581Z 仓库：/home/runner/work/teamwork/teamwork
+2026-11-17T07:50:47.2979247Z 活动 change：3
+2026-11-17T07:50:47.2979718Z ------------------------------------------------------------
+2026-11-17T07:50:47.2980302Z 变更：2026-10-14-upgrade-material-library
+2026-11-17T07:50:47.2980800Z   需求 26 / 场景 151 / 任务 46 / 能力 4
+2026-11-17T07:50:47.2981590Z ------------------------------------------------------------
+2026-11-17T07:50:47.2982200Z 变更：2026-11-05-add-async-grading
+2026-11-17T07:50:47.2982606Z   需求 10 / 场景 32 / 任务 30 / 能力 1
+2026-11-17T07:50:47.2983151Z ------------------------------------------------------------
+2026-11-17T07:50:47.2983642Z 变更：2026-11-17-harden-security
+2026-11-17T07:50:47.2984054Z   需求 6 / 场景 29 / 任务 40 / 能力 1
+2026-11-17T07:50:47.2984534Z ------------------------------------------------------------
+2026-11-17T07:50:47.2985088Z 汇总：3 个活动 change，42 条需求，212 个场景，116 条任务
+2026-11-17T07:50:47.2985600Z 通过：四份文件、需求/场景结构、失败路径、对应表和任务清单均符合要求。
+2026-11-17T07:50:47.3230224Z 八类工程规范自查
+2026-11-17T07:50:47.3231197Z 仓库：/home/runner/work/teamwork/teamwork
+2026-11-17T07:50:47.3232097Z ------------------------------------------------------------
+2026-11-17T07:50:47.3232846Z   ✓ 产品设计（含前端）: 10 条规范
+2026-11-17T07:50:47.3233348Z   ✓ 后端开发: 11 条规范
+2026-11-17T07:50:47.3233851Z   ✓ 安全开发: 17 条规范
+2026-11-17T07:50:47.3234289Z   ✓ 测试: 12 条规范
+2026-11-17T07:50:47.3234599Z   ✓ 部署运维: 13 条规范
+2026-11-17T07:50:47.3234895Z   ✓ AI 应用: 10 条规范
+2026-11-17T07:50:47.3235227Z   ✓ 数据: 9 条规范
+2026-11-17T07:50:47.3235524Z   ✓ 评审与完成定义: 10 条规范
+2026-11-17T07:50:47.3235958Z ------------------------------------------------------------
+2026-11-17T07:50:47.3236608Z 通过：八类规范、常驻规则、工程技能、数据字典、四步核对、SPEC 入口和归档包均齐备。
+2026-11-17T07:50:47.3968252Z 静态安全回归通过：无 raw HTML、无 localStorage token、CSRF/用例文件存在。
+2026-11-17T07:50:47.4002050Z == OpenSpec strict
+2026-11-17T07:50:50.1538415Z ✓ change/2026-10-14-upgrade-material-library
+2026-11-17T07:50:50.1540334Z ✓ change/2026-11-05-add-async-grading
+2026-11-17T07:50:50.1541496Z ✓ change/2026-11-17-harden-security
+2026-11-17T07:50:50.1542034Z ✓ spec/auth-upload
+2026-11-17T07:50:50.1542486Z ✓ spec/knowledge-retrieval
+2026-11-17T07:50:50.1543002Z ✓ spec/platform-foundation
+2026-11-17T07:50:50.1543439Z Totals: 6 passed, 0 failed (6 items)
+2026-11-17T07:50:50.1840021Z == 分层、密钥与变异
+2026-11-17T07:50:50.2054390Z 分层检查通过：新增 httpapi 代码没有 SQL；遗留文件已登记为例外。
+2026-11-17T07:50:50.2594691Z 密钥边界检查通过：工作树和提交历史都没有非空密钥赋值。
+2026-11-17T07:50:50.3067782Z 接口层出现 SQL（新增代码必须放数据访问层）：
+2026-11-17T07:50:50.3069344Z   ✗ backend/internal/httpapi/zz_violation.go:3: const violation = "SELECT * FROM users"
+2026-11-17T07:50:50.3302927Z 分层检查通过：新增 httpapi 代码没有 SQL；遗留文件已登记为例外。
+2026-11-17T07:50:50.3337155Z 变异检查通过：注入 SQL 时失败，还原后通过。
+2026-11-17T07:50:50.3385204Z == Go 格式、测试与 vet
+2026-11-17T07:50:50.4385415Z Unable to find image 'golang:1.25-alpine' locally
+2026-11-17T07:50:50.9007697Z 1.25-alpine: Pulling from library/golang
+2026-11-17T07:50:51.0992245Z 4f4fb700ef54: Pulling fs layer
+2026-11-17T07:50:51.0996072Z fbbf4aee6bbb: Pulling fs layer
+2026-11-17T07:50:51.0996999Z 2129e38f8eb9: Pulling fs layer
+2026-11-17T07:50:51.0997747Z 55afa1ecc21d: Pulling fs layer
+2026-11-17T07:50:51.0998311Z 91ca672d117c: Pulling fs layer
+2026-11-17T07:50:51.1422796Z 4f4fb700ef54: Already exists
+2026-11-17T07:50:51.2429526Z fbbf4aee6bbb: Download complete
+2026-11-17T07:50:51.2432891Z 91ca672d117c: Download complete
+2026-11-17T07:50:51.3424680Z 311687a911db: Download complete
+2026-11-17T07:50:51.3426947Z 55afa1ecc21d: Download complete
+2026-11-17T07:50:51.4418438Z 3c3f89a6cbd8: Download complete
+2026-11-17T07:50:51.4451698Z 55afa1ecc21d: Pull complete
+2026-11-17T07:50:51.5414233Z 2129e38f8eb9: Download complete
+2026-11-17T07:50:51.5441331Z fbbf4aee6bbb: Pull complete
+2026-11-17T07:50:54.2307768Z 4f4fb700ef54: Pull complete
+2026-11-17T07:50:54.2316252Z 91ca672d117c: Pull complete
+2026-11-17T07:50:54.2327262Z 2129e38f8eb9: Pull complete
+2026-11-17T07:50:54.2328862Z Digest: sha256:1ae0735f00daffa3aaf1363a5184c0d2dc55c78e3db4ec70241cdac97bf84b59
+2026-11-17T07:50:54.2330444Z Status: Downloaded newer image for golang:1.25-alpine
+2026-11-17T07:50:55.1991833Z go: downloading golang.org/x/crypto v0.41.0
+2026-11-17T07:50:55.2237274Z go: downloading github.com/go-sql-driver/mysql v1.9.3
+2026-11-17T07:50:55.2278765Z go: downloading github.com/oklog/ulid/v2 v2.1.0
+2026-11-17T07:50:55.2351881Z go: downloading github.com/rabbitmq/amqp091-go v1.10.0
+2026-11-17T07:50:56.0437660Z go: downloading filippo.io/edwards25519 v1.1.0
+2026-11-17T07:51:12.0884798Z ?   	campusclaw/cmd/server	[no test files]
+2026-11-17T07:51:12.0886026Z ?   	campusclaw/cmd/worker	[no test files]
+2026-11-17T07:51:12.0887285Z ?   	campusclaw/internal/audit	[no test files]
+2026-11-17T07:51:12.1648712Z ok  	campusclaw/internal/auth	0.004s
+2026-11-17T07:51:12.1649971Z ?   	campusclaw/internal/catalog	[no test files]
+2026-11-17T07:51:12.3819779Z ok  	campusclaw/internal/chat	0.003s
+2026-11-17T07:51:12.3821057Z ok  	campusclaw/internal/chunk	0.003s
+2026-11-17T07:51:12.4054159Z ok  	campusclaw/internal/config	0.003s
+2026-11-17T07:51:12.4054856Z ?   	campusclaw/internal/db	[no test files]
+2026-11-17T07:51:12.4055528Z ?   	campusclaw/internal/embed	[no test files]
+2026-11-17T07:51:12.6837380Z ok  	campusclaw/internal/grading	0.003s
+2026-11-17T07:51:12.6845435Z ok  	campusclaw/internal/health	0.004s
+2026-11-17T07:51:12.6846790Z ?   	campusclaw/internal/httpapi	[no test files]
+2026-11-17T07:51:12.6848016Z ?   	campusclaw/internal/knowledge	[no test files]
+2026-11-17T07:51:13.2369654Z ok  	campusclaw/internal/lifecycle	0.218s
+2026-11-17T07:51:13.2370405Z ok  	campusclaw/internal/logging	0.004s
+2026-11-17T07:51:13.2371463Z ok  	campusclaw/internal/materials	0.003s
+2026-11-17T07:51:13.2372120Z ?   	campusclaw/internal/outbox	[no test files]
+2026-11-17T07:51:13.2372828Z ?   	campusclaw/internal/qdrant	[no test files]
+2026-11-17T07:51:13.3314731Z ok  	campusclaw/internal/queue	0.002s
+2026-11-17T07:51:13.3962808Z ok  	campusclaw/internal/retrieval	0.002s
+2026-11-17T07:51:13.3963533Z ?   	campusclaw/internal/worker	[no test files]
+2026-11-17T07:51:16.4145147Z == 前端构建
+2026-11-17T07:51:19.0077362Z #0 building with "default" instance using docker driver
+2026-11-17T07:51:19.0077955Z 
+2026-11-17T07:51:19.0078228Z #1 [internal] load build definition from Dockerfile
+2026-11-17T07:51:19.0078739Z #1 transferring dockerfile: 298B 0.0s done
+2026-11-17T07:51:19.0079103Z #1 DONE 0.0s
+2026-11-17T07:51:19.0079249Z 
+2026-11-17T07:51:19.0079538Z #2 [auth] library/node:pull token for registry-1.docker.io
+2026-11-17T07:51:19.1586796Z #2 DONE 0.0s
+2026-11-17T07:51:19.1586996Z 
+2026-11-17T07:51:19.1587385Z #3 [internal] load metadata for docker.io/library/node:22-alpine
+2026-11-17T07:51:19.4790699Z #3 DONE 0.6s
+2026-11-17T07:51:19.6107548Z 
+2026-11-17T07:51:19.6108407Z #4 [internal] load .dockerignore
+2026-11-17T07:51:19.6108865Z #4 transferring context: 63B done
+2026-11-17T07:51:19.6109432Z #4 DONE 0.0s
+2026-11-17T07:51:19.6109653Z 
+2026-11-17T07:51:19.6110222Z #5 [internal] load build context
+2026-11-17T07:51:19.6110774Z #5 transferring context: 156.20kB done
+2026-11-17T07:51:19.6111634Z #5 DONE 0.0s
+2026-11-17T07:51:19.6111868Z 
+2026-11-17T07:51:19.6112938Z #6 [build 1/6] FROM docker.io/library/node:22-alpine@sha256:1314fb30ec37592d5845e5a160d522c0e680972aa534549940b8d73bde88481a
+2026-11-17T07:51:19.6114910Z #6 resolve docker.io/library/node:22-alpine@sha256:1314fb30ec37592d5845e5a160d522c0e680972aa534549940b8d73bde88481a 0.0s done
+2026-11-17T07:51:19.6116025Z #6 sha256:177fffbd7f516ce769745a38154a76ab1cc31d9f87f1c4ea5e448f6548fea4c4 443B / 443B 0.0s done
+2026-11-17T07:51:19.7188808Z #6 sha256:87aaee1f6667374a3b8e33a252954e01b1fac9749bb0c570022533b9120d13a1 9.44MB / 56.25MB 0.2s
+2026-11-17T07:51:19.8690609Z #6 sha256:87aaee1f6667374a3b8e33a252954e01b1fac9749bb0c570022533b9120d13a1 52.43MB / 56.25MB 0.3s
+2026-11-17T07:51:19.8693130Z #6 sha256:e868d1035e5072f0e369d44b840e8532b9500f7cc74aa8c908ccd2e1b9898eb3 1.26MB / 1.26MB 0.2s done
+2026-11-17T07:51:19.8695618Z #6 sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17 3.85MB / 3.85MB 0.2s done
+2026-11-17T07:51:19.8698192Z #6 extracting sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17
+2026-11-17T07:51:20.0584750Z #6 sha256:87aaee1f6667374a3b8e33a252954e01b1fac9749bb0c570022533b9120d13a1 56.25MB / 56.25MB 0.3s done
+2026-11-17T07:51:20.0586461Z #6 extracting sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17 0.1s done
+2026-11-17T07:51:20.0588322Z #6 extracting sha256:87aaee1f6667374a3b8e33a252954e01b1fac9749bb0c570022533b9120d13a1
+2026-11-17T07:51:20.9099623Z #6 extracting sha256:87aaee1f6667374a3b8e33a252954e01b1fac9749bb0c570022533b9120d13a1 1.0s done
+2026-11-17T07:51:20.9101403Z #6 DONE 1.4s
+2026-11-17T07:51:21.0953630Z 
+2026-11-17T07:51:21.0954710Z #6 [build 1/6] FROM docker.io/library/node:22-alpine@sha256:1314fb30ec37592d5845e5a160d522c0e680972aa534549940b8d73bde88481a
+2026-11-17T07:51:21.0956424Z #6 extracting sha256:e868d1035e5072f0e369d44b840e8532b9500f7cc74aa8c908ccd2e1b9898eb3 0.0s done
+2026-11-17T07:51:21.0958053Z #6 extracting sha256:177fffbd7f516ce769745a38154a76ab1cc31d9f87f1c4ea5e448f6548fea4c4 done
+2026-11-17T07:51:21.0959045Z #6 DONE 1.4s
+2026-11-17T07:51:21.0959289Z 
+2026-11-17T07:51:21.0959525Z #7 [build 2/6] WORKDIR /src
+2026-11-17T07:51:21.1252994Z #7 DONE 0.2s
+2026-11-17T07:51:21.2939220Z 
+2026-11-17T07:51:21.2940070Z #8 [build 3/6] COPY package.json package-lock.json ./
+2026-11-17T07:51:21.2940848Z #8 DONE 0.0s
+2026-11-17T07:51:21.2941442Z 
+2026-11-17T07:51:21.2941869Z #9 [build 4/6] RUN npm ci --include=optional
+2026-11-17T07:51:23.6315808Z #9 2.487 
+2026-11-17T07:51:23.6317185Z #9 2.487 added 131 packages, and audited 132 packages in 2s
+2026-11-17T07:51:23.6318190Z #9 2.487 
+2026-11-17T07:51:23.7839054Z #9 2.488 93 packages are looking for funding
+2026-11-17T07:51:23.7839864Z #9 2.488   run `npm fund` for details
+2026-11-17T07:51:23.7840384Z #9 2.489 
+2026-11-17T07:51:23.7840865Z #9 2.489 found 0 vulnerabilities
+2026-11-17T07:51:23.7841626Z #9 2.490 npm notice
+2026-11-17T07:51:23.7842450Z #9 2.490 npm notice New major version of npm available! 10.9.9 -> 12.2.2
+2026-11-17T07:51:23.7843256Z #9 2.490 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+2026-11-17T07:51:23.7843973Z #9 2.490 npm notice To update run: npm install -g npm@12.2.2
+2026-11-17T07:51:23.7844414Z #9 2.490 npm notice
+2026-11-17T07:51:23.8164400Z #9 DONE 2.7s
+2026-11-17T07:51:24.0112376Z 
+2026-11-17T07:51:24.0112970Z #10 [build 5/6] COPY . .
+2026-11-17T07:51:24.0113526Z #10 DONE 0.0s
+2026-11-17T07:51:24.0113796Z 
+2026-11-17T07:51:24.0114677Z #11 [build 6/6] RUN npm run build
+2026-11-17T07:51:24.1324057Z #11 0.272 
+2026-11-17T07:51:24.1324527Z #11 0.272 > build
+2026-11-17T07:51:24.1325124Z #11 0.272 > tsc --noEmit && vite build
+2026-11-17T07:51:24.1325678Z #11 0.272 
+2026-11-17T07:51:24.6773858Z #11 0.817 vite v8.3.5 building client environment for production...
+2026-11-17T07:51:24.7783616Z #11 0.830 transforming...
+2026-11-17T07:51:24.7784410Z #11 0.918 ✓ 273 modules transformed.
+2026-11-17T07:51:24.9149856Z #11 0.951 rendering chunks...
+2026-11-17T07:51:24.9150517Z #11 1.009 computing gzip size...
+2026-11-17T07:51:24.9151893Z #11 1.016 dist/index.html                   0.39 kB │ gzip:   0.27 kB
+2026-11-17T07:51:24.9152916Z #11 1.016 dist/assets/index-CS3miDDG.css    7.10 kB │ gzip:   2.14 kB
+2026-11-17T07:51:24.9154020Z #11 1.016 dist/assets/index-BPetbmQ2.js   355.29 kB │ gzip: 111.35 kB
+2026-11-17T07:51:24.9154387Z #11 1.016 
+2026-11-17T07:51:24.9154907Z #11 1.017 ✓ built in 198ms
+2026-11-17T07:51:24.9155164Z #11 DONE 1.1s
+2026-11-17T07:51:25.0683606Z 
+2026-11-17T07:51:25.0684255Z #12 exporting to image
+2026-11-17T07:51:25.0684751Z #12 exporting layers
+2026-11-17T07:51:28.5527906Z #12 exporting layers 3.6s done
+2026-11-17T07:51:28.7339400Z #12 exporting manifest sha256:0f0f663c7f93d62232925160d08d2af89f0bcc6bb7dfb6dcaec10a941faa6e95 done
+2026-11-17T07:51:28.7341165Z #12 exporting config sha256:442ab850a63296c0de2cc1bfdfb7461acc64b85e6c8ba8bcbae906421688383c done
+2026-11-17T07:51:28.7342473Z #12 exporting attestation manifest sha256:cb1555091a4c05d67c37eecca16e7990b8df5f1952985d1bfe6e527a85d8eb22 done
+2026-11-17T07:51:28.7343483Z #12 exporting manifest list sha256:12f6a0b6895dd018400154fed32a9260216292b565d7b27e4ef8bfc55deebd77 done
+2026-11-17T07:51:28.7344249Z #12 naming to docker.io/library/campusclaw-frontend-check:latest done
+2026-11-17T07:51:28.7344861Z #12 unpacking to docker.io/library/campusclaw-frontend-check:latest
+2026-11-17T07:51:29.4768223Z #12 unpacking to docker.io/library/campusclaw-frontend-check:latest 0.9s done
+2026-11-17T07:51:29.5400637Z #12 DONE 4.6s
+2026-11-17T07:51:29.6555567Z 前端 npm ci + build：通过
+2026-11-17T07:51:29.6556110Z check 全部通过
+2026-11-17T07:51:29.6671322Z Post job cleanup.
+2026-11-17T07:51:29.7967167Z (node:7344) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-17T07:51:29.7968614Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-17T07:51:29.8201326Z Post job cleanup.
+2026-11-17T07:51:29.9130158Z [command]/usr/bin/git version
+2026-11-17T07:51:29.9178332Z git version 2.56.1
+2026-11-17T07:51:29.9219027Z Temporarily overriding HOME='/home/runner/work/_temp/be509aa5-ba39-4af7-ace0-c3193f13a57c' before making global git config changes
+2026-11-17T07:51:29.9220569Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-17T07:51:29.9224611Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/teamwork/teamwork
+2026-11-17T07:51:29.9269219Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-17T07:51:29.9308086Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-17T07:51:29.9630502Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-17T07:51:29.9658647Z http.https://github.com/.extraheader
+2026-11-17T07:51:29.9671728Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-17T07:51:29.9720853Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-17T07:51:30.0045714Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-17T07:51:30.0083384Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-17T07:51:30.0532966Z Cleaning up orphan processes
+2026-11-17T07:51:30.0968739Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

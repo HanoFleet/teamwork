@@ -1,0 +1,3 @@
+2d2900bf34b52d8df21513c6ef2ebc873df9f345
+HEAD -> change/2026-11-18-fix-lesson9-retest, origin/test/archive-lesson9-tests-20261118, origin/main, origin/HEAD
+test(archive): 汇总测试来源覆盖范围与实际归档验证证据

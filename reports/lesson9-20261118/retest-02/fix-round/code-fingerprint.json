@@ -1,0 +1,13 @@
+{
+  "baseline": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "uncommitted": true,
+  "sha256": {
+    "frontend/package.json": "05916ab82a9770d101a3fe0b6690465d840cd6ebd184a75a689ebda19cb4cc00",
+    "frontend/package-lock.json": "cf9ba013ec119f8857b735208f59667f928be277765b650d6b318905e5b42ead",
+    "scripts/spec_check.py": "9bc377d8f0227fe789b4f1e8153f905d2a42e95e00d57f10c745b0e4150c356d",
+    "scripts/qa/lesson9/run_fix_validation.py": "e2ccad7317f392abc45b87d77a2c52081ae6a56422dd95cae0044e46def69793",
+    "scripts/qa/lesson9/performance_probe.py": "19d86e9c983c51818e78e073e92918f2a1d1ac3134e5847e46fa10498d50d196",
+    "scripts/qa/lesson9/check_performance.py": "84e551e0e1c40ccf0fd16defb01a304e55b8b82e2087e15958ea96f6856d51d7"
+  },
+  "backend_diff": ""
+}

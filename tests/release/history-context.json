@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "history_manifest": {
+    "path": "tests/manifest.json",
+    "sha256": "3ff95248c2089532f04d6ea0a1023c2f0aeca3bb8be9f4c8979d18b80304d05a",
+    "baseline_commit": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+    "revision": "lesson9 round-02 working snapshot before enqueue-latency-v2; includes uncommitted changes",
+    "fingerprint": "reports/lesson9-20261118/retest-02/fix-round/round-02/code-fingerprint.json",
+    "changed_since_snapshot": [
+      {
+        "path": "tests/README.md",
+        "sha256": "52491d69cacc0a481f96cfe062f0b15cf01fed11977a749c1c845b4e46ae6d44"
+      },
+      {
+        "path": "tests/performance/analyze_grade_waits.py",
+        "sha256": "b6240e0aed2ab29f62c3896a406dbcb2ac7a1d06f2be7af65951a5c3fefa6c1c"
+      },
+      {
+        "path": "tests/performance/check_single_request_limit.py",
+        "sha256": "84e551e0e1c40ccf0fd16defb01a304e55b8b82e2087e15958ea96f6856d51d7"
+      },
+      {
+        "path": "tests/performance/compare_outbox_isolation.py",
+        "sha256": "b675af034dfba2b86614890235916fbfcf641664e193f16405363c45b23ec7a2"
+      },
+      {
+        "path": "tests/performance/grade_enqueue_latency.py",
+        "sha256": "41c33f35c8deadc7b05fff4d94b26628c95d350ea48c087dd68590cee637508e"
+      },
+      {
+        "path": "tests/performance/grade_latency_diagnostics.py",
+        "sha256": "a7612309c1df6616fe095c02419ef7d813120cd559225ccbbcd7bd2fc8c4fa93"
+      },
+      {
+        "path": "tests/performance/latency_gate_contract.py",
+        "sha256": "b0132ad7b37916652aeeb5cb9dd1b4a26e8bd40bb0d049f8a65eac3834c6ebdb"
+      },
+      {
+        "path": "tests/support/update_lesson9_round2_report.py",
+        "sha256": "ef37d7c27f7984ba5151db59410c2e0dd130730ca9b37366627bdbf33b070348"
+      }
+    ],
+    "validation_scope": "Historical values retained; current release uses tests/release/lesson9-v2-publication.json"
+  },
+  "aliases": {
+    "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/browser-results/.last-run.json": {
+      "path": "tests/release/history/browser-run-state.json",
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    }
+  },
+  "gate_manifest": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/manifest.json",
+  "excluded_runtime": {
+    "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/__pycache__/run_checks.cpython-312.pyc": {
+      "sha256": "82dfcc33a0b9b1289c4322530b12e95733fe788723c211951bee9e2faf7a4eb4",
+      "reason": "historical CPython runtime cache, retained locally, explicitly outside publication"
+    }
+  }
+}

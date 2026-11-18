@@ -19,6 +19,16 @@ BASE_SPECS = ROOT / "openspec" / "specs"
 
 # 每个活动 change 的专属检查项。新增 change 时必须在这里登记，避免漏检。
 CHANGE_RULES: dict[str, dict[str, object]] = {
+    "2026-11-18-observe-enqueue-latency": {
+        "capabilities": ["async-grading"],
+        "anchors": ["100ms", "500ms", "20", "WARN", "enqueue-latency-v2"],
+        "min_tasks": 4,
+    },
+    "2026-11-18-fix-lesson9-retest": {
+        "capabilities": ["security-hardening", "async-grading"],
+        "anchors": ["100ms", "20", "L9-DEP-001", "179.6", "503"],
+        "min_tasks": 5,
+    },
     "2026-10-14-upgrade-material-library": {
         "capabilities": [
             "platform-foundation",

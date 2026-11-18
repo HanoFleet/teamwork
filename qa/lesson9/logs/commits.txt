@@ -1,0 +1,35 @@
+﻿bd42a6149e975c1ed217fb9349621443a3be53d5 merge(security-hardening): 合并角色二第9课证据对齐到 main
+5fc4f92551220215d0fc12bf91fb4f626e128b85 docs(security-hardening): 把第 9 课回归提交号写入贡献记录
+f575066bd72ed9e07f778d5a7dd12f61de2ad524 test(security-hardening): 在 Go 1.26.11 上补齐第 9 课回归证据
+9749fbba7f7d450f53ed14cbe00ace2ee879c6b0 docs(security-hardening): 把第 9 课对照表改成实际跑过的证据
+5e458278058f5e5df928497bcf2eca70524c997b docs(security-hardening): 记下角色二补齐的第 9 课证据
+090ca01a08598e099905b3272ee5907bfb02c7ac test(security-hardening): 按学生和时间窗回查配置拒绝审计
+fc770042462bbd7ba14f803a3ec190ca1c3711b9 test(security-hardening): 记录材料列表页对脚本标题的源码转义
+b4659eec191d3c4c5af3b5e6e4758a9ef29092a9 test(security-hardening): 注入反例按接口路径落盘并接入 make check
+1a7e58fe305dbc00caead7d4063818aec71cf5e5 test(security-hardening): 把 govulncheck 接进安全门禁
+cfe7e749329ba0f43a502893f22cc8e9c22535b7 fix(security-hardening): 把 Go 工具链升到 1.26.11 并升级有通报的依赖
+70ed3778dafd4f0092c146a3614a5ad76c717581 docs: 记录 main 上第9课 CI 结果
+0dd2b46c708c1cedf004c04cb8498575f32aec5f chore: 归档第8/9课 change 并更新入口文档
+b2663bc276c1314c804b64e2fc56bc1bddbe1eb7 ci: 用 runner Chrome 运行 Playwright，避免浏览器依赖安装失败
+5f4fd5795f404a1cd575cef3b5375c51bcda71d9 docs(security-hardening): 记录第9课提交号
+fab8383ff914b7f0204556f8116774a2bfb8da2f docs(security-hardening): 7.1-8.4 按证据勾选任务
+7263dda211139292a7ff8f7539ed25429a9da983 feat(security-hardening): 0.1-7.3 完成第9课安全加固
+53951aad38850a2920f8839599818f7a660f6444 交叉评审记录
+d0e1834c4abc23e78fe2af2d033505b527028e8d 资产类基线
+ab9f6bc01388a3646057319ce61f94d8eb7ad1dd 高风险三查 · 并发
+0983c14f8dae340a5a70709bcfccbc3ed16936f5 高风险三查 · 事务
+e18cd19a5b852e64f0d6240777f63ad7beda6676 高风险三查 · 权限
+fe260912cce8e8bc550ff8bc2bf12ea443e9b8e5 Update security-precheck.md
+46dd27079ffa4572b316fdc848481ea294e1cd30 七项检测记录
+292eaaffc24fcad07e936ec6b4adf72dd6af8589 merge(async-grading): 合并角色二异步批改实现到 main
+076edc25df118dfb8396026b80bbb75359d27079 fix(async-grading): 2.2 补齐批改事务与验收缺口
+041c62a5ff4210c12ee705a0536a088c056fbce2 docs(async-grading): 记录角色二规约与规范评审
+c2a2414bdb1be8a4cebd31eaccf2e951dc6327f0 docs(async-grading): 同步入口文档与角色二实现记录
+3c247d6c691c3a828bcbed643959c4b25b4daa67 test(async-grading): 6.1-6.4 三条判据自动化与证据
+7058763b133e5bdbbe086e2200c2e3e97f8e5563 feat(async-grading): 5.2-5.3 作业页轮询与结果展示
+8ccf9b555936d80e0ae95d8bbd1c45509d21a98f feat(async-grading): 2.1-2.4 提交接口与 202 契约
+4f8414285f7ff7508f6b2658e58734c32d4b4d52 feat(async-grading): 1.1-1.4 增加 RabbitMQ、worker 与任务表
+a2c5453a73d5bac6244b6f4719e3543bd586b91e docs: 补第8课规约修正提交号
+9e59b8a3d88e5866f0fe0778fcd8192bfaadeb0e docs(async-grading): 0.2 补齐版本、迁移与安全清单
+3495435c7e513a2c078b40213e8b90c487bd4a13 docs: 记录第8课规约推送后的 CI 结果
+833a0271b968063f88e518ea5568f9bcbe10f6bf docs: 补第8课规约提交号

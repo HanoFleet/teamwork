@@ -1,0 +1,9 @@
+✓ change/2026-10-14-upgrade-material-library
+✓ change/2026-11-18-fix-lesson9-retest
+✓ change/2026-11-18-observe-enqueue-latency
+✓ spec/async-grading
+✓ spec/auth-upload
+✓ spec/knowledge-retrieval
+✓ spec/platform-foundation
+✓ spec/security-hardening
+Totals: 8 passed, 0 failed (8 items)

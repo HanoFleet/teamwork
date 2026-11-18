@@ -1,0 +1,38 @@
+python3 scripts/security_gate.py
+$ python3 scripts/secret_scan.py
+密钥边界检查通过：工作树和提交历史都没有非空密钥赋值。
+exit=0
+$ npm audit --audit-level=high
+# npm audit report
+
+picomatch  *
+Severity: high
+picomatch vulnerable to ReDoS through single-branch repeated extglobs - https://github.com/advisories/GHSA-fc5q-39xc-vjpf
+fix available via `npm audit fix --force`
+Will install vite@6.2.7, which is a breaking change
+node_modules/picomatch
+  fdir  >=5.2.1
+  Depends on vulnerable versions of picomatch
+  node_modules/fdir
+  tinyglobby  *
+  Depends on vulnerable versions of fdir
+  Depends on vulnerable versions of picomatch
+  node_modules/tinyglobby
+  vite  >=6.3.0-beta.0
+  Depends on vulnerable versions of picomatch
+  Depends on vulnerable versions of tinyglobby
+  node_modules/vite
+    @vitejs/plugin-react  >=6.0.0-beta.0
+    Depends on vulnerable versions of vite
+    node_modules/@vitejs/plugin-react
+
+5 high severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+exit=1
+SECURITY GATE FAILED: 前端依赖存在高危/严重漏洞或审计失败
+make: *** [Makefile:16: check-security] Error 1

@@ -1,0 +1,29 @@
+{
+  "started": "2026-11-18T16:20:07.272475+08:00",
+  "label": "baseline",
+  "head": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+  "uncommitted": true,
+  "project": "teamwork-tests-latency-diagnosis-ad940942",
+  "backend_image": "sha256:79ca1cdfab9e7c18827129f1e9c24a72cc048b83a08b63937dff1b400a0f347e",
+  "backend_tree": "6d10025587460ba22a7f840124b54b64b3088c25",
+  "rounds": [
+    {
+      "sample_count": 20,
+      "max_ms": 195.3815000015311,
+      "p95_ms": 138.91070000317995,
+      "over_100_ms": 2,
+      "passed": false
+    },
+    {
+      "sample_count": 20,
+      "max_ms": 131.71580000198446,
+      "p95_ms": 58.63130000216188,
+      "over_100_ms": 1,
+      "passed": false
+    }
+  ],
+  "verify": "UnicodeDecodeError",
+  "e2e-install": 0,
+  "playwright": 0,
+  "finished": "2026-11-18T16:26:11.191790+08:00"
+}

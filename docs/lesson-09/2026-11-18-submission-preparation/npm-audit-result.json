@@ -1,0 +1,21 @@
+{
+  "command": [
+    "E:/node.exe",
+    "E:/node_modules/npm/bin/npm-cli.js",
+    "audit",
+    "--audit-level=high",
+    "--json"
+  ],
+  "registry": "https://registry.npmjs.org",
+  "exit_code": 0,
+  "vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "former_affected_packages_remaining": [],
+  "dependency_files_unchanged": true
+}

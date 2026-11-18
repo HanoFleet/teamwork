@@ -1,0 +1,45 @@
+建议源码/规约提交清单，待处理审阅问题后使用。未执行git add。
+ M	共享配置/说明	.gitattributes
+ M	共享配置/说明	.gitignore
+ M	第9课既有整改	backend/Dockerfile
+ M	第9课既有整改	backend/internal/outbox/dispatcher.go
+ M	enqueue-latency-v2	docs/standards/04-testing.md
+ M	第9课既有整改	frontend/package-lock.json
+ M	第9课既有整改	frontend/package.json
+ D	第9课既有整改	frontend/src/vite-env.d.ts
+ D	第9课既有整改	frontend/vite.config.ts
+ M	enqueue-latency-v2	scripts/check.sh
+ M	共享配置/说明	scripts/spec_check.py
+ M	共享配置/说明	tests/README.md
+ M	第9课既有整改	tests/environment/run_project_gates.sh
+ M	enqueue-latency-v2	tests/performance/check_single_request_limit.py
+ M	enqueue-latency-v2	tests/performance/grade_enqueue_latency.py
+ M	enqueue-latency-v2	tests/performance/latency_gate_contract.py
+??	第9课既有整改	docs/lesson-09/fix-20261118.md
+??	第9课既有整改	frontend/README.md
+??	第9课既有整改	frontend/src/assets.d.ts
+??	第9课既有整改	frontend/toolchain.mjs
+??	第9课既有整改	openspec/changes/2026-11-18-fix-lesson9-retest/.openspec.yaml
+??	第9课既有整改	openspec/changes/2026-11-18-fix-lesson9-retest/design.md
+??	第9课既有整改	openspec/changes/2026-11-18-fix-lesson9-retest/proposal.md
+??	第9课既有整改	openspec/changes/2026-11-18-fix-lesson9-retest/specs/async-grading/spec.md
+??	第9课既有整改	openspec/changes/2026-11-18-fix-lesson9-retest/specs/security-hardening/spec.md
+??	第9课既有整改	openspec/changes/2026-11-18-fix-lesson9-retest/tasks.md
+??	enqueue-latency-v2	openspec/changes/2026-11-18-observe-enqueue-latency/.openspec.yaml
+??	enqueue-latency-v2	openspec/changes/2026-11-18-observe-enqueue-latency/design.md
+??	enqueue-latency-v2	openspec/changes/2026-11-18-observe-enqueue-latency/proposal.md
+??	enqueue-latency-v2	openspec/changes/2026-11-18-observe-enqueue-latency/specs/async-grading/spec.md
+??	enqueue-latency-v2	openspec/changes/2026-11-18-observe-enqueue-latency/tasks.md
+??	enqueue-latency-v2	scripts/qa/lesson9/check_performance.py
+??	enqueue-latency-v2	scripts/qa/lesson9/finalize.py
+??	enqueue-latency-v2	scripts/qa/lesson9/performance_probe.py
+??	第9课既有整改	tests/environment/npm
+??	第9课既有整改	tests/environment/run_windows_security_gate.py
+??	第9课既有整改	tests/environment/windows_tool_launcher.c
+??	enqueue-latency-v2	tests/performance/analyze_grade_waits.py
+??	enqueue-latency-v2	tests/performance/compare_outbox_isolation.py
+??	enqueue-latency-v2	tests/performance/grade_latency_diagnostics.py
+??	第9课既有整改	tests/regression/frontend_toolchain.test.mjs
+??	第9课既有整改	tests/regression/lesson9_final_regression.py
+??	第9课既有整改	tests/security/frontend_dependency_candidates.py
+??	enqueue-latency-v2	tests/support/update_lesson9_round2_report.py

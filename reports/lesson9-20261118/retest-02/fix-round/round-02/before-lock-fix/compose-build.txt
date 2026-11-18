@@ -1,0 +1,42 @@
+Sending build context to Docker daemon  524.4kB
+Sending build context to Docker daemon  1.049MB
+Sending build context to Docker daemon  1.573MB
+Sending build context to Docker daemon  2.098MB
+Sending build context to Docker daemon  2.622MB
+Sending build context to Docker daemon  3.146MB
+Sending build context to Docker daemon  3.254MB
+
+Step 1/10 : FROM node:22-alpine AS build
+ ---> ceef4ecff798
+Step 2/10 : WORKDIR /src
+ ---> Using cache
+ ---> 60d32df94e95
+Step 3/10 : COPY package.json package-lock.json ./
+ ---> Using cache
+ ---> 58941cb0432e
+Step 4/10 : RUN npm ci --include=optional
+ ---> Using cache
+ ---> 02fffe0617b8
+Step 5/10 : COPY . .
+ ---> Using cache
+ ---> 5efb597aa8cb
+Step 6/10 : RUN npm run build
+ ---> Using cache
+ ---> 06c27b6f5c79
+Step 7/10 : FROM nginx:1.27-alpine
+ ---> 1c7709d5f4d8
+Step 8/10 : COPY nginx.conf /etc/nginx/conf.d/default.conf
+ ---> Using cache
+ ---> 1563868a7777
+Step 9/10 : COPY --from=build /src/dist /usr/share/nginx/html
+ ---> Using cache
+ ---> c07a5de60aa9
+Step 10/10 : LABEL com.docker.compose.image.builder=classic
+ ---> Using cache
+ ---> e4549eba6fab
+Successfully built e4549eba6fab
+Successfully tagged teamwork-tests-latency-diagnosis-b407415e-web:latest
+ Image teamwork-tests-latency-diagnosis-b407415e-web Building 
+ Image teamwork-tests-latency-diagnosis-b407415e-web Building 
+ Image teamwork-tests-latency-diagnosis-b407415e-web Built 
+ Image teamwork-tests-latency-diagnosis-b407415e-web Built 

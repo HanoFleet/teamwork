@@ -1,0 +1,148 @@
+[
+  {
+    "id": "spec",
+    "command": [
+      "python",
+      "scripts/spec_check.py"
+    ],
+    "time": "2026-11-18T08:31:01.803505+08:00",
+    "exit": 0,
+    "evidence": "logs/spec.txt"
+  },
+  {
+    "id": "standards",
+    "command": [
+      "python",
+      "scripts/standards_check.py"
+    ],
+    "time": "2026-11-18T08:31:01.945587+08:00",
+    "exit": 0,
+    "evidence": "logs/standards.txt"
+  },
+  {
+    "id": "layer",
+    "command": [
+      "python",
+      "scripts/layer_check.py"
+    ],
+    "time": "2026-11-18T08:31:02.072936+08:00",
+    "exit": 0,
+    "evidence": "logs/layer.txt"
+  },
+  {
+    "id": "security-static",
+    "command": [
+      "python",
+      "scripts/security_static.py"
+    ],
+    "time": "2026-11-18T08:31:02.176366+08:00",
+    "exit": 0,
+    "evidence": "logs/security-static.txt"
+  },
+  {
+    "id": "injection-cases",
+    "command": [
+      "python",
+      "scripts/security_cases.py"
+    ],
+    "time": "2026-11-18T08:31:02.290004+08:00",
+    "exit": 0,
+    "evidence": "logs/injection-cases.txt"
+  },
+  {
+    "id": "secret",
+    "command": [
+      "python",
+      "scripts/secret_scan.py"
+    ],
+    "time": "2026-11-18T08:31:02.404748+08:00",
+    "exit": 0,
+    "evidence": "logs/secret.txt"
+  },
+  {
+    "id": "make-check",
+    "command": [
+      "make",
+      "check"
+    ],
+    "time": "2026-11-18T08:31:08.640933+08:00",
+    "exit": 127,
+    "evidence": "logs/make-check.txt"
+  },
+  {
+    "id": "make-security",
+    "command": [
+      "make",
+      "check-security"
+    ],
+    "time": "2026-11-18T08:31:08.649933+08:00",
+    "exit": 127,
+    "evidence": "logs/make-security.txt"
+  },
+  {
+    "id": "make-grade",
+    "command": [
+      "make",
+      "grade"
+    ],
+    "time": "2026-11-18T08:31:08.659843+08:00",
+    "exit": 127,
+    "evidence": "logs/make-grade.txt"
+  },
+  {
+    "id": "verify",
+    "command": [
+      "python",
+      "scripts/verify.py"
+    ],
+    "time": "2026-11-18T08:31:08.669842+08:00",
+    "exit": 1,
+    "evidence": "logs/verify.txt"
+  },
+  {
+    "id": "docker",
+    "command": [
+      "docker",
+      "info",
+      "--format",
+      "{{.ServerVersion}}"
+    ],
+    "time": "2026-11-18T08:31:08.913745+08:00",
+    "exit": 1,
+    "evidence": "logs/docker.txt"
+  },
+  {
+    "id": "go",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./..."
+    ],
+    "time": "2026-11-18T08:31:09.091636+08:00",
+    "exit": 1,
+    "evidence": "logs/go.txt"
+  },
+  {
+    "id": "openspec",
+    "command": [
+      "cmd",
+      "/c",
+      "npx -y @fission-ai/openspec@1.15.0 validate --all --strict"
+    ],
+    "time": "2026-11-18T08:31:14.886166+08:00",
+    "exit": 1,
+    "evidence": "logs/openspec.txt"
+  },
+  {
+    "id": "gate-selftest",
+    "command": [
+      "python",
+      "scripts/security_gate.py",
+      "--self-test"
+    ],
+    "time": "2026-11-18T08:32:28.852343+08:00",
+    "exit": 1,
+    "evidence": "logs/gate-selftest.txt"
+  }
+]

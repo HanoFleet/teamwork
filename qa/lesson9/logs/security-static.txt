@@ -1,0 +1,1 @@
+静态安全回归通过：无 raw HTML、无 localStorage token、CSRF/用例文件存在。

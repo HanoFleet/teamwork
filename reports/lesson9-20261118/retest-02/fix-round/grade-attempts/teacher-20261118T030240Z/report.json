@@ -1,0 +1,28 @@
+{
+  "project": "CampusClaw 2.0 platform foundation",
+  "created_at": "2026-11-18T03:03:04.727679+00:00",
+  "source_commit": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "source_dirty": true,
+  "environment": {
+    "os": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-musl1",
+    "python": "3.14.10",
+    "docker": "Docker version 29.9.3, build 5457199aa57c45e990c59c89cab5f02b817238d7"
+  },
+  "scope": "lesson 7 skeleton: live/health/ready, logs, shutdown, default deny",
+  "status": "failed",
+  "counts": {
+    "passed": 0,
+    "failed": 1,
+    "total": 1
+  },
+  "checks": [
+    {
+      "id": "ENV",
+      "name": "验收环境",
+      "criterion": "Compose 构建/启动成功",
+      "status": "failed",
+      "elapsed_ms": 0,
+      "detail": "docker compose -p campusclaw-acceptance --env-file /run/desktop/mnt/host/e/proj/teamwork-main-latest/qa/lesson9/fix-worktree/.env.acceptance build -> 1\n Image campusclaw-acceptance-api Building \n Image campusclaw-acceptance-worker Building \n Image campusclaw-acceptance-worker Building \n Image campusclaw-acceptance-api Building \nThe command '/bin/sh -c go mod download' returned a non-zero code: 1\n"
+    }
+  ]
+}

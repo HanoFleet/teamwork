@@ -5,6 +5,7 @@ cd "$(dirname "$0")/.."
 echo "== 规约与规范"
 python3 scripts/spec_check.py
 python3 scripts/standards_check.py
+python3 tests/performance/latency_gate_contract.py
 python3 -m py_compile scripts/async_test.py scripts/security_test.py scripts/security_gate.py scripts/security_cases.py scripts/govuln_check.py scripts/sec08_experiment.py
 python3 scripts/security_static.py
 python3 scripts/security_cases.py

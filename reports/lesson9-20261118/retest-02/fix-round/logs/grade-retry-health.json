@@ -1,0 +1,47 @@
+{
+  "proxy_environment": [
+    "http_proxy=http://host.docker.internal:7897",
+    "QDRANT_URL=http://qdrant:6333",
+    "HTTPS_PROXY=http://host.docker.internal:7897",
+    "HTTP_PROXY=http://host.docker.internal:7897",
+    "NO_PROXY=localhost,127.0.0.1,db,qdrant,rabbitmq,api,worker,web",
+    "https_proxy=http://host.docker.internal:7897",
+    "no_proxy=localhost,127.0.0.1,db,qdrant,rabbitmq,api,worker,web"
+  ],
+  "health": {
+    "Status": "starting",
+    "FailingStreak": 6,
+    "Log": [
+      {
+        "Start": "2026-11-18T02:59:35.045623373Z",
+        "End": "2026-11-18T02:59:37.291556074Z",
+        "ExitCode": 1,
+        "Output": "wget: server returned error: HTTP/1.1 502 Bad Gateway\n"
+      },
+      {
+        "Start": "2026-11-18T02:59:42.293022343Z",
+        "End": "2026-11-18T02:59:45.334782884Z",
+        "ExitCode": -1,
+        "Output": "Health check exceeded timeout (3s)"
+      },
+      {
+        "Start": "2026-11-18T02:59:50.336194808Z",
+        "End": "2026-11-18T02:59:53.206950603Z",
+        "ExitCode": 1,
+        "Output": "wget: server returned error: HTTP/1.1 502 Bad Gateway\n"
+      },
+      {
+        "Start": "2026-11-18T02:59:58.208398692Z",
+        "End": "2026-11-18T03:00:01.246481849Z",
+        "ExitCode": -1,
+        "Output": "Health check exceeded timeout (3s)"
+      },
+      {
+        "Start": "2026-11-18T03:00:06.247032753Z",
+        "End": "2026-11-18T03:00:09.297102722Z",
+        "ExitCode": -1,
+        "Output": "Health check exceeded timeout (3s)"
+      }
+    ]
+  }
+}

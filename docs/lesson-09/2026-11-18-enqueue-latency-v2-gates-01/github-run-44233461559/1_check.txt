@@ -1,0 +1,193 @@
+﻿2026-11-18T03:52:55.6671442Z Current runner version: '2.338.2'
+2026-11-18T03:52:55.6696677Z ##[group]Runner Image Provisioner
+2026-11-18T03:52:55.6697524Z Hosted Compute Agent
+2026-11-18T03:52:55.6698221Z Version: 20261103.629
+2026-11-18T03:52:55.6698913Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-18T03:52:55.6699748Z Build Date: 2026-11-03T17:26:59Z
+2026-11-18T03:52:55.6700454Z Worker ID: {91f6e7f6-5c4c-42ce-b791-0f66a9940f77}
+2026-11-18T03:52:55.6701162Z Region: westus2
+2026-11-18T03:52:55.6701783Z Cloud: Azure
+2026-11-18T03:52:55.6702335Z ##[endgroup]
+2026-11-18T03:52:55.6704626Z ##[group]Operating System
+2026-11-18T03:52:55.6705309Z Ubuntu
+2026-11-18T03:52:55.6705849Z 26.04.1
+2026-11-18T03:52:55.6706495Z LTS
+2026-11-18T03:52:55.6707056Z ##[endgroup]
+2026-11-18T03:52:55.6707688Z ##[group]Runner Image
+2026-11-18T03:52:55.6708419Z Image: ubuntu-26.04
+2026-11-18T03:52:55.6709004Z Version: 20261111.196.1
+2026-11-18T03:52:55.6710320Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261111.196/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-18T03:52:55.6711950Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261111.196
+2026-11-18T03:52:55.6713269Z ##[endgroup]
+2026-11-18T03:52:55.6714496Z ##[group]GITHUB_TOKEN Permissions
+2026-11-18T03:52:55.6716648Z Contents: read
+2026-11-18T03:52:55.6717308Z Metadata: read
+2026-11-18T03:52:55.6717967Z ##[endgroup]
+2026-11-18T03:52:55.6720024Z Secret source: Actions
+2026-11-18T03:52:55.6721094Z Cache mode: write
+2026-11-18T03:52:55.6722085Z Prepare workflow directory
+2026-11-18T03:52:55.7058784Z Prepare all required actions
+2026-11-18T03:52:55.7108491Z Getting action download info
+2026-11-18T03:52:56.0275578Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-18T03:52:56.1589226Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-18T03:52:56.3279398Z Complete job name: check
+2026-11-18T03:52:56.4186363Z ##[group]Run actions/checkout@v4
+2026-11-18T03:52:56.4187312Z with:
+2026-11-18T03:52:56.4187797Z   repository: HanoFleet/teamwork
+2026-11-18T03:52:56.4191641Z   token: ***
+2026-11-18T03:52:56.4192110Z   ssh-strict: true
+2026-11-18T03:52:56.4192589Z   ssh-user: git
+2026-11-18T03:52:56.4193241Z   persist-credentials: true
+2026-11-18T03:52:56.4193768Z   clean: true
+2026-11-18T03:52:56.4194250Z   sparse-checkout-cone-mode: true
+2026-11-18T03:52:56.4194804Z   fetch-depth: 1
+2026-11-18T03:52:56.4195268Z   fetch-tags: false
+2026-11-18T03:52:56.4195743Z   show-progress: true
+2026-11-18T03:52:56.4196222Z   lfs: false
+2026-11-18T03:52:56.4196661Z   submodules: false
+2026-11-18T03:52:56.4197145Z   set-safe-directory: true
+2026-11-18T03:52:56.4197681Z   allow-unsafe-pr-checkout: false
+2026-11-18T03:52:56.4198468Z ##[endgroup]
+2026-11-18T03:52:56.8142673Z Syncing repository: HanoFleet/teamwork
+2026-11-18T03:52:56.8145003Z ##[group]Getting Git version info
+2026-11-18T03:52:56.8146595Z Working directory is '/home/runner/work/teamwork/teamwork'
+2026-11-18T03:52:56.8148442Z [command]/usr/bin/git version
+2026-11-18T03:52:56.8172239Z git version 2.56.1
+2026-11-18T03:52:56.8197394Z ##[endgroup]
+2026-11-18T03:52:56.8213440Z Temporarily overriding HOME='/home/runner/work/_temp/643abf09-05d5-438e-b41e-0881bebe0bf0' before making global git config changes
+2026-11-18T03:52:56.8215640Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-18T03:52:56.8220994Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/teamwork/teamwork
+2026-11-18T03:52:56.8313975Z Deleting the contents of '/home/runner/work/teamwork/teamwork'
+2026-11-18T03:52:56.8317390Z ##[group]Initializing the repository
+2026-11-18T03:52:56.8322662Z [command]/usr/bin/git init /home/runner/work/teamwork/teamwork
+2026-11-18T03:52:56.8451574Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-18T03:52:56.8453346Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-18T03:52:56.8455009Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-18T03:52:56.8456131Z hint: call:
+2026-11-18T03:52:56.8456645Z hint:
+2026-11-18T03:52:56.8457273Z hint: 	git config --global init.defaultBranch <name>
+2026-11-18T03:52:56.8458002Z hint:
+2026-11-18T03:52:56.8458851Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-18T03:52:56.8460090Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-18T03:52:56.8460936Z hint:
+2026-11-18T03:52:56.8461529Z hint: 	git branch -m <name>
+2026-11-18T03:52:56.8462267Z hint:
+2026-11-18T03:52:56.8463209Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-18T03:52:56.8467197Z Initialized empty Git repository in /home/runner/work/teamwork/teamwork/.git/
+2026-11-18T03:52:56.8479567Z [command]/usr/bin/git remote add origin https://github.com/HanoFleet/teamwork
+2026-11-18T03:52:56.8543687Z ##[endgroup]
+2026-11-18T03:52:56.8544575Z ##[group]Disabling automatic garbage collection
+2026-11-18T03:52:56.8548433Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-18T03:52:56.8588269Z ##[endgroup]
+2026-11-18T03:52:56.8589147Z ##[group]Setting up auth
+2026-11-18T03:52:56.8597332Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-18T03:52:56.8634913Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-18T03:52:56.9160468Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-18T03:52:56.9197748Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-18T03:52:56.9474082Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-18T03:52:56.9510441Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-18T03:52:56.9787807Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-18T03:52:56.9828893Z ##[endgroup]
+2026-11-18T03:52:56.9829766Z ##[group]Fetching the repository
+2026-11-18T03:52:56.9838814Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2ad4fab3ca5c8c6d608e38c0a48e53ef596fbcf1:refs/remotes/pull/1/merge
+2026-11-18T03:52:57.3655793Z From https://github.com/HanoFleet/teamwork
+2026-11-18T03:52:57.3657226Z  * [new ref]         2ad4fab3ca5c8c6d608e38c0a48e53ef596fbcf1 -> pull/1/merge
+2026-11-18T03:52:57.3660567Z ##[endgroup]
+2026-11-18T03:52:57.3661441Z ##[group]Determining the checkout info
+2026-11-18T03:52:57.3663232Z ##[endgroup]
+2026-11-18T03:52:57.3669800Z [command]/usr/bin/git sparse-checkout disable
+2026-11-18T03:52:57.3733216Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-18T03:52:57.3763372Z ##[group]Checking out the ref
+2026-11-18T03:52:57.3766805Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1/merge
+2026-11-18T03:52:57.4057259Z Note: switching to 'refs/remotes/pull/1/merge'.
+2026-11-18T03:52:57.4058220Z 
+2026-11-18T03:52:57.4058817Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-18T03:52:57.4060093Z changes and commit them, and you can discard any commits you make in this
+2026-11-18T03:52:57.4061363Z state without impacting any branches by switching back to a branch.
+2026-11-18T03:52:57.4062073Z 
+2026-11-18T03:52:57.4062666Z If you want to create a new branch to retain commits you create, you may
+2026-11-18T03:52:57.4064201Z do so (now or later) by using -c with the switch command. Example:
+2026-11-18T03:52:57.4065044Z 
+2026-11-18T03:52:57.4065573Z   git switch -c <new-branch-name>
+2026-11-18T03:52:57.4066333Z 
+2026-11-18T03:52:57.4067206Z Or undo this operation with:
+2026-11-18T03:52:57.4067921Z 
+2026-11-18T03:52:57.4068345Z   git switch -
+2026-11-18T03:52:57.4068930Z 
+2026-11-18T03:52:57.4069882Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-18T03:52:57.4071052Z 
+2026-11-18T03:52:57.4072397Z HEAD is now at 2ad4fab Merge 2d2900bf34b52d8df21513c6ef2ebc873df9f345 into bd42a6149e975c1ed217fb9349621443a3be53d5
+2026-11-18T03:52:57.4076342Z ##[endgroup]
+2026-11-18T03:52:57.4123147Z [command]/usr/bin/git log -1 --format=%H
+2026-11-18T03:52:57.4148214Z 2ad4fab3ca5c8c6d608e38c0a48e53ef596fbcf1
+2026-11-18T03:52:57.4467232Z ##[group]Run actions/setup-node@v4
+2026-11-18T03:52:57.4467873Z with:
+2026-11-18T03:52:57.4468321Z   node-version: 24
+2026-11-18T03:52:57.4468788Z   always-auth: false
+2026-11-18T03:52:57.4469262Z   check-latest: false
+2026-11-18T03:52:57.4473169Z   token: ***
+2026-11-18T03:52:57.4546930Z ##[endgroup]
+2026-11-18T03:52:57.6000521Z (node:2857) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-18T03:52:57.6002533Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-18T03:52:57.6004961Z Found in cache @ /opt/hostedtoolcache/node/24.22.2/x64
+2026-11-18T03:52:57.6006067Z ##[group]Environment details
+2026-11-18T03:52:59.8204615Z node: v24.22.2
+2026-11-18T03:52:59.8205319Z npm: 11.19.1
+2026-11-18T03:52:59.8205809Z yarn: 1.22.22
+2026-11-18T03:52:59.8207712Z ##[endgroup]
+2026-11-18T03:52:59.8377348Z ##[group]Run make check-security
+2026-11-18T03:52:59.8377795Z [36;1mmake check-security[0m
+2026-11-18T03:52:59.8474721Z shell: /usr/bin/bash -e {0}
+2026-11-18T03:52:59.8475058Z ##[endgroup]
+2026-11-18T03:52:59.8612395Z python3 scripts/security_gate.py
+2026-11-18T03:53:01.8148529Z $ python3 scripts/secret_scan.py
+2026-11-18T03:53:01.8149298Z 密钥边界检查通过：工作树和提交历史都没有非空密钥赋值。
+2026-11-18T03:53:01.8149611Z exit=0
+2026-11-18T03:53:01.8149989Z $ npm audit --audit-level=high
+2026-11-18T03:53:01.8150350Z # npm audit report
+2026-11-18T03:53:01.8150549Z 
+2026-11-18T03:53:01.8150721Z picomatch  *
+2026-11-18T03:53:01.8150991Z Severity: high
+2026-11-18T03:53:01.8152064Z picomatch vulnerable to ReDoS through single-branch repeated extglobs - https://github.com/advisories/GHSA-fc5q-39xc-vjpf
+2026-11-18T03:53:01.8153227Z fix available via `npm audit fix --force`
+2026-11-18T03:53:01.8153963Z Will install vite@6.2.7, which is a breaking change
+2026-11-18T03:53:01.8154390Z node_modules/picomatch
+2026-11-18T03:53:01.8154742Z   fdir  >=5.2.1
+2026-11-18T03:53:01.8155083Z   Depends on vulnerable versions of picomatch
+2026-11-18T03:53:01.8155460Z   node_modules/fdir
+2026-11-18T03:53:01.8155739Z     tinyglobby  *
+2026-11-18T03:53:01.8156057Z     Depends on vulnerable versions of fdir
+2026-11-18T03:53:01.8156483Z     Depends on vulnerable versions of picomatch
+2026-11-18T03:53:01.8156887Z     node_modules/tinyglobby
+2026-11-18T03:53:01.8157189Z       vite  >=6.3.0-beta.0
+2026-11-18T03:53:01.8157592Z       Depends on vulnerable versions of picomatch
+2026-11-18T03:53:01.8158087Z       Depends on vulnerable versions of tinyglobby
+2026-11-18T03:53:01.8158488Z       node_modules/vite
+2026-11-18T03:53:01.8158793Z         @vitejs/plugin-react  >=6.0.0-beta.0
+2026-11-18T03:53:01.8159155Z         Depends on vulnerable versions of vite
+2026-11-18T03:53:01.8159518Z         node_modules/@vitejs/plugin-react
+2026-11-18T03:53:01.8159731Z 
+2026-11-18T03:53:01.8159924Z 5 high severity vulnerabilities
+2026-11-18T03:53:01.8160123Z 
+2026-11-18T03:53:01.8160375Z To address all issues (including breaking changes), run:
+2026-11-18T03:53:01.8160748Z   npm audit fix --force
+2026-11-18T03:53:01.8160989Z exit=1
+2026-11-18T03:53:01.8161451Z SECURITY GATE FAILED: 前端依赖存在高危/严重漏洞或审计失败
+2026-11-18T03:53:01.8215027Z make: *** [Makefile:16: check-security] Error 1
+2026-11-18T03:53:01.8234835Z ##[error]Process completed with exit code 2.
+2026-11-18T03:53:01.8389565Z Post job cleanup.
+2026-11-18T03:53:01.9253291Z [command]/usr/bin/git version
+2026-11-18T03:53:01.9299037Z git version 2.56.1
+2026-11-18T03:53:01.9342073Z Temporarily overriding HOME='/home/runner/work/_temp/a78208ee-c0fb-4c49-9cd0-bbd7f7dd3833' before making global git config changes
+2026-11-18T03:53:01.9344148Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-18T03:53:01.9348155Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/teamwork/teamwork
+2026-11-18T03:53:01.9389616Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-18T03:53:01.9439758Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-18T03:53:01.9756285Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-18T03:53:01.9784057Z http.https://github.com/.extraheader
+2026-11-18T03:53:01.9800560Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-18T03:53:01.9864980Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-18T03:53:02.0195080Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-18T03:53:02.0231153Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-18T03:53:02.0660492Z Cleaning up orphan processes
+2026-11-18T03:53:02.1083649Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

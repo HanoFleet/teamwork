@@ -1,0 +1,7 @@
+Error: this command requires the 'rabbit' app to be running on the target node. Start it with 'rabbitmqctl start_app'.
+Arguments given:
+	list_queues name durable
+
+Usage
+
+rabbitmqctl [--node <node>] [--longnames] [--quiet] list_queues [--vhost <vhost>] [--online] [--offline] [--local] [--no-table-headers] [<column>, ...] [--timeout <timeout>]

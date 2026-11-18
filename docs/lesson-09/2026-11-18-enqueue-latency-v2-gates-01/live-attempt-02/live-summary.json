@@ -1,0 +1,7 @@
+{
+  "selected_subnet": "10.254.1.0/24",
+  "project": "teamwork-tests-latency-v2-gates-df873771",
+  "project_output": "tests\\output\\teamwork-tests-latency-v2-gates-df873771",
+  "verify-build": 1,
+  "error": "RuntimeError: verify-build failed"
+}

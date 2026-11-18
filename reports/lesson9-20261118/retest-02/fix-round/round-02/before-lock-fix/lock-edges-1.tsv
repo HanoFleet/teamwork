@@ -1,0 +1,10 @@
+epoch_ms	waiter_thread	blocker_thread	table	index	lock_type	lock_mode	key_class
+1794990572976.626000	49	58	outbox_messages	PRIMARY	RECORD	X	supremum pseudo-record
+1794990574094.463000	49	58	outbox_messages	PRIMARY	RECORD	X	supremum pseudo-record
+1794990574105.413000	49	58	outbox_messages	PRIMARY	RECORD	X	supremum pseudo-record
+1794990574116.517000	49	58	outbox_messages	PRIMARY	RECORD	X	supremum pseudo-record
+1794990574127.731000	49	58	outbox_messages	PRIMARY	RECORD	X	supremum pseudo-record
+1794990574138.715000	49	58	outbox_messages	PRIMARY	RECORD	X	supremum pseudo-record
+1794990574149.921000	49	58	outbox_messages	PRIMARY	RECORD	X	supremum pseudo-record
+1794990574161.105000	49	58	outbox_messages	PRIMARY	RECORD	X	supremum pseudo-record
+1794990574904.749000	49	58	outbox_messages	idx_outbox_status_next	RECORD	X	record-key-redacted

@@ -1,0 +1,14 @@
+{
+  "time": "2026-11-18T09:48:09.694415+08:00",
+  "source_commit": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "image": "docker.io/library/golang:1.26.11-alpine",
+  "daemon_proxy": "http.docker.internal:3128",
+  "registry_mirrors": [],
+  "host_proxy": "127.0.0.1:7897",
+  "make": "not found",
+  "shell": "F:/Git/bin/sh.exe",
+  "global_configuration_changed": false,
+  "original_pull": "failed: direct connect timeout before authentication",
+  "proxy_registry_probe": "v2 401 challenge; anonymous token 200; official platform manifest verified",
+  "fallback_registry": false
+}

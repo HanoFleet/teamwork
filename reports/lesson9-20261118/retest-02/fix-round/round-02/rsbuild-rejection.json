@@ -1,0 +1,10 @@
+{
+  "candidate": "@rsbuild/core@2.3.3 + @rsbuild/plugin-react@2.1.1",
+  "npm_audit_high": 0,
+  "embedded_markers": [
+    "picomatch/4.0.5"
+  ],
+  "file": "dist/tinyglobby.js",
+  "file_sha256": "bbd93a533f49779a1b693a1159d830a9e6619b10c54c80d94ddf2a855c665af7",
+  "decision": "Rejected: advisory-affected picomatch code is embedded despite npm audit zero"
+}

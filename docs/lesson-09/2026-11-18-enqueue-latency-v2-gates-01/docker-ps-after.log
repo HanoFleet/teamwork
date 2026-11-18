@@ -1,0 +1,230 @@
+63dfde2f0a0e	hungry_borg	Exited (1) 13 minutes ago		
+cd44803dddff	heuristic_elbakyan	Exited (1) 16 minutes ago		
+423e9e58479f	nostalgic_bell	Exited (1) 3 hours ago		
+36c53645bc24	adoring_euclid	Exited (1) 8 hours ago		
+6f8c2a3c1c9e	condescending_colden	Exited (1) 8 hours ago		
+a6643051d337	teamwork-main-latest-browser-web-1	Exited (255) 10 hours ago	127.0.0.1:18080->80/tcp	teamwork-main-latest-browser
+9e4bd3e225d7	teamwork-main-latest-browser-worker-1	Exited (255) 10 hours ago	8080/tcp	teamwork-main-latest-browser
+253999a4726f	teamwork-main-latest-browser-api-1	Exited (255) 10 hours ago	8080/tcp	teamwork-main-latest-browser
+0a0f1757f085	teamwork-main-latest-browser-qdrant-1	Exited (255) 10 hours ago	6333-6334/tcp	teamwork-main-latest-browser
+415e515b2c6e	teamwork-main-latest-browser-db-1	Exited (255) 10 hours ago	3306/tcp, 33060/tcp	teamwork-main-latest-browser
+a5c703e41f6a	teamwork-main-latest-browser-rabbitmq-1	Exited (255) 10 hours ago	4369/tcp, 5671-5672/tcp, 15691-15692/tcp, 25672/tcp	teamwork-main-latest-browser
+91fbd066776c	campusclaw-browser-20261026-app-1	Exited (255) 12 days ago	8080/tcp	campusclaw-browser-20261026
+1155512fe255	campusclaw-browser-20261026-nginx-1	Exited (255) 12 days ago	80/tcp, 127.0.0.1:8081->8080/tcp	campusclaw-browser-20261026
+7503cb7a1197	campusclaw-browser-20261026-initialize-1	Exited (0) 3 weeks ago		campusclaw-browser-20261026
+9ed4c0851a76	campusclaw-browser-20261026-qdrant-1	Exited (255) 12 days ago	6333-6334/tcp	campusclaw-browser-20261026
+ebdff1c4b0fc	campusclaw-browser-20261026-mysql-1	Exited (255) 12 days ago	3306/tcp, 33060/tcp	campusclaw-browser-20261026
+342cabab21df	campusclaw-browser-20261026-storage-init-1	Exited (0) 3 weeks ago		campusclaw-browser-20261026
+adcb4567da68	campusclaw-align-ui-4b8ddd77-proxy	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32779->8080/tcp	
+0556b5105585	campusclaw-align-ui-4b8ddd77-app	Exited (255) 4 weeks ago		
+15c11a83e77f	campusclaw-align-ui-d7912cdf-proxy	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32778->8080/tcp	
+25f6cecb56a5	campusclaw-align-ui-d7912cdf-app	Exited (255) 4 weeks ago		
+b77b1a3bc45e	campusclaw-align-real-f9195baa	Exited (0) 4 weeks ago		
+fa0446bb0760	campusclaw-align-real-e6d87180	Exited (0) 4 weeks ago		
+88b4005b067d	campusclaw-align-storage-17d5f822-phase3core-5946e5bf	Exited (0) 4 weeks ago		
+bfd5de8edc62	campusclaw-align-storage-17d5f822-phase2-43ed13dc	Exited (0) 4 weeks ago		
+2be76785843e	campusclaw-align-real-68e76673	Exited (1) 4 weeks ago		
+f88a0b7382da	campusclaw-align-real-d896b1a3	Exited (1) 4 weeks ago		
+e72c41a469d8	campusclaw-align-ui-d08b5cd8-proxy	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32777->8080/tcp	
+028d93a3b215	campusclaw-align-ui-d08b5cd8-app	Exited (1) 4 weeks ago		
+dee13dd33fd4	campusclaw-align-storage-17d5f822-recoveryfinish-62bb6776	Exited (0) 4 weeks ago		
+25c900fb07a1	campusclaw-align-storage-17d5f822-recoveryprepare-d978a82b	Exited (0) 4 weeks ago		
+cdddb1660c53	campusclaw-align-ui-0467a291-proxy	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32776->8080/tcp	
+9c7af9684c89	campusclaw-align-ui-0467a291-app	Exited (1) 4 weeks ago		
+a0994cb4808b	campusclaw-align-ui-7934c9c8-proxy	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32775->8080/tcp	
+5a59517f1e7d	campusclaw-align-ui-7934c9c8-app	Exited (1) 4 weeks ago		
+f24a2fb7545d	campusclaw-align-storage-17d5f822-phase3-6a753aa4	Exited (0) 4 weeks ago		
+60ada32359df	campusclaw-align-storage-17d5f822-phase2-d3a8f4df	Exited (0) 4 weeks ago		
+471341b56d4a	campusclaw-align-storage-17d5f822-all-ef29f6cc	Exited (0) 4 weeks ago		
+267cab0e43c6	campusclaw-align-ui-9c9349f8-proxy	Exited (0) 4 weeks ago		
+dfd60922d9ab	campusclaw-align-ui-9c9349f8-app	Exited (0) 4 weeks ago		
+cdd814d619c6	campusclaw-align-ui-b175081b-proxy	Exited (0) 4 weeks ago		
+cf36505398df	campusclaw-align-ui-b175081b-app	Exited (0) 4 weeks ago		
+aede03af6093	campusclaw-align-storage-17d5f822-phase2roles-186d8796	Exited (0) 4 weeks ago		
+b0e3e7ed3dc3	campusclaw-align-storage-17d5f822-phase2api-4afc96a1	Exited (0) 4 weeks ago		
+fd92f51380f1	campusclaw-align-ui-08a87bba-proxy	Exited (0) 4 weeks ago		
+800166480d9b	campusclaw-align-ui-08a87bba-app	Exited (0) 4 weeks ago		
+b13b8bd170b3	campusclaw-align-ui-305713f6-proxy	Exited (0) 4 weeks ago		
+3754432a96f6	campusclaw-align-ui-305713f6-app	Exited (0) 4 weeks ago		
+109feb918636	campusclaw-align-ui-412de527-proxy	Exited (0) 4 weeks ago		
+5f0f206e2e72	campusclaw-align-ui-412de527-app	Exited (0) 4 weeks ago		
+2763911c535f	campusclaw-align-ui-844e8829-proxy	Exited (0) 4 weeks ago		
+fbd8f33d1dc8	campusclaw-align-ui-844e8829-app	Exited (0) 4 weeks ago		
+1bca8d554494	campusclaw-align-ui-124af051-proxy	Exited (0) 4 weeks ago		
+3d624ebab097	campusclaw-align-ui-124af051-app	Exited (0) 4 weeks ago		
+727f0e44ae1d	campusclaw-align-storage-17d5f822-phase3-06e53309	Exited (0) 4 weeks ago		
+b36c2e382924	campusclaw-align-storage-17d5f822-delete-759b8c43	Exited (0) 4 weeks ago		
+382991b0d666	campusclaw-align-storage-17d5f822-store-3e9a046c	Exited (0) 4 weeks ago		
+d8fb54298616	campusclaw-align-storage-17d5f822-phase2-581e7d11	Exited (0) 4 weeks ago		
+0ff30d3bafe5	campusclaw-align-storage-17d5f822-phase3-9942f135	Exited (0) 4 weeks ago		
+47213fd8e637	campusclaw-align-storage-17d5f822-phase2-c42f49ed	Exited (1) 4 weeks ago		
+8d728daa1c4c	campusclaw-align-storage-17d5f822-phase3-fd39a235	Exited (0) 4 weeks ago		
+02591b2012e5	campusclaw-align-storage-17d5f822-phase3-1e39e43f	Exited (1) 4 weeks ago		
+1f9772c84712	campusclaw-align-storage-17d5f822-phase3-217a4171	Exited (1) 4 weeks ago		
+a1a644855f60	campusclaw-align-storage-17d5f822-phase3-01f3e0af	Exited (1) 4 weeks ago		
+7f966b48b775	campusclaw-align-stream-6e1982af-qdrant	Exited (255) 4 weeks ago	6333-6334/tcp	
+37d20eba5eeb	campusclaw-align-storage-17d5f822-phase3core-057caa3f	Exited (0) 4 weeks ago		
+add3bc20d8cb	campusclaw-align-storage-17d5f822-phase3core-0c538483	Exited (1) 4 weeks ago		
+6277ab5b41f5	campusclaw-align-storage-17d5f822-delete-bb1970b4	Exited (0) 4 weeks ago		
+5fe63d131309	campusclaw-align-storage-17d5f822-store-cfa4baa9	Exited (0) 4 weeks ago		
+05bfd14589b2	campusclaw-align-storage-17d5f822-phase2-08ed57a1	Exited (0) 4 weeks ago		
+79e321d707e3	campusclaw-align-storage-17d5f822-phase2history-e1ddd6f4	Exited (0) 4 weeks ago		
+f418de40eb7b	campusclaw-align-storage-17d5f822-phase2roles-08439b0a	Exited (0) 4 weeks ago		
+9fe6ceec62fd	campusclaw-align-storage-17d5f822-phase2evidence-b7c7bb5b	Exited (0) 4 weeks ago		
+731889ba10a7	campusclaw-align-storage-17d5f822-phase2routing-c067967f	Exited (0) 4 weeks ago		
+a1ff19413c43	campusclaw-align-storage-17d5f822-phase2api-25810772	Exited (0) 4 weeks ago		
+260f7e0a4cee	campusclaw-align-storage-17d5f822-recoveryfinish-15fc1ced	Exited (0) 4 weeks ago		
+8e3f890c1121	campusclaw-align-storage-17d5f822-recoveryprepare-32251a77	Exited (0) 4 weeks ago		
+ad488dd4c29e	campusclaw-align-storage-17d5f822-store-0ae7656d	Exited (0) 4 weeks ago		
+0b34afc7ebfd	campusclaw-align-storage-17d5f822-legacy-bfbcedda	Exited (0) 4 weeks ago		
+ca06933d204c	campusclaw-align-storage-17d5f822-delete-18ca75c6	Exited (0) 4 weeks ago		
+70a02c09bb55	campusclaw-align-storage-17d5f822-recoveryfinish-84e0ebf2	Exited (0) 4 weeks ago		
+35e00acc46c0	campusclaw-align-storage-17d5f822-recoveryprepare-0018f141	Exited (0) 4 weeks ago		
+cd3f011f66c8	campusclaw-align-storage-17d5f822-all-bd3765ad	Exited (0) 4 weeks ago		
+60b6e344c9df	campusclaw-align-storage-17d5f822-all-bf0976da	Exited (0) 4 weeks ago		
+478432b190d6	campusclaw-align-storage-17d5f822-recoveryfinish-f9ce81fe	Exited (0) 4 weeks ago		
+d79b1e9ce304	campusclaw-align-storage-17d5f822-recoveryprepare-07e4a028	Exited (0) 4 weeks ago		
+e521adddeb98	campusclaw-align-storage-17d5f822-delete-ea8fdef1	Exited (0) 4 weeks ago		
+23427a1a7a2f	campusclaw-align-storage-17d5f822-store-cd3cc783	Exited (0) 4 weeks ago		
+06564a17c6f5	campusclaw-align-storage-17d5f822-legacy-532d1a64	Exited (0) 4 weeks ago		
+777cd25bd7ce	campusclaw-align-storage-17d5f822-schema-92e13083	Exited (0) 4 weeks ago		
+388e82780856	campusclaw-align-storage-17d5f822-schema-df1c59ea	Exited (0) 4 weeks ago		
+8ddc40aa0939	campusclaw-align-storage-17d5f822-capture-f0d77728	Exited (0) 4 weeks ago		
+2156f8ffe82e	campusclaw-align-storage-17d5f822-capture-13c89afb	Exited (1) 4 weeks ago		
+93cee19eac9b	campusclaw-align-storage-17d5f822	Exited (255) 4 weeks ago	3306/tcp, 33060/tcp	
+89d7ebdfb1ef	campusclaw-week5-rag-ee706bec-proxy-8bbbe3ab	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32785->8080/tcp	
+91efe1cb12fb	campusclaw-week5-rag-ee706bec-ui-8bbbe3ab	Exited (0) 5 weeks ago		
+d343760a4280	campusclaw-week5-rag-ee706bec-proxy-47552c52	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32784->8080/tcp	
+cd4c0399b7c6	campusclaw-week5-rag-ee706bec-ui-47552c52	Exited (0) 5 weeks ago		
+9707048a3433	campusclaw-week5-rag-ee706bec-proxy-cda4d025	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32783->8080/tcp	
+a1944f17574a	campusclaw-week5-rag-ee706bec-ui-cda4d025	Exited (0) 5 weeks ago		
+163a77b23737	campusclaw-week5-rag-ee706bec-proxy-c259cbc3	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32782->8080/tcp	
+20ab4c9c7946	campusclaw-week5-rag-ee706bec-ui-c259cbc3	Exited (0) 5 weeks ago		
+9f5ebe8bef0b	campusclaw-week5-rag-ee706bec-proxy-d0747b2d	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32781->8080/tcp	
+f00357f59d60	campusclaw-week5-rag-ee706bec-ui-d0747b2d	Exited (0) 5 weeks ago		
+f1be19782553	campusclaw-week5-rag-ee706bec-proxy-1afbf179	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32780->8080/tcp	
+5b15facad646	campusclaw-week5-rag-ee706bec-ui-1afbf179	Exited (0) 5 weeks ago		
+43da308ef1ac	campusclaw-week5-rag-ee706bec-proxy-6f7a1447	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32779->8080/tcp	
+daa491b571a9	campusclaw-week5-rag-ee706bec-phase3-a1ae0f84	Exited (0) 5 weeks ago		
+29044b6b7c4e	campusclaw-week5-rag-ee706bec-proxy-034a21a3	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32778->8080/tcp	
+aac3bad17581	campusclaw-week5-rag-ee706bec-proxy-544e9700	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32777->8080/tcp	
+2726cdb6d500	campusclaw-week5-rag-ee706bec-ui-544e9700	Exited (0) 5 weeks ago		
+4c814a802fe9	campusclaw-week5-rag-ee706bec-apitest-847463a1	Exited (0) 5 weeks ago		
+7e1e9d1f7bc9	campusclaw-week5-rag-ee706bec-proxy-847463a1	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32776->8080/tcp	
+30fab73cbee9	campusclaw-week5-rag-ee706bec-ui-847463a1	Exited (0) 5 weeks ago		
+09dab5b8c9de	campusclaw-week5-rag-ee706bec-phase3-a03c8ab8	Exited (0) 5 weeks ago		
+7ec45b176c95	campusclaw-week5-rag-ee706bec-apitest-3c28aa1b	Exited (1) 5 weeks ago		
+83e086223f70	campusclaw-week5-rag-ee706bec-proxy-3c28aa1b	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32775->8080/tcp	
+5a83bbceb90d	campusclaw-week5-rag-ee706bec-ui-3c28aa1b	Exited (0) 5 weeks ago		
+ad4c9ab63cf7	campusclaw-week5-rag-ee706bec-phase3-5509c7df	Exited (0) 5 weeks ago		
+cac984bd8c7e	campusclaw-week5-rag-ee706bec-apitest-9c9868c7	Exited (1) 5 weeks ago		
+a46d3b4143ad	campusclaw-week5-rag-ee706bec-proxy-9c9868c7	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32774->8080/tcp	
+3383792074bb	campusclaw-week5-rag-ee706bec-ui-9c9868c7	Exited (0) 5 weeks ago		
+a2986beef21c	campusclaw-week5-rag-ee706bec-phase3-7e4e697d	Exited (0) 5 weeks ago		
+575de359bd8b	campusclaw-week5-rag-ee706bec-proxy-e55130a2	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32773->8080/tcp	
+6f37cc4dc574	campusclaw-week5-rag-ee706bec-ui-e55130a2	Exited (0) 5 weeks ago		
+26041bf09c92	campusclaw-week5-rag-ee706bec-proxy-fc31bb03	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32772->8080/tcp	
+df35bbb11862	campusclaw-week5-rag-ee706bec-ui-fc31bb03	Exited (0) 5 weeks ago		
+24470e0c0709	campusclaw-week5-rag-ee706bec-proxy-dc062e0f	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32771->8080/tcp	
+cc37a8d9da0d	campusclaw-week5-rag-ee706bec-ui-dc062e0f	Exited (0) 5 weeks ago		
+140ee827b9b0	campusclaw-week5-rag-ee706bec-proxy-f61d4f4a	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32770->8080/tcp	
+840b7e35ec2a	campusclaw-week5-rag-ee706bec-ui-f61d4f4a	Exited (0) 5 weeks ago		
+4ae541388ddf	campusclaw-week5-rag-ee706bec-proxy-6017813d	Exited (255) 4 weeks ago	80/tcp, 127.0.0.1:32769->8080/tcp	
+72fc9781292f	campusclaw-week5-rag-ee706bec-ui-6017813d	Exited (0) 5 weeks ago		
+c48fba5a8963	campusclaw-week5-rag-ee706bec-proxy-c8038994	Exited (1) 5 weeks ago		
+20e4efcb5d55	campusclaw-week5-rag-ee706bec-ui-c8038994	Exited (0) 5 weeks ago		
+92a1856d0923	campusclaw-week5-rag-ee706bec-proxy-44cf0c0e	Exited (255) 4 weeks ago	80/tcp, 8080/tcp	
+441c4eb54f72	campusclaw-week5-rag-ee706bec-ui-44cf0c0e	Exited (0) 5 weeks ago		
+e986e866c75e	campusclaw-week5-rag-ee706bec-phase3-f50fa4cb	Exited (0) 5 weeks ago		
+06f75004e9a6	campusclaw-week5-rag-ee706bec-phase3-1066d9bf	Exited (1) 5 weeks ago		
+b912b6778c14	campusclaw-week5-rag-ee706bec-phase3-4bfbbdc0	Exited (0) 5 weeks ago		
+2a60294e0f92	campusclaw-week5-rag-ee706bec-phase3-8fc73905	Exited (0) 5 weeks ago		
+1a2fc087d8ce	phase3-faults-abc99f00	Exited (0) 5 weeks ago		
+7a405dbf1b06	phase3-conversation-9f35ec92	Exited (0) 5 weeks ago		
+a410a744b4c3	campusclaw-week5-rag-ee706bec-phase2-7c3fd915	Exited (0) 5 weeks ago		
+ae05f16f3637	phase2-tutor-a3bd349c	Exited (0) 5 weeks ago		
+ff4cc3fdbbab	campusclaw-week5-rag-ee706bec-verify-1a33927f	Exited (0) 5 weeks ago		
+57f0c4866b80	campusclaw-week5-rag-ee706bec-verify-3840c183	Exited (0) 5 weeks ago		
+b424155acecd	campusclaw-week5-rag-ee706bec-verify-6be633c4	Exited (1) 5 weeks ago		
+35bd93edb626	campusclaw-week5-rag-ee706bec-verify-3ab873e7	Exited (0) 5 weeks ago		
+076c977cd2a6	week5-rag-verify2-ee706bec	Exited (0) 5 weeks ago		
+79e1a40830db	week5-rag-verify-ee706bec	Exited (1) 5 weeks ago		
+a057547dc0c4	week5-rag-integration-ee706bec	Exited (0) 5 weeks ago		
+372f3261e6a6	week5-rag-catalog-ee706bec	Exited (0) 5 weeks ago		
+cf83581f02f4	campusclaw-week5-rag-ee706bec-qdrant-1	Exited (255) 4 weeks ago	6333-6334/tcp	campusclaw-week5-rag-ee706bec
+956433b41096	campusclaw-week5-rag-ee706bec-mysql-1	Exited (255) 4 weeks ago	3306/tcp, 33060/tcp	campusclaw-week5-rag-ee706bec
+b91c05fb820b	campusclaw-phase4-read-e9853e4d-go	Exited (0) 5 weeks ago		
+c6770fd7de20	campusclaw-phase4-read-e9853e4d	Exited (0) 5 weeks ago		
+f59860bcbd5b	campusclaw-phase4-upload-416c062f-go	Exited (0) 5 weeks ago		
+d0d8b2f4b1fe	campusclaw-phase4-upload-416c062f	Exited (0) 5 weeks ago		
+0c0ca7591bfd	campusclaw-phase3-test-0347093a-go	Exited (0) 5 weeks ago		
+8b20901e8b56	campusclaw-phase3-test-0347093a	Exited (0) 5 weeks ago		
+2010afe16f23	campusclaw-phase5-compose-5465e339-nginx-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-5465e339
+f8fd06967634	campusclaw-phase5-compose-5465e339-app-1	Exited (2) 5 weeks ago		campusclaw-phase5-compose-5465e339
+6b95eb21b19e	campusclaw-phase5-compose-5465e339-initialize-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-5465e339
+872f3c6db046	campusclaw-phase5-compose-5465e339-storage-init-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-5465e339
+9bf3e9bc7e96	campusclaw-phase5-compose-5465e339-mysql-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-5465e339
+971efa900b3d	campusclaw-phase5-compose-5465e339-initialize-run-83ad4bca6874	Exited (1) 5 weeks ago		campusclaw-phase5-compose-5465e339
+5b489d600c9e	campusclaw-phase5-compose-5465e339-initialize-run-dbf1ece2980a	Exited (0) 5 weeks ago		campusclaw-phase5-compose-5465e339
+ed5bd34d544d	campusclaw-phase5-compose-5465e339-initialize-run-0342dcfa2689	Exited (1) 5 weeks ago		campusclaw-phase5-compose-5465e339
+6d2e14a762b8	campusclaw-phase5-compose-5465e339-initialize-run-e52a4023a054	Exited (0) 5 weeks ago		campusclaw-phase5-compose-5465e339
+57e498788680	campusclaw-phase5-compose-5465e339-initialize-run-29eb49896458	Exited (1) 5 weeks ago		campusclaw-phase5-compose-5465e339
+0191810931a7	campusclaw-phase5-contract-33d578fd	Exited (0) 5 weeks ago		
+437e6ff60171	campusclaw-retrieval-check-ffcb59d4-qdrant	Exited (143) 5 weeks ago		
+a23c98ee8ee1	campusclaw-retrieval-check-ffcb59d4-mysql	Exited (0) 5 weeks ago		
+a597479c9d1f	campusclaw-phase6-5c763ee0-initialize-run-ca9318e7d6c1	Exited (0) 5 weeks ago		campusclaw-phase6-5c763ee0
+2acc60cddae4	campusclaw-phase6-5c763ee0-initialize-run-01dbc2af8e1b	Exited (0) 5 weeks ago		campusclaw-phase6-5c763ee0
+096e12438e96	campusclaw-phase6-5c763ee0-nginx-1	Exited (0) 5 weeks ago		campusclaw-phase6-5c763ee0
+d320dfd8fa80	campusclaw-phase6-5c763ee0-app-1	Exited (2) 5 weeks ago		campusclaw-phase6-5c763ee0
+d9c89f966b98	campusclaw-phase6-5c763ee0-initialize-1	Exited (0) 5 weeks ago		campusclaw-phase6-5c763ee0
+85746a464c00	campusclaw-phase6-5c763ee0-mysql-1	Exited (0) 5 weeks ago		campusclaw-phase6-5c763ee0
+239ff5a40bae	campusclaw-phase6-5c763ee0-storage-init-1	Exited (0) 5 weeks ago		campusclaw-phase6-5c763ee0
+a2dab9c3b6e2	campusclaw-phase5-compose-ced2bc23-nginx-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-ced2bc23
+d2e0e397f587	campusclaw-phase5-compose-ced2bc23-app-1	Exited (2) 5 weeks ago		campusclaw-phase5-compose-ced2bc23
+9214b6515255	campusclaw-phase5-compose-ced2bc23-initialize-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-ced2bc23
+c5345807af8f	campusclaw-phase5-compose-ced2bc23-storage-init-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-ced2bc23
+fea7d222e69f	campusclaw-phase5-compose-ced2bc23-mysql-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-ced2bc23
+966293c892ac	campusclaw-phase5-compose-ced2bc23-initialize-run-4dfd1c8e2e3d	Exited (1) 5 weeks ago		campusclaw-phase5-compose-ced2bc23
+65e879ae3a45	campusclaw-phase5-compose-ced2bc23-initialize-run-0adb8b488391	Exited (0) 5 weeks ago		campusclaw-phase5-compose-ced2bc23
+2d4b3ede4ca5	campusclaw-phase5-compose-ced2bc23-initialize-run-6afdae0016f7	Exited (1) 5 weeks ago		campusclaw-phase5-compose-ced2bc23
+a12e4832d19f	campusclaw-phase5-compose-ced2bc23-initialize-run-1f8f5d48f897	Exited (0) 5 weeks ago		campusclaw-phase5-compose-ced2bc23
+3f28b4478851	campusclaw-phase5-compose-ced2bc23-initialize-run-1948eb981c04	Exited (1) 5 weeks ago		campusclaw-phase5-compose-ced2bc23
+64cde308a0d8	campusclaw-phase5-compose-ab31297d-initialize-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-ab31297d
+4969bf1bec61	campusclaw-phase5-compose-ab31297d-nginx-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-ab31297d
+b84b5403d221	campusclaw-phase5-compose-ab31297d-app-1	Exited (2) 5 weeks ago		campusclaw-phase5-compose-ab31297d
+90276fa33b43	campusclaw-phase5-compose-ab31297d-mysql-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-ab31297d
+6ff30db8dca5	campusclaw-phase5-compose-ab31297d-storage-init-1	Exited (0) 5 weeks ago		campusclaw-phase5-compose-ab31297d
+a5f0b87cd8ab	campusclaw-phase5-cutover-20ce794d-tool-10	Exited (0) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+6aa596a22c58	campusclaw-phase5-cutover-20ce794d-tool-9	Exited (0) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+a4c81ff9f041	campusclaw-phase5-cutover-20ce794d-tool-8	Exited (1) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+07dfb199026b	campusclaw-phase5-cutover-20ce794d-tool-7	Exited (0) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+10a69e05f17e	campusclaw-phase5-cutover-20ce794d-tool-6	Exited (0) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+1ba64bfa4558	campusclaw-phase5-cutover-20ce794d-app-1	Exited (2) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+abf8a153636b	campusclaw-phase5-cutover-20ce794d-tool-5	Exited (0) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+c3f29ca02e60	campusclaw-phase5-cutover-20ce794d-tool-4	Exited (1) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+b2c228da43b4	campusclaw-phase5-cutover-20ce794d-tool-3	Exited (0) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+4e971fcfd709	campusclaw-phase5-cutover-20ce794d-tool-2	Exited (1) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+7d62b828aad8	campusclaw-phase5-cutover-20ce794d-tool-1	Exited (0) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+e5709a5c1d52	campusclaw-phase5-cutover-20ce794d-storage-init	Exited (0) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+ced8ba238802	campusclaw-phase5-cutover-20ce794d-nginx-1	Exited (0) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+ab8e55a2b456	campusclaw-phase5-cutover-20ce794d-mysql-1	Exited (0) 5 weeks ago		campusclaw-phase5-cutover-20ce794d
+d8c97aa5a7b6	campusclaw-phase5-contract-de3a9dfe	Exited (0) 5 weeks ago		
+7009ed8a3251	campusclaw-phase5-contract-8ee6bf26	Exited (0) 5 weeks ago		
+77a3d818a927	campusclaw-phase5-contract-e544ab9c	Exited (0) 5 weeks ago		
+248f8e916715	campusclaw-phase5-contract-8bcdb72b	Exited (0) 5 weeks ago		
+a5751ed89ca2	campusclaw-phase5-contract-dedb1c85	Exited (0) 5 weeks ago		
+7dfe261d9f85	campusclaw-phase4-ui-479be491	Exited (0) 5 weeks ago		
+ceee0b23cf82	campusclaw-phase4-ui-33e64bae	Exited (0) 5 weeks ago		
+052f58e1e802	campusclaw-phase4-ui-7d4c8d96	Exited (0) 5 weeks ago		
+3a7cbb035b78	campusclaw-phase4-read-5300ac2a-go	Exited (0) 5 weeks ago		
+8a90b2d2c0c5	campusclaw-phase4-read-5300ac2a	Exited (0) 5 weeks ago		
+67992ab368fc	campusclaw-phase4-read-f0124c0f-go	Exited (0) 5 weeks ago		
+0244ac8005f3	campusclaw-phase4-read-f0124c0f	Exited (0) 5 weeks ago		
+ac1cd27140e3	campusclaw-phase4-upload-c5b5b3be-go	Exited (0) 5 weeks ago		
+b9ee57a29dbd	campusclaw-phase4-upload-c5b5b3be	Exited (0) 5 weeks ago		
+42d319078e74	campusclaw-phase3-test-6ac52b75-go	Exited (0) 5 weeks ago		
+8a462fcb33bc	campusclaw-phase3-test-6ac52b75	Exited (0) 5 weeks ago		
+3620f88996ff	campusclaw-retrieval-demo-qdrant-1	Exited (255) 5 weeks ago	6333-6334/tcp	campusclaw-retrieval-demo
+2862078a3fdc	campusclaw-retrieval-demo-mysql-1	Exited (255) 5 weeks ago	3306/tcp, 33060/tcp	campusclaw-retrieval-demo
+7123d97439f6	campusclaw-retrieval-demo-app-1	Exited (255) 5 weeks ago	127.0.0.1:8080->8080/tcp	campusclaw-retrieval-demo
+292b2018bc34	buildx_buildkit_default	Up About an hour		

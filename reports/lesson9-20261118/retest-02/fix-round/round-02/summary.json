@@ -1,0 +1,136 @@
+{
+  "time": "2026-11-18T17:24:11.280005+08:00",
+  "head": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+  "origin_main": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+  "branch": "change/2026-11-18-fix-lesson9-retest",
+  "uncommitted": true,
+  "dependency": {
+    "status": "复测通过",
+    "before": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 5,
+      "critical": 0,
+      "total": 5
+    },
+    "after": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "original_security_gate": {
+      "time": "2026-11-18T17:11:39.920609+08:00",
+      "command": [
+        "mingw32-make",
+        "check-security"
+      ],
+      "threshold_changed": false,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "python": "Python 3.12.7",
+      "exit": 0
+    }
+  },
+  "performance": {
+    "status": "复测失败",
+    "threshold_ms": 100,
+    "comparison": {
+      "started": "2026-11-18T16:39:51.180426+08:00",
+      "head": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+      "uncommitted": true,
+      "phases": {
+        "before": {
+          "image": "campusclaw-l9-official-backend",
+          "id": "sha256:79ca1cdfab9e7c18827129f1e9c24a72cc048b83a08b63937dff1b400a0f347e",
+          "rounds": [
+            {
+              "sample_count": 20,
+              "max_ms": 317.57329999891226,
+              "p95_ms": 89.64259999993374,
+              "over_100_ms": 1,
+              "passed": false
+            },
+            {
+              "sample_count": 20,
+              "max_ms": 109.24380000142264,
+              "p95_ms": 50.71989999851212,
+              "over_100_ms": 1,
+              "passed": false
+            }
+          ]
+        },
+        "after": {
+          "image": "campusclaw-l9-round02-backend",
+          "id": "sha256:f70098b0df6567a404e9c45404c5cf14eac57397778ef1beea3c930f69cf0e37",
+          "rounds": [
+            {
+              "sample_count": 20,
+              "max_ms": 122.06220000007306,
+              "p95_ms": 64.5362000032037,
+              "over_100_ms": 1,
+              "passed": false
+            },
+            {
+              "sample_count": 20,
+              "max_ms": 77.58109999849694,
+              "p95_ms": 50.45669999890379,
+              "over_100_ms": 0,
+              "passed": true
+            }
+          ]
+        }
+      },
+      "project": "teamwork-tests-outbox-comparison-b38437b3",
+      "after_passed": false,
+      "finished": "2026-11-18T16:42:10.185360+08:00"
+    },
+    "original_verify_extra_samples": {
+      "samples_ms": [
+        29.1,
+        29.6,
+        40.0,
+        33.0,
+        32.0,
+        50.8,
+        34.3,
+        27.7,
+        28.3,
+        32.1,
+        31.1,
+        25.4,
+        25.9,
+        25.7,
+        35.5,
+        34.7,
+        70.4,
+        60.8,
+        54.0,
+        35.7
+      ],
+      "max_ms": 70.4,
+      "over_100_ms": 0,
+      "note": "original verifier prints rounded 0.1ms values; independent from controlled comparison"
+    }
+  },
+  "cases_this_round": {
+    "通过": 10,
+    "失败": 1
+  },
+  "case_total": 11,
+  "defects_latest": {
+    "复测通过": 1,
+    "复测失败": 1
+  },
+  "grade": {
+    "passed": 18,
+    "failed": 0,
+    "total": 18
+  },
+  "verify": 0,
+  "playwright": 0,
+  "conclusion": "依赖修复验收通过；性能部分改善但原100ms门槛仍失败；整体未完成，不提交不推送"
+}
