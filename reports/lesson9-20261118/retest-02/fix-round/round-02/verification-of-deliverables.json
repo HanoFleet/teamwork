@@ -1,0 +1,12 @@
+{
+  "historical_source_files_preserved": 222,
+  "case_rows_current_round": 11,
+  "case_pass": 10,
+  "case_fail": 1,
+  "defect_ids_current_round": 2,
+  "dependency_subitems": 5,
+  "current_defect_pass": 1,
+  "current_defect_fail": 1,
+  "original_dirty_xss_preserved": true,
+  "json_csv_hashes_validated": true
+}

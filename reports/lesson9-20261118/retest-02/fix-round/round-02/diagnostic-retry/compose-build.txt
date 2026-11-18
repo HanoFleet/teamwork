@@ -1,0 +1,57 @@
+Sending build context to Docker daemon  524.4kB
+Sending build context to Docker daemon  1.049MB
+Sending build context to Docker daemon  1.573MB
+Sending build context to Docker daemon  2.098MB
+Sending build context to Docker daemon  2.622MB
+Sending build context to Docker daemon  3.146MB
+Sending build context to Docker daemon  3.254MB
+
+Step 1/10 : FROM node:22-alpine AS build
+ ---> ceef4ecff798
+Step 2/10 : WORKDIR /src
+ ---> Using cache
+ ---> 60d32df94e95
+Step 3/10 : COPY package.json package-lock.json ./
+ ---> 58941cb0432e
+Step 4/10 : RUN npm ci --include=optional
+ ---> Running in 3d8dc60ebbd8
+
+added 117 packages, and audited 118 packages in 3m
+
+85 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+[91mnpm notice
+npm notice New major version of npm available! 10.9.9 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice
+[0m ---> Removed intermediate container 3d8dc60ebbd8
+ ---> 02fffe0617b8
+Step 5/10 : COPY . .
+ ---> 5efb597aa8cb
+Step 6/10 : RUN npm run build
+ ---> Running in 0bdf4a4ea35a
+
+> build
+> tsc --noEmit && node toolchain.mjs build
+
+ ---> Removed intermediate container 0bdf4a4ea35a
+ ---> 06c27b6f5c79
+Step 7/10 : FROM nginx:1.27-alpine
+ ---> 1c7709d5f4d8
+Step 8/10 : COPY nginx.conf /etc/nginx/conf.d/default.conf
+ ---> 1563868a7777
+Step 9/10 : COPY --from=build /src/dist /usr/share/nginx/html
+ ---> c07a5de60aa9
+Step 10/10 : LABEL com.docker.compose.image.builder=classic
+ ---> Running in 6ede0e746d87
+ ---> Removed intermediate container 6ede0e746d87
+ ---> e4549eba6fab
+Successfully built e4549eba6fab
+Successfully tagged teamwork-tests-latency-diagnosis-ad940942-web:latest
+ Image teamwork-tests-latency-diagnosis-ad940942-web Building 
+ Image teamwork-tests-latency-diagnosis-ad940942-web Building 
+ Image teamwork-tests-latency-diagnosis-ad940942-web Built 
+ Image teamwork-tests-latency-diagnosis-ad940942-web Built 

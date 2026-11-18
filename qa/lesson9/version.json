@@ -1,0 +1,23 @@
+{
+  "origin": "https://github.com/HanoFleet/teamwork.git",
+  "before_branch": "change/2026-11-06-security-precheck",
+  "before_head": "292eaaffc24fcad07e936ec6b4adf72dd6af8589",
+  "fetch": "success (first sandbox attempt denied FETCH_HEAD; authorized retry succeeded)",
+  "fetched_origin_main": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "tested_head": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "worktree_status": "",
+  "fix_ancestry": {
+    "7263dda": {
+      "commit": "7263dda211139292a7ff8f7539ed25429a9da983",
+      "in_main": true
+    },
+    "090ca01": {
+      "commit": "090ca01a08598e099905b3272ee5907bfb02c7ac",
+      "in_main": true
+    },
+    "cfe7e74": {
+      "commit": "cfe7e749329ba0f43a502893f22cc8e9c22535b7",
+      "in_main": true
+    }
+  }
+}

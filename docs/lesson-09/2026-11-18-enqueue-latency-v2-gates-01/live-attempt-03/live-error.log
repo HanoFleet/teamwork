@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "E:\proj\teamwork-main-latest\qa\lesson9\fix-worktree\docs\lesson-09\2026-11-18-enqueue-latency-v2-gates-01\live_verify.py", line 46, in <module>
+    raise RuntimeError(label + " failed")
+RuntimeError: verify-up failed

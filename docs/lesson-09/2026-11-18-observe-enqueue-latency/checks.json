@@ -1,0 +1,159 @@
+[
+  {
+    "name": "contracts",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "-W",
+      "error::ResourceWarning",
+      "tests/performance/latency_gate_contract.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "spec-check",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/spec_check.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "standards-check",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/standards_check.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "security-static",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/security_static.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "security-cases",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/security_cases.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "historical-readonly-evaluation",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/qa/lesson9/check_performance.py",
+      "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/performance-1.json",
+      "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/performance-2.json",
+      "--output",
+      "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\fix-worktree\\docs\\lesson-09\\2026-11-18-observe-enqueue-latency\\new-rule-evaluation.json"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "contracts-final",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "-W",
+      "error::ResourceWarning",
+      "tests/performance/latency_gate_contract.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "spec-check-final",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/spec_check.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "standards-check-final",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/standards_check.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "openspec-version",
+    "command": [
+      "node",
+      "C:\\Users\\Kugeln\\AppData\\Local\\npm-cache\\_npx\\21a1280729add0a7\\node_modules\\@fission-ai\\openspec\\bin\\openspec.js",
+      "--version"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "openspec-strict",
+    "command": [
+      "node",
+      "C:\\Users\\Kugeln\\AppData\\Local\\npm-cache\\_npx\\21a1280729add0a7\\node_modules\\@fission-ai\\openspec\\bin\\openspec.js",
+      "validate",
+      "--all",
+      "--strict"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "layer-check",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/layer_check.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "contracts-post-review",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "-W",
+      "error::ResourceWarning",
+      "tests/performance/latency_gate_contract.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "docs/standards/04-testing.md",
+      "scripts/check.sh",
+      "scripts/spec_check.py",
+      "tests/README.md",
+      "tests/performance/check_single_request_limit.py",
+      "tests/performance/grade_enqueue_latency.py",
+      "tests/performance/latency_gate_contract.py"
+    ],
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,332 @@
+[
+  {
+    "file": "docs/review-role2-specs-standards.md",
+    "line": 79,
+    "text": "- 本页「正向用例超过 100ms 不通过」是材料库接口的项目值，不能套到批改执行时间；批改 P95 判据用的是 202 响应 < 500ms、本地批改 2 秒，两者不混用。"
+  },
+  {
+    "file": "docs/lesson-09/fix-20261118.md",
+    "line": 11,
+    "text": "依赖兼容更新已构建和回归，但high5尚未清零；性能保留100ms门槛，样本仍超限。功能verify及2条Playwright通过不等于整改全部通过。change不归档、不发布，未通过任务不勾选。"
+  },
+  {
+    "file": "docs/standards/04-testing.md",
+    "line": 41,
+    "text": "| 响应时间 | 正向用例：超过 50ms 标记，超过 100ms 不通过（项目值，可按环境调整并记录；第9课异步批改复测采用下述专用规则）；负向用例不计入 | 没有阈值就无法发现性能退化 | 每条正向用例记录耗时；超过阈值输出报告 |"
+  },
+  {
+    "file": "docs/standards/04-testing.md",
+    "line": 72,
+    "text": "依据活动change `2026-11-18-observe-enqueue-latency`，采用enqueue-latency-v2。恰好20次新提交、全部202且响应无score/feedback为硬条件。nearest-rank P95取第19小值，必须严格小于500ms。单次大于100ms输出WARN，含序号、request_id及完整耗时，保存警告列表，仅此警告不导致整轮失败。100ms为项目自定义观察值，课程原文采用用户已核对结论。其他接口继续使用上表项目门槛。"
+  },
+  {
+    "file": "docs/standards/04-testing.md",
+    "line": 74,
+    "text": "历史single_request_pass=false和passed=false及122.06220000007306ms原样保留。新规则只读重评单独记录规则版本及来源。功能、权限、并发、事务和异步状态流转继续按原规约验收。第10课性能验收优先采用老师明确要求的吞吐、P95、错误率、饱和点及改进前后对比。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/design.md",
+    "line": 1,
+    "text": "> 性能条款由活动change `2026-11-18-observe-enqueue-latency` 替代。下文100ms阻断为旧规则决策记录，现行规则为100ms警告、20次P95 < 500ms硬断言。历史失败完整保留。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/design.md",
+    "line": 12,
+    "text": "选了什么：保持20次及100ms，不改业务直到定位根因。放弃了什么：删除慢样本。代价由谁承担：负责人保留失败结果及根因调查范围。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/design.md",
+    "line": 24,
+    "text": "上游无安全picomatch发布，升级仍可能high5；不发布。Windows/Docker时序及I/O影响单次延迟，严格保留100ms失败。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/design.md",
+    "line": 32,
+    "text": "先在同一隔离Compose、相同20次顺序提交/202计时口径重放，保留每次样本。区分客户端耗时、API日志耗时与数据库等待；没有可复现根因不修改业务实现。不得通过预热删除首样本或提高100ms阈值宣称通过。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/design.md",
+    "line": 53,
+    "text": "仅 dispatcher.flush 的 BeginTx 指定 READ COMMITTED；保留相同 FOR UPDATE SKIP LOCKED、批次20、发布确认及事务提交。唯一约束、API/worker 事务隔离、InnoDB/binlog 刷盘和至少一次语义不变。风险是读取不再具有可重复读快照，但该事务只锁取一次 pending 批次并按 id 更新；不依赖重复快照。验证跨班/幂等/事务回滚/停 broker 补投与20次严格门槛。若同条件仍出现单次>100ms，整项性能仍不通过，不以锁等待下降代替验收。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/proposal.md",
+    "line": 1,
+    "text": "> 性能条款由活动change `2026-11-18-observe-enqueue-latency` 替代。下文100ms阻断为旧规则决策记录，现行规则为100ms警告、20次P95 < 500ms硬断言。历史失败完整保留。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/proposal.md",
+    "line": 6,
+    "text": "L9-DEP-001 的5个high依赖条目来自picomatch及其传递链；历史单次179.6ms超过04-testing默认100ms。历次会话测试包装器尚未纳入可提交档案。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/proposal.md",
+    "line": 10,
+    "text": "- 保存20次顺序202样本，保持P95<500ms与单次<=100ms两套判据；不提高阈值、不删慢样本。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/proposal.md",
+    "line": 25,
+    "text": "|提高100ms阈值|放弃|掩盖原179.6ms样本|"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/proposal.md",
+    "line": 41,
+    "text": "- 20次采样不丢弃任何值，以100ms默认单次门槛判定。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/tasks.md",
+    "line": 1,
+    "text": "> 性能条款由活动change `2026-11-18-observe-enqueue-latency` 替代。下文100ms阻断为旧规则决策记录，现行规则为100ms警告、20次P95 < 500ms硬断言。历史失败完整保留。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/tasks.md",
+    "line": 11,
+    "text": "场景满足、用例通过、门禁通过、文档同步、验证归档五项缺一不可。高危或100ms门禁失败不勾选。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/design.md",
+    "line": 4,
+    "text": "实施位于第9课复测工作树。本change替代2026-11-18-fix-lesson9-retest中单次100ms阻断条款。主规约与归档保留，用户确认后再归档delta。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/design.md",
+    "line": 8,
+    "text": "选了什么：固定20次，nearest-rank P95取第19小值，严格小于500ms。100ms恰好相等无警告，大于时逐条WARN含index、request_id及完整elapsed_ms。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/design.md",
+    "line": 9,
+    "text": "放弃了什么：单次100ms阻断整轮。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/design.md",
+    "line": 13,
+    "text": "选了什么：仅第9课异步批改复测使用enqueue-latency-v2。其他接口保留原项目门槛。只读原samples重算，历史passed和single_request_pass原样保留，新结果独立写入。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/proposal.md",
+    "line": 4,
+    "text": "100ms来自04-testing项目值，Git提交29e3851首次引入，b3f2cab归档逐请求检查。用户已核对课程PDF并授权修订。保留122.06220000007306ms及历史失败。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/proposal.md",
+    "line": 7,
+    "text": "- 100ms改为逐样本WARN观察阈值。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/proposal.md",
+    "line": 19,
+    "text": "|保留单次100ms硬门槛|放弃|项目观察目标缺少逐请求课程依据，保留逐样本警告|"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/proposal.md",
+    "line": 33,
+    "text": "- 恰好20条202，P95严格小于500ms，100ms超限警告含原始样本。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/specs/async-grading/spec.md",
+    "line": 28,
+    "text": "- **THEN** 全部响应202且不含分数，保存20个完整样本，单次超过100ms输出WARN及完整样本，P95必须严格小于500ms，按enqueue-latency-v2规则判定"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-fix-lesson9-retest/specs/security-hardening/spec.md",
+    "line": 20,
+    "text": "- **THEN** 保存20个202耗时、P95和超过100ms的次数，单次超过100ms输出WARN及完整样本，P95必须严格小于500ms，按enqueue-latency-v2规则判定"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/specs/async-grading/spec.md",
+    "line": 4,
+    "text": "第9课异步批改复测 MUST 使用enqueue-latency-v2。MUST 恰好20次新提交全部202且无score/feedback。nearest-rank P95取第19小值，MUST 严格小于500ms。大于100ms MUST 输出WARN及序号、request_id、完整耗时并保存警告列表，MUST NOT仅因100ms警告失败。MUST 保留全部历史证据和原失败判定，新评估独立存储。既有功能、权限、并发、事务、幂等、恢复与状态流转继续适用。"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/specs/async-grading/spec.md",
+    "line": 7,
+    "text": "- **GIVEN** 本班学生20条有效202样本均为100ms"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/specs/async-grading/spec.md",
+    "line": 9,
+    "text": "- **THEN** 退出0，warnings为0，P95=100ms"
+  },
+  {
+    "file": "openspec/changes/2026-11-18-observe-enqueue-latency/specs/async-grading/spec.md",
+    "line": 17,
+    "text": "- **GIVEN** 本班学生20条202样本，18条为100ms、2条为500ms"
+  },
+  {
+    "file": "scripts/spec_check.py",
+    "line": 24,
+    "text": "        \"anchors\": [\"100ms\", \"500ms\", \"20\", \"WARN\", \"enqueue-latency-v2\"],"
+  },
+  {
+    "file": "scripts/spec_check.py",
+    "line": 29,
+    "text": "        \"anchors\": [\"100ms\", \"20\", \"L9-DEP-001\", \"179.6\", \"503\"],"
+  },
+  {
+    "file": "scripts/qa/lesson9/finalize.py",
+    "line": 16,
+    "text": "summary=dict(time=NOW,baseline=validation['baseline'],uncommitted=True,historical_source_files=len(inventory),before=before['metadata']['vulnerabilities'],after=after['metadata']['vulnerabilities'],validation=validation,performance=[dict(samples=len(p['samples']),max_ms=p['max_ms'],p95_ms=p['p95_ms'],over_100_ms=p['over_100_ms'],passed=p['single_request_pass']) for p in perf],make=make,conclusion='未完成：依赖high未清零、100ms性能门槛失败；不发布、不勾选未通过任务')"
+  },
+  {
+    "file": "scripts/qa/lesson9/finalize.py",
+    "line": 28,
+    "text": "rows.append(dict(缺陷编号='L9-PERF-001',子项='默认单次100ms',轮次=ROUND,首次提交=validation['baseline'],实际复测提交=validation['baseline']+' + code-fingerprint.json',执行时间=NOW,预期='20份202，全部<=100ms；P95<500ms',实际='原179.6ms保留；本轮max253.72/349.70ms，超限2/1；服务端相关耗时178/249/346ms，尚不能归因具体SQL或代码',复测状态='复测失败',本轮证据='fix-round/performance-1.json；performance-2.json；performance-correlation.json；logs/performance-gate.txt'))"
+  },
+  {
+    "file": "scripts/qa/lesson9/finalize.py",
+    "line": 31,
+    "text": "checks=[('DEP','失败','5条high仍在','logs/audit-after.json'),('BUILD','通过' if validation.get('frontend_build')==0 else '失败','最终锁文件npm ci与build','logs/frontend-build.txt'),('PERF1','通过' if perf[0]['single_request_pass'] else '失败',str(perf[0]['max_ms']),'performance-1.json'),('PERF2','通过' if perf[1]['single_request_pass'] else '失败',str(perf[1]['max_ms']),'performance-2.json'),('VERIFY','通过' if validation.get('verify')==0 else '失败','原verify全部断言','verify.md'),('E2E','通过' if validation.get('playwright')==0 else '失败','2条Playwright实际通过，含作业页与XSS页面源码','logs/playwright.txt')]"
+  },
+  {
+    "file": "scripts/qa/lesson9/finalize.py",
+    "line": 60,
+    "text": "- 性能：原179.6ms保留；本轮2×20完整202样本，max253.72/349.70ms，超100ms各2/1。API相关耗时178/249/346ms，客户端额外开销约4–7ms；不能单纯归为客户端网络。采样后获取SQL摘要时原verify已重建DB，故该快照不能用于归因采样窗口。检查了连接池、事务、outbox/worker并发与客户端/API计时，尚无确证瓶颈，不盲改业务逻辑。100ms严格检查退出1。原verify自身20次另观测435.0ms，P95=86.1ms满足500ms但单次仍不满足100ms。"
+  },
+  {
+    "file": "scripts/qa/lesson9/finalize.py",
+    "line": 68,
+    "text": "保留此前所有失败/阻塞与补跑记录；本节和本轮CSV行是最新状态，不用总历史执行次数作为独立用例通过率。尚缺：上游安全依赖或独立工具链迁移方案、性能根因及<=100ms修复、真人独立复现2条和正式录像。复现/录屏操作见fix-round/复现与录屏清单.md。未发布或推送。"
+  },
+  {
+    "file": "scripts/qa/lesson9/finalize.py",
+    "line": 88,
+    "text": "4. 依赖修复后重跑npm ci、npm audit、build、Playwright；性能按原20次，不删超限样本。当前high5和100ms失败需保留，不能录成“全绿”。"
+  },
+  {
+    "file": "scripts/qa/lesson9/README.md",
+    "line": 6,
+    "text": "- `python scripts/qa/lesson9/check_performance.py reports/lesson9-20261118/retest-02/fix-round/performance-1.json reports/lesson9-20261118/retest-02/fix-round/performance-2.json`：任意单次>100ms或样本不是20份202则退出1，保留P95<500ms独立判据。"
+  },
+  {
+    "file": "tests/README.md",
+    "line": 5,
+    "text": "以下为归档进入 main 之后的本地未提交整改，历史归档结论不改写。基线为 `2d2900bf34b52d8df21513c6ef2ebc873df9f345` 加实际代码差异；报告在 `reports/lesson9-20261118/retest-02/fix-round/round-02/`（下称 R2）。本轮依赖原门禁通过，100ms 性能仍失败。"
+  },
+  {
+    "file": "tests/README.md",
+    "line": 11,
+    "text": "|`performance/compare_outbox_isolation.py`|同一Compose/DB/broker/前端，只切换已验证后端镜像，前后各2×20；不删样本，任一>100ms退出1|`python -X utf8 tests/performance/compare_outbox_isolation.py --help`；先构建修复前后镜像|R2/controlled-comparison；已执行退出1；修复后仍有122.062ms|"
+  },
+  {
+    "file": "tests/README.md",
+    "line": 12,
+    "text": "|`performance/analyze_grade_waits.py`|以数据库anchor关联慢请求/API和重叠SQL/文件等待；统计outbox锁关系，不含SQL字面量|`python tests/performance/analyze_grade_waits.py <comparison-dir> <output.json>`|R2/performance-analysis.json；已执行；分析退出0不代表100ms通过|"
+  },
+  {
+    "file": "tests/README.md",
+    "line": 47,
+    "text": "|[performance/grade_enqueue_latency.py](performance/grade_enqueue_latency.py)|20次顺序新提交→计时批改POST；逐次必须202，不含score/feedback；保留全样本、P95、最大值、>50ms和>100ms次数；不预热、不丢弃慢值|`python tests/performance/grade_enqueue_latency.py`|Docker；全部<=100ms且P95<500ms才0。来自实际performance_probe.py，历史证据[两轮样本](evidence/enqueue-latency-round-1.json)，原179.6ms见[历史汇总](evidence/historical-retest-summary.json)|"
+  },
+  {
+    "file": "tests/README.md",
+    "line": 48,
+    "text": "|[performance/check_single_request_limit.py](performance/check_single_request_limit.py)|离线复核每份20个202；单次>100ms、数量错误或非202则非零。P95通过不能覆盖单次失败|`python tests/performance/check_single_request_limit.py tests/evidence/enqueue-latency-round-1.json tests/evidence/enqueue-latency-round-2.json`|仅Python；这两份真实历史数据应退出1，不能把预期红项当归档失败或改绿|"
+  },
+  {
+    "file": "tests/README.md",
+    "line": 49,
+    "text": "|[performance/latency_gate_contract.py](performance/latency_gate_contract.py)|本次新增的门槛合同测试：100ms边界通过、100.001ms失败、19条失败、状态200失败；防止门槛检查出现假绿|`python tests/performance/latency_gate_contract.py`|标准库unittest；4条均通过，结果见validation/archive-validation.json。不是冒称历史脚本|"
+  },
+  {
+    "file": "tests/README.md",
+    "line": 120,
+    "text": "历史：bd42a61隔离验收18/18、原verify通过、SEC03/04/07及SEC08第四步通过；修复工作树Playwright2/2。历史179.6ms以及后续253.72/349.70ms慢样本保留；high5与100ms门槛没有因本PR归档而关闭。"
+  },
+  {
+    "file": "tests/README.md",
+    "line": 128,
+    "text": "隔离入口18/18、业务入口原verify全部断言、直接跨班入口404/无残留均通过。性能CLI实际完成20次采样，最大318.3293ms、超过100ms一次，按原门槛退出1；并非环境阻塞或性能修复成功。4条门槛合同测试及2条脱敏合同测试通过。旧报告一致性脚本实跑因缺reports/evidence/week8/latest.json而失败，归类缺夹具；只读旧交叉复核未完整重跑。构建瞬时失败与首次配置适配失败均保存为脱敏失败记录，修正CLI环境来源后重跑成功。完整机器可读结果见validation/live-validation.json。"
+  },
+  {
+    "file": "tests/README.md",
+    "line": 134,
+    "text": "现行enqueue-latency-v2对单次100ms超限输出警告，20条202和P95 < 500ms继续硬断言。上述归档结果和tests/manifest.json属于旧版本记录，原样保留。当前源码清单及验证见docs/lesson-09/2026-11-18-observe-enqueue-latency。历史报告生成器冻结入口以保护旧证据。"
+  },
+  {
+    "file": "tests/performance/analyze_grade_waits.py",
+    "line": 29,
+    "text": "                if sample[\"elapsed_ms\"] <= 100: continue"
+  },
+  {
+    "file": "tests/performance/check_single_request_limit.py",
+    "line": 1,
+    "text": "\"\"\"Observe individual latency above 100ms and enforce 20 samples / P95 < 500ms.\"\"\""
+  },
+  {
+    "file": "tests/performance/check_single_request_limit.py",
+    "line": 23,
+    "text": "                for index, sample in enumerate(samples) if sample[\"elapsed_ms\"] > 100]"
+  },
+  {
+    "file": "tests/performance/grade_enqueue_latency.py",
+    "line": 34,
+    "text": "    options = arguments('20 sequential grade enqueue samples; retain all values; 100ms observation and P95 < 500ms gate')"
+  },
+  {
+    "file": "tests/performance/grade_latency_diagnostics.py",
+    "line": 5,
+    "text": "hard assertion are retained. Individual latency >100ms emits warnings. SQL observation happens outside timed calls."
+  },
+  {
+    "file": "tests/performance/grade_latency_diagnostics.py",
+    "line": 75,
+    "text": "              \"over_100_ms\": sum(x > 100 for x in ordered), \"threshold_ms\": 100,"
+  },
+  {
+    "file": "tests/performance/grade_latency_diagnostics.py",
+    "line": 91,
+    "text": "        waits = sql(project, f\"SELECT THREAD_ID,EVENT_ID,TIMER_START,TIMER_END,ROUND(TIMER_WAIT/1000000000,3),EVENT_NAME,OPERATION,CASE WHEN EVENT_NAME='wait/io/table/sql/handler' THEN COALESCE(OBJECT_NAME,'') ELSE '' END FROM performance_schema.events_waits_history_long WHERE TIMER_START>={timer} AND TIMER_WAIT>1000000000 AND EVENT_NAME<>'idle' ORDER BY TIMER_START\")"
+  },
+  {
+    "file": "tests/performance/latency_gate_contract.py",
+    "line": 42,
+    "text": "    def test_100ms_boundary_has_no_warning(self):"
+  },
+  {
+    "file": "tests/performance/latency_gate_contract.py",
+    "line": 47,
+    "text": "    def test_above_100ms_warns_in_both_entries(self):"
+  },
+  {
+    "file": "tests/regression/lesson9_final_regression.py",
+    "line": 50,
+    "text": "                result[\"verify_latency\"] = {\"samples_ms\": values, \"max_ms\": max(values), \"over_100_ms\": sum(x > 100 for x in values), \"note\": \"original verifier prints rounded 0.1ms values; independent from controlled comparison\"}"
+  },
+  {
+    "file": "tests/support/update_lesson9_round2_report.py",
+    "line": 84,
+    "text": "        (\"PERF-100\", \"python scripts/qa/lesson9/check_performance.py <两个after样本文件>\", 1, \"修复后max122.062/77.581ms，超100ms为1/0；严格失败\", \"logs/performance-gate.txt\"),"
+  },
+  {
+    "file": "tests/support/update_lesson9_round2_report.py",
+    "line": 86,
+    "text": "    cases = [{\"用例编号\": name, \"关联需求\": \"security-hardening/复测整改证据；async-grading/事务性发件箱与可靠补投\", \"前置条件\": \"独立工作树；合成账号；Node24.22.2/npm11.19.1审计；环境与源码指纹见R2\", \"输入与操作\": command, \"预期结果\": \"原入口退出0；性能任一单次>100ms失败；功能正常且数据边界不变\", \"实际结果\": f\"exit={code}；{actual}\", \"状态\": \"通过\" if code == 0 else \"失败\", \"证据位置\": \"fix-round/round-02/\" + evidence, \"执行时间\": now + \"（具体采样/命令时间见证据）\", \"被测提交\": version, \"轮次\": ROUND} for name, command, code, actual, evidence in case_specs]"
+  },
+  {
+    "file": "tests/support/update_lesson9_round2_report.py",
+    "line": 93,
+    "text": "    defect_rows.append({\"缺陷编号\": \"L9-PERF-001\", \"原失败用例\": \"PERF-100\", \"首次提交\": \"bd42a6149e975c1ed217fb9349621443a3be53d5 + 历史未提交差异\", \"首次实际\": \"179.6、253.7、349.7ms原样保留\", \"首次证据\": \"fix-round/performance-1.json；performance-2.json；qa/lesson9/retest-02/recovery/summary.json\", \"修复提交\": \"未提交（仅dispatcher事务READ COMMITTED）\", \"实际复测提交\": version, \"执行时间\": now, \"预期\": \"每轮20个202，所有单次<=100ms\", \"实际\": \"同Compose：before max317.573/109.244ms，after122.062/77.581ms；超限1/1→1/0。outbox锁边27/6→0/0；剩余122ms请求API117ms、重叠COMMIT87.352ms及持久化sync等待。原verify另20次max70.4ms不抵消失败。\", \"复测状态\": \"复测失败\", \"本轮证据\": \"fix-round/round-02/controlled-comparison/；performance-analysis.json；logs/performance-gate.txt\", \"所需材料\": \"保持持久化的存储I/O排查与同口径再验；不能以取消刷盘或提高门槛修复\", \"修复文件路径\": \"backend/internal/outbox/dispatcher.go\", \"防御性核验\": \"保留行锁/SKIP LOCKED/消息确认/唯一约束；MySQL flush_at_commit=1、sync_binlog=1；完整verify通过\", \"轮次\": ROUND, \"子项\": \"单次100ms；部分根因已修复但整项未通过\"})"
+  },
+  {
+    "file": "tests/support/update_lesson9_round2_report.py",
+    "line": 102,
+    "text": "    summary = {\"time\": now, \"head\": head, \"origin_main\": subprocess.check_output([\"git\", \"rev-parse\", \"origin/main\"], cwd=ROOT, text=True).strip(), \"branch\": \"change/2026-11-18-fix-lesson9-retest\", \"uncommitted\": True, \"dependency\": {\"status\": \"复测通过\", \"before\": before[\"metadata\"][\"vulnerabilities\"], \"after\": audit[\"metadata\"][\"vulnerabilities\"], \"original_security_gate\": native}, \"performance\": {\"status\": \"复测失败\", \"threshold_ms\": 100, \"comparison\": comparison, \"original_verify_extra_samples\": regression.get(\"verify_latency\")}, \"cases_this_round\": counts, \"case_total\": len(cases), \"defects_latest\": {\"复测通过\": 1, \"复测失败\": 1}, \"grade\": grade[\"counts\"], \"verify\": regression[\"verify\"], \"playwright\": regression[\"playwright\"], \"conclusion\": \"依赖修复验收通过；性能部分改善但原100ms门槛仍失败；整体未完成，不提交不推送\"}"
+  },
+  {
+    "file": "tests/support/update_lesson9_round2_report.py",
+    "line": 142,
+    "text": "尚需：保持刷盘语义的存储/VM I/O定位和原100ms再验；用户审阅工具链迁移的开发体验变化；真人独立复现至少2条、正式演示录像与真人返工签字。AI实测记录不替代真人材料，已准备的复现/录屏清单仍在父fix-round/。"
+  },
+  {
+    "file": "tests/support/update_lesson9_round2_report.py",
+    "line": 146,
+    "text": "    append_section(REPORT / \"证据索引.md\", \"## 第二轮续修证据\\n\\n[结论与运行/证据表](fix-round/round-02/复测结论.md)、[源码与实际差异](fix-round/round-02/code-fingerprint.json)、[慢请求关联](fix-round/round-02/performance-analysis.json)、[汇总](fix-round/round-02/summary.json)。全部新增/修改测试入口逐项见[tests索引](../../../tests/README.md)。本轮原安全门禁通过，100ms门槛失败，不能用后续单轮通过覆盖失败。\")"
+  },
+  {
+    "file": "tests/support/update_lesson9_round2_report.py",
+    "line": 147,
+    "text": "    append_section(REPORT / \"课程要求映射.md\", \"## 第二轮续修补充\\n\\n依赖安全门禁现已实际通过，完整业务/安全回归和18项grade通过，证据见[本轮结论](fix-round/round-02/复测结论.md)。性能原100ms门槛仍失败，课程整体完成结论仍为未完成。真人独立复现、正式录像、真人返工签字仍需补齐；本地AI实测记录不替代。材料准备在reports下，未提交或发布。\")"
+  }
+]

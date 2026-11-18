@@ -1,0 +1,12 @@
+{
+  "time": "2026-11-18T17:11:39.920609+08:00",
+  "command": [
+    "mingw32-make",
+    "check-security"
+  ],
+  "threshold_changed": false,
+  "node": "v24.22.2",
+  "npm": "11.19.1",
+  "python": "Python 3.12.7",
+  "exit": 0
+}

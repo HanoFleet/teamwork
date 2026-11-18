@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-11-18T09:18:19.115854+08:00",
+  "fetch": "success",
+  "origin": "https://github.com/HanoFleet/teamwork.git",
+  "original_branch": "change/2026-11-06-security-precheck",
+  "original_head": "292eaaffc24fcad07e936ec6b4adf72dd6af8589",
+  "origin_main": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "tested": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "previous_attempt": "2026-11-18 08:31–08:36 +08:00 / bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "fixes": {
+    "7263dda": {
+      "commit": "7263dda211139292a7ff8f7539ed25429a9da983",
+      "in_main": true
+    },
+    "090ca01": {
+      "commit": "090ca01a08598e099905b3272ee5907bfb02c7ac",
+      "in_main": true
+    },
+    "cfe7e74": {
+      "commit": "cfe7e749329ba0f43a502893f22cc8e9c22535b7",
+      "in_main": true
+    }
+  },
+  "worktree_status": "",
+  "new_frontend_fix": "not found; frontend lockfile unchanged since previous attempt",
+  "fetched_at": "2026-11-18T08:56:31.974031+08:00"
+}

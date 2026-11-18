@@ -1,0 +1,93 @@
+sh scripts/check.sh
+== 规约与规范
+活动 change 规约自查
+仓库：/run/desktop/mnt/host/e/proj/teamwork-main-latest/qa/lesson9/fix-worktree
+活动 change：2
+------------------------------------------------------------
+变更：2026-10-14-upgrade-material-library
+  需求 26 / 场景 151 / 任务 46 / 能力 4
+------------------------------------------------------------
+变更：2026-11-18-fix-lesson9-retest
+  需求 2 / 场景 12 / 任务 5 / 能力 2
+------------------------------------------------------------
+汇总：2 个活动 change，28 条需求，163 个场景，51 条任务
+通过：四份文件、需求/场景结构、失败路径、对应表和任务清单均符合要求。
+八类工程规范自查
+仓库：/run/desktop/mnt/host/e/proj/teamwork-main-latest/qa/lesson9/fix-worktree
+------------------------------------------------------------
+  ✓ 产品设计（含前端）: 10 条规范
+  ✓ 后端开发: 11 条规范
+  ✓ 安全开发: 17 条规范
+  ✓ 测试: 12 条规范
+  ✓ 部署运维: 13 条规范
+  ✓ AI 应用: 10 条规范
+  ✓ 数据: 9 条规范
+  ✓ 评审与完成定义: 10 条规范
+------------------------------------------------------------
+通过：八类规范、常驻规则、工程技能、数据字典、四步核对、SPEC 入口和归档包均齐备。
+静态安全回归通过：无 raw HTML、无 localStorage token、CSRF/用例文件存在。
+PASS sqli apitest/cases/api/search/POST/case.json
+  前置：学生 A1 已登录。B 班预置讲义标题为「B班-牛顿定律笔记」。
+  操作：登录用户名提交 ' OR '1'='1。材料列表 q 和关键字检索 query 分别提交 ' OR '1'='1、% 和 _。
+  期望：登录返回 401。材料列表和检索返回 200，响应正文不含 B 班标题，没有 500，也没有 SQL 报错。
+PASS xss apitest/cases/api/materials/POST/case.json
+  前置：教师已登录。列表页用 React 文本节点渲染标题，正文用 ReactMarkdown，不启用 rehype-raw。
+  操作：上传文件名含 <script>alert(1) 且不含 / 的 Markdown（显示标题按最后一段路径取值，</script> 会被截断），正文含 <script>alert(1)</script>，再打开 /materials 查看页面源码。
+  期望：详情 JSON 把 <script> 写成 \u003cscript\u003e。列表页源码包含 &lt;script&gt;，不存在可执行的 <script>alert(1)</script>。
+PASS csrf apitest/cases/api/skills/grade/PATCH/case.json
+  前置：教师已登录。会话 Cookie 为 HttpOnly、SameSite=Lax。Cookie 写请求必须带 X-CSRF-Token。
+  操作：PATCH /api/skills/grade：不带令牌一次，带令牌但 Origin 为 https://evil.example 一次，带正确令牌且 Origin 为本站一次。
+  期望：缺令牌和跨源都返回 403，技能描述不变。正确令牌且同源返回 200。
+注入反例文件与静态 XSS 检查通过。在线三段式由 python3 scripts/verify.py 执行。
+== OpenSpec strict
+Note: OpenSpec collects anonymous usage stats. Opt out: OPENSPEC_TELEMETRY=0 or openspec config set telemetry.enabled false
+✓ change/2026-10-14-upgrade-material-library
+✓ change/2026-11-18-fix-lesson9-retest
+✓ spec/async-grading
+✓ spec/auth-upload
+✓ spec/knowledge-retrieval
+✓ spec/platform-foundation
+✓ spec/security-hardening
+Totals: 7 passed, 0 failed (7 items)
+npm notice
+npm notice New major version of npm available! 10.9.9 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice
+== 分层、密钥与变异
+分层检查通过：新增 httpapi 代码没有 SQL；遗留文件已登记为例外。
+密钥边界检查通过：工作树和提交历史都没有非空密钥赋值。
+接口层出现 SQL（新增代码必须放数据访问层）：
+  ✗ backend/internal/httpapi/zz_violation.go:3: const violation = "SELECT * FROM users"
+分层检查通过：新增 httpapi 代码没有 SQL；遗留文件已登记为例外。
+变异检查通过：注入 SQL 时失败，还原后通过。
+== Go 格式、测试与 vet
+?   	campusclaw/cmd/server	[no test files]
+?   	campusclaw/cmd/worker	[no test files]
+?   	campusclaw/internal/audit	[no test files]
+ok  	campusclaw/internal/auth	0.008s
+?   	campusclaw/internal/catalog	[no test files]
+ok  	campusclaw/internal/chat	0.008s
+ok  	campusclaw/internal/chunk	0.005s
+ok  	campusclaw/internal/config	0.006s
+?   	campusclaw/internal/db	[no test files]
+?   	campusclaw/internal/embed	[no test files]
+ok  	campusclaw/internal/grading	0.028s
+ok  	campusclaw/internal/health	0.008s
+?   	campusclaw/internal/httpapi	[no test files]
+?   	campusclaw/internal/knowledge	[no test files]
+ok  	campusclaw/internal/lifecycle	0.221s
+ok  	campusclaw/internal/logging	0.007s
+ok  	campusclaw/internal/materials	0.007s
+?   	campusclaw/internal/outbox	[no test files]
+?   	campusclaw/internal/qdrant	[no test files]
+ok  	campusclaw/internal/queue	0.027s
+ok  	campusclaw/internal/retrieval	0.004s
+?   	campusclaw/internal/worker	[no test files]
+== 前端构建
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            BuildKit is currently disabled; enable it by removing the DOCKER_BUILDKIT=0
+            environment-variable.
+
+前端 npm ci + build：通过
+check 全部通过

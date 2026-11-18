@@ -1,0 +1,120 @@
+{
+  "suggested_count": 44,
+  "included_source_files": 42,
+  "deleted_sources": [
+    "frontend/src/vite-env.d.ts",
+    "frontend/vite.config.ts"
+  ],
+  "missing": [],
+  "additional_selected_count": 562,
+  "explicit_excluded": [
+    {
+      "path": "reports/xss-page-source.md",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/build_release.py",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/diff-check.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/latency-contracts.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/openspec-strict.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/results.json",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/spec-check.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/standards-check.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/git-status-before.txt",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/npm-audit-result.json",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/npm-audit-stderr.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/npm-audit.json",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/preservation-before.json",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/suggested-source-reference.txt",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/validation-01/checkout.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/validation-01/worktree.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/Dockerfile.tools",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/grade-build-proxy.yml",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_fix_validation.py",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_grade.sh",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_grade_buildproxy.sh",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_grade_clean.sh",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_grade_final_host.py",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_make.sh",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "tests/release/lesson9-v2.json",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/browser-results/.last-run.json",
+      "reason": "ignored browser state; immutable alias in history-context.json"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/__pycache__/run_checks.cpython-312.pyc",
+      "reason": "historical CPython cache; explicitly non-published, see history-context.json"
+    }
+  ]
+}

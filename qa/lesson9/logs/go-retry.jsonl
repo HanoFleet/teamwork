@@ -1,0 +1,214 @@
+go : go: downloading golang.org/x/crypto v0.59.0
+所在位置 行:2 字符: 43
++ ... cn,direct'; go test -json ./... > ../../logs/go-retry.jsonl 2>&1; $LA ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (go: downloading.../crypto v0.59.0:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+go: downloading github.com/rabbitmq/amqp091-go v1.17.0
+go: downloading filippo.io/edwards25519 v1.1.1
+{"Time":"2026-11-18T08:33:49.3116929+08:00","Action":"start","Package":"campusclaw/cmd/server"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"output","Package":"campusclaw/cmd/server","Output":"?   \tcampusclaw/cmd/server\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"start","Package":"campusclaw/cmd/worker"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"skip","Package":"campusclaw/cmd/server","Elapsed":0.001}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"output","Package":"campusclaw/cmd/worker","Output":"?   \tcampusclaw/cmd/worker\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"skip","Package":"campusclaw/cmd/worker","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"start","Package":"campusclaw/internal/audit"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"output","Package":"campusclaw/internal/audit","Output":"?   \tcampusclaw/internal/audit\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"start","Package":"campusclaw/internal/auth"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"skip","Package":"campusclaw/internal/audit","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"start","Package":"campusclaw/internal/catalog"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"output","Package":"campusclaw/internal/catalog","Output":"?   \tcampusclaw/internal/catalog\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"skip","Package":"campusclaw/internal/catalog","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"start","Package":"campusclaw/internal/chat"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"start","Package":"campusclaw/internal/chunk"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"start","Package":"campusclaw/internal/config"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"start","Package":"campusclaw/internal/db"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"output","Package":"campusclaw/internal/db","Output":"?   \tcampusclaw/internal/db\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"skip","Package":"campusclaw/internal/db","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"start","Package":"campusclaw/internal/embed"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"output","Package":"campusclaw/internal/embed","Output":"?   \tcampusclaw/internal/embed\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.3122235+08:00","Action":"skip","Package":"campusclaw/internal/embed","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/grading"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/health"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/httpapi"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/httpapi","Output":"?   \tcampusclaw/internal/httpapi\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/knowledge"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"skip","Package":"campusclaw/internal/httpapi","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/knowledge","Output":"?   \tcampusclaw/internal/knowledge\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"skip","Package":"campusclaw/internal/knowledge","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/lifecycle"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"run","Package":"campusclaw/internal/lifecycle","Test":"TestServeDrainsInflightRequest"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/lifecycle","Test":"TestServeDrainsInflightRequest","Output":"=== RUN   TestServeDrainsInflightRequest\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/logging"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/lifecycle","Test":"TestServeDrainsInflightRequest","Output":"--- PASS: TestServeDrainsInflightRequest (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"pass","Package":"campusclaw/internal/lifecycle","Test":"TestServeDrainsInflightRequest","Elapsed":0.12}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"run","Package":"campusclaw/internal/lifecycle","Test":"TestServeForceClosesAfterTimeout"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/materials"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/lifecycle","Test":"TestServeForceClosesAfterTimeout","Output":"=== RUN   TestServeForceClosesAfterTimeout\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/lifecycle","Test":"TestServeForceClosesAfterTimeout","Output":"--- PASS: TestServeForceClosesAfterTimeout (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"pass","Package":"campusclaw/internal/lifecycle","Test":"TestServeForceClosesAfterTimeout","Elapsed":0.05}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/lifecycle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/lifecycle","Output":"ok  \tcampusclaw/internal/lifecycle\t(cached)\n"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"pass","Package":"campusclaw/internal/lifecycle","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/outbox"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/outbox","Output":"?   \tcampusclaw/internal/outbox\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"skip","Package":"campusclaw/internal/outbox","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/qdrant"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/qdrant","Output":"?   \tcampusclaw/internal/qdrant\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"skip","Package":"campusclaw/internal/qdrant","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/queue"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/retrieval"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"start","Package":"campusclaw/internal/worker"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"output","Package":"campusclaw/internal/worker","Output":"?   \tcampusclaw/internal/worker\t[no test files]\n"}
+{"Time":"2026-11-18T08:33:49.7675364+08:00","Action":"skip","Package":"campusclaw/internal/worker","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"run","Package":"campusclaw/internal/chunk","Test":"TestAutoDefaultWindow"}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"output","Package":"campusclaw/internal/chunk","Test":"TestAutoDefaultWindow","Output":"=== RUN   TestAutoDefaultWindow\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"output","Package":"campusclaw/internal/chunk","Test":"TestAutoDefaultWindow","Output":"--- PASS: TestAutoDefaultWindow (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"pass","Package":"campusclaw/internal/chunk","Test":"TestAutoDefaultWindow","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"run","Package":"campusclaw/internal/chunk","Test":"TestStrategiesDifferOnTitledDoc"}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"output","Package":"campusclaw/internal/chunk","Test":"TestStrategiesDifferOnTitledDoc","Output":"=== RUN   TestStrategiesDifferOnTitledDoc\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"output","Package":"campusclaw/internal/chunk","Test":"TestStrategiesDifferOnTitledDoc","Output":"--- PASS: TestStrategiesDifferOnTitledDoc (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"pass","Package":"campusclaw/internal/chunk","Test":"TestStrategiesDifferOnTitledDoc","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"run","Package":"campusclaw/internal/chunk","Test":"TestOffsetsOnSource"}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"output","Package":"campusclaw/internal/chunk","Test":"TestOffsetsOnSource","Output":"=== RUN   TestOffsetsOnSource\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"output","Package":"campusclaw/internal/chunk","Test":"TestOffsetsOnSource","Output":"--- PASS: TestOffsetsOnSource (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"pass","Package":"campusclaw/internal/chunk","Test":"TestOffsetsOnSource","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"run","Package":"campusclaw/internal/chunk","Test":"TestPreprocessDoesNotChangeCaller"}
+{"Time":"2026-11-18T08:33:49.8717566+08:00","Action":"output","Package":"campusclaw/internal/chunk","Test":"TestPreprocessDoesNotChangeCaller","Output":"=== RUN   TestPreprocessDoesNotChangeCaller\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.8722914+08:00","Action":"output","Package":"campusclaw/internal/chunk","Test":"TestPreprocessDoesNotChangeCaller","Output":"--- PASS: TestPreprocessDoesNotChangeCaller (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.8722914+08:00","Action":"pass","Package":"campusclaw/internal/chunk","Test":"TestPreprocessDoesNotChangeCaller","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.8722914+08:00","Action":"output","Package":"campusclaw/internal/chunk","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.8742754+08:00","Action":"output","Package":"campusclaw/internal/chunk","Output":"ok  \tcampusclaw/internal/chunk\t0.562s\n"}
+{"Time":"2026-11-18T08:33:49.8811747+08:00","Action":"pass","Package":"campusclaw/internal/chunk","Elapsed":0.569}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"run","Package":"campusclaw/internal/health","Test":"TestLive"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"output","Package":"campusclaw/internal/health","Test":"TestLive","Output":"=== RUN   TestLive\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"output","Package":"campusclaw/internal/health","Test":"TestLive","Output":"--- PASS: TestLive (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"pass","Package":"campusclaw/internal/health","Test":"TestLive","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"run","Package":"campusclaw/internal/health","Test":"TestReadyAllUp"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"output","Package":"campusclaw/internal/health","Test":"TestReadyAllUp","Output":"=== RUN   TestReadyAllUp\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"output","Package":"campusclaw/internal/health","Test":"TestReadyAllUp","Output":"--- PASS: TestReadyAllUp (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"pass","Package":"campusclaw/internal/health","Test":"TestReadyAllUp","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"run","Package":"campusclaw/internal/health","Test":"TestReadyDatabaseDown"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"output","Package":"campusclaw/internal/health","Test":"TestReadyDatabaseDown","Output":"=== RUN   TestReadyDatabaseDown\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"output","Package":"campusclaw/internal/health","Test":"TestReadyDatabaseDown","Output":"--- PASS: TestReadyDatabaseDown (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"pass","Package":"campusclaw/internal/health","Test":"TestReadyDatabaseDown","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"run","Package":"campusclaw/internal/health","Test":"TestReadyQdrantDown"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"output","Package":"campusclaw/internal/health","Test":"TestReadyQdrantDown","Output":"=== RUN   TestReadyQdrantDown\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"output","Package":"campusclaw/internal/health","Test":"TestReadyQdrantDown","Output":"--- PASS: TestReadyQdrantDown (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"pass","Package":"campusclaw/internal/health","Test":"TestReadyQdrantDown","Elapsed":0}
+{"Time":"2026-11-18T08:33:49.9361068+08:00","Action":"output","Package":"campusclaw/internal/health","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:49.937724+08:00","Action":"output","Package":"campusclaw/internal/health","Output":"ok  \tcampusclaw/internal/health\t0.168s\n"}
+{"Time":"2026-11-18T08:33:49.9438092+08:00","Action":"pass","Package":"campusclaw/internal/health","Elapsed":0.176}
+{"Time":"2026-11-18T08:33:51.1954476+08:00","Action":"run","Package":"campusclaw/internal/auth","Test":"TestJWTRoundTrip"}
+{"Time":"2026-11-18T08:33:51.1954476+08:00","Action":"output","Package":"campusclaw/internal/auth","Test":"TestJWTRoundTrip","Output":"=== RUN   TestJWTRoundTrip\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:51.1954476+08:00","Action":"output","Package":"campusclaw/internal/auth","Test":"TestJWTRoundTrip","Output":"--- PASS: TestJWTRoundTrip (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:51.1954476+08:00","Action":"pass","Package":"campusclaw/internal/auth","Test":"TestJWTRoundTrip","Elapsed":0}
+{"Time":"2026-11-18T08:33:51.1954476+08:00","Action":"run","Package":"campusclaw/internal/auth","Test":"TestJWTRejectsExpired"}
+{"Time":"2026-11-18T08:33:51.1954476+08:00","Action":"output","Package":"campusclaw/internal/auth","Test":"TestJWTRejectsExpired","Output":"=== RUN   TestJWTRejectsExpired\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:51.1954476+08:00","Action":"output","Package":"campusclaw/internal/auth","Test":"TestJWTRejectsExpired","Output":"--- PASS: TestJWTRejectsExpired (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:51.1954476+08:00","Action":"pass","Package":"campusclaw/internal/auth","Test":"TestJWTRejectsExpired","Elapsed":0}
+{"Time":"2026-11-18T08:33:51.1959533+08:00","Action":"output","Package":"campusclaw/internal/auth","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:51.1975451+08:00","Action":"output","Package":"campusclaw/internal/auth","Output":"ok  \tcampusclaw/internal/auth\t1.885s\n"}
+{"Time":"2026-11-18T08:33:51.2041007+08:00","Action":"pass","Package":"campusclaw/internal/auth","Elapsed":1.892}
+{"Time":"2026-11-18T08:33:51.2719995+08:00","Action":"run","Package":"campusclaw/internal/chat","Test":"TestPickAnswerMagnet"}
+{"Time":"2026-11-18T08:33:51.2719995+08:00","Action":"output","Package":"campusclaw/internal/chat","Test":"TestPickAnswerMagnet","Output":"=== RUN   TestPickAnswerMagnet\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:51.2719995+08:00","Action":"output","Package":"campusclaw/internal/chat","Test":"TestPickAnswerMagnet","Output":"--- PASS: TestPickAnswerMagnet (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:51.2719995+08:00","Action":"pass","Package":"campusclaw/internal/chat","Test":"TestPickAnswerMagnet","Elapsed":0}
+{"Time":"2026-11-18T08:33:51.2719995+08:00","Action":"output","Package":"campusclaw/internal/chat","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:51.2737935+08:00","Action":"output","Package":"campusclaw/internal/chat","Output":"ok  \tcampusclaw/internal/chat\t1.961s\n"}
+{"Time":"2026-11-18T08:33:51.2782979+08:00","Action":"pass","Package":"campusclaw/internal/chat","Elapsed":1.966}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"run","Package":"campusclaw/internal/materials","Test":"TestAllowedExt"}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"output","Package":"campusclaw/internal/materials","Test":"TestAllowedExt","Output":"=== RUN   TestAllowedExt\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"output","Package":"campusclaw/internal/materials","Test":"TestAllowedExt","Output":"--- PASS: TestAllowedExt (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"pass","Package":"campusclaw/internal/materials","Test":"TestAllowedExt","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"run","Package":"campusclaw/internal/materials","Test":"TestDisplayTitleStripsPath"}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"output","Package":"campusclaw/internal/materials","Test":"TestDisplayTitleStripsPath","Output":"=== RUN   TestDisplayTitleStripsPath\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"output","Package":"campusclaw/internal/materials","Test":"TestDisplayTitleStripsPath","Output":"--- PASS: TestDisplayTitleStripsPath (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"pass","Package":"campusclaw/internal/materials","Test":"TestDisplayTitleStripsPath","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"run","Package":"campusclaw/internal/materials","Test":"TestValidateText"}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"output","Package":"campusclaw/internal/materials","Test":"TestValidateText","Output":"=== RUN   TestValidateText\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"output","Package":"campusclaw/internal/materials","Test":"TestValidateText","Output":"--- PASS: TestValidateText (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"pass","Package":"campusclaw/internal/materials","Test":"TestValidateText","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.0961471+08:00","Action":"output","Package":"campusclaw/internal/materials","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.0977305+08:00","Action":"output","Package":"campusclaw/internal/materials","Output":"ok  \tcampusclaw/internal/materials\t3.329s\n"}
+{"Time":"2026-11-18T08:33:53.1034949+08:00","Action":"pass","Package":"campusclaw/internal/materials","Elapsed":3.336}
+{"Time":"2026-11-18T08:33:53.1576249+08:00","Action":"run","Package":"campusclaw/internal/queue","Test":"TestRetryQueueNames"}
+{"Time":"2026-11-18T08:33:53.1576249+08:00","Action":"output","Package":"campusclaw/internal/queue","Test":"TestRetryQueueNames","Output":"=== RUN   TestRetryQueueNames\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.1576249+08:00","Action":"output","Package":"campusclaw/internal/queue","Test":"TestRetryQueueNames","Output":"--- PASS: TestRetryQueueNames (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.1576249+08:00","Action":"pass","Package":"campusclaw/internal/queue","Test":"TestRetryQueueNames","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.1576249+08:00","Action":"output","Package":"campusclaw/internal/queue","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.1592239+08:00","Action":"output","Package":"campusclaw/internal/queue","Output":"ok  \tcampusclaw/internal/queue\t3.391s\n"}
+{"Time":"2026-11-18T08:33:53.1661145+08:00","Action":"pass","Package":"campusclaw/internal/queue","Elapsed":3.399}
+{"Time":"2026-11-18T08:33:53.1709399+08:00","Action":"run","Package":"campusclaw/internal/config","Test":"TestLoadRejectsMissingSecret"}
+{"Time":"2026-11-18T08:33:53.1714543+08:00","Action":"output","Package":"campusclaw/internal/config","Test":"TestLoadRejectsMissingSecret","Output":"=== RUN   TestLoadRejectsMissingSecret\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.1719778+08:00","Action":"output","Package":"campusclaw/internal/config","Test":"TestLoadRejectsMissingSecret","Output":"--- PASS: TestLoadRejectsMissingSecret (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.1719778+08:00","Action":"pass","Package":"campusclaw/internal/config","Test":"TestLoadRejectsMissingSecret","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.1719778+08:00","Action":"run","Package":"campusclaw/internal/config","Test":"TestLoadAcceptsExplicitEnv"}
+{"Time":"2026-11-18T08:33:53.1719778+08:00","Action":"output","Package":"campusclaw/internal/config","Test":"TestLoadAcceptsExplicitEnv","Output":"=== RUN   TestLoadAcceptsExplicitEnv\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.1730227+08:00","Action":"output","Package":"campusclaw/internal/config","Test":"TestLoadAcceptsExplicitEnv","Output":"--- PASS: TestLoadAcceptsExplicitEnv (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.1730227+08:00","Action":"pass","Package":"campusclaw/internal/config","Test":"TestLoadAcceptsExplicitEnv","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.1730227+08:00","Action":"output","Package":"campusclaw/internal/config","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.1746326+08:00","Action":"output","Package":"campusclaw/internal/config","Output":"ok  \tcampusclaw/internal/config\t3.862s\n"}
+{"Time":"2026-11-18T08:33:53.180394+08:00","Action":"pass","Package":"campusclaw/internal/config","Elapsed":3.868}
+{"Time":"2026-11-18T08:33:53.2089622+08:00","Action":"run","Package":"campusclaw/internal/logging","Test":"TestValidRequestID"}
+{"Time":"2026-11-18T08:33:53.2089622+08:00","Action":"output","Package":"campusclaw/internal/logging","Test":"TestValidRequestID","Output":"=== RUN   TestValidRequestID\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2089622+08:00","Action":"output","Package":"campusclaw/internal/logging","Test":"TestValidRequestID","Output":"--- PASS: TestValidRequestID (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2089622+08:00","Action":"pass","Package":"campusclaw/internal/logging","Test":"TestValidRequestID","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2089622+08:00","Action":"run","Package":"campusclaw/internal/logging","Test":"TestMiddlewareGeneratesAndEchoesRequestID"}
+{"Time":"2026-11-18T08:33:53.2089622+08:00","Action":"output","Package":"campusclaw/internal/logging","Test":"TestMiddlewareGeneratesAndEchoesRequestID","Output":"=== RUN   TestMiddlewareGeneratesAndEchoesRequestID\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2202075+08:00","Action":"run","Package":"campusclaw/internal/grading","Test":"TestIdempotencyKey"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestIdempotencyKey","Output":"=== RUN   TestIdempotencyKey\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestIdempotencyKey","Output":"--- PASS: TestIdempotencyKey (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"pass","Package":"campusclaw/internal/grading","Test":"TestIdempotencyKey","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"run","Package":"campusclaw/internal/grading","Test":"TestScoreLocalRange"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestScoreLocalRange","Output":"=== RUN   TestScoreLocalRange\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestScoreLocalRange","Output":"--- PASS: TestScoreLocalRange (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"pass","Package":"campusclaw/internal/grading","Test":"TestScoreLocalRange","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"run","Package":"campusclaw/internal/grading","Test":"TestClassifySentinels"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestClassifySentinels","Output":"=== RUN   TestClassifySentinels\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestClassifySentinels","Output":"--- PASS: TestClassifySentinels (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"pass","Package":"campusclaw/internal/grading","Test":"TestClassifySentinels","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"run","Package":"campusclaw/internal/grading","Test":"TestStateMachineHappyPath"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestStateMachineHappyPath","Output":"=== RUN   TestStateMachineHappyPath\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestStateMachineHappyPath","Output":"--- PASS: TestStateMachineHappyPath (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"pass","Package":"campusclaw/internal/grading","Test":"TestStateMachineHappyPath","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"run","Package":"campusclaw/internal/grading","Test":"TestStateMachineTransientThenDead"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestStateMachineTransientThenDead","Output":"=== RUN   TestStateMachineTransientThenDead\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestStateMachineTransientThenDead","Output":"--- PASS: TestStateMachineTransientThenDead (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"pass","Package":"campusclaw/internal/grading","Test":"TestStateMachineTransientThenDead","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"run","Package":"campusclaw/internal/grading","Test":"TestStateMachinePermanentFailed"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestStateMachinePermanentFailed","Output":"=== RUN   TestStateMachinePermanentFailed\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestStateMachinePermanentFailed","Output":"--- PASS: TestStateMachinePermanentFailed (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"pass","Package":"campusclaw/internal/grading","Test":"TestStateMachinePermanentFailed","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"run","Package":"campusclaw/internal/grading","Test":"TestIllegalTransfers"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestIllegalTransfers","Output":"=== RUN   TestIllegalTransfers\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestIllegalTransfers","Output":"--- PASS: TestIllegalTransfers (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"pass","Package":"campusclaw/internal/grading","Test":"TestIllegalTransfers","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"run","Package":"campusclaw/internal/grading","Test":"TestRetrySeconds"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestRetrySeconds","Output":"=== RUN   TestRetrySeconds\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Test":"TestRetrySeconds","Output":"--- PASS: TestRetrySeconds (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"pass","Package":"campusclaw/internal/grading","Test":"TestRetrySeconds","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2207334+08:00","Action":"output","Package":"campusclaw/internal/grading","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2223243+08:00","Action":"output","Package":"campusclaw/internal/grading","Output":"ok  \tcampusclaw/internal/grading\t3.455s\n"}
+{"Time":"2026-11-18T08:33:53.2297917+08:00","Action":"pass","Package":"campusclaw/internal/grading","Elapsed":3.462}
+{"Time":"2026-11-18T08:33:53.2410133+08:00","Action":"run","Package":"campusclaw/internal/retrieval","Test":"TestRRFPrefersOverlap"}
+{"Time":"2026-11-18T08:33:53.2410133+08:00","Action":"output","Package":"campusclaw/internal/retrieval","Test":"TestRRFPrefersOverlap","Output":"=== RUN   TestRRFPrefersOverlap\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2410133+08:00","Action":"output","Package":"campusclaw/internal/retrieval","Test":"TestRRFPrefersOverlap","Output":"--- PASS: TestRRFPrefersOverlap (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2410133+08:00","Action":"pass","Package":"campusclaw/internal/retrieval","Test":"TestRRFPrefersOverlap","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2410133+08:00","Action":"run","Package":"campusclaw/internal/retrieval","Test":"TestRRFMissingListAddsNothing"}
+{"Time":"2026-11-18T08:33:53.2410133+08:00","Action":"output","Package":"campusclaw/internal/retrieval","Test":"TestRRFMissingListAddsNothing","Output":"=== RUN   TestRRFMissingListAddsNothing\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2410133+08:00","Action":"output","Package":"campusclaw/internal/retrieval","Test":"TestRRFMissingListAddsNothing","Output":"--- PASS: TestRRFMissingListAddsNothing (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2410133+08:00","Action":"pass","Package":"campusclaw/internal/retrieval","Test":"TestRRFMissingListAddsNothing","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2410133+08:00","Action":"output","Package":"campusclaw/internal/retrieval","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.243172+08:00","Action":"output","Package":"campusclaw/internal/retrieval","Output":"ok  \tcampusclaw/internal/retrieval\t3.474s\n"}
+{"Time":"2026-11-18T08:33:53.2492977+08:00","Action":"pass","Package":"campusclaw/internal/retrieval","Elapsed":3.482}
+{"Time":"2026-11-18T08:33:53.2536567+08:00","Action":"output","Package":"campusclaw/internal/logging","Test":"TestMiddlewareGeneratesAndEchoesRequestID","Output":"--- PASS: TestMiddlewareGeneratesAndEchoesRequestID (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2541848+08:00","Action":"pass","Package":"campusclaw/internal/logging","Test":"TestMiddlewareGeneratesAndEchoesRequestID","Elapsed":0.04}
+{"Time":"2026-11-18T08:33:53.2541848+08:00","Action":"run","Package":"campusclaw/internal/logging","Test":"TestMiddlewareKeepsValidRequestID"}
+{"Time":"2026-11-18T08:33:53.2541848+08:00","Action":"output","Package":"campusclaw/internal/logging","Test":"TestMiddlewareKeepsValidRequestID","Output":"=== RUN   TestMiddlewareKeepsValidRequestID\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2541848+08:00","Action":"output","Package":"campusclaw/internal/logging","Test":"TestMiddlewareKeepsValidRequestID","Output":"--- PASS: TestMiddlewareKeepsValidRequestID (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2541848+08:00","Action":"pass","Package":"campusclaw/internal/logging","Test":"TestMiddlewareKeepsValidRequestID","Elapsed":0}
+{"Time":"2026-11-18T08:33:53.2541848+08:00","Action":"output","Package":"campusclaw/internal/logging","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:33:53.2563466+08:00","Action":"output","Package":"campusclaw/internal/logging","Output":"ok  \tcampusclaw/internal/logging\t3.487s\n"}
+{"Time":"2026-11-18T08:33:53.2618685+08:00","Action":"pass","Package":"campusclaw/internal/logging","Elapsed":3.4939999999999998}

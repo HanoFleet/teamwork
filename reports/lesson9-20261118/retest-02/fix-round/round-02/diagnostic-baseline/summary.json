@@ -1,0 +1,9 @@
+{
+  "started": "2026-11-18T16:17:33.076879+08:00",
+  "label": "baseline",
+  "head": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+  "uncommitted": true,
+  "project": "teamwork-tests-latency-diagnosis-c5aae1f3",
+  "error": "RuntimeError: compose-build failed: exit 1; see saved output",
+  "finished": "2026-11-18T16:17:53.676594+08:00"
+}

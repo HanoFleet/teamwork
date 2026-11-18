@@ -1,0 +1,218 @@
+[
+  {
+    "path": ".github/workflows/check.yml",
+    "sha256": "9dabe5d5495c62aff9fa7f7f4dbb15f670089b1800d87e5b80834bfc95db91b4",
+    "references": [
+      {
+        "line": 21,
+        "text": "      - run: make check-security"
+      },
+      {
+        "line": 22,
+        "text": "      - run: make check"
+      },
+      {
+        "line": 29,
+        "text": "      - run: sh scripts/grade.sh"
+      },
+      {
+        "line": 50,
+        "text": "        run: python3 scripts/verify.py"
+      },
+      {
+        "line": 56,
+        "text": "        run: cd frontend/e2e && npx playwright test"
+      }
+    ]
+  },
+  {
+    "path": "Makefile",
+    "sha256": "67926eb83121317d215c73c43d83c9c6a4ae8e446876308281fe481b84855c22",
+    "references": [
+      {
+        "line": 1,
+        "text": ".PHONY: up down logs check check-security acceptance grade"
+      },
+      {
+        "line": 15,
+        "text": "check-security:"
+      },
+      {
+        "line": 22,
+        "text": "\tsh scripts/grade.sh"
+      }
+    ]
+  },
+  {
+    "path": "scripts/check.sh",
+    "sha256": "a60083e33b8e4193ca471692cee6517e045efc4a5a8de6fbfb2915319fc346cb",
+    "references": [
+      {
+        "line": 8,
+        "text": "python3 tests/performance/latency_gate_contract.py"
+      }
+    ]
+  },
+  {
+    "path": "scripts/grade.sh",
+    "sha256": "b6c1d6e717c07f7dc37292d7212362ba90f12f07e4c3f2974151a373913d2a05",
+    "references": []
+  },
+  {
+    "path": "scripts/security_gate.py",
+    "sha256": "a059f25f61c662af3e04422908e39401512fc74fca23020d1bee62cdc4934521",
+    "references": []
+  },
+  {
+    "path": "scripts/govuln_check.py",
+    "sha256": "16b64f45b29c62aadfd46455ab5d7b36514d271f68a343490b37bb7a1e99bab0",
+    "references": []
+  },
+  {
+    "path": "scripts/verify.py",
+    "sha256": "4c646591b371cbc932aaff26ad378a46037f123738043b8ad0040c840b3f22e9",
+    "references": []
+  },
+  {
+    "path": "scripts/async_test.py",
+    "sha256": "3a5b66f288d31815099a4711f25c20153b3a36a890a20e6fa640dc2ad2f42dad",
+    "references": [
+      {
+        "line": 252,
+        "text": "    if p95 >= 500:"
+      },
+      {
+        "line": 254,
+        "text": "    note(f\"PASS 20 次批改 P95={p95:.1f}ms < 500ms，响应不含分数 times=[{rendered}]\")"
+      }
+    ]
+  },
+  {
+    "path": "scripts/acceptance.py",
+    "sha256": "e8af790d2a85050376ecc0770c292a99c147db86c9e015d918b5eb13085a4c38",
+    "references": []
+  },
+  {
+    "path": "tests/performance/check_single_request_limit.py",
+    "sha256": "8ebe329bc74bc4ba556fb37b93fc151d96c8f2dc8df638647cf8a45f5a0475e3",
+    "references": [
+      {
+        "line": 1,
+        "text": "\"\"\"Observe individual latency above 100ms and enforce 20 samples / P95 < 500ms.\"\"\""
+      },
+      {
+        "line": 10,
+        "text": "def evaluate_samples(samples):"
+      },
+      {
+        "line": 28,
+        "text": "                async_p95_pass=p95 < 500, passed=valid and p95 < 500)"
+      },
+      {
+        "line": 31,
+        "text": "def print_evaluation(result):"
+      },
+      {
+        "line": 47,
+        "text": "            result = evaluate_samples(data[\"samples\"])"
+      },
+      {
+        "line": 48,
+        "text": "            print_evaluation(result)"
+      }
+    ]
+  },
+  {
+    "path": "tests/performance/latency_gate_contract.py",
+    "sha256": "4d952241074c156b22d813adf94dbe900d89b854ec2d2e98acc0ee029de0634f",
+    "references": [
+      {
+        "line": 10,
+        "text": "from check_single_request_limit import evaluate_samples"
+      },
+      {
+        "line": 41,
+        "text": "    def test_100ms_boundary_has_no_warning(self):"
+      },
+      {
+        "line": 46,
+        "text": "    def test_above_100ms_warns_in_both_entries(self):"
+      },
+      {
+        "line": 62,
+        "text": "    def test_p95_below_500_passes(self):"
+      },
+      {
+        "line": 65,
+        "text": "    def test_p95_at_or_above_500_fails(self):"
+      },
+      {
+        "line": 92,
+        "text": "        self.assertFalse(evaluate_samples(rows)[\"passed\"])"
+      }
+    ]
+  },
+  {
+    "path": "tests/performance/grade_enqueue_latency.py",
+    "sha256": "caf253f9f39936733476c156d321fc4c0f4293ccc79bddc3cdba0fdf4a98fda7",
+    "references": [
+      {
+        "line": 3,
+        "text": "from check_single_request_limit import evaluate_samples, print_evaluation"
+      },
+      {
+        "line": 24,
+        "text": "    result.update(evaluate_samples(samples))"
+      },
+      {
+        "line": 25,
+        "text": "    print_evaluation(result)"
+      },
+      {
+        "line": 34,
+        "text": "    options = arguments('20 sequential grade enqueue samples; retain all values; 100ms observation and P95 < 500ms gate')"
+      }
+    ]
+  },
+  {
+    "path": "tests/performance/grade_latency_diagnostics.py",
+    "sha256": "0d15253b13e80003b5eab5810abd6453a7e6f14fc0bde4fa8b574984127890e1",
+    "references": [
+      {
+        "line": 5,
+        "text": "hard assertion are retained. Individual latency >100ms emits warnings. SQL observation happens outside timed calls."
+      },
+      {
+        "line": 20,
+        "text": "from check_single_request_limit import RULE, evaluate_samples, print_evaluation"
+      },
+      {
+        "line": 77,
+        "text": "    result.update(evaluate_samples(samples))"
+      },
+      {
+        "line": 78,
+        "text": "    print_evaluation(result)"
+      },
+      {
+        "line": 157,
+        "text": "                for label, command in [(\"e2e-install\", [\"cmd\", \"/c\", \"npm ci --registry=https://registry.npmjs.org\"]), (\"playwright\", [\"cmd\", \"/c\", \"npx playwright test\"])]:"
+      }
+    ]
+  },
+  {
+    "path": "tests/performance/compare_outbox_isolation.py",
+    "sha256": "ded18f1b66f2ea4e4d2b47739a31cebc7e8efc53b330f1fb3727d8ca4deca2df",
+    "references": []
+  },
+  {
+    "path": "scripts/qa/lesson9/check_performance.py",
+    "sha256": "08137b293487034169c9ed31195c743a09ada43c0d368e14c4d358215e0041eb",
+    "references": []
+  },
+  {
+    "path": "scripts/qa/lesson9/performance_probe.py",
+    "sha256": "99c9e5d891398da434904fb5081ca2ffbd6c100693e779cbf3805eb80a3995a6",
+    "references": []
+  }
+]

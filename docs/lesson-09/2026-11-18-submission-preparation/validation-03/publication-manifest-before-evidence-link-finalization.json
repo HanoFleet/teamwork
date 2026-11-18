@@ -1,0 +1,3748 @@
+{
+  "schema": 1,
+  "baseline_commit": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+  "scope": "explicit working-tree delta over baseline",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "immutable": false,
+      "worktree_sha256": "b0a7b7147c607cc9e33667d7b11e49b3e0601ccdb58c4ba3975a925572436852",
+      "git_blob_sha256": "b0a7b7147c607cc9e33667d7b11e49b3e0601ccdb58c4ba3975a925572436852"
+    },
+    {
+      "path": ".gitignore",
+      "immutable": false,
+      "worktree_sha256": "dbe5358e2f372afa46dd3ad37c474e3cecadabc7ccc232fb1a05e0f62c7f70ed",
+      "git_blob_sha256": "dbe5358e2f372afa46dd3ad37c474e3cecadabc7ccc232fb1a05e0f62c7f70ed"
+    },
+    {
+      "path": "backend/Dockerfile",
+      "immutable": false,
+      "worktree_sha256": "6eff0cce3e81354ccb101edf0296287b9d8fae797fc0f73b1a35a4819ae15d4b",
+      "git_blob_sha256": "6eff0cce3e81354ccb101edf0296287b9d8fae797fc0f73b1a35a4819ae15d4b"
+    },
+    {
+      "path": "backend/internal/outbox/dispatcher.go",
+      "immutable": false,
+      "worktree_sha256": "5cbbf4da4b261f35c3d434024fb980930fffcd5dd4447e8a120419f5c25eacdc",
+      "git_blob_sha256": "5cbbf4da4b261f35c3d434024fb980930fffcd5dd4447e8a120419f5c25eacdc"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/acceptance-project-before.log",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/boundary-p95-500.json",
+      "immutable": true,
+      "worktree_sha256": "addf24db7d15aee130214a90128dd9ddc33c8f2c80b2c5b0e40242c9c18668f0",
+      "git_blob_sha256": "addf24db7d15aee130214a90128dd9ddc33c8f2c80b2c5b0e40242c9c18668f0"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/boundary-warning.json",
+      "immutable": true,
+      "worktree_sha256": "412c0f7aaa2faa71121cc50346986e626f04ae983fd2b5baabcaa811345d26ee",
+      "git_blob_sha256": "412c0f7aaa2faa71121cc50346986e626f04ae983fd2b5baabcaa811345d26ee"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/compat-cli-boundary-p95-500.log",
+      "immutable": true,
+      "worktree_sha256": "9834507cb81e603da631d2f3b91d104573e065b16a42b3de3b91d6e7d9dd2571",
+      "git_blob_sha256": "9834507cb81e603da631d2f3b91d104573e065b16a42b3de3b91d6e7d9dd2571"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/compat-cli-boundary-warning.log",
+      "immutable": true,
+      "worktree_sha256": "355c9b40d12b8745e1611dc2601a8a1a206066da4be26a00072f5fd4c647bb4b",
+      "git_blob_sha256": "355c9b40d12b8745e1611dc2601a8a1a206066da4be26a00072f5fd4c647bb4b"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/conditions.json",
+      "immutable": true,
+      "worktree_sha256": "f5829b33574c057d4b53b19e472d1f0896da31bfa0825e97304324437b92cd8a",
+      "git_blob_sha256": "f5829b33574c057d4b53b19e472d1f0896da31bfa0825e97304324437b92cd8a"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/current-cli-boundary-p95-500.log",
+      "immutable": true,
+      "worktree_sha256": "9834507cb81e603da631d2f3b91d104573e065b16a42b3de3b91d6e7d9dd2571",
+      "git_blob_sha256": "9834507cb81e603da631d2f3b91d104573e065b16a42b3de3b91d6e7d9dd2571"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/current-cli-boundary-warning.log",
+      "immutable": true,
+      "worktree_sha256": "355c9b40d12b8745e1611dc2601a8a1a206066da4be26a00072f5fd4c647bb4b",
+      "git_blob_sha256": "355c9b40d12b8745e1611dc2601a8a1a206066da4be26a00072f5fd4c647bb4b"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/diff-check-after.log",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/docker-images.log",
+      "immutable": true,
+      "worktree_sha256": "6a441f92e0f735a5f237999299374b7d4847fa101b0aae9ac308b37037630f0b",
+      "git_blob_sha256": "6a441f92e0f735a5f237999299374b7d4847fa101b0aae9ac308b37037630f0b"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/docker-info.log",
+      "immutable": true,
+      "worktree_sha256": "aadf45269f84bcc3039713e16c3a30ddfb37278d62d5bb6cf3a2e03a9e850de4",
+      "git_blob_sha256": "aadf45269f84bcc3039713e16c3a30ddfb37278d62d5bb6cf3a2e03a9e850de4"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/docker-networks-after.log",
+      "immutable": true,
+      "worktree_sha256": "845f9fcc61fe20c9c526c92430abe26700f3e87ed821e2236340f620e05ba9b3",
+      "git_blob_sha256": "845f9fcc61fe20c9c526c92430abe26700f3e87ed821e2236340f620e05ba9b3"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/docker-networks-before.log",
+      "immutable": true,
+      "worktree_sha256": "845f9fcc61fe20c9c526c92430abe26700f3e87ed821e2236340f620e05ba9b3",
+      "git_blob_sha256": "845f9fcc61fe20c9c526c92430abe26700f3e87ed821e2236340f620e05ba9b3"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/docker-owned-projects-after.log",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/docker-ps-after.log",
+      "immutable": true,
+      "worktree_sha256": "7950f0cd11ec93245598fb8fd21fb9a91d0aac41df381cdc1b592e8c5609d858",
+      "git_blob_sha256": "7950f0cd11ec93245598fb8fd21fb9a91d0aac41df381cdc1b592e8c5609d858"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/docker-ps-before.log",
+      "immutable": true,
+      "worktree_sha256": "fa96fe13b818039995a168236b643ce6d7367873d399eab982749a6b293c77bd",
+      "git_blob_sha256": "fa96fe13b818039995a168236b643ce6d7367873d399eab982749a6b293c77bd"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/entrypoint-audit.json",
+      "immutable": true,
+      "worktree_sha256": "3ca2e1e1ee551087c79a471fb0f12c432583d3a8a4e37e1f21682ffed74d1a7c",
+      "git_blob_sha256": "3ca2e1e1ee551087c79a471fb0f12c432583d3a8a4e37e1f21682ffed74d1a7c"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/environment-preservation.json",
+      "immutable": true,
+      "worktree_sha256": "3934e856e81dfb711144d861600db294809c4f94c699565154be7e689223ad32",
+      "git_blob_sha256": "3934e856e81dfb711144d861600db294809c4f94c699565154be7e689223ad32"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/frontend-check-tag-before.log",
+      "immutable": true,
+      "worktree_sha256": "012ecce976dae15d9d084343525bb25f9cdafd014c562d02a8e5dec4b3b169e3",
+      "git_blob_sha256": "012ecce976dae15d9d084343525bb25f9cdafd014c562d02a8e5dec4b3b169e3"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/git-diff-stat.txt",
+      "immutable": true,
+      "worktree_sha256": "ed139b4c533b28bdfbae519a26f9045c3ed3fd60d25b73238fdc3b94f84b32da",
+      "git_blob_sha256": "ed139b4c533b28bdfbae519a26f9045c3ed3fd60d25b73238fdc3b94f84b32da"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/git-head-after.log",
+      "immutable": true,
+      "worktree_sha256": "13d34d00c7e6fa7c8465ef5abfdbb535bdb587e0ba9bda9aa8f9adecb129acd9",
+      "git_blob_sha256": "13d34d00c7e6fa7c8465ef5abfdbb535bdb587e0ba9bda9aa8f9adecb129acd9"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/git-head.txt",
+      "immutable": true,
+      "worktree_sha256": "83e419895470486aabb31a2c9673645873d19b6e46d2ce845bdf1d091629ec40",
+      "git_blob_sha256": "83e419895470486aabb31a2c9673645873d19b6e46d2ce845bdf1d091629ec40"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/git-remote.txt",
+      "immutable": true,
+      "worktree_sha256": "d3f0021769bb0a8074b4acf036e9de72f558e030d689b10ed4085b02eb410e4b",
+      "git_blob_sha256": "d3f0021769bb0a8074b4acf036e9de72f558e030d689b10ed4085b02eb410e4b"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/git-status-after.log",
+      "immutable": true,
+      "worktree_sha256": "3626177e3b82765b331dcd138e174499f84e691a5618b5593862ce78ad91e7b8",
+      "git_blob_sha256": "3626177e3b82765b331dcd138e174499f84e691a5618b5593862ce78ad91e7b8"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/git-status-before.txt",
+      "immutable": true,
+      "worktree_sha256": "3626177e3b82765b331dcd138e174499f84e691a5618b5593862ce78ad91e7b8",
+      "git_blob_sha256": "3626177e3b82765b331dcd138e174499f84e691a5618b5593862ce78ad91e7b8"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/git-worktrees.txt",
+      "immutable": true,
+      "worktree_sha256": "9f8d00ed37b6ac62b0e8fafe6189359310d1641b998d4e5d32b3202620bfac0d",
+      "git_blob_sha256": "9f8d00ed37b6ac62b0e8fafe6189359310d1641b998d4e5d32b3202620bfac0d"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-access.json",
+      "immutable": true,
+      "worktree_sha256": "a2f22b837a2bbebd34e399e4b0515be1337b8ce699b41a8057a86f698dd12b7e",
+      "git_blob_sha256": "a2f22b837a2bbebd34e399e4b0515be1337b8ce699b41a8057a86f698dd12b7e"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-annotations-133897954274.json",
+      "immutable": true,
+      "worktree_sha256": "4ce1aa7937c4e2031313064814f1f5390725bb1bc820a8801a4efad4c9403a86",
+      "git_blob_sha256": "4ce1aa7937c4e2031313064814f1f5390725bb1bc820a8801a4efad4c9403a86"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-annotations-134563317651.json",
+      "immutable": true,
+      "worktree_sha256": "81204855da881f829ae774bd478d5ef1385de1d5f423a3e0739bd6e838365f10",
+      "git_blob_sha256": "81204855da881f829ae774bd478d5ef1385de1d5f423a3e0739bd6e838365f10"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-annotations-134563837300.json",
+      "immutable": true,
+      "worktree_sha256": "81204855da881f829ae774bd478d5ef1385de1d5f423a3e0739bd6e838365f10",
+      "git_blob_sha256": "81204855da881f829ae774bd478d5ef1385de1d5f423a3e0739bd6e838365f10"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-annotations-134652992899.json",
+      "immutable": true,
+      "worktree_sha256": "81204855da881f829ae774bd478d5ef1385de1d5f423a3e0739bd6e838365f10",
+      "git_blob_sha256": "81204855da881f829ae774bd478d5ef1385de1d5f423a3e0739bd6e838365f10"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-details-access.json",
+      "immutable": true,
+      "worktree_sha256": "0564befaf688bc16ff8b4bdbadb813346e9c3c8c51fe4af26c6895ede55e78b9",
+      "git_blob_sha256": "0564befaf688bc16ff8b4bdbadb813346e9c3c8c51fe4af26c6895ede55e78b9"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-jobs-44041821128.json",
+      "immutable": true,
+      "worktree_sha256": "e652176016f2c92d6bc533e0475458f6b3887f75de383b738f90a77df03e89c4",
+      "git_blob_sha256": "e652176016f2c92d6bc533e0475458f6b3887f75de383b738f90a77df03e89c4"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-jobs-44233303139.json",
+      "immutable": true,
+      "worktree_sha256": "1492f5145e7f2365c57d7c9e091f8e01ef7f5e0e8728dd1a1663c6888c4ec733",
+      "git_blob_sha256": "1492f5145e7f2365c57d7c9e091f8e01ef7f5e0e8728dd1a1663c6888c4ec733"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-jobs-44233461559.json",
+      "immutable": true,
+      "worktree_sha256": "8752a2726218da30d940dd6d8bb25d2caccd944b8dbd9f21e250f9954a4617ca",
+      "git_blob_sha256": "8752a2726218da30d940dd6d8bb25d2caccd944b8dbd9f21e250f9954a4617ca"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-jobs-44260682697.json",
+      "immutable": true,
+      "worktree_sha256": "58d55b0cb4766055f87ec4925ac9b4dcbfc5d3a6c6e5389d0f84b61a6bf4239f",
+      "git_blob_sha256": "58d55b0cb4766055f87ec4925ac9b4dcbfc5d3a6c6e5389d0f84b61a6bf4239f"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-logs-44041821128.zip",
+      "immutable": true,
+      "worktree_sha256": "5e6461ca90e3fbe0aea688745004a1cc1967b0c170d0663ec410e808a893f3c0",
+      "git_blob_sha256": "5e6461ca90e3fbe0aea688745004a1cc1967b0c170d0663ec410e808a893f3c0"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-logs-44233303139.zip",
+      "immutable": true,
+      "worktree_sha256": "61046ac8ffd82560eb79d78d8f147059d9676bc56483d092ca127f255ad39e77",
+      "git_blob_sha256": "61046ac8ffd82560eb79d78d8f147059d9676bc56483d092ca127f255ad39e77"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-logs-44233461559.zip",
+      "immutable": true,
+      "worktree_sha256": "3c66cd6b867c513ab3601b5ceebdeba2b58b17003f8c960caa0ed04f852eca98",
+      "git_blob_sha256": "3c66cd6b867c513ab3601b5ceebdeba2b58b17003f8c960caa0ed04f852eca98"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-logs-44260682697.zip",
+      "immutable": true,
+      "worktree_sha256": "9edde2c6038a2ee8e8cdadbebfe3071af635e5fb0a6943d0355ae37edb80dd80",
+      "git_blob_sha256": "9edde2c6038a2ee8e8cdadbebfe3071af635e5fb0a6943d0355ae37edb80dd80"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-run-44041821128/2_check.txt",
+      "immutable": true,
+      "worktree_sha256": "a46ac0df56613eb9dfa6190d644d95ec5fc941dff09279ab2cc6db4fcc716485",
+      "git_blob_sha256": "a46ac0df56613eb9dfa6190d644d95ec5fc941dff09279ab2cc6db4fcc716485"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-run-44041821128/check__system.txt",
+      "immutable": true,
+      "worktree_sha256": "00d999b67eb0568fd74ab9bc729342daeaa799b804533ea88d33437c961c2db6",
+      "git_blob_sha256": "00d999b67eb0568fd74ab9bc729342daeaa799b804533ea88d33437c961c2db6"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-run-44233303139/2_check.txt",
+      "immutable": true,
+      "worktree_sha256": "057ad86e83647a79aef007023478d83e1537e5542b553b72180c0850ad9ded9d",
+      "git_blob_sha256": "057ad86e83647a79aef007023478d83e1537e5542b553b72180c0850ad9ded9d"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-run-44233303139/check__system.txt",
+      "immutable": true,
+      "worktree_sha256": "2316c1c5aae0b3f346eef8446b2ace9964d76096175e1c2810f97285fac54ab3",
+      "git_blob_sha256": "2316c1c5aae0b3f346eef8446b2ace9964d76096175e1c2810f97285fac54ab3"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-run-44233461559/1_check.txt",
+      "immutable": true,
+      "worktree_sha256": "9b563f946f89b995d1de9e3686c64ec0a2a7a6e6fe9059c912ff9c7e12d6003b",
+      "git_blob_sha256": "9b563f946f89b995d1de9e3686c64ec0a2a7a6e6fe9059c912ff9c7e12d6003b"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-run-44233461559/check__system.txt",
+      "immutable": true,
+      "worktree_sha256": "f487b4df424b5cdb38b9a5e57599fbd92a143b9982dd12265caa589bd7681b9a",
+      "git_blob_sha256": "f487b4df424b5cdb38b9a5e57599fbd92a143b9982dd12265caa589bd7681b9a"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-run-44260682697/2_check.txt",
+      "immutable": true,
+      "worktree_sha256": "b5d8bb795f9472efb39e4408a743743db339aaa29772baee81baa48e9f9a247e",
+      "git_blob_sha256": "b5d8bb795f9472efb39e4408a743743db339aaa29772baee81baa48e9f9a247e"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-run-44260682697/check__system.txt",
+      "immutable": true,
+      "worktree_sha256": "761d9e6f2ae4ef65283daa52787618e1776f31629e5ed551f1d3f01323996f27",
+      "git_blob_sha256": "761d9e6f2ae4ef65283daa52787618e1776f31629e5ed551f1d3f01323996f27"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/github-runs.json",
+      "immutable": true,
+      "worktree_sha256": "f8b1f47446f0fb8adcb93cc760c7f429dbc3980a85f7c3503762d6643c62deb2",
+      "git_blob_sha256": "f8b1f47446f0fb8adcb93cc760c7f429dbc3980a85f7c3503762d6643c62deb2"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/grade-network-retry.json",
+      "immutable": true,
+      "worktree_sha256": "9ce73e2f1d7dc91928cfa3a2e18f11f565efc6203977b6f99700b5838be026b8",
+      "git_blob_sha256": "9ce73e2f1d7dc91928cfa3a2e18f11f565efc6203977b6f99700b5838be026b8"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/grade-rabbitmq-diagnostic.log",
+      "immutable": true,
+      "worktree_sha256": "2b31e25aae6e822fa6566fd211c09a27a66d5092335e037a6bcc454cfa744750",
+      "git_blob_sha256": "2b31e25aae6e822fa6566fd211c09a27a66d5092335e037a6bcc454cfa744750"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/latency-contracts.log",
+      "immutable": true,
+      "worktree_sha256": "bcc0076f84261442573fdaddcacadb942f695cb1ee540b60fa1b551d519545a6",
+      "git_blob_sha256": "bcc0076f84261442573fdaddcacadb942f695cb1ee540b60fa1b551d519545a6"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-02/live-error.log",
+      "immutable": true,
+      "worktree_sha256": "75229f37587d05aad3754548e31e584a437c2652d959461ec4a73185151ce581",
+      "git_blob_sha256": "75229f37587d05aad3754548e31e584a437c2652d959461ec4a73185151ce581"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-02/live-summary.json",
+      "immutable": true,
+      "worktree_sha256": "5c024b2f240c9aa092fc1cb3e4cba451df683e9f363ff1433c90cfc193e4d3fd",
+      "git_blob_sha256": "5c024b2f240c9aa092fc1cb3e4cba451df683e9f363ff1433c90cfc193e4d3fd"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-02/verify-build.log",
+      "immutable": true,
+      "worktree_sha256": "194c27418f1ede8d744c5692d2230b4de45bfe3c031013ee9ebb23d4aae08ede",
+      "git_blob_sha256": "194c27418f1ede8d744c5692d2230b4de45bfe3c031013ee9ebb23d4aae08ede"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-03/live-error.log",
+      "immutable": true,
+      "worktree_sha256": "36da7eab3921d1483eb845b4f954952953c1f5a09dfdba7fefb6410b9bdac97b",
+      "git_blob_sha256": "36da7eab3921d1483eb845b4f954952953c1f5a09dfdba7fefb6410b9bdac97b"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-03/live-summary.json",
+      "immutable": true,
+      "worktree_sha256": "26c7b3e708b7ec7a10e7aecf473b32e463c7ce688a2c55e0949afd46288ad5c5",
+      "git_blob_sha256": "26c7b3e708b7ec7a10e7aecf473b32e463c7ce688a2c55e0949afd46288ad5c5"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-03/verify-build.log",
+      "immutable": true,
+      "worktree_sha256": "683b902154a394e34ea1cdd595ceb770b02a41a6b9ef3f787fc8725128331fe6",
+      "git_blob_sha256": "683b902154a394e34ea1cdd595ceb770b02a41a6b9ef3f787fc8725128331fe6"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-03/verify-up.log",
+      "immutable": true,
+      "worktree_sha256": "487ee448cca20f6257150fe30cd7c4edd1bace975cb9f67083a249b5423cbad4",
+      "git_blob_sha256": "487ee448cca20f6257150fe30cd7c4edd1bace975cb9f67083a249b5423cbad4"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/e2e-install.log",
+      "immutable": true,
+      "worktree_sha256": "725cd0a9aa9de8a496c58652e7825411eee27f3f20ea72d438ec14139565e533",
+      "git_blob_sha256": "725cd0a9aa9de8a496c58652e7825411eee27f3f20ea72d438ec14139565e533"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/live-summary.json",
+      "immutable": true,
+      "worktree_sha256": "70bd02a402d592637aeb22fd079d9ac7d7857ba8d204362c0eccf36f3e7df7fd",
+      "git_blob_sha256": "70bd02a402d592637aeb22fd079d9ac7d7857ba8d204362c0eccf36f3e7df7fd"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/live-v2-samples.json",
+      "immutable": true,
+      "worktree_sha256": "bb9df894279308e27d50dd4874e69c33aaf229d10cef5c862c247934ee5fb168",
+      "git_blob_sha256": "bb9df894279308e27d50dd4874e69c33aaf229d10cef5c862c247934ee5fb168"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/playwright.log",
+      "immutable": true,
+      "worktree_sha256": "ffaa19e4e7ad86d05edda2f5265043762da2ca01811c90b41faf47514a6cace4",
+      "git_blob_sha256": "ffaa19e4e7ad86d05edda2f5265043762da2ca01811c90b41faf47514a6cace4"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/results.jsonl",
+      "immutable": true,
+      "worktree_sha256": "48347856561702e4ea0668b2fde146ee0d349aa4803a5c697dbde6f947f8b7ed",
+      "git_blob_sha256": "48347856561702e4ea0668b2fde146ee0d349aa4803a5c697dbde6f947f8b7ed"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/verify-build.log",
+      "immutable": true,
+      "worktree_sha256": "09b9c6151c8e046460b44113229fadb76f8f4d0ed259dacf902604a1363da459",
+      "git_blob_sha256": "09b9c6151c8e046460b44113229fadb76f8f4d0ed259dacf902604a1363da459"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/verify-up.log",
+      "immutable": true,
+      "worktree_sha256": "5c404055499269b62c4ddad7fddfb743ac01a3a99bb0786e5238d38cd91251f7",
+      "git_blob_sha256": "5c404055499269b62c4ddad7fddfb743ac01a3a99bb0786e5238d38cd91251f7"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/verify.md",
+      "immutable": true,
+      "worktree_sha256": "76eadbf4e96d3b9e3b8c26da30ed04bd2dee108da92b722b97ee4dd8f694e0d4",
+      "git_blob_sha256": "76eadbf4e96d3b9e3b8c26da30ed04bd2dee108da92b722b97ee4dd8f694e0d4"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/xss-page-source.md",
+      "immutable": true,
+      "worktree_sha256": "2707d1d4f0ca018cb20c692d5e4b6d74be119b0a3deb7c03ea6bc35ad3f163f3",
+      "git_blob_sha256": "2707d1d4f0ca018cb20c692d5e4b6d74be119b0a3deb7c03ea6bc35ad3f163f3"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-error.log",
+      "immutable": true,
+      "worktree_sha256": "7d0ef0c839089edfae5ff2cad970ab1a7091bb1330e7278bb511db0c41be3dfd",
+      "git_blob_sha256": "7d0ef0c839089edfae5ff2cad970ab1a7091bb1330e7278bb511db0c41be3dfd"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-summary.json",
+      "immutable": true,
+      "worktree_sha256": "7e15499a7f3366aebae9a5204f0c6454d3500246edc6b72e18f5ae5e10fcdf8a",
+      "git_blob_sha256": "7e15499a7f3366aebae9a5204f0c6454d3500246edc6b72e18f5ae5e10fcdf8a"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live_verify.py",
+      "immutable": true,
+      "worktree_sha256": "9a18dd691851e4d2868c85862551c45e01596e581fac64239cd54a266909ba08",
+      "git_blob_sha256": "9a18dd691851e4d2868c85862551c45e01596e581fac64239cd54a266909ba08"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/make-check-security.log",
+      "immutable": true,
+      "worktree_sha256": "645c89b4300f28c72d8bf951d2f6337637e718dbc3ddbbecfa6d5ea0fa94b2c0",
+      "git_blob_sha256": "645c89b4300f28c72d8bf951d2f6337637e718dbc3ddbbecfa6d5ea0fa94b2c0"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/make-check.log",
+      "immutable": true,
+      "worktree_sha256": "68f43615d8e33364a24877ecb0ec46968795e8f13c1fb415c361042b8a21df89",
+      "git_blob_sha256": "68f43615d8e33364a24877ecb0ec46968795e8f13c1fb415c361042b8a21df89"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/make-grade-network-retry.log",
+      "immutable": true,
+      "worktree_sha256": "ae083fe0694f62f83414192d24ef839dfb9b9a29b2bde8f6e612c7a1cf7b44c4",
+      "git_blob_sha256": "ae083fe0694f62f83414192d24ef839dfb9b9a29b2bde8f6e612c7a1cf7b44c4"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/make-grade.log",
+      "immutable": true,
+      "worktree_sha256": "95e85521110cf0318832df03e7bd6c19874ca650805f478a5dee8b0d469fb677",
+      "git_blob_sha256": "95e85521110cf0318832df03e7bd6c19874ca650805f478a5dee8b0d469fb677"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/make-version.log",
+      "immutable": true,
+      "worktree_sha256": "ae5db712d96509efa1ef4db3e98ba84b3cf635415b720b11906eff996bf7c1a3",
+      "git_blob_sha256": "ae5db712d96509efa1ef4db3e98ba84b3cf635415b720b11906eff996bf7c1a3"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/manifest.json",
+      "immutable": true,
+      "worktree_sha256": "94d81c93e1be13a7dce13407ae55d3651f68ae38dc1f8de92cecb475d11de6dd",
+      "git_blob_sha256": "94d81c93e1be13a7dce13407ae55d3651f68ae38dc1f8de92cecb475d11de6dd"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/network-apk-probe.json",
+      "immutable": true,
+      "worktree_sha256": "7e2dedb4e18314be4e4b4ab8e021c256b9a8963ebff69a3543e0750a577b2c11",
+      "git_blob_sha256": "7e2dedb4e18314be4e4b4ab8e021c256b9a8963ebff69a3543e0750a577b2c11"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/network-probe.json",
+      "immutable": true,
+      "worktree_sha256": "7e2dedb4e18314be4e4b4ab8e021c256b9a8963ebff69a3543e0750a577b2c11",
+      "git_blob_sha256": "7e2dedb4e18314be4e4b4ab8e021c256b9a8963ebff69a3543e0750a577b2c11"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/network_probe.py",
+      "immutable": true,
+      "worktree_sha256": "dcc145c11e53eaf8032d93a5e46357c559bbbf175db42c65d570fd991144311b",
+      "git_blob_sha256": "dcc145c11e53eaf8032d93a5e46357c559bbbf175db42c65d570fd991144311b"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/node-version.log",
+      "immutable": true,
+      "worktree_sha256": "44ce64f1806e1aa8fa0bdd85b10e0413acd78557c88a8d52e94a0eb70f40b7ee",
+      "git_blob_sha256": "44ce64f1806e1aa8fa0bdd85b10e0413acd78557c88a8d52e94a0eb70f40b7ee"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/npm-version.log",
+      "immutable": true,
+      "worktree_sha256": "005206ab803f8881d8227540b7980b37e723b69a8849edb31734a90b7e7964e2",
+      "git_blob_sha256": "005206ab803f8881d8227540b7980b37e723b69a8849edb31734a90b7e7964e2"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/old-samples-v2-evaluation.json",
+      "immutable": true,
+      "worktree_sha256": "4e6d9672a3efac59d0fd0a094d31e0ba38cfadeadc868b0aea883cbdc884fd92",
+      "git_blob_sha256": "4e6d9672a3efac59d0fd0a094d31e0ba38cfadeadc868b0aea883cbdc884fd92"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/old-samples-v2-readonly.log",
+      "immutable": true,
+      "worktree_sha256": "b8e009fdc5cf8cfde85cd8c28ed04fa2879dac0c37407209091ddcbc1a34d497",
+      "git_blob_sha256": "b8e009fdc5cf8cfde85cd8c28ed04fa2879dac0c37407209091ddcbc1a34d497"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/postflight.py",
+      "immutable": true,
+      "worktree_sha256": "b4a7873a40e2e069d6a42ee27ffe639468bc75d2e99d03c429eed039758be3aa",
+      "git_blob_sha256": "b4a7873a40e2e069d6a42ee27ffe639468bc75d2e99d03c429eed039758be3aa"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/preservation-after.json",
+      "immutable": true,
+      "worktree_sha256": "f4f740820846814c3d0c01e62ca4b586177152668899deaac838e7fa4f990812",
+      "git_blob_sha256": "f4f740820846814c3d0c01e62ca4b586177152668899deaac838e7fa4f990812"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/preservation-before.json",
+      "immutable": true,
+      "worktree_sha256": "5def898850438cca84504def4b3a0cd5f0e144e025a64bd9b2bac481e58f8b6f",
+      "git_blob_sha256": "5def898850438cca84504def4b3a0cd5f0e144e025a64bd9b2bac481e58f8b6f"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/python-version.log",
+      "immutable": true,
+      "worktree_sha256": "8ab52e84c2b9ea630d58cf62197bf78036c9d702f1f59c23c2a63b96660548fe",
+      "git_blob_sha256": "8ab52e84c2b9ea630d58cf62197bf78036c9d702f1f59c23c2a63b96660548fe"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/remote-job-summary.json",
+      "immutable": true,
+      "worktree_sha256": "29f59d4cbb38ba8706bd43d6922ed52db940ea414c266f197e8c3e7278d4b140",
+      "git_blob_sha256": "29f59d4cbb38ba8706bd43d6922ed52db940ea414c266f197e8c3e7278d4b140"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/remote_actions.py",
+      "immutable": true,
+      "worktree_sha256": "a09a42241cd0cfc0d9227176c0e3935859679eff643865d574198971685d555b",
+      "git_blob_sha256": "a09a42241cd0cfc0d9227176c0e3935859679eff643865d574198971685d555b"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/remote_details.py",
+      "immutable": true,
+      "worktree_sha256": "a7c415595afa2e963a61e8cc1c694fc9ee2546e6db9579ee87a7d576be07a27e",
+      "git_blob_sha256": "a7c415595afa2e963a61e8cc1c694fc9ee2546e6db9579ee87a7d576be07a27e"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/report.md",
+      "immutable": true,
+      "worktree_sha256": "27533dea8b5bb234ba5af57b94fd0a203f928689a7be6d3b0ce06593f8d01c01",
+      "git_blob_sha256": "27533dea8b5bb234ba5af57b94fd0a203f928689a7be6d3b0ce06593f8d01c01"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/results.jsonl",
+      "immutable": true,
+      "worktree_sha256": "540ba3e43aabc3183c21f6d5e45ab5b1538a8d6d791416d995a082505898e647",
+      "git_blob_sha256": "540ba3e43aabc3183c21f6d5e45ab5b1538a8d6d791416d995a082505898e647"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/run_checks.py",
+      "immutable": true,
+      "worktree_sha256": "5add49d6f9372704372fe9f652d130da91e8beeea5a009282fb3f6138c582b74",
+      "git_blob_sha256": "5add49d6f9372704372fe9f652d130da91e8beeea5a009282fb3f6138c582b74"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/summary.json",
+      "immutable": true,
+      "worktree_sha256": "3d0b1720353504b75d6dd4f4112414e5f855514e2feb8008b972cad5dc524c54",
+      "git_blob_sha256": "3d0b1720353504b75d6dd4f4112414e5f855514e2feb8008b972cad5dc524c54"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/v2-source-integrity.json",
+      "immutable": true,
+      "worktree_sha256": "7810bae99e1272f4f1f1e1ed5933249cb8afa044909063f20f187aaa371a40ef",
+      "git_blob_sha256": "7810bae99e1272f4f1f1e1ed5933249cb8afa044909063f20f187aaa371a40ef"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/workflow-check.yml.txt",
+      "immutable": true,
+      "worktree_sha256": "9dabe5d5495c62aff9fa7f7f4dbb15f670089b1800d87e5b80834bfc95db91b4",
+      "git_blob_sha256": "9dabe5d5495c62aff9fa7f7f4dbb15f670089b1800d87e5b80834bfc95db91b4"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/checks.json",
+      "immutable": true,
+      "worktree_sha256": "a0d348598635c26da7c4c088cba2725f34938d4ee5f3ba678432bf884ab182ac",
+      "git_blob_sha256": "a0d348598635c26da7c4c088cba2725f34938d4ee5f3ba678432bf884ab182ac"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/contracts-final.log",
+      "immutable": true,
+      "worktree_sha256": "69ecb1f2fe2b34c8e333b5d644300c9c004f4634b2615ae56612804177c8d89e",
+      "git_blob_sha256": "69ecb1f2fe2b34c8e333b5d644300c9c004f4634b2615ae56612804177c8d89e"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/contracts-post-review.log",
+      "immutable": true,
+      "worktree_sha256": "3842b25930e3b7569e83b410cac277a93d7616d8839d17714bb9deeb5ab95e22",
+      "git_blob_sha256": "3842b25930e3b7569e83b410cac277a93d7616d8839d17714bb9deeb5ab95e22"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/contracts.log",
+      "immutable": true,
+      "worktree_sha256": "f70a51c298c04eb1f33243cc21239524229a0914848206067404b8abdf8a8cae",
+      "git_blob_sha256": "f70a51c298c04eb1f33243cc21239524229a0914848206067404b8abdf8a8cae"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/current-source-sha256.json",
+      "immutable": true,
+      "worktree_sha256": "c7cc0ef4b1b1646cced928e4e57a8ea10b552c58978f02527d98ec663a36a243",
+      "git_blob_sha256": "c7cc0ef4b1b1646cced928e4e57a8ea10b552c58978f02527d98ec663a36a243"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/diff-check.log",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/historical-readonly-evaluation.log",
+      "immutable": true,
+      "worktree_sha256": "b8e009fdc5cf8cfde85cd8c28ed04fa2879dac0c37407209091ddcbc1a34d497",
+      "git_blob_sha256": "b8e009fdc5cf8cfde85cd8c28ed04fa2879dac0c37407209091ddcbc1a34d497"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/layer-check.log",
+      "immutable": true,
+      "worktree_sha256": "a61ce4a1a24326678d70d3d4814dac6b636459dd34129a1a68ddb3651c1fe8de",
+      "git_blob_sha256": "a61ce4a1a24326678d70d3d4814dac6b636459dd34129a1a68ddb3651c1fe8de"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/new-rule-evaluation.json",
+      "immutable": true,
+      "worktree_sha256": "4e6d9672a3efac59d0fd0a094d31e0ba38cfadeadc868b0aea883cbdc884fd92",
+      "git_blob_sha256": "4e6d9672a3efac59d0fd0a094d31e0ba38cfadeadc868b0aea883cbdc884fd92"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/openspec-strict.log",
+      "immutable": true,
+      "worktree_sha256": "28054ab9eb1fdbaabc25c87b2c068a57a7befcd3e31a69164208bf38da1f17af",
+      "git_blob_sha256": "28054ab9eb1fdbaabc25c87b2c068a57a7befcd3e31a69164208bf38da1f17af"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/openspec-version.log",
+      "immutable": true,
+      "worktree_sha256": "d5b1f46669d1cff3be556b1656732c8777ad8ad3f3d05459cfb11dadb1f17d19",
+      "git_blob_sha256": "d5b1f46669d1cff3be556b1656732c8777ad8ad3f3d05459cfb11dadb1f17d19"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/preservation-after.json",
+      "immutable": true,
+      "worktree_sha256": "b30ec65699156799d851673aaf43fd36c7645f449e2282caa49fc15a4736231f",
+      "git_blob_sha256": "b30ec65699156799d851673aaf43fd36c7645f449e2282caa49fc15a4736231f"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/preservation-before.json",
+      "immutable": true,
+      "worktree_sha256": "fe2a1c92e8abecf97878a0d1c3b5d3065ac0ee533813f71253bd89f61138372b",
+      "git_blob_sha256": "fe2a1c92e8abecf97878a0d1c3b5d3065ac0ee533813f71253bd89f61138372b"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/references.json",
+      "immutable": true,
+      "worktree_sha256": "42782c9ce991f5356a67c22a0fb9e4efdc113375f1afd128b052ef89c7ade213",
+      "git_blob_sha256": "42782c9ce991f5356a67c22a0fb9e4efdc113375f1afd128b052ef89c7ade213"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/report.md",
+      "immutable": true,
+      "worktree_sha256": "d6740e7969f301a92d7559ec7e3eda5ed643bdc5b8f2afb7bb18d6186f140d4d",
+      "git_blob_sha256": "d6740e7969f301a92d7559ec7e3eda5ed643bdc5b8f2afb7bb18d6186f140d4d"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/security-cases.log",
+      "immutable": true,
+      "worktree_sha256": "b07be17f5af35f2273afe7740ea9d69c5745aaf80159ec3c7363a13d2c773141",
+      "git_blob_sha256": "b07be17f5af35f2273afe7740ea9d69c5745aaf80159ec3c7363a13d2c773141"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/security-static.log",
+      "immutable": true,
+      "worktree_sha256": "c49db6e6795b40e27f78a552c0024dffc9dfa0649e3fda25e045d93b1d79388f",
+      "git_blob_sha256": "c49db6e6795b40e27f78a552c0024dffc9dfa0649e3fda25e045d93b1d79388f"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/spec-check-final.log",
+      "immutable": true,
+      "worktree_sha256": "ccb2e6b583062c0331aa445348581597d329ac5daf9d619b05c975e9bf3eed95",
+      "git_blob_sha256": "ccb2e6b583062c0331aa445348581597d329ac5daf9d619b05c975e9bf3eed95"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/spec-check.log",
+      "immutable": true,
+      "worktree_sha256": "ccb2e6b583062c0331aa445348581597d329ac5daf9d619b05c975e9bf3eed95",
+      "git_blob_sha256": "ccb2e6b583062c0331aa445348581597d329ac5daf9d619b05c975e9bf3eed95"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/standards-check-final.log",
+      "immutable": true,
+      "worktree_sha256": "569af8630e7c9a6561b3e38f294cbc0b02807c27e3af44069193ffe83ed82eb2",
+      "git_blob_sha256": "569af8630e7c9a6561b3e38f294cbc0b02807c27e3af44069193ffe83ed82eb2"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-observe-enqueue-latency/standards-check.log",
+      "immutable": true,
+      "worktree_sha256": "569af8630e7c9a6561b3e38f294cbc0b02807c27e3af44069193ffe83ed82eb2",
+      "git_blob_sha256": "569af8630e7c9a6561b3e38f294cbc0b02807c27e3af44069193ffe83ed82eb2"
+    },
+    {
+      "path": "docs/lesson-09/fix-20261118.md",
+      "immutable": false,
+      "worktree_sha256": "634315bcb782a62b7e182399b51f6a42d4e5242526268daa07655e2df57a5b01",
+      "git_blob_sha256": "634315bcb782a62b7e182399b51f6a42d4e5242526268daa07655e2df57a5b01"
+    },
+    {
+      "path": "docs/standards/04-testing.md",
+      "immutable": false,
+      "worktree_sha256": "94bcd0d03677477759522ed5c65e5c419603b7cddf790ee8867cd07083aeb53b",
+      "git_blob_sha256": "94bcd0d03677477759522ed5c65e5c419603b7cddf790ee8867cd07083aeb53b"
+    },
+    {
+      "path": "frontend/README.md",
+      "immutable": false,
+      "worktree_sha256": "9662bc1afcc74a42a581f70ffd5e169e24eac44aa5d4cbed3d4459ea75ece761",
+      "git_blob_sha256": "9662bc1afcc74a42a581f70ffd5e169e24eac44aa5d4cbed3d4459ea75ece761"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "immutable": false,
+      "worktree_sha256": "0191b84c34a6221f8ad2e5a6f519462457a1aec8cf88f2adb5e287243c4b71c5",
+      "git_blob_sha256": "0191b84c34a6221f8ad2e5a6f519462457a1aec8cf88f2adb5e287243c4b71c5"
+    },
+    {
+      "path": "frontend/package.json",
+      "immutable": false,
+      "worktree_sha256": "fa26798bad9960c959bceea57b27bff59b61b6626487f8508ab803fec7e61b93",
+      "git_blob_sha256": "fa26798bad9960c959bceea57b27bff59b61b6626487f8508ab803fec7e61b93"
+    },
+    {
+      "path": "frontend/src/assets.d.ts",
+      "immutable": false,
+      "worktree_sha256": "cdd18327f675a1513103a06e7387b021a44239bc126f5fa4fa286adf1ab64629",
+      "git_blob_sha256": "cdd18327f675a1513103a06e7387b021a44239bc126f5fa4fa286adf1ab64629"
+    },
+    {
+      "path": "frontend/toolchain.mjs",
+      "immutable": false,
+      "worktree_sha256": "ccab93a35973e57b1f5da4f2fe499ce51f51b1fc123adcfbd7ae3dc86b4aa834",
+      "git_blob_sha256": "ccab93a35973e57b1f5da4f2fe499ce51f51b1fc123adcfbd7ae3dc86b4aa834"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-fix-lesson9-retest/.openspec.yaml",
+      "immutable": false,
+      "worktree_sha256": "277c3c07d7ab9927f15fff0d9c08afbbb9cc808d563ada95016a72a464a761e0",
+      "git_blob_sha256": "277c3c07d7ab9927f15fff0d9c08afbbb9cc808d563ada95016a72a464a761e0"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-fix-lesson9-retest/design.md",
+      "immutable": false,
+      "worktree_sha256": "65eebb61c1f4083fde8d78c216ee42b412dd0a89d14b15694f1d3295ee892dac",
+      "git_blob_sha256": "65eebb61c1f4083fde8d78c216ee42b412dd0a89d14b15694f1d3295ee892dac"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-fix-lesson9-retest/proposal.md",
+      "immutable": false,
+      "worktree_sha256": "617a0e4248d4ce7716184ea59561b24b1c4e40034361a846390bb8be16e09cd1",
+      "git_blob_sha256": "617a0e4248d4ce7716184ea59561b24b1c4e40034361a846390bb8be16e09cd1"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-fix-lesson9-retest/specs/async-grading/spec.md",
+      "immutable": false,
+      "worktree_sha256": "a30820d9fc4e7bdeff20b3fbed280ad2da7ad4f1e4f81dc8188386cdc73fdc75",
+      "git_blob_sha256": "a30820d9fc4e7bdeff20b3fbed280ad2da7ad4f1e4f81dc8188386cdc73fdc75"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-fix-lesson9-retest/specs/security-hardening/spec.md",
+      "immutable": false,
+      "worktree_sha256": "288e2289763faf9d4c643ec7c65a171721a6da4e7ae206cde20844bf5af1230a",
+      "git_blob_sha256": "288e2289763faf9d4c643ec7c65a171721a6da4e7ae206cde20844bf5af1230a"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-fix-lesson9-retest/tasks.md",
+      "immutable": false,
+      "worktree_sha256": "439247d616a80116f0573199c895e14de645215392b4209b1e4a3cfbbbc9df8e",
+      "git_blob_sha256": "439247d616a80116f0573199c895e14de645215392b4209b1e4a3cfbbbc9df8e"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-observe-enqueue-latency/.openspec.yaml",
+      "immutable": false,
+      "worktree_sha256": "277c3c07d7ab9927f15fff0d9c08afbbb9cc808d563ada95016a72a464a761e0",
+      "git_blob_sha256": "277c3c07d7ab9927f15fff0d9c08afbbb9cc808d563ada95016a72a464a761e0"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-observe-enqueue-latency/design.md",
+      "immutable": false,
+      "worktree_sha256": "802b96eacaedafd27b57b0f91423ff848c7f54087c57c42beeff9e358c7b952b",
+      "git_blob_sha256": "802b96eacaedafd27b57b0f91423ff848c7f54087c57c42beeff9e358c7b952b"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-observe-enqueue-latency/proposal.md",
+      "immutable": false,
+      "worktree_sha256": "2e05ac2b5b046b8085f0bb94d58083317d4c2d7995ea43fd5acdc4539d21cd70",
+      "git_blob_sha256": "2e05ac2b5b046b8085f0bb94d58083317d4c2d7995ea43fd5acdc4539d21cd70"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-observe-enqueue-latency/specs/async-grading/spec.md",
+      "immutable": false,
+      "worktree_sha256": "98f4facd42ec7b9bb9c6c7c26738abacc54d686cc36ad2bd23968e3691f27ac3",
+      "git_blob_sha256": "98f4facd42ec7b9bb9c6c7c26738abacc54d686cc36ad2bd23968e3691f27ac3"
+    },
+    {
+      "path": "openspec/changes/2026-11-18-observe-enqueue-latency/tasks.md",
+      "immutable": false,
+      "worktree_sha256": "6663c30a85bded2ac79abbee1e2c7b2d1433fde025b15bb073fc8784d6261a19",
+      "git_blob_sha256": "6663c30a85bded2ac79abbee1e2c7b2d1433fde025b15bb073fc8784d6261a19"
+    },
+    {
+      "path": "qa/lesson9/build_report.py",
+      "immutable": true,
+      "worktree_sha256": "9819e094ee9a002ef7d4218ae0183df7a4e8ac3f34835811d6d4843ac7b6b10c",
+      "git_blob_sha256": "9819e094ee9a002ef7d4218ae0183df7a4e8ac3f34835811d6d4843ac7b6b10c"
+    },
+    {
+      "path": "qa/lesson9/execution.json",
+      "immutable": true,
+      "worktree_sha256": "69256fe0f95f428c91c725db4f2ef03c1b4aec38432c85e316414956b955202c",
+      "git_blob_sha256": "69256fe0f95f428c91c725db4f2ef03c1b4aec38432c85e316414956b955202c"
+    },
+    {
+      "path": "qa/lesson9/logs/change-stat.txt",
+      "immutable": true,
+      "worktree_sha256": "d8b5c77c46cd3796625f0d9e40e4ed3d8f29799385bed67e4110c8d21deb7ef1",
+      "git_blob_sha256": "d8b5c77c46cd3796625f0d9e40e4ed3d8f29799385bed67e4110c8d21deb7ef1"
+    },
+    {
+      "path": "qa/lesson9/logs/commits.txt",
+      "immutable": true,
+      "worktree_sha256": "570d8c339557511b5d9c95d5bf4657328cac39fb5a50da54e3a652bf90e0dc53",
+      "git_blob_sha256": "570d8c339557511b5d9c95d5bf4657328cac39fb5a50da54e3a652bf90e0dc53"
+    },
+    {
+      "path": "qa/lesson9/logs/docker.txt",
+      "immutable": true,
+      "worktree_sha256": "816c2a697d5664fcc68c2bf40403b3a2f2f9681c3ea0e9ec02baa5527fea864e",
+      "git_blob_sha256": "816c2a697d5664fcc68c2bf40403b3a2f2f9681c3ea0e9ec02baa5527fea864e"
+    },
+    {
+      "path": "qa/lesson9/logs/gate-selftest-retry.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b",
+      "git_blob_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b"
+    },
+    {
+      "path": "qa/lesson9/logs/gate-selftest-retry.txt",
+      "immutable": true,
+      "worktree_sha256": "cd4e80902d506384ee2080f3378cf54514c6fa70fcad19c8774b684ce58cf055",
+      "git_blob_sha256": "cd4e80902d506384ee2080f3378cf54514c6fa70fcad19c8774b684ce58cf055"
+    },
+    {
+      "path": "qa/lesson9/logs/gate-selftest-retry.txt.original-utf16",
+      "immutable": true,
+      "worktree_sha256": "ebb5ae97a731a424541349d6f84effb7a37be7a1d4c8a3b160c4933fef5c63d6",
+      "git_blob_sha256": "ebb5ae97a731a424541349d6f84effb7a37be7a1d4c8a3b160c4933fef5c63d6"
+    },
+    {
+      "path": "qa/lesson9/logs/gate-selftest.txt",
+      "immutable": true,
+      "worktree_sha256": "aab45045eb4cdc6d58cf438a7f75d0af53f358bab14e4a6d223f720d268bd67e",
+      "git_blob_sha256": "aab45045eb4cdc6d58cf438a7f75d0af53f358bab14e4a6d223f720d268bd67e"
+    },
+    {
+      "path": "qa/lesson9/logs/go-retry.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b",
+      "git_blob_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b"
+    },
+    {
+      "path": "qa/lesson9/logs/go-retry.jsonl",
+      "immutable": true,
+      "worktree_sha256": "2c1fc40c66f4d5bdd3ddbd660bd5ad18fbf8ed0390329692399e0ac564c0f202",
+      "git_blob_sha256": "2c1fc40c66f4d5bdd3ddbd660bd5ad18fbf8ed0390329692399e0ac564c0f202"
+    },
+    {
+      "path": "qa/lesson9/logs/go-retry.jsonl.original-utf16",
+      "immutable": true,
+      "worktree_sha256": "02b475aa00159f0f23448aacdb6c9021601241bb6a537bfcdf48e5f40a27371d",
+      "git_blob_sha256": "02b475aa00159f0f23448aacdb6c9021601241bb6a537bfcdf48e5f40a27371d"
+    },
+    {
+      "path": "qa/lesson9/logs/go.txt",
+      "immutable": true,
+      "worktree_sha256": "a7ec98cf1e1f6264e6e4b1617515d822d1f7d5c264d716a92cc027a8dc46f9b7",
+      "git_blob_sha256": "a7ec98cf1e1f6264e6e4b1617515d822d1f7d5c264d716a92cc027a8dc46f9b7"
+    },
+    {
+      "path": "qa/lesson9/logs/injection-cases.txt",
+      "immutable": true,
+      "worktree_sha256": "35dc2c6fe40d860875b7519f91072468cf7e625da1a8795b4e40c00f400d9d91",
+      "git_blob_sha256": "35dc2c6fe40d860875b7519f91072468cf7e625da1a8795b4e40c00f400d9d91"
+    },
+    {
+      "path": "qa/lesson9/logs/layer.txt",
+      "immutable": true,
+      "worktree_sha256": "8acfc14bc85b882a91c5db19c66a71d24f83742733e07e0878fc6b8d41e1ea09",
+      "git_blob_sha256": "8acfc14bc85b882a91c5db19c66a71d24f83742733e07e0878fc6b8d41e1ea09"
+    },
+    {
+      "path": "qa/lesson9/logs/make-check.txt",
+      "immutable": true,
+      "worktree_sha256": "453cb03f67f52ba77bb9204385984e68d713123f2a1f88974925c1c0090a0503",
+      "git_blob_sha256": "453cb03f67f52ba77bb9204385984e68d713123f2a1f88974925c1c0090a0503"
+    },
+    {
+      "path": "qa/lesson9/logs/make-grade.txt",
+      "immutable": true,
+      "worktree_sha256": "453cb03f67f52ba77bb9204385984e68d713123f2a1f88974925c1c0090a0503",
+      "git_blob_sha256": "453cb03f67f52ba77bb9204385984e68d713123f2a1f88974925c1c0090a0503"
+    },
+    {
+      "path": "qa/lesson9/logs/make-security.txt",
+      "immutable": true,
+      "worktree_sha256": "453cb03f67f52ba77bb9204385984e68d713123f2a1f88974925c1c0090a0503",
+      "git_blob_sha256": "453cb03f67f52ba77bb9204385984e68d713123f2a1f88974925c1c0090a0503"
+    },
+    {
+      "path": "qa/lesson9/logs/npm-audit-retry.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "07846b783c23904a75834c1932bc2fad41e388e18bc32ffd73ed87bfa3844d87",
+      "git_blob_sha256": "07846b783c23904a75834c1932bc2fad41e388e18bc32ffd73ed87bfa3844d87"
+    },
+    {
+      "path": "qa/lesson9/logs/npm-audit-retry.json",
+      "immutable": true,
+      "worktree_sha256": "9f427e5ab0ce530d5fc377375ab09d830ee1097aedbf5c05ea5b93490ff32df6",
+      "git_blob_sha256": "9f427e5ab0ce530d5fc377375ab09d830ee1097aedbf5c05ea5b93490ff32df6"
+    },
+    {
+      "path": "qa/lesson9/logs/npm-audit.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "07846b783c23904a75834c1932bc2fad41e388e18bc32ffd73ed87bfa3844d87",
+      "git_blob_sha256": "07846b783c23904a75834c1932bc2fad41e388e18bc32ffd73ed87bfa3844d87"
+    },
+    {
+      "path": "qa/lesson9/logs/npm-audit.json",
+      "immutable": true,
+      "worktree_sha256": "fcbb407101180bf5076e37e5b694afeac459b1a5787d54efa330653b47b8a577",
+      "git_blob_sha256": "fcbb407101180bf5076e37e5b694afeac459b1a5787d54efa330653b47b8a577"
+    },
+    {
+      "path": "qa/lesson9/logs/openspec-retry.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b",
+      "git_blob_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b"
+    },
+    {
+      "path": "qa/lesson9/logs/openspec-retry.txt",
+      "immutable": true,
+      "worktree_sha256": "77b0b2d1caaea398977be729b2b7dd6b5b7d67b69b5ff0385080f726eaa52615",
+      "git_blob_sha256": "77b0b2d1caaea398977be729b2b7dd6b5b7d67b69b5ff0385080f726eaa52615"
+    },
+    {
+      "path": "qa/lesson9/logs/openspec.txt",
+      "immutable": true,
+      "worktree_sha256": "f5bb753863a7f07eb063a4253da8816f886146a142ac80b75a7342c317e16ae8",
+      "git_blob_sha256": "f5bb753863a7f07eb063a4253da8816f886146a142ac80b75a7342c317e16ae8"
+    },
+    {
+      "path": "qa/lesson9/logs/original-status.txt",
+      "immutable": true,
+      "worktree_sha256": "2636dedd8afe913af44a5505f5cb3d6fb7c1d78997b0a2c44d7d4591589ab262",
+      "git_blob_sha256": "2636dedd8afe913af44a5505f5cb3d6fb7c1d78997b0a2c44d7d4591589ab262"
+    },
+    {
+      "path": "qa/lesson9/logs/secret.txt",
+      "immutable": true,
+      "worktree_sha256": "ba2edfc92ec1df6e465870210d76a9f1b679d3e3df9156eac224933432bb445a",
+      "git_blob_sha256": "ba2edfc92ec1df6e465870210d76a9f1b679d3e3df9156eac224933432bb445a"
+    },
+    {
+      "path": "qa/lesson9/logs/security-static.txt",
+      "immutable": true,
+      "worktree_sha256": "1e6f890d7339efd731c4cdd66b327c3aad779fb2d8c56ac819677c9b9752de86",
+      "git_blob_sha256": "1e6f890d7339efd731c4cdd66b327c3aad779fb2d8c56ac819677c9b9752de86"
+    },
+    {
+      "path": "qa/lesson9/logs/spec.txt",
+      "immutable": true,
+      "worktree_sha256": "b5ca7f69cea2963c6ee13a5b2023bbde520a66a1b83a0025fa18fe862a6636c1",
+      "git_blob_sha256": "b5ca7f69cea2963c6ee13a5b2023bbde520a66a1b83a0025fa18fe862a6636c1"
+    },
+    {
+      "path": "qa/lesson9/logs/standards.txt",
+      "immutable": true,
+      "worktree_sha256": "50ec2ab6a969f36f49b77e5d5a864b10502e87067db49a2e03c251adbbfc9f56",
+      "git_blob_sha256": "50ec2ab6a969f36f49b77e5d5a864b10502e87067db49a2e03c251adbbfc9f56"
+    },
+    {
+      "path": "qa/lesson9/logs/verify.txt",
+      "immutable": true,
+      "worktree_sha256": "50ddbbdd23f04ab8b5a745258ec7a4cb78609c66f6057c3e2e5715e8a53da4e8",
+      "git_blob_sha256": "50ddbbdd23f04ab8b5a745258ec7a4cb78609c66f6057c3e2e5715e8a53da4e8"
+    },
+    {
+      "path": "qa/lesson9/manifest.json",
+      "immutable": true,
+      "worktree_sha256": "bb249959ac611a6e1f203895539f4ab421ea04bb6d9b4a84d3bb12217d4d72a7",
+      "git_blob_sha256": "bb249959ac611a6e1f203895539f4ab421ea04bb6d9b4a84d3bb12217d4d72a7"
+    },
+    {
+      "path": "qa/lesson9/reports/defects.md",
+      "immutable": true,
+      "worktree_sha256": "967eb1b9ce70a1c196bdea8ba6c9950125a9dc75947a1c07d2fd90598125315b",
+      "git_blob_sha256": "967eb1b9ce70a1c196bdea8ba6c9950125a9dc75947a1c07d2fd90598125315b"
+    },
+    {
+      "path": "qa/lesson9/reports/gate-red-green.md",
+      "immutable": true,
+      "worktree_sha256": "cb82b48715878677e4cacf0aab279742683da5aea8cdea13c24d8d1abedf6f47",
+      "git_blob_sha256": "cb82b48715878677e4cacf0aab279742683da5aea8cdea13c24d8d1abedf6f47"
+    },
+    {
+      "path": "qa/lesson9/reports/review-04.md",
+      "immutable": true,
+      "worktree_sha256": "62b1b4f506fa78b7f3eac98c75075c3aa1d8d16f7d14228ae0cc544ff30bdf52",
+      "git_blob_sha256": "62b1b4f506fa78b7f3eac98c75075c3aa1d8d16f7d14228ae0cc544ff30bdf52"
+    },
+    {
+      "path": "qa/lesson9/reports/review-05.md",
+      "immutable": true,
+      "worktree_sha256": "08e7ef2514d134d15450be45cc70c9edb46353bffa393e3bc06fde4217c21c81",
+      "git_blob_sha256": "08e7ef2514d134d15450be45cc70c9edb46353bffa393e3bc06fde4217c21c81"
+    },
+    {
+      "path": "qa/lesson9/reports/rework.md",
+      "immutable": true,
+      "worktree_sha256": "938059816b5f9f4a7383ec65b2ffb4be33ef909faedacc51c8e3d01bf4dca319",
+      "git_blob_sha256": "938059816b5f9f4a7383ec65b2ffb4be33ef909faedacc51c8e3d01bf4dca319"
+    },
+    {
+      "path": "qa/lesson9/reports/sec08-experiment.md",
+      "immutable": true,
+      "worktree_sha256": "72f74450f9e98deb539efaedfcd4e7397c5202e91d40c5206917d2bfcbbb344f",
+      "git_blob_sha256": "72f74450f9e98deb539efaedfcd4e7397c5202e91d40c5206917d2bfcbbb344f"
+    },
+    {
+      "path": "qa/lesson9/reports/security-baseline.md",
+      "immutable": true,
+      "worktree_sha256": "8b99873af5347e5bd3185dd37fb8be5af1f67ad77b52e60512257f2c9c9b46ba",
+      "git_blob_sha256": "8b99873af5347e5bd3185dd37fb8be5af1f67ad77b52e60512257f2c9c9b46ba"
+    },
+    {
+      "path": "qa/lesson9/reports/security-fix-log.md",
+      "immutable": true,
+      "worktree_sha256": "9cda1adbcc0dbf32ba6e1b55b8bed4d8bac1d5bd2bede564cab3ea923d655e47",
+      "git_blob_sha256": "9cda1adbcc0dbf32ba6e1b55b8bed4d8bac1d5bd2bede564cab3ea923d655e47"
+    },
+    {
+      "path": "qa/lesson9/reports/测试与复测报告.md",
+      "immutable": true,
+      "worktree_sha256": "11bc0c8e6dfe9b0d75eaa8d52d99f1a9f5bd5cda68ff180febcd586fd2060281",
+      "git_blob_sha256": "11bc0c8e6dfe9b0d75eaa8d52d99f1a9f5bd5cda68ff180febcd586fd2060281"
+    },
+    {
+      "path": "qa/lesson9/reports/课程要求映射.md",
+      "immutable": true,
+      "worktree_sha256": "650d93812b906f795343707f3d204fae2f2047ad11453029c926e7a869a850ac",
+      "git_blob_sha256": "650d93812b906f795343707f3d204fae2f2047ad11453029c926e7a869a850ac"
+    },
+    {
+      "path": "qa/lesson9/retest-02/acceptance.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "git_blob_sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/acceptance/report.html",
+      "immutable": true,
+      "worktree_sha256": "6d3d83343511c3e5f67d5d8356735c92907888b5e7c624f909107aa84fa40eca",
+      "git_blob_sha256": "6d3d83343511c3e5f67d5d8356735c92907888b5e7c624f909107aa84fa40eca"
+    },
+    {
+      "path": "qa/lesson9/retest-02/acceptance/report.json",
+      "immutable": true,
+      "worktree_sha256": "a62e50ab7e6e87bfc172405c79f76e857950a7930235d7ed4d8402e40a68facf",
+      "git_blob_sha256": "a62e50ab7e6e87bfc172405c79f76e857950a7930235d7ed4d8402e40a68facf"
+    },
+    {
+      "path": "qa/lesson9/retest-02/acceptance_run.py",
+      "immutable": true,
+      "worktree_sha256": "1669a4a75f73ba6412219b848e2f600241b5975755a31dabcc933faab67a0698",
+      "git_blob_sha256": "1669a4a75f73ba6412219b848e2f600241b5975755a31dabcc933faab67a0698"
+    },
+    {
+      "path": "qa/lesson9/retest-02/execution.json",
+      "immutable": true,
+      "worktree_sha256": "ab4a65f458768cfebd067754fe7a715154900ceb9bd88a752a7b3d0d360ffa7c",
+      "git_blob_sha256": "ab4a65f458768cfebd067754fe7a715154900ceb9bd88a752a7b3d0d360ffa7c"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/acceptance.txt",
+      "immutable": true,
+      "worktree_sha256": "752f6fe6ac6d267899921fcaa61ee7a4b36fde1f59fe44c8e484cf26b3605bb8",
+      "git_blob_sha256": "752f6fe6ac6d267899921fcaa61ee7a4b36fde1f59fe44c8e484cf26b3605bb8"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/audit.txt",
+      "immutable": true,
+      "worktree_sha256": "9f427e5ab0ce530d5fc377375ab09d830ee1097aedbf5c05ea5b93490ff32df6",
+      "git_blob_sha256": "9f427e5ab0ce530d5fc377375ab09d830ee1097aedbf5c05ea5b93490ff32df6"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/cases.txt",
+      "immutable": true,
+      "worktree_sha256": "b07be17f5af35f2273afe7740ea9d69c5745aaf80159ec3c7363a13d2c773141",
+      "git_blob_sha256": "b07be17f5af35f2273afe7740ea9d69c5745aaf80159ec3c7363a13d2c773141"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/docker-info-current.json",
+      "immutable": true,
+      "worktree_sha256": "5e8d5d9ea4f1e247dc9497ab60dac5db87de2b18af0a53d711aec72e430109e5",
+      "git_blob_sha256": "5e8d5d9ea4f1e247dc9497ab60dac5db87de2b18af0a53d711aec72e430109e5"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/docker.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b",
+      "git_blob_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/docker.txt",
+      "immutable": true,
+      "worktree_sha256": "47fa899ce28974322a82043150dec32409e7660e90023fcb2b28d33b13cb553a",
+      "git_blob_sha256": "47fa899ce28974322a82043150dec32409e7660e90023fcb2b28d33b13cb553a"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/gate-self-test.txt",
+      "immutable": true,
+      "worktree_sha256": "f797c17cb9bf8e70a154fb184edbd5b5a7df517b719f63ca6cb6ac09d497a001",
+      "git_blob_sha256": "f797c17cb9bf8e70a154fb184edbd5b5a7df517b719f63ca6cb6ac09d497a001"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/go.txt",
+      "immutable": true,
+      "worktree_sha256": "5d756e17f8e91edbdc9b2ae658d70e24cf42fe8c95d6dad6ce20752aa6365eb4",
+      "git_blob_sha256": "5d756e17f8e91edbdc9b2ae658d70e24cf42fe8c95d6dad6ce20752aa6365eb4"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/govuln.txt",
+      "immutable": true,
+      "worktree_sha256": "00223c79dae3f7a0d321bfcdf75cc070639f8ff6ec7f8f9488d82068456e1ca2",
+      "git_blob_sha256": "00223c79dae3f7a0d321bfcdf75cc070639f8ff6ec7f8f9488d82068456e1ca2"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/layer.txt",
+      "immutable": true,
+      "worktree_sha256": "a61ce4a1a24326678d70d3d4814dac6b636459dd34129a1a68ddb3651c1fe8de",
+      "git_blob_sha256": "a61ce4a1a24326678d70d3d4814dac6b636459dd34129a1a68ddb3651c1fe8de"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/make.txt",
+      "immutable": true,
+      "worktree_sha256": "34d225a739f739fb4d8df7dc1124e10d3595c1685352fa8a404399be5ccecc86",
+      "git_blob_sha256": "34d225a739f739fb4d8df7dc1124e10d3595c1685352fa8a404399be5ccecc86"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/secrets.txt",
+      "immutable": true,
+      "worktree_sha256": "d2890a6fcb177def6eaf34f5d2a14548adfafde23fb31d94698709b58ad4904c",
+      "git_blob_sha256": "d2890a6fcb177def6eaf34f5d2a14548adfafde23fb31d94698709b58ad4904c"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/spec.txt",
+      "immutable": true,
+      "worktree_sha256": "c7d4e8937df0ad499a4e5b050dd84fd87639a55f061133ab44fd1ed6eb3cfd8c",
+      "git_blob_sha256": "c7d4e8937df0ad499a4e5b050dd84fd87639a55f061133ab44fd1ed6eb3cfd8c"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/standards.txt",
+      "immutable": true,
+      "worktree_sha256": "ac7f1ea560ce8bb416aace5fd04a26d2f5f91b559b07e49fd930ab4c1fd7a748",
+      "git_blob_sha256": "ac7f1ea560ce8bb416aace5fd04a26d2f5f91b559b07e49fd930ab4c1fd7a748"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/static.txt",
+      "immutable": true,
+      "worktree_sha256": "c49db6e6795b40e27f78a552c0024dffc9dfa0649e3fda25e045d93b1d79388f",
+      "git_blob_sha256": "c49db6e6795b40e27f78a552c0024dffc9dfa0649e3fda25e045d93b1d79388f"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/strict.txt",
+      "immutable": true,
+      "worktree_sha256": "77b0b2d1caaea398977be729b2b7dd6b5b7d67b69b5ff0385080f726eaa52615",
+      "git_blob_sha256": "77b0b2d1caaea398977be729b2b7dd6b5b7d67b69b5ff0385080f726eaa52615"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/vet.txt",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/workspace-before.txt",
+      "immutable": true,
+      "worktree_sha256": "d2684a7f6db09dd955b67221fe55c3399f29f0955b4249aa4797b594805647d3",
+      "git_blob_sha256": "d2684a7f6db09dd955b67221fe55c3399f29f0955b4249aa4797b594805647d3"
+    },
+    {
+      "path": "qa/lesson9/retest-02/logs/worktrees.txt",
+      "immutable": true,
+      "worktree_sha256": "47f725d7d6ba8fdb28880cfb7032783a589e717fe53ae607a1dbebd6ff7d6836",
+      "git_blob_sha256": "47f725d7d6ba8fdb28880cfb7032783a589e717fe53ae607a1dbebd6ff7d6836"
+    },
+    {
+      "path": "qa/lesson9/retest-02/manifest.json",
+      "immutable": true,
+      "worktree_sha256": "b98e0feeb864a677fb93578a97ad0d86a4b3ff1325ed2bec757e452019acea71",
+      "git_blob_sha256": "b98e0feeb864a677fb93578a97ad0d86a4b3ff1325ed2bec757e452019acea71"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/.gitignore",
+      "immutable": true,
+      "worktree_sha256": "84995cc8f991a24f5f47bf56f9d8790e0d3f7b444137caebf98d094a378fc1b4",
+      "git_blob_sha256": "84995cc8f991a24f5f47bf56f9d8790e0d3f7b444137caebf98d094a378fc1b4"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/Dockerfile.runtime",
+      "immutable": true,
+      "worktree_sha256": "14bc83ddd96345d11e6943f0eee389e027205a6b40655d0c302c604322eb0951",
+      "git_blob_sha256": "14bc83ddd96345d11e6943f0eee389e027205a6b40655d0c302c604322eb0951"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/Dockerfile.web",
+      "immutable": true,
+      "worktree_sha256": "b09dc106e790010cf5ccc025dfad9ad1361f43d20d9c7d9f1ff548c21e4a91f5",
+      "git_blob_sha256": "b09dc106e790010cf5ccc025dfad9ad1361f43d20d9c7d9f1ff548c21e4a91f5"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/acceptance-network-failure/report.html",
+      "immutable": true,
+      "worktree_sha256": "7efbfcd458fffaad31b276e7a1da969fda67934812e04bbdb513016c9da54c99",
+      "git_blob_sha256": "7efbfcd458fffaad31b276e7a1da969fda67934812e04bbdb513016c9da54c99"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/acceptance-network-failure/report.json",
+      "immutable": true,
+      "worktree_sha256": "995a317f445190c4e25e08fa45d11a359c7784c184947afc3e261692d495cb51",
+      "git_blob_sha256": "995a317f445190c4e25e08fa45d11a359c7784c184947afc3e261692d495cb51"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/acceptance/report.html",
+      "immutable": true,
+      "worktree_sha256": "d825f46d8e0b19ea92f9cbaa35fa259c54df90cb0f2c4060bc715b3487c6ad24",
+      "git_blob_sha256": "d825f46d8e0b19ea92f9cbaa35fa259c54df90cb0f2c4060bc715b3487c6ad24"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/acceptance/report.json",
+      "immutable": true,
+      "worktree_sha256": "7ecedad88f8414fc58264e99414fd347c8caab331cb4d8124c6aa98025d462e4",
+      "git_blob_sha256": "7ecedad88f8414fc58264e99414fd347c8caab331cb4d8124c6aa98025d462e4"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/cases-before.csv",
+      "immutable": true,
+      "worktree_sha256": "ff476970cd05defa55f48af2408486c5f4ec317546dc9975d92b2d2f6bfbb6c0",
+      "git_blob_sha256": "ff476970cd05defa55f48af2408486c5f4ec317546dc9975d92b2d2f6bfbb6c0"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/component-results.json",
+      "immutable": true,
+      "worktree_sha256": "f8e26515460051c13443b1d172f2456432bd9d3047a08d8c4eb167907b09caf6",
+      "git_blob_sha256": "f8e26515460051c13443b1d172f2456432bd9d3047a08d8c4eb167907b09caf6"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/defects-before.csv",
+      "immutable": true,
+      "worktree_sha256": "8d96edca6f9beb218161cda49467b5c980197d1d9d14a1ba1d14ac558e673a84",
+      "git_blob_sha256": "8d96edca6f9beb218161cda49467b5c980197d1d9d14a1ba1d14ac558e673a84"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/environment.json",
+      "immutable": true,
+      "worktree_sha256": "6a203acbb99a7e9bbe8e58eb51821722642a9d7728ec6c51a1a4ae918c7f1978",
+      "git_blob_sha256": "6a203acbb99a7e9bbe8e58eb51821722642a9d7728ec6c51a1a4ae918c7f1978"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/frontend-build.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b",
+      "git_blob_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/import_official_image.py",
+      "immutable": true,
+      "worktree_sha256": "1690041a11c18233ee07a435e45d7ef1aa2ac924ec114505ac8089767f68fa54",
+      "git_blob_sha256": "1690041a11c18233ee07a435e45d7ef1aa2ac924ec114505ac8089767f68fa54"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/dns.txt",
+      "immutable": true,
+      "worktree_sha256": "16936ddc72e180f7ef042151c65bfbc67a647b2444d7e1347b46b2fd7f97bea7",
+      "git_blob_sha256": "16936ddc72e180f7ef042151c65bfbc67a647b2444d7e1347b46b2fd7f97bea7"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/format-1.26.11.txt",
+      "immutable": true,
+      "worktree_sha256": "9d47f7a0bc216ef2948a78eccd9c6d4b370096641889fda4fc1fb053abfa4ec5",
+      "git_blob_sha256": "9d47f7a0bc216ef2948a78eccd9c6d4b370096641889fda4fc1fb053abfa4ec5"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/format-git-blobs.json",
+      "immutable": true,
+      "worktree_sha256": "d069f9fe1b885f1725b377842b21e2d82ec84c19d117da573e0cc1f578da1c0e",
+      "git_blob_sha256": "d069f9fe1b885f1725b377842b21e2d82ec84c19d117da573e0cc1f578da1c0e"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/format.txt",
+      "immutable": true,
+      "worktree_sha256": "a12e2595a82b0c07fcc464323374697cbc1931ca1d9186bcd4fda0636d46627c",
+      "git_blob_sha256": "a12e2595a82b0c07fcc464323374697cbc1931ca1d9186bcd4fda0636d46627c"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/frontend-build.txt",
+      "immutable": true,
+      "worktree_sha256": "763a23ce2635fa88710e87550d82451705a411c2e90f07e7f6c0546996553e73",
+      "git_blob_sha256": "763a23ce2635fa88710e87550d82451705a411c2e90f07e7f6c0546996553e73"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/image-identities.txt",
+      "immutable": true,
+      "worktree_sha256": "cbb4b77036019ae90e80642dd5f591faa6423eee747e4bd43339ce45834a5fb5",
+      "git_blob_sha256": "cbb4b77036019ae90e80642dd5f591faa6423eee747e4bd43339ce45834a5fb5"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/image-import.txt",
+      "immutable": true,
+      "worktree_sha256": "f891919ee0c19ed16cdbbe7beae4c891614d5ba330ed8d5e0bca975836e55d5f",
+      "git_blob_sha256": "f891919ee0c19ed16cdbbe7beae4c891614d5ba330ed8d5e0bca975836e55d5f"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/image-load.txt",
+      "immutable": true,
+      "worktree_sha256": "0c681ccf421c4daee1f09e5aca424abdedf69d4cc4d0282617e57d5d9d04b188",
+      "git_blob_sha256": "0c681ccf421c4daee1f09e5aca424abdedf69d4cc4d0282617e57d5d9d04b188"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/image-resume-02.txt",
+      "immutable": true,
+      "worktree_sha256": "19d3522779e14e1995c42e2e40df26265e80bcb2dc1a79473feb52878e1d320c",
+      "git_blob_sha256": "19d3522779e14e1995c42e2e40df26265e80bcb2dc1a79473feb52878e1d320c"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/image-resume.txt",
+      "immutable": true,
+      "worktree_sha256": "b7bb473483c428c921f49709cc9deb6803f58b28a146702965ebd2df4525e43c",
+      "git_blob_sha256": "b7bb473483c428c921f49709cc9deb6803f58b28a146702965ebd2df4525e43c"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/mutation.txt",
+      "immutable": true,
+      "worktree_sha256": "409b1468c2a9e4e2f93e3a3d12cc1289f1de37131fb045370f12320ef7e52fcc",
+      "git_blob_sha256": "409b1468c2a9e4e2f93e3a3d12cc1289f1de37131fb045370f12320ef7e52fcc"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/network-check.json",
+      "immutable": true,
+      "worktree_sha256": "03bed6c892a42b5495e2a85b2ee69e4e2b4f0f39d92df2bf66978099b5109935",
+      "git_blob_sha256": "03bed6c892a42b5495e2a85b2ee69e4e2b4f0f39d92df2bf66978099b5109935"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/official-backend-build.txt",
+      "immutable": true,
+      "worktree_sha256": "50134387132b8c018cf6c5503c25341a64c260b9b048fc0ac7e0955c9a0f4566",
+      "git_blob_sha256": "50134387132b8c018cf6c5503c25341a64c260b9b048fc0ac7e0955c9a0f4566"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/official-frontend-build.txt",
+      "immutable": true,
+      "worktree_sha256": "8d68639a3ed9c50309d969283c4aa65b8359435bfa379da9dda79af01fe85f04",
+      "git_blob_sha256": "8d68639a3ed9c50309d969283c4aa65b8359435bfa379da9dda79af01fe85f04"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/official-go-test.txt",
+      "immutable": true,
+      "worktree_sha256": "b6422c5304bc5e8b416c7d93ee7cc551e51b923b2d7eaff485c8ca3cfe64f23b",
+      "git_blob_sha256": "b6422c5304bc5e8b416c7d93ee7cc551e51b923b2d7eaff485c8ca3cfe64f23b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/official-image-id.txt",
+      "immutable": true,
+      "worktree_sha256": "5750f260232cefb64a399f2f0e0822d713c8a132a81dc5aeb1f253be8d9270ea",
+      "git_blob_sha256": "5750f260232cefb64a399f2f0e0822d713c8a132a81dc5aeb1f253be8d9270ea"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/online-official-backend.txt",
+      "immutable": true,
+      "worktree_sha256": "7072f47959bf71bb78ae2b0443b4489687fabc052fdf42a22ece9059400161d6",
+      "git_blob_sha256": "7072f47959bf71bb78ae2b0443b4489687fabc052fdf42a22ece9059400161d6"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/online-subnet.txt",
+      "immutable": true,
+      "worktree_sha256": "725818cf2129ae47c02bffedf2247fb7d342de60bcf7898863c8fe82c1bc2147",
+      "git_blob_sha256": "725818cf2129ae47c02bffedf2247fb7d342de60bcf7898863c8fe82c1bc2147"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/online.txt",
+      "immutable": true,
+      "worktree_sha256": "d16df86dd25ba36bf919e7a525ad389d5b8ceb55dd4ff8d1cbdfee19cabd9720",
+      "git_blob_sha256": "d16df86dd25ba36bf919e7a525ad389d5b8ceb55dd4ff8d1cbdfee19cabd9720"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/pull-01.txt",
+      "immutable": true,
+      "worktree_sha256": "ba2fd43092ae03651a26bc506fb70fdd2f95c70c061748ffbad65042e7695cd7",
+      "git_blob_sha256": "ba2fd43092ae03651a26bc506fb70fdd2f95c70c061748ffbad65042e7695cd7"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/runtime-build.txt",
+      "immutable": true,
+      "worktree_sha256": "af1769cfb742bfb4b96faa8f83eecdf62720f8f690781118a2cd3809425736cb",
+      "git_blob_sha256": "af1769cfb742bfb4b96faa8f83eecdf62720f8f690781118a2cd3809425736cb"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/supplement.txt",
+      "immutable": true,
+      "worktree_sha256": "95f905909e6af0c60fd3a09ecb46139d01e41c8f423cb8afab3d26b863dcae21",
+      "git_blob_sha256": "95f905909e6af0c60fd3a09ecb46139d01e41c8f423cb8afab3d26b863dcae21"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/verify-command-error.txt",
+      "immutable": true,
+      "worktree_sha256": "f5e144e4def48c66b84dbe8479cbd07d5f61c5562c957158d3dfe5aeadd2b976",
+      "git_blob_sha256": "f5e144e4def48c66b84dbe8479cbd07d5f61c5562c957158d3dfe5aeadd2b976"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/verify-final.txt",
+      "immutable": true,
+      "worktree_sha256": "6e974ceadfae5315227af61e0badb4d916df29f042032ecaa93111cf5297e105",
+      "git_blob_sha256": "6e974ceadfae5315227af61e0badb4d916df29f042032ecaa93111cf5297e105"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/version-1.26.11.txt",
+      "immutable": true,
+      "worktree_sha256": "e4f8bd59274dd7c868d6bc641e24f6fc5ceaebffdf6f10c765f297d3eaab1b50",
+      "git_blob_sha256": "e4f8bd59274dd7c868d6bc641e24f6fc5ceaebffdf6f10c765f297d3eaab1b50"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/versions.txt",
+      "immutable": true,
+      "worktree_sha256": "e37270413fda49039b4f31dd90726df0e94c163cf9bca2f62fd40a47d12b5db1",
+      "git_blob_sha256": "e37270413fda49039b4f31dd90726df0e94c163cf9bca2f62fd40a47d12b5db1"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/logs/web-build.txt",
+      "immutable": true,
+      "worktree_sha256": "20068e0a2658cbc77d8a6d9547740517e8c6722eacf00714cb8faf72946a7534",
+      "git_blob_sha256": "20068e0a2658cbc77d8a6d9547740517e8c6722eacf00714cb8faf72946a7534"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/manifest-before-recovery.json",
+      "immutable": true,
+      "worktree_sha256": "8effd5b10abb3be269c1ab60d369eeef5d09b9a71e5e718a0fa3463a52ec872b",
+      "git_blob_sha256": "8effd5b10abb3be269c1ab60d369eeef5d09b9a71e5e718a0fa3463a52ec872b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/manifest.json",
+      "immutable": true,
+      "worktree_sha256": "ce0d1d925828f74359b95d495e6bb707aea1ed304dc773e3b8fa6e4bb6361d90",
+      "git_blob_sha256": "ce0d1d925828f74359b95d495e6bb707aea1ed304dc773e3b8fa6e4bb6361d90"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/network.yml",
+      "immutable": true,
+      "worktree_sha256": "76578f94304e05198b4aaba471cccfe752e26a55a15e438ab3f6d12e1f58fd61",
+      "git_blob_sha256": "76578f94304e05198b4aaba471cccfe752e26a55a15e438ab3f6d12e1f58fd61"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/nginx.conf",
+      "immutable": true,
+      "worktree_sha256": "148c7fccf961ff93d5701f5c1b988c3e8ef8b1901ee698d563ab9e434132053f",
+      "git_blob_sha256": "148c7fccf961ff93d5701f5c1b988c3e8ef8b1901ee698d563ab9e434132053f"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/official-backend-build.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b",
+      "git_blob_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/official-frontend-build.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b",
+      "git_blob_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/official-go-test.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b",
+      "git_blob_sha256": "9585fbece5c402088f2d6a2def7e60d1c7ffecc24b16d32d5823a064b008935b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/official-manifest.json",
+      "immutable": true,
+      "worktree_sha256": "8d51bdd8551fcaee3b7e11decf548cf3ecb19c83d52ce948279f6d2061a9efb0",
+      "git_blob_sha256": "8d51bdd8551fcaee3b7e11decf548cf3ecb19c83d52ce948279f6d2061a9efb0"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/performance-observation.json",
+      "immutable": true,
+      "worktree_sha256": "5c129df98d0232fccabddaba8554e1367b7b50ff5868c81e710d53b8576303a3",
+      "git_blob_sha256": "5c129df98d0232fccabddaba8554e1367b7b50ff5868c81e710d53b8576303a3"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/resume_image.py",
+      "immutable": true,
+      "worktree_sha256": "0d0221cf048825f5a28f576f11e20eede39be191951044a1e30618237e2daae8",
+      "git_blob_sha256": "0d0221cf048825f5a28f576f11e20eede39be191951044a1e30618237e2daae8"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/run_online.py",
+      "immutable": true,
+      "worktree_sha256": "43552df8751d6ab8528af7c6ef78a41cf3f68990241e693d99e3885b4144974f",
+      "git_blob_sha256": "43552df8751d6ab8528af7c6ef78a41cf3f68990241e693d99e3885b4144974f"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/sec08-sandbox/docs/lesson-09/sec08/malicious-material.md",
+      "immutable": true,
+      "worktree_sha256": "ca3492f34dfd0240f4d9c4e8973f99217be8931170fd3fc119b0c55940faf87b",
+      "git_blob_sha256": "ca3492f34dfd0240f4d9c4e8973f99217be8931170fd3fc119b0c55940faf87b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/sec08-sandbox/docs/lesson-09/sec08/prompts.md",
+      "immutable": true,
+      "worktree_sha256": "45c69919fb3ccfccc720697a001f918f334f1d01b4d8d7ca54beb5f8ca595c48",
+      "git_blob_sha256": "45c69919fb3ccfccc720697a001f918f334f1d01b4d8d7ca54beb5f8ca595c48"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/sec08-sandbox/reports/sec08-experiment.md",
+      "immutable": true,
+      "worktree_sha256": "0426f6d264fafe99f33507e498b3b495cbc9cec8450fa53fee4d96952f8f484a",
+      "git_blob_sha256": "0426f6d264fafe99f33507e498b3b495cbc9cec8450fa53fee4d96952f8f484a"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/security-prioritized.md",
+      "immutable": true,
+      "worktree_sha256": "80ffd5ee3dfa9901aa2fef986b41ea9bce447efb3aacae749a14e304d93e573f",
+      "git_blob_sha256": "80ffd5ee3dfa9901aa2fef986b41ea9bce447efb3aacae749a14e304d93e573f"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/status-attempt01.json",
+      "immutable": true,
+      "worktree_sha256": "bd3a428c509d064b0ebc39d7ec750f893528206081057a8440235c5871bd5116",
+      "git_blob_sha256": "bd3a428c509d064b0ebc39d7ec750f893528206081057a8440235c5871bd5116"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/status-attempt02.json",
+      "immutable": true,
+      "worktree_sha256": "b527ddc191cc03d372611cabc59038181c4a8f686be16efaaa388e213689eff9",
+      "git_blob_sha256": "b527ddc191cc03d372611cabc59038181c4a8f686be16efaaa388e213689eff9"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/status.json",
+      "immutable": true,
+      "worktree_sha256": "cdb686fda10aa5d081b9db9cd2d04937f2cd21aa8b9dfc66e908a0ad9c85bd34",
+      "git_blob_sha256": "cdb686fda10aa5d081b9db9cd2d04937f2cd21aa8b9dfc66e908a0ad9c85bd34"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/summary.json",
+      "immutable": true,
+      "worktree_sha256": "871bf58a5b3e0bff901d953f511a3e743b9f0a6b632cd2605cc543f3db771480",
+      "git_blob_sha256": "871bf58a5b3e0bff901d953f511a3e743b9f0a6b632cd2605cc543f3db771480"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/supplement-result.json",
+      "immutable": true,
+      "worktree_sha256": "c4394cb5af0c89db600dd7a0277686f832227d59d27d2b6749e1baa7795ac5a6",
+      "git_blob_sha256": "c4394cb5af0c89db600dd7a0277686f832227d59d27d2b6749e1baa7795ac5a6"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/supplement.py",
+      "immutable": true,
+      "worktree_sha256": "62421ac27e74d086417e9c13439e8956032751e79f4fa55c3b32391470e779d1",
+      "git_blob_sha256": "62421ac27e74d086417e9c13439e8956032751e79f4fa55c3b32391470e779d1"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/update_deliverables.py",
+      "immutable": true,
+      "worktree_sha256": "c80aadd11a44f9532f1205bc8beaf21d1dd9f0a858f3b67ec3c74506de685dee",
+      "git_blob_sha256": "c80aadd11a44f9532f1205bc8beaf21d1dd9f0a858f3b67ec3c74506de685dee"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/verify-attempt01.md",
+      "immutable": true,
+      "worktree_sha256": "0fb372b93058a0d6bf1ccda1bc33d4b18c129946e73c001463f6b786b20dcf17",
+      "git_blob_sha256": "0fb372b93058a0d6bf1ccda1bc33d4b18c129946e73c001463f6b786b20dcf17"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/verify-attempt02.md",
+      "immutable": true,
+      "worktree_sha256": "1458714c9730960c98d5edbbe6347acdcc2c8aef00e1f70ae894216e43a376c9",
+      "git_blob_sha256": "1458714c9730960c98d5edbbe6347acdcc2c8aef00e1f70ae894216e43a376c9"
+    },
+    {
+      "path": "qa/lesson9/retest-02/recovery/verify.md",
+      "immutable": true,
+      "worktree_sha256": "607ca88bd0a1505db0e181e8648e5ac380d7222764dfb0f241e3989aaf3761ab",
+      "git_blob_sha256": "607ca88bd0a1505db0e181e8648e5ac380d7222764dfb0f241e3989aaf3761ab"
+    },
+    {
+      "path": "qa/lesson9/retest-02/report.py",
+      "immutable": true,
+      "worktree_sha256": "1ee75b9b162b7cc8e6935453164289573c727ce78d86f82f9c5b0d971dbaf206",
+      "git_blob_sha256": "1ee75b9b162b7cc8e6935453164289573c727ce78d86f82f9c5b0d971dbaf206"
+    },
+    {
+      "path": "qa/lesson9/retest-02/review-06.md",
+      "immutable": true,
+      "worktree_sha256": "cd217b4a1420c66965200429256f14bdeebff3fd937695be16adcb060d6de2a0",
+      "git_blob_sha256": "cd217b4a1420c66965200429256f14bdeebff3fd937695be16adcb060d6de2a0"
+    },
+    {
+      "path": "qa/lesson9/retest-02/review-07.md",
+      "immutable": true,
+      "worktree_sha256": "68f218000e2f17b3d2a74363c72406459a9c79e39c05b03a0abc94bb42c8a865",
+      "git_blob_sha256": "68f218000e2f17b3d2a74363c72406459a9c79e39c05b03a0abc94bb42c8a865"
+    },
+    {
+      "path": "qa/lesson9/retest-02/run.py",
+      "immutable": true,
+      "worktree_sha256": "b587e5073e2080d70ec635b5f4bf834e0f43a47ab5254a59af2ff798af816429",
+      "git_blob_sha256": "b587e5073e2080d70ec635b5f4bf834e0f43a47ab5254a59af2ff798af816429"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/README.md",
+      "immutable": true,
+      "worktree_sha256": "4de45db949a76b9d604c4a3b38ded0351f0274a9d21153ba33d71682fd2d510f",
+      "git_blob_sha256": "4de45db949a76b9d604c4a3b38ded0351f0274a9d21153ba33d71682fd2d510f"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/developer-verification.md",
+      "immutable": true,
+      "worktree_sha256": "00c4eb84a4d3cd67498723a2dcddc3a54503a519a31fb4e046c35c723352f716",
+      "git_blob_sha256": "00c4eb84a4d3cd67498723a2dcddc3a54503a519a31fb4e046c35c723352f716"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/fix-090ca01.txt",
+      "immutable": true,
+      "worktree_sha256": "90958bd0f17e15912e1139aa7f5dd96156f7234cf83401f4e789ccdf6c105519",
+      "git_blob_sha256": "90958bd0f17e15912e1139aa7f5dd96156f7234cf83401f4e789ccdf6c105519"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/fix-7263dda.txt",
+      "immutable": true,
+      "worktree_sha256": "b10492da857cb4c64632153f05169e71bfc57bfcd3664b39b33580c79421bddd",
+      "git_blob_sha256": "b10492da857cb4c64632153f05169e71bfc57bfcd3664b39b33580c79421bddd"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/fix-go-deps.txt",
+      "immutable": true,
+      "worktree_sha256": "d0778cbaedcd856dd5eca7d0f6dc6c90b88bbe5c8a2ebc0583bf0101cb2be58b",
+      "git_blob_sha256": "d0778cbaedcd856dd5eca7d0f6dc6c90b88bbe5c8a2ebc0583bf0101cb2be58b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/frontend-dependency-history.txt",
+      "immutable": true,
+      "worktree_sha256": "8744d0fa26788bc54563e817d5676591b515c82e35961a6d71cb88ffc5f5eb22",
+      "git_blob_sha256": "8744d0fa26788bc54563e817d5676591b515c82e35961a6d71cb88ffc5f5eb22"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/govuln-disposition.md",
+      "immutable": true,
+      "worktree_sha256": "a6cc7ba9fd016e533c773e9c70dc95b446a8fb7cc8523db4aeb72232b398c939",
+      "git_blob_sha256": "a6cc7ba9fd016e533c773e9c70dc95b446a8fb7cc8523db4aeb72232b398c939"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/lesson8.html",
+      "immutable": true,
+      "worktree_sha256": "7dee48871d9908385d490b1ba77c6df04603ad7b8aa50c61c9ab2d5160757c41",
+      "git_blob_sha256": "7dee48871d9908385d490b1ba77c6df04603ad7b8aa50c61c9ab2d5160757c41"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/lesson8.txt",
+      "immutable": true,
+      "worktree_sha256": "9e02ad9053bddd0398cd335e94a02d7bf02292a8face77a215613d1cf9a450bc",
+      "git_blob_sha256": "9e02ad9053bddd0398cd335e94a02d7bf02292a8face77a215613d1cf9a450bc"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/lesson9.html",
+      "immutable": true,
+      "worktree_sha256": "32d8a42b72799ed5d4886ff2a8203df81d5b45d3cba46b33c8c20190e2892b63",
+      "git_blob_sha256": "32d8a42b72799ed5d4886ff2a8203df81d5b45d3cba46b33c8c20190e2892b63"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/lesson9.txt",
+      "immutable": true,
+      "worktree_sha256": "a894d66243a118c215542431ea777c28ee7592be980304768c008b5161d4dc61",
+      "git_blob_sha256": "a894d66243a118c215542431ea777c28ee7592be980304768c008b5161d4dc61"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/path-review.txt",
+      "immutable": true,
+      "worktree_sha256": "0d4802cf6a6dc614dbccba3a8fc81603684d729fbfd696cab96684ca29329ca0",
+      "git_blob_sha256": "0d4802cf6a6dc614dbccba3a8fc81603684d729fbfd696cab96684ca29329ca0"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/sec08-experiment.md",
+      "immutable": true,
+      "worktree_sha256": "44309d6596cb402b20cbe82d8faba65ca7a6b3492262dfdc9ff91f0d0c49bffb",
+      "git_blob_sha256": "44309d6596cb402b20cbe82d8faba65ca7a6b3492262dfdc9ff91f0d0c49bffb"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/security-fix-log.md",
+      "immutable": true,
+      "worktree_sha256": "aae9fbaa636452270dd9fb47d4d456d4ec5e899920c5199ba0ab3b6c9dc1454b",
+      "git_blob_sha256": "aae9fbaa636452270dd9fb47d4d456d4ec5e899920c5199ba0ab3b6c9dc1454b"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/security-precheck.md",
+      "immutable": true,
+      "worktree_sha256": "760b657095b58dee20d6eded0d6b6c36aa4aa82c9c46886c005d6be5d27fc269",
+      "git_blob_sha256": "760b657095b58dee20d6eded0d6b6c36aa4aa82c9c46886c005d6be5d27fc269"
+    },
+    {
+      "path": "qa/lesson9/retest-02/sources/xss-page-source.md",
+      "immutable": true,
+      "worktree_sha256": "c70890e0e97844188dda21376eadbb82f490635caa70abff4f688fb6b9e20b47",
+      "git_blob_sha256": "c70890e0e97844188dda21376eadbb82f490635caa70abff4f688fb6b9e20b47"
+    },
+    {
+      "path": "qa/lesson9/retest-02/summary.json",
+      "immutable": true,
+      "worktree_sha256": "ffd1d920cfc38fa39770fdf5468e0fe512f92ee1c13d4fe6c9d4c482c97a5059",
+      "git_blob_sha256": "ffd1d920cfc38fa39770fdf5468e0fe512f92ee1c13d4fe6c9d4c482c97a5059"
+    },
+    {
+      "path": "qa/lesson9/retest-02/version.json",
+      "immutable": true,
+      "worktree_sha256": "91cd97cca3945e0dd7f7495ba3b2b3b3a4a1cddf1b07329c196be101c4c2a8c5",
+      "git_blob_sha256": "91cd97cca3945e0dd7f7495ba3b2b3b3a4a1cddf1b07329c196be101c4c2a8c5"
+    },
+    {
+      "path": "qa/lesson9/retest-02/修复定位与防御性复核.md",
+      "immutable": true,
+      "worktree_sha256": "514531017d0c30f9f7bee86209432100889320854ac9d589d620fec714f3d7f8",
+      "git_blob_sha256": "514531017d0c30f9f7bee86209432100889320854ac9d589d620fec714f3d7f8"
+    },
+    {
+      "path": "qa/lesson9/retest-02/复测报告.md",
+      "immutable": true,
+      "worktree_sha256": "ae0a3239cf0da48f583c7eccf91c6b19dfebd1745827a13e1cb06c1aade378e1",
+      "git_blob_sha256": "ae0a3239cf0da48f583c7eccf91c6b19dfebd1745827a13e1cb06c1aade378e1"
+    },
+    {
+      "path": "qa/lesson9/retest-02/用例执行表.csv",
+      "immutable": true,
+      "worktree_sha256": "1aeb4de0fbc6473d5ad191247eddc67da8f7f8cb2242f45d2793f65f31ae2273",
+      "git_blob_sha256": "1aeb4de0fbc6473d5ad191247eddc67da8f7f8cb2242f45d2793f65f31ae2273"
+    },
+    {
+      "path": "qa/lesson9/retest-02/缺陷复测表.csv",
+      "immutable": true,
+      "worktree_sha256": "96be8a87b8225ee0d5edb9c513394742234a957b6375996aa7139da902e3a4bb",
+      "git_blob_sha256": "96be8a87b8225ee0d5edb9c513394742234a957b6375996aa7139da902e3a4bb"
+    },
+    {
+      "path": "qa/lesson9/retest-02/证据索引.md",
+      "immutable": true,
+      "worktree_sha256": "f7435736d55b75fc4a53a5ecf39bbcd6e36a00f60c7b98d34e93e7a7e6dfc634",
+      "git_blob_sha256": "f7435736d55b75fc4a53a5ecf39bbcd6e36a00f60c7b98d34e93e7a7e6dfc634"
+    },
+    {
+      "path": "qa/lesson9/retest-02/课程要求映射.md",
+      "immutable": true,
+      "worktree_sha256": "30d1acb1b91fea3f91f9d9cec551d8cab0f3c9ca6dd4c9de777d618ac64a7b14",
+      "git_blob_sha256": "30d1acb1b91fea3f91f9d9cec551d8cab0f3c9ca6dd4c9de777d618ac64a7b14"
+    },
+    {
+      "path": "qa/lesson9/run_checks.py",
+      "immutable": true,
+      "worktree_sha256": "1a283fad4d63980ee0668a8c7c65202ca35d10f47e8c2518e96ed2e140140ac9",
+      "git_blob_sha256": "1a283fad4d63980ee0668a8c7c65202ca35d10f47e8c2518e96ed2e140140ac9"
+    },
+    {
+      "path": "qa/lesson9/sources/developer-fix-log.md",
+      "immutable": true,
+      "worktree_sha256": "aae9fbaa636452270dd9fb47d4d456d4ec5e899920c5199ba0ab3b6c9dc1454b",
+      "git_blob_sha256": "aae9fbaa636452270dd9fb47d4d456d4ec5e899920c5199ba0ab3b6c9dc1454b"
+    },
+    {
+      "path": "qa/lesson9/sources/issues.json",
+      "immutable": true,
+      "worktree_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "git_blob_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "qa/lesson9/sources/lesson8.html",
+      "immutable": true,
+      "worktree_sha256": "7dee48871d9908385d490b1ba77c6df04603ad7b8aa50c61c9ab2d5160757c41",
+      "git_blob_sha256": "7dee48871d9908385d490b1ba77c6df04603ad7b8aa50c61c9ab2d5160757c41"
+    },
+    {
+      "path": "qa/lesson9/sources/lesson8.txt",
+      "immutable": true,
+      "worktree_sha256": "9e02ad9053bddd0398cd335e94a02d7bf02292a8face77a215613d1cf9a450bc",
+      "git_blob_sha256": "9e02ad9053bddd0398cd335e94a02d7bf02292a8face77a215613d1cf9a450bc"
+    },
+    {
+      "path": "qa/lesson9/sources/lesson9.html",
+      "immutable": true,
+      "worktree_sha256": "32d8a42b72799ed5d4886ff2a8203df81d5b45d3cba46b33c8c20190e2892b63",
+      "git_blob_sha256": "32d8a42b72799ed5d4886ff2a8203df81d5b45d3cba46b33c8c20190e2892b63"
+    },
+    {
+      "path": "qa/lesson9/sources/lesson9.txt",
+      "immutable": true,
+      "worktree_sha256": "a894d66243a118c215542431ea777c28ee7592be980304768c008b5161d4dc61",
+      "git_blob_sha256": "a894d66243a118c215542431ea777c28ee7592be980304768c008b5161d4dc61"
+    },
+    {
+      "path": "qa/lesson9/sources/local-week8-security-precheck.md",
+      "immutable": true,
+      "worktree_sha256": "f8c3a2c111aca3b69feb75aed9a889e11a84570a767307dc7ecba96cbc880b62",
+      "git_blob_sha256": "f8c3a2c111aca3b69feb75aed9a889e11a84570a767307dc7ecba96cbc880b62"
+    },
+    {
+      "path": "qa/lesson9/sources/main-week8-security-precheck.md",
+      "immutable": true,
+      "worktree_sha256": "760b657095b58dee20d6eded0d6b6c36aa4aa82c9c46886c005d6be5d27fc269",
+      "git_blob_sha256": "760b657095b58dee20d6eded0d6b6c36aa4aa82c9c46886c005d6be5d27fc269"
+    },
+    {
+      "path": "qa/lesson9/sources/pulls.json",
+      "immutable": true,
+      "worktree_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "git_blob_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "qa/lesson9/summary.json",
+      "immutable": true,
+      "worktree_sha256": "c69852d341582a50f9fe6b14769733d7aa483b7e32ee244e8d712cac7f834091",
+      "git_blob_sha256": "c69852d341582a50f9fe6b14769733d7aa483b7e32ee244e8d712cac7f834091"
+    },
+    {
+      "path": "qa/lesson9/version.json",
+      "immutable": true,
+      "worktree_sha256": "f6730573ec4065c6c3b8d25d65adff72c6610f55edf5c790cca3180c6213fa09",
+      "git_blob_sha256": "f6730573ec4065c6c3b8d25d65adff72c6610f55edf5c790cca3180c6213fa09"
+    },
+    {
+      "path": "qa/lesson9/测试与复测报告.md",
+      "immutable": true,
+      "worktree_sha256": "11bc0c8e6dfe9b0d75eaa8d52d99f1a9f5bd5cda68ff180febcd586fd2060281",
+      "git_blob_sha256": "11bc0c8e6dfe9b0d75eaa8d52d99f1a9f5bd5cda68ff180febcd586fd2060281"
+    },
+    {
+      "path": "qa/lesson9/用例执行表.csv",
+      "immutable": true,
+      "worktree_sha256": "36154e769336e350ae84c8307ed7f0bc4d8ae513bf1fd60a4bc5d2ae1ac7a5d3",
+      "git_blob_sha256": "36154e769336e350ae84c8307ed7f0bc4d8ae513bf1fd60a4bc5d2ae1ac7a5d3"
+    },
+    {
+      "path": "qa/lesson9/缺陷复测表.csv",
+      "immutable": true,
+      "worktree_sha256": "512b25a6b163d895d13d0c886037be472d26f221e4b675f787bf7a27b487b48f",
+      "git_blob_sha256": "512b25a6b163d895d13d0c886037be472d26f221e4b675f787bf7a27b487b48f"
+    },
+    {
+      "path": "reports/lesson9-20261118/defects.md",
+      "immutable": true,
+      "worktree_sha256": "967eb1b9ce70a1c196bdea8ba6c9950125a9dc75947a1c07d2fd90598125315b",
+      "git_blob_sha256": "967eb1b9ce70a1c196bdea8ba6c9950125a9dc75947a1c07d2fd90598125315b"
+    },
+    {
+      "path": "reports/lesson9-20261118/gate-red-green.md",
+      "immutable": true,
+      "worktree_sha256": "cb82b48715878677e4cacf0aab279742683da5aea8cdea13c24d8d1abedf6f47",
+      "git_blob_sha256": "cb82b48715878677e4cacf0aab279742683da5aea8cdea13c24d8d1abedf6f47"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/actual-make-entry.json",
+      "immutable": true,
+      "worktree_sha256": "7659df2b35d33daa2054b8cf0cd77f6443afbd8af4cacf0e05b376aaa73557fe",
+      "git_blob_sha256": "7659df2b35d33daa2054b8cf0cd77f6443afbd8af4cacf0e05b376aaa73557fe"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/code-diff.patch",
+      "immutable": true,
+      "worktree_sha256": "15baf90047edcb7c42b7b19965fde96b91de12d71a832f8a248430caca7f82c5",
+      "git_blob_sha256": "15baf90047edcb7c42b7b19965fde96b91de12d71a832f8a248430caca7f82c5"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/code-fingerprint.json",
+      "immutable": true,
+      "worktree_sha256": "0f724515e902097959d2661edab3012205a2a9ea7a52d126a74e9329ab87dd56",
+      "git_blob_sha256": "0f724515e902097959d2661edab3012205a2a9ea7a52d126a74e9329ab87dd56"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/grade-attempts/teacher-20261118T025013Z/report.html",
+      "immutable": true,
+      "worktree_sha256": "65834cfc364023f76fbfe1e7ecc37e2646e13a5659f257a9ccabfe14d21022e0",
+      "git_blob_sha256": "65834cfc364023f76fbfe1e7ecc37e2646e13a5659f257a9ccabfe14d21022e0"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/grade-attempts/teacher-20261118T025013Z/report.json",
+      "immutable": true,
+      "worktree_sha256": "4a24cd71d840fef26d8e2304da4b4e011a66b4ae10122c0ec9f00dbdc47bd637",
+      "git_blob_sha256": "4a24cd71d840fef26d8e2304da4b4e011a66b4ae10122c0ec9f00dbdc47bd637"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/grade-attempts/teacher-20261118T025808Z/report.html",
+      "immutable": true,
+      "worktree_sha256": "7c1906a07ab628cfac933f2538c7e6ddc2cdeac73af435111f81edb161bfaf92",
+      "git_blob_sha256": "7c1906a07ab628cfac933f2538c7e6ddc2cdeac73af435111f81edb161bfaf92"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/grade-attempts/teacher-20261118T025808Z/report.json",
+      "immutable": true,
+      "worktree_sha256": "bb752eea4d0ab02d68f283c02771f1ed9b182e7c2de12c590937cb087ed53a43",
+      "git_blob_sha256": "bb752eea4d0ab02d68f283c02771f1ed9b182e7c2de12c590937cb087ed53a43"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/grade-attempts/teacher-20261118T030240Z/report.html",
+      "immutable": true,
+      "worktree_sha256": "04af8336b564d76eceaba7fc1cd2ffb1b4e518966b88f7a7acbe16329c699f7e",
+      "git_blob_sha256": "04af8336b564d76eceaba7fc1cd2ffb1b4e518966b88f7a7acbe16329c699f7e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/grade-attempts/teacher-20261118T030240Z/report.json",
+      "immutable": true,
+      "worktree_sha256": "1bd8f4ce18edf7411551c1a26132d1113b20e973a08cc706168bd1455b31e89e",
+      "git_blob_sha256": "1bd8f4ce18edf7411551c1a26132d1113b20e973a08cc706168bd1455b31e89e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/grade-attempts/teacher-20261118T030503Z/report.html",
+      "immutable": true,
+      "worktree_sha256": "95ff64bf14df60508912adb29446631a81abf181097987e776fc2ef009787cc5",
+      "git_blob_sha256": "95ff64bf14df60508912adb29446631a81abf181097987e776fc2ef009787cc5"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/grade-attempts/teacher-20261118T030503Z/report.json",
+      "immutable": true,
+      "worktree_sha256": "0bfc9c03da4713ce6c80b5fda630534e3c470b4460cfe11cc448055657b9281c",
+      "git_blob_sha256": "0bfc9c03da4713ce6c80b5fda630534e3c470b4460cfe11cc448055657b9281c"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/api-performance.txt",
+      "immutable": true,
+      "worktree_sha256": "2b006dace9c8db8f4b965756c3e9d00fe9a0efbad3fbd61ade32a8ac25139330",
+      "git_blob_sha256": "2b006dace9c8db8f4b965756c3e9d00fe9a0efbad3fbd61ade32a8ac25139330"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/audit-after.json",
+      "immutable": true,
+      "worktree_sha256": "a6ee0ee765d174f1cf53793c718e4854f28d7105ee5ef99d7ae6ff0681195dda",
+      "git_blob_sha256": "a6ee0ee765d174f1cf53793c718e4854f28d7105ee5ef99d7ae6ff0681195dda"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/audit-before.json",
+      "immutable": true,
+      "worktree_sha256": "9f427e5ab0ce530d5fc377375ab09d830ee1097aedbf5c05ea5b93490ff32df6",
+      "git_blob_sha256": "9f427e5ab0ce530d5fc377375ab09d830ee1097aedbf5c05ea5b93490ff32df6"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/audit-rejected-vite6.json",
+      "immutable": true,
+      "worktree_sha256": "bf1ea191bb5e836e4d416ed9fe3027b21cd345600d9fdcd75618708be1a11a2d",
+      "git_blob_sha256": "bf1ea191bb5e836e4d416ed9fe3027b21cd345600d9fdcd75618708be1a11a2d"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/compatibility.json",
+      "immutable": true,
+      "worktree_sha256": "be7e178b68adbc46fb8f18601b26a00730cfa231ce078270f4a8ccea8abb1d3c",
+      "git_blob_sha256": "be7e178b68adbc46fb8f18601b26a00730cfa231ce078270f4a8ccea8abb1d3c"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/dependency-change.txt",
+      "immutable": true,
+      "worktree_sha256": "5617f34ca9e13ab8e4c382ab0161191de71df9f6d72a959d0ba1e8c728d982e8",
+      "git_blob_sha256": "5617f34ca9e13ab8e4c382ab0161191de71df9f6d72a959d0ba1e8c728d982e8"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/dependency-final.txt",
+      "immutable": true,
+      "worktree_sha256": "d6aafb1b5b7399015c78c169a408926870f3798c2c27f5d563b05daeb210216a",
+      "git_blob_sha256": "d6aafb1b5b7399015c78c169a408926870f3798c2c27f5d563b05daeb210216a"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/e2e-install.txt",
+      "immutable": true,
+      "worktree_sha256": "69785b7f43bb7f9cddeec5fdee96bc2c6b393d6eaad99bcfe195341cb732b517",
+      "git_blob_sha256": "69785b7f43bb7f9cddeec5fdee96bc2c6b393d6eaad99bcfe195341cb732b517"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/frontend-build.txt",
+      "immutable": true,
+      "worktree_sha256": "f261d7a00d0b0f06537d42f23b399af3426b3f1461a140a0270c1d56ca593be6",
+      "git_blob_sha256": "f261d7a00d0b0f06537d42f23b399af3426b3f1461a140a0270c1d56ca593be6"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/grade-api-health.json",
+      "immutable": true,
+      "worktree_sha256": "42333603edbcde36cadd62a93c41fe62a60c82d66dfd186c721c02b1cb3dfd35",
+      "git_blob_sha256": "42333603edbcde36cadd62a93c41fe62a60c82d66dfd186c721c02b1cb3dfd35"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/grade-retry-health.json",
+      "immutable": true,
+      "worktree_sha256": "d7ebcf3384d4ef7f50de4f81f8adf9a8239a9c4ea64817c9d3f4330b08e6fa2f",
+      "git_blob_sha256": "d7ebcf3384d4ef7f50de4f81f8adf9a8239a9c4ea64817c9d3f4330b08e6fa2f"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/health-no-proxy.txt",
+      "immutable": true,
+      "worktree_sha256": "18cc1c2d2c83fa4c5dcf2fad7024f88437b46b17b53de120f752896a30891727",
+      "git_blob_sha256": "18cc1c2d2c83fa4c5dcf2fad7024f88437b46b17b53de120f752896a30891727"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/layer.txt",
+      "immutable": true,
+      "worktree_sha256": "a61ce4a1a24326678d70d3d4814dac6b636459dd34129a1a68ddb3651c1fe8de",
+      "git_blob_sha256": "a61ce4a1a24326678d70d3d4814dac6b636459dd34129a1a68ddb3651c1fe8de"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-check-security.txt",
+      "immutable": true,
+      "worktree_sha256": "1436d200ac02366a32da98736398c4549b2a6b3f8eefc921b607c736224ed203",
+      "git_blob_sha256": "1436d200ac02366a32da98736398c4549b2a6b3f8eefc921b607c736224ed203"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-check.txt",
+      "immutable": true,
+      "worktree_sha256": "05ab21fa30850d81c1cdbe29b8f01b00b10a290b41250dbc45191e61257ddd47",
+      "git_blob_sha256": "05ab21fa30850d81c1cdbe29b8f01b00b10a290b41250dbc45191e61257ddd47"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-console.txt",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-grade-buildproxy-console.txt",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-grade-buildproxy.txt",
+      "immutable": true,
+      "worktree_sha256": "dc46a0288c7fb6a71f5f3cf1518b92813f6df52479a7e5c2ed7b6289a3d63dc9",
+      "git_blob_sha256": "dc46a0288c7fb6a71f5f3cf1518b92813f6df52479a7e5c2ed7b6289a3d63dc9"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-grade-clean-console.txt",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-grade-clean.txt",
+      "immutable": true,
+      "worktree_sha256": "91bab55384bd1ceaa319635928794df57813dee283bc709406264e581339ded1",
+      "git_blob_sha256": "91bab55384bd1ceaa319635928794df57813dee283bc709406264e581339ded1"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-grade-console-retry.txt",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-grade-retry.txt",
+      "immutable": true,
+      "worktree_sha256": "e60b4f02c1d53e8eebd449d3582c3c6ff811a7b557b36f58e89bad2261619c30",
+      "git_blob_sha256": "e60b4f02c1d53e8eebd449d3582c3c6ff811a7b557b36f58e89bad2261619c30"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-grade.txt",
+      "immutable": true,
+      "worktree_sha256": "4bb01cda91dcb02292ff978632bce98284ef44f935c35f54f6ae78d1e3691744",
+      "git_blob_sha256": "4bb01cda91dcb02292ff978632bce98284ef44f935c35f54f6ae78d1e3691744"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-probe.txt",
+      "immutable": true,
+      "worktree_sha256": "c3372e9927b07a21f72dc1d5939d8b18e4a64ada5d57865ae7d02125c761a459",
+      "git_blob_sha256": "c3372e9927b07a21f72dc1d5939d8b18e4a64ada5d57865ae7d02125c761a459"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/make-version.txt",
+      "immutable": true,
+      "worktree_sha256": "72e02fa89dfd7ad3ed478aad34f3959511b411ef6f94ac01cdca983718a249d3",
+      "git_blob_sha256": "72e02fa89dfd7ad3ed478aad34f3959511b411ef6f94ac01cdca983718a249d3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/mysql-digest.txt",
+      "immutable": true,
+      "worktree_sha256": "50bb1dbb371fbc29b186bfca76069e46a94a6f4cd513fc0070bd8389baae3353",
+      "git_blob_sha256": "50bb1dbb371fbc29b186bfca76069e46a94a6f4cd513fc0070bd8389baae3353"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/performance-gate.txt",
+      "immutable": true,
+      "worktree_sha256": "f92b237772784d62bc16ebf131b49afda3f1c038d49efb898e96f2193e753f5e",
+      "git_blob_sha256": "f92b237772784d62bc16ebf131b49afda3f1c038d49efb898e96f2193e753f5e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/playwright.txt",
+      "immutable": true,
+      "worktree_sha256": "1b4f1806925406c6e51d62114903050de7dc67eed98da5c248ba184af7c8a070",
+      "git_blob_sha256": "1b4f1806925406c6e51d62114903050de7dc67eed98da5c248ba184af7c8a070"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/spec.txt",
+      "immutable": true,
+      "worktree_sha256": "f9d80df67c133b8b242699e466eac49b673da5f1e837f9464c373149eefc91e1",
+      "git_blob_sha256": "f9d80df67c133b8b242699e466eac49b673da5f1e837f9464c373149eefc91e1"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/standards.txt",
+      "immutable": true,
+      "worktree_sha256": "569af8630e7c9a6561b3e38f294cbc0b02807c27e3af44069193ffe83ed82eb2",
+      "git_blob_sha256": "569af8630e7c9a6561b3e38f294cbc0b02807c27e3af44069193ffe83ed82eb2"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/static.txt",
+      "immutable": true,
+      "worktree_sha256": "c49db6e6795b40e27f78a552c0024dffc9dfa0649e3fda25e045d93b1d79388f",
+      "git_blob_sha256": "c49db6e6795b40e27f78a552c0024dffc9dfa0649e3fda25e045d93b1d79388f"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/strict.txt",
+      "immutable": true,
+      "worktree_sha256": "9522d70d56e646e72b1145bd8d387bfe0bac50f7595115b693df59b6033aadb8",
+      "git_blob_sha256": "9522d70d56e646e72b1145bd8d387bfe0bac50f7595115b693df59b6033aadb8"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/tag-api.txt",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/tag-worker.txt",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/tools-build.txt",
+      "immutable": true,
+      "worktree_sha256": "f1c9464818b852516c00e2e9677f6dda24bff6cfaf0887374c602315018471d3",
+      "git_blob_sha256": "f1c9464818b852516c00e2e9677f6dda24bff6cfaf0887374c602315018471d3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/validation-console.txt",
+      "immutable": true,
+      "worktree_sha256": "45fafe614602a62bb6aee6d31943f473e03d58f53775377e3d6c9a4d9d283e1e",
+      "git_blob_sha256": "45fafe614602a62bb6aee6d31943f473e03d58f53775377e3d6c9a4d9d283e1e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/logs/versions.json",
+      "immutable": true,
+      "worktree_sha256": "cdeeecbe2c39d89ad5ee570a60bacf8f9367b6fd0e879d430f6aa037d1893f02",
+      "git_blob_sha256": "cdeeecbe2c39d89ad5ee570a60bacf8f9367b6fd0e879d430f6aa037d1893f02"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/make-check-security.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "git_blob_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/make-check.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "git_blob_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/make-grade-buildproxy.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "git_blob_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/make-grade-clean.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "git_blob_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/make-grade-retry.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "git_blob_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/make-grade.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "git_blob_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/make-results.json",
+      "immutable": true,
+      "worktree_sha256": "498c0c45e27bcf93a846eb445d64ca56143b35ee6f589c058ae62b5a376f2864",
+      "git_blob_sha256": "498c0c45e27bcf93a846eb445d64ca56143b35ee6f589c058ae62b5a376f2864"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/manifest.json",
+      "immutable": true,
+      "worktree_sha256": "c031fa2b874830b4a5d027a628b52353df6eb8de2d785fb14ad224eef9bb95ad",
+      "git_blob_sha256": "c031fa2b874830b4a5d027a628b52353df6eb8de2d785fb14ad224eef9bb95ad"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/network-make.yml",
+      "immutable": true,
+      "worktree_sha256": "4c72a829897fddd570f68164dbf5e962104a919167ffdcd343b28d6ec7e0ac0b",
+      "git_blob_sha256": "4c72a829897fddd570f68164dbf5e962104a919167ffdcd343b28d6ec7e0ac0b"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/network.yml",
+      "immutable": true,
+      "worktree_sha256": "d1662b94e14e340d801386b6d7deb6899b1c40ed129a14e03ac749c37568f21a",
+      "git_blob_sha256": "d1662b94e14e340d801386b6d7deb6899b1c40ed129a14e03ac749c37568f21a"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/performance-1.json",
+      "immutable": true,
+      "worktree_sha256": "773f6159ff5c81920f863c01798a8214ac00f5e7cc57d43e17d2d94e63d77d13",
+      "git_blob_sha256": "773f6159ff5c81920f863c01798a8214ac00f5e7cc57d43e17d2d94e63d77d13"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/performance-2.json",
+      "immutable": true,
+      "worktree_sha256": "1f8e6a4d9283c48d0e31b59c9066dcea288146f8f67ab14077e5bda541d2915a",
+      "git_blob_sha256": "1f8e6a4d9283c48d0e31b59c9066dcea288146f8f67ab14077e5bda541d2915a"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/performance-correlation.json",
+      "immutable": true,
+      "worktree_sha256": "af3433096dd9e9e10528a6697ad251a21ba9fa9169ccf6986dbd2dfb523ed50d",
+      "git_blob_sha256": "af3433096dd9e9e10528a6697ad251a21ba9fa9169ccf6986dbd2dfb523ed50d"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/performance-gate.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "07846b783c23904a75834c1932bc2fad41e388e18bc32ffd73ed87bfa3844d87",
+      "git_blob_sha256": "07846b783c23904a75834c1932bc2fad41e388e18bc32ffd73ed87bfa3844d87"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/audit-before.json",
+      "immutable": true,
+      "worktree_sha256": "a6ee0ee765d174f1cf53793c718e4854f28d7105ee5ef99d7ae6ff0681195dda",
+      "git_blob_sha256": "a6ee0ee765d174f1cf53793c718e4854f28d7105ee5ef99d7ae6ff0681195dda"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/api-timings-1.json",
+      "immutable": true,
+      "worktree_sha256": "a338e594615b68c15d4840615a6c712edbe7d9de0826cf52ac622941c104e68f",
+      "git_blob_sha256": "a338e594615b68c15d4840615a6c712edbe7d9de0826cf52ac622941c104e68f"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/api-timings-2.json",
+      "immutable": true,
+      "worktree_sha256": "aaddb9818b7dd2501227f25e3288f894665582d8d703603e9b38f89b62ac0845",
+      "git_blob_sha256": "aaddb9818b7dd2501227f25e3288f894665582d8d703603e9b38f89b62ac0845"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/compose-build.txt",
+      "immutable": true,
+      "worktree_sha256": "3966941ebdc52ebdc3e8e159961fc09d71108ca89bdf4600faa16a6c4d1d4488",
+      "git_blob_sha256": "3966941ebdc52ebdc3e8e159961fc09d71108ca89bdf4600faa16a6c4d1d4488"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/compose-up.txt",
+      "immutable": true,
+      "worktree_sha256": "a87f394eb6af14d868029f09f4f2ee323243cb7525bd36d6881aa5245578b5b2",
+      "git_blob_sha256": "a87f394eb6af14d868029f09f4f2ee323243cb7525bd36d6881aa5245578b5b2"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/container-stats-1.jsonl",
+      "immutable": true,
+      "worktree_sha256": "92a9399cfe5015d67bba0638f62b10204b61a8f67589b1a61dab23cbbfa57e4e",
+      "git_blob_sha256": "92a9399cfe5015d67bba0638f62b10204b61a8f67589b1a61dab23cbbfa57e4e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/container-stats-2.jsonl",
+      "immutable": true,
+      "worktree_sha256": "319ac9c25e3f01cf481e8b60b8de529b0976810658b90d1e4c4fc21081c1a620",
+      "git_blob_sha256": "319ac9c25e3f01cf481e8b60b8de529b0976810658b90d1e4c4fc21081c1a620"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/db-config.txt",
+      "immutable": true,
+      "worktree_sha256": "f9a5c09145f1c74b116beba9c77f13a93216e0ddd854ee97119963ecc9c86ffb",
+      "git_blob_sha256": "f9a5c09145f1c74b116beba9c77f13a93216e0ddd854ee97119963ecc9c86ffb"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/db-waits-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "fc5ffbac7357847a3f89dd2682baa2f6d772e687d94d4c58d3a7f2a7531cbbc7",
+      "git_blob_sha256": "fc5ffbac7357847a3f89dd2682baa2f6d772e687d94d4c58d3a7f2a7531cbbc7"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/db-waits-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "ecd74d0e74b8945ed753f04cc38d04a9bbb37789647e03ebb8ab44fd5703ac0b",
+      "git_blob_sha256": "ecd74d0e74b8945ed753f04cc38d04a9bbb37789647e03ebb8ab44fd5703ac0b"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/lock-edges-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "a561832d85343c2d8bdcb7df1bd7af048dcec389376c88316357888ff397787c",
+      "git_blob_sha256": "a561832d85343c2d8bdcb7df1bd7af048dcec389376c88316357888ff397787c"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/lock-edges-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "f9f240f3da680833c7bd062dfa67142d59cc8a1dd20736cbaf1eafeb92923b78",
+      "git_blob_sha256": "f9f240f3da680833c7bd062dfa67142d59cc8a1dd20736cbaf1eafeb92923b78"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/performance-1.json",
+      "immutable": true,
+      "worktree_sha256": "98e325b7b6f4844b4bbcb56e59b12f756ea15701d8aa392ce2e988c7423c621a",
+      "git_blob_sha256": "98e325b7b6f4844b4bbcb56e59b12f756ea15701d8aa392ce2e988c7423c621a"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/performance-2.json",
+      "immutable": true,
+      "worktree_sha256": "8f63f6d41ff04d9687f4e1baafa8a22374551bbd319252ea13db0bd42a5aee20",
+      "git_blob_sha256": "8f63f6d41ff04d9687f4e1baafa8a22374551bbd319252ea13db0bd42a5aee20"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/sql-statements-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "061f8088f770575000d9d3593683e9078a7a99ee92e68d7173f0e340878c2309",
+      "git_blob_sha256": "061f8088f770575000d9d3593683e9078a7a99ee92e68d7173f0e340878c2309"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/sql-statements-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "df11df2c285b558fef9daf5fccad966d66150a32a3788b012211dab483633ad4",
+      "git_blob_sha256": "df11df2c285b558fef9daf5fccad966d66150a32a3788b012211dab483633ad4"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/before-lock-fix/summary.json",
+      "immutable": true,
+      "worktree_sha256": "d843fdb6d4c0334701a5e5aa97a31cdc0683d89386695902929d39783164c1a2",
+      "git_blob_sha256": "d843fdb6d4c0334701a5e5aa97a31cdc0683d89386695902929d39783164c1a2"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/code-diff.patch",
+      "immutable": true,
+      "worktree_sha256": "3d9353247ef773792c0dd6482dd8d2708e278cc1f8c5cad698dc5e365e5c4b3f",
+      "git_blob_sha256": "3d9353247ef773792c0dd6482dd8d2708e278cc1f8c5cad698dc5e365e5c4b3f"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/code-fingerprint.json",
+      "immutable": true,
+      "worktree_sha256": "35384906e4ce613da2a45d46dee28937504f0d7b72b5898ddbd919279c4850bc",
+      "git_blob_sha256": "35384906e4ce613da2a45d46dee28937504f0d7b72b5898ddbd919279c4850bc"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/api-timings-1.json",
+      "immutable": true,
+      "worktree_sha256": "9fa9755960d3e43514eb577adc05aa321a55cacede5c79ec311a3706b344b1a4",
+      "git_blob_sha256": "9fa9755960d3e43514eb577adc05aa321a55cacede5c79ec311a3706b344b1a4"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/api-timings-2.json",
+      "immutable": true,
+      "worktree_sha256": "63d1a9d0cd57eca499e985171817ece1f227d2e7b6fd5b50720434fd8086429e",
+      "git_blob_sha256": "63d1a9d0cd57eca499e985171817ece1f227d2e7b6fd5b50720434fd8086429e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/compose-up.txt",
+      "immutable": true,
+      "worktree_sha256": "eb7791fc0216b3668d56cc92e0c7ea8f0a693266a1cde58cf42193fd7e820602",
+      "git_blob_sha256": "eb7791fc0216b3668d56cc92e0c7ea8f0a693266a1cde58cf42193fd7e820602"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/container-stats-1.jsonl",
+      "immutable": true,
+      "worktree_sha256": "0dff166187657ebe0690b0ffde9ad03589dd8e0d9e3f362bbcf59358da5c4daf",
+      "git_blob_sha256": "0dff166187657ebe0690b0ffde9ad03589dd8e0d9e3f362bbcf59358da5c4daf"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/container-stats-2.jsonl",
+      "immutable": true,
+      "worktree_sha256": "a57b0f0caf4c7217fbf62384e0a99793aae419f5a88e4039af6815a5316d58f3",
+      "git_blob_sha256": "a57b0f0caf4c7217fbf62384e0a99793aae419f5a88e4039af6815a5316d58f3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/db-config.txt",
+      "immutable": true,
+      "worktree_sha256": "972d2ad280653a05505052d6ccb806df3e6960595b2b05c9a0913713f90fcce4",
+      "git_blob_sha256": "972d2ad280653a05505052d6ccb806df3e6960595b2b05c9a0913713f90fcce4"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/db-waits-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "0ce5bc80b390304b30428e0aed6ae16387fbb4fd375938131240f6fded0e56fb",
+      "git_blob_sha256": "0ce5bc80b390304b30428e0aed6ae16387fbb4fd375938131240f6fded0e56fb"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/db-waits-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "3ddd6bb8f3ec17e3f18d2cf40c7de31176df7281886a75122febab6da2f6b43d",
+      "git_blob_sha256": "3ddd6bb8f3ec17e3f18d2cf40c7de31176df7281886a75122febab6da2f6b43d"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/lock-edges-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "a6c69e824b9ae7a197571041cf8ebce230238cfad0196713a83961f1a032bdd3",
+      "git_blob_sha256": "a6c69e824b9ae7a197571041cf8ebce230238cfad0196713a83961f1a032bdd3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/lock-edges-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "a6c69e824b9ae7a197571041cf8ebce230238cfad0196713a83961f1a032bdd3",
+      "git_blob_sha256": "a6c69e824b9ae7a197571041cf8ebce230238cfad0196713a83961f1a032bdd3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/performance-1.json",
+      "immutable": true,
+      "worktree_sha256": "89743b2a4b529bcb2f31a394a1a424723980f62032e178fbf00c36a565d9ecc2",
+      "git_blob_sha256": "89743b2a4b529bcb2f31a394a1a424723980f62032e178fbf00c36a565d9ecc2"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/performance-2.json",
+      "immutable": true,
+      "worktree_sha256": "ddfc3d2b8f97a4416318bbbeceb37a26f094de5ca53ae5a90a482eedbcfcb92b",
+      "git_blob_sha256": "ddfc3d2b8f97a4416318bbbeceb37a26f094de5ca53ae5a90a482eedbcfcb92b"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/sql-statements-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "6d90631b2842c373cf96f4236089b7d29b9dc2e2d164778c02a7098490fc1dda",
+      "git_blob_sha256": "6d90631b2842c373cf96f4236089b7d29b9dc2e2d164778c02a7098490fc1dda"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/after/sql-statements-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "e9ac187009fc8d5bb9e2665fd4971b5b5b978a24537814b55c1b70258efd58b4",
+      "git_blob_sha256": "e9ac187009fc8d5bb9e2665fd4971b5b5b978a24537814b55c1b70258efd58b4"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/api-timings-1.json",
+      "immutable": true,
+      "worktree_sha256": "e8354c2c9aee32c9001d5ff8677f2fb265da63ccb7b5734a5a25da0bd04a4a08",
+      "git_blob_sha256": "e8354c2c9aee32c9001d5ff8677f2fb265da63ccb7b5734a5a25da0bd04a4a08"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/api-timings-2.json",
+      "immutable": true,
+      "worktree_sha256": "427876c8e9852c82d7d64cd0505a5ddc1708994cef00b45a5f5171d014ddc2cb",
+      "git_blob_sha256": "427876c8e9852c82d7d64cd0505a5ddc1708994cef00b45a5f5171d014ddc2cb"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/compose-up.txt",
+      "immutable": true,
+      "worktree_sha256": "c795e562aa2ffc0e0e77cd72ef220a3cc9fa56b930c240a8cce755f1a69e398e",
+      "git_blob_sha256": "c795e562aa2ffc0e0e77cd72ef220a3cc9fa56b930c240a8cce755f1a69e398e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/container-stats-1.jsonl",
+      "immutable": true,
+      "worktree_sha256": "6fa3f999ea907345c25a09729a7f84a93f37655c951cfc0fd1ef483a7632b8e9",
+      "git_blob_sha256": "6fa3f999ea907345c25a09729a7f84a93f37655c951cfc0fd1ef483a7632b8e9"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/container-stats-2.jsonl",
+      "immutable": true,
+      "worktree_sha256": "111067848d5a03d13fc1f7c3cac216f08e8ab374934f24958a6980ce43749c7c",
+      "git_blob_sha256": "111067848d5a03d13fc1f7c3cac216f08e8ab374934f24958a6980ce43749c7c"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/db-config.txt",
+      "immutable": true,
+      "worktree_sha256": "972d2ad280653a05505052d6ccb806df3e6960595b2b05c9a0913713f90fcce4",
+      "git_blob_sha256": "972d2ad280653a05505052d6ccb806df3e6960595b2b05c9a0913713f90fcce4"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/db-waits-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "512ad726841727cdde98ca2d4a99b63792e22b064c5e8f59b7e6e894b04e2247",
+      "git_blob_sha256": "512ad726841727cdde98ca2d4a99b63792e22b064c5e8f59b7e6e894b04e2247"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/db-waits-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "9bef6d592dbba7ca32191da55b38f5ebe5615ee0a3eb4625ebb81031f8fec210",
+      "git_blob_sha256": "9bef6d592dbba7ca32191da55b38f5ebe5615ee0a3eb4625ebb81031f8fec210"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/lock-edges-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "21059f39b856cdd42795bf98841b4ea8ca5fda37cb4b30542dbe06124ff02a1d",
+      "git_blob_sha256": "21059f39b856cdd42795bf98841b4ea8ca5fda37cb4b30542dbe06124ff02a1d"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/lock-edges-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "34c21d5dcd7ccf0a98aeefbc3849f2bfc3d9171d97120c245d8ec3c131f043e5",
+      "git_blob_sha256": "34c21d5dcd7ccf0a98aeefbc3849f2bfc3d9171d97120c245d8ec3c131f043e5"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/performance-1.json",
+      "immutable": true,
+      "worktree_sha256": "1de78edc7be13f11c597ad961276c2f35295cc49add2b79d956745dea8ace0ca",
+      "git_blob_sha256": "1de78edc7be13f11c597ad961276c2f35295cc49add2b79d956745dea8ace0ca"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/performance-2.json",
+      "immutable": true,
+      "worktree_sha256": "a1d5f1037a5c9bb0a2a00f0183824978a3db08f0ea42db60ebd9105e5135cc56",
+      "git_blob_sha256": "a1d5f1037a5c9bb0a2a00f0183824978a3db08f0ea42db60ebd9105e5135cc56"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/sql-statements-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "ad4aedd998defdc37c8b2f27f35df616fd455697d287db8c8d69a5623c7fb75d",
+      "git_blob_sha256": "ad4aedd998defdc37c8b2f27f35df616fd455697d287db8c8d69a5623c7fb75d"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/before/sql-statements-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "d2886a39cb6d7370bb1f9e6452a74c1519e94e79e94845c8fbc55f31e23c7362",
+      "git_blob_sha256": "d2886a39cb6d7370bb1f9e6452a74c1519e94e79e94845c8fbc55f31e23c7362"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/summary.json",
+      "immutable": true,
+      "worktree_sha256": "852fcfb5fa05d3aa462d5da75ad2a0e95da8cc7ca51aee7c0613be42215304a8",
+      "git_blob_sha256": "852fcfb5fa05d3aa462d5da75ad2a0e95da8cc7ca51aee7c0613be42215304a8"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/controlled-comparison/web-build.txt",
+      "immutable": true,
+      "worktree_sha256": "6081cba9c5aecee6688ecb6fc84f7934b88780b332060d6746ca329919ba697a",
+      "git_blob_sha256": "6081cba9c5aecee6688ecb6fc84f7934b88780b332060d6746ca329919ba697a"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/dependency-chain.json",
+      "immutable": true,
+      "worktree_sha256": "df9f4f2697d1e1ad5dbb428e4ebdc5435313d2e85f66aa164a91b62d13a4f083",
+      "git_blob_sha256": "df9f4f2697d1e1ad5dbb428e4ebdc5435313d2e85f66aa164a91b62d13a4f083"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/dependency-validation.json",
+      "immutable": true,
+      "worktree_sha256": "5e51911d8d75311c5b18fa7ba8341531dc9365a161ff8203a01ca766daf61f6e",
+      "git_blob_sha256": "5e51911d8d75311c5b18fa7ba8341531dc9365a161ff8203a01ca766daf61f6e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-baseline/compose-build.txt",
+      "immutable": true,
+      "worktree_sha256": "65f717db04df4c47d6d5e7a23417f012f288d3889b41bb05e8bc0ddb40fe0347",
+      "git_blob_sha256": "65f717db04df4c47d6d5e7a23417f012f288d3889b41bb05e8bc0ddb40fe0347"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-baseline/summary.json",
+      "immutable": true,
+      "worktree_sha256": "973c8632064185682849f0e036526dab59d24e3164afedfce15a0a92c90b8dff",
+      "git_blob_sha256": "973c8632064185682849f0e036526dab59d24e3164afedfce15a0a92c90b8dff"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/api-timings-1.json",
+      "immutable": true,
+      "worktree_sha256": "e2254f09b119f3e740c0191ab985b67fa5ee6db03ac9b7139900e497c586cb8d",
+      "git_blob_sha256": "e2254f09b119f3e740c0191ab985b67fa5ee6db03ac9b7139900e497c586cb8d"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/api-timings-2.json",
+      "immutable": true,
+      "worktree_sha256": "5b3d17343a405c749ac661babb8927824cd0735224a0c962ff4ef6e0aa7e2b04",
+      "git_blob_sha256": "5b3d17343a405c749ac661babb8927824cd0735224a0c962ff4ef6e0aa7e2b04"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/compose-build.txt",
+      "immutable": true,
+      "worktree_sha256": "7b78d28aedf6defb86c2a168ddc9edbcab5a1872a779fba846ffc767fd3475dd",
+      "git_blob_sha256": "7b78d28aedf6defb86c2a168ddc9edbcab5a1872a779fba846ffc767fd3475dd"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/compose-up.txt",
+      "immutable": true,
+      "worktree_sha256": "af29cff16f787dfdb9c80c83ecb5d6c77b9bbd942563840387a9533fe8e1b37a",
+      "git_blob_sha256": "af29cff16f787dfdb9c80c83ecb5d6c77b9bbd942563840387a9533fe8e1b37a"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/container-stats-1.jsonl",
+      "immutable": true,
+      "worktree_sha256": "f1fd7b0540b716576b5e73f8afbb8398ef604aff06498e6cf115249a4daf8a24",
+      "git_blob_sha256": "f1fd7b0540b716576b5e73f8afbb8398ef604aff06498e6cf115249a4daf8a24"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/container-stats-2.jsonl",
+      "immutable": true,
+      "worktree_sha256": "f8c1dcb0f9bec33266bcd355a5abc3c81f62953b6bc45df1f5fabe820a534c1b",
+      "git_blob_sha256": "f8c1dcb0f9bec33266bcd355a5abc3c81f62953b6bc45df1f5fabe820a534c1b"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/db-config.txt",
+      "immutable": true,
+      "worktree_sha256": "813fac76ac6938996cf2477d77f81d8f424e6a9c47f9f8ea6801d0bb2839edb6",
+      "git_blob_sha256": "813fac76ac6938996cf2477d77f81d8f424e6a9c47f9f8ea6801d0bb2839edb6"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/db-waits-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "8fefa9c715f1ad10ac072525135e2f708a0df08e3ac3c0c4828932cdb950404e",
+      "git_blob_sha256": "8fefa9c715f1ad10ac072525135e2f708a0df08e3ac3c0c4828932cdb950404e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/db-waits-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "bac22165f4f7b35dbbd53c589f50b4b9bc6467abe053a7218dafe8f3f2ccbf89",
+      "git_blob_sha256": "bac22165f4f7b35dbbd53c589f50b4b9bc6467abe053a7218dafe8f3f2ccbf89"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/e2e-install.txt",
+      "immutable": true,
+      "worktree_sha256": "725cd0a9aa9de8a496c58652e7825411eee27f3f20ea72d438ec14139565e533",
+      "git_blob_sha256": "725cd0a9aa9de8a496c58652e7825411eee27f3f20ea72d438ec14139565e533"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/performance-1.json",
+      "immutable": true,
+      "worktree_sha256": "ec4331d3c1c2207f3241b984e88838cc69b69e1d227af0bab988f8cef7fab234",
+      "git_blob_sha256": "ec4331d3c1c2207f3241b984e88838cc69b69e1d227af0bab988f8cef7fab234"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/performance-2.json",
+      "immutable": true,
+      "worktree_sha256": "6a4c6d5e81f6f42633ee980992430faf515f0eecd0267e41c7d0c84d2d500d27",
+      "git_blob_sha256": "6a4c6d5e81f6f42633ee980992430faf515f0eecd0267e41c7d0c84d2d500d27"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/playwright.txt",
+      "immutable": true,
+      "worktree_sha256": "c2c8a59fac6af39be5afe1ca4e3d4a8585c009e7405a22ad23bdb99caa738ada",
+      "git_blob_sha256": "c2c8a59fac6af39be5afe1ca4e3d4a8585c009e7405a22ad23bdb99caa738ada"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/sql-statements-1.tsv",
+      "immutable": true,
+      "worktree_sha256": "d85e2fc33fd6edd5fa388946b1f6377dd0ce63a90cbf390ec5fbc776518b1298",
+      "git_blob_sha256": "d85e2fc33fd6edd5fa388946b1f6377dd0ce63a90cbf390ec5fbc776518b1298"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/sql-statements-2.tsv",
+      "immutable": true,
+      "worktree_sha256": "7e8d96642d5a7a9f82025507815c40ba024ea5743641bb0c900b48cfe43937c0",
+      "git_blob_sha256": "7e8d96642d5a7a9f82025507815c40ba024ea5743641bb0c900b48cfe43937c0"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/summary.json",
+      "immutable": true,
+      "worktree_sha256": "4ab5225c9997f86c17a5b251eac097d6398cb1377a227b133b161751790c3b3b",
+      "git_blob_sha256": "4ab5225c9997f86c17a5b251eac097d6398cb1377a227b133b161751790c3b3b"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/verify.md",
+      "immutable": true,
+      "worktree_sha256": "20473e507ed105af262b213a89ebf22abd262b198dea451866df7a82fca01fdd",
+      "git_blob_sha256": "20473e507ed105af262b213a89ebf22abd262b198dea451866df7a82fca01fdd"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/diagnostic-retry/xss-page-source.md",
+      "immutable": true,
+      "worktree_sha256": "cd53fc58cd00445f13fa54f1f658f959dfad3cdfc7f7e6ecde7041881a383a07",
+      "git_blob_sha256": "cd53fc58cd00445f13fa54f1f658f959dfad3cdfc7f7e6ecde7041881a383a07"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/esbuild-audit.txt",
+      "immutable": true,
+      "worktree_sha256": "d66cace55aa0c19d6c06bbb4421a876ccb3462b588190a91687d2d0350e51a15",
+      "git_blob_sha256": "d66cace55aa0c19d6c06bbb4421a876ccb3462b588190a91687d2d0350e51a15"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/esbuild-resolve.txt",
+      "immutable": true,
+      "worktree_sha256": "66b4bd32dfd7ae0ad4794cecacdb32c9942fd476dac9f1e307f674f43a244099",
+      "git_blob_sha256": "66b4bd32dfd7ae0ad4794cecacdb32c9942fd476dac9f1e307f674f43a244099"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/final-regression/build.txt",
+      "immutable": true,
+      "worktree_sha256": "795243c183e538b54a7cf1969eac958a5e1e471fdbc5618be039793962910810",
+      "git_blob_sha256": "795243c183e538b54a7cf1969eac958a5e1e471fdbc5618be039793962910810"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/final-regression/e2e-install.txt",
+      "immutable": true,
+      "worktree_sha256": "5818108a021b7dd463395fcfc9803af21944368dd59329a8a3d44591823e9eac",
+      "git_blob_sha256": "5818108a021b7dd463395fcfc9803af21944368dd59329a8a3d44591823e9eac"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/final-regression/playwright.txt",
+      "immutable": true,
+      "worktree_sha256": "4e3c0c6522b0db2259df0227f714fb4a3035206427f0c6eab396cab2116cd720",
+      "git_blob_sha256": "4e3c0c6522b0db2259df0227f714fb4a3035206427f0c6eab396cab2116cd720"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/final-regression/summary.json",
+      "immutable": true,
+      "worktree_sha256": "ecb5fde190acbf2b58971b047a5ebee85590fc6c3f006aae05b1d445082c7ead",
+      "git_blob_sha256": "ecb5fde190acbf2b58971b047a5ebee85590fc6c3f006aae05b1d445082c7ead"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/final-regression/up.txt",
+      "immutable": true,
+      "worktree_sha256": "0580aed5d6d033b0cabb6be2005745f0edae1bab2ccdaa09fd809854c78853c7",
+      "git_blob_sha256": "0580aed5d6d033b0cabb6be2005745f0edae1bab2ccdaa09fd809854c78853c7"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/final-regression/verify.md",
+      "immutable": true,
+      "worktree_sha256": "e40be5a081dda785deb1cffd47726bd9cab861ef9b73defd76f228a6d99d862a",
+      "git_blob_sha256": "e40be5a081dda785deb1cffd47726bd9cab861ef9b73defd76f228a6d99d862a"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/final-regression/xss-page-source.md",
+      "immutable": true,
+      "worktree_sha256": "9f50390a9fe6414c684bdb9927b6cd7653316f720863f5d995e45d374f58cc52",
+      "git_blob_sha256": "9f50390a9fe6414c684bdb9927b6cd7653316f720863f5d995e45d374f58cc52"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/grade-report.json",
+      "immutable": true,
+      "worktree_sha256": "75f1b7b72619f1f92531a2fc8c8547c7d714f32925ea9f52488827e51ac82fa0",
+      "git_blob_sha256": "75f1b7b72619f1f92531a2fc8c8547c7d714f32925ea9f52488827e51ac82fa0"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/initial-state.json",
+      "immutable": true,
+      "worktree_sha256": "26b6b44dde8369f497616f96ba553d9dd14ead91ecb82629f446562cde0f70b5",
+      "git_blob_sha256": "26b6b44dde8369f497616f96ba553d9dd14ead91ecb82629f446562cde0f70b5"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/initial-tracked-diff.patch",
+      "immutable": true,
+      "worktree_sha256": "15baf90047edcb7c42b7b19965fde96b91de12d71a832f8a248430caca7f82c5",
+      "git_blob_sha256": "15baf90047edcb7c42b7b19965fde96b91de12d71a832f8a248430caca7f82c5"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/local-status.txt",
+      "immutable": true,
+      "worktree_sha256": "94a3aa6ca5fc1949a6f4a8673c5405ab948ed829e503ecc42a6c88e59ad8a015",
+      "git_blob_sha256": "94a3aa6ca5fc1949a6f4a8673c5405ab948ed829e503ecc42a6c88e59ad8a015"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/audit-after.txt",
+      "immutable": true,
+      "worktree_sha256": "d66cace55aa0c19d6c06bbb4421a876ccb3462b588190a91687d2d0350e51a15",
+      "git_blob_sha256": "d66cace55aa0c19d6c06bbb4421a876ccb3462b588190a91687d2d0350e51a15"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/audit-before.stderr.txt",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/backend-build-after-retry.txt",
+      "immutable": true,
+      "worktree_sha256": "2ecb325e6a80606ea0030d37aaa50358b35394c5d9f80438351f820218672ea4",
+      "git_blob_sha256": "2ecb325e6a80606ea0030d37aaa50358b35394c5d9f80438351f820218672ea4"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/backend-build-after.txt",
+      "immutable": true,
+      "worktree_sha256": "55993872ebe7a0d6916cdd894daefb174cd62cdc51e1f59144e1c9845c824243",
+      "git_blob_sha256": "55993872ebe7a0d6916cdd894daefb174cd62cdc51e1f59144e1c9845c824243"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/dependency-chain.stderr.txt",
+      "immutable": true,
+      "worktree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/dependency-probe-help.txt",
+      "immutable": true,
+      "worktree_sha256": "547a3ac3c4c816dacfae656d11819b1f231e5f49522d0ee86a4427cb0524d04e",
+      "git_blob_sha256": "547a3ac3c4c816dacfae656d11819b1f231e5f49522d0ee86a4427cb0524d04e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/final-regression-console.txt",
+      "immutable": true,
+      "worktree_sha256": "8b89ffe4748d4b438bcfcbc9b7125d4b48cb685b567dd1938be77c4c87df50f1",
+      "git_blob_sha256": "8b89ffe4748d4b438bcfcbc9b7125d4b48cb685b567dd1938be77c4c87df50f1"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/frontend-build-final.txt",
+      "immutable": true,
+      "worktree_sha256": "ae81d1acb4b08dbcb5e9299460814cd7b8c8feb254b301086a6c7b6c335f628f",
+      "git_blob_sha256": "ae81d1acb4b08dbcb5e9299460814cd7b8c8feb254b301086a6c7b6c335f628f"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/frontend-build.txt",
+      "immutable": true,
+      "worktree_sha256": "6381343deb0097bb8cbe80636e8f73fd84e25cf4eabc35673366b8fdf4214da4",
+      "git_blob_sha256": "6381343deb0097bb8cbe80636e8f73fd84e25cf4eabc35673366b8fdf4214da4"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/lock-update.txt",
+      "immutable": true,
+      "worktree_sha256": "628b1a15f4433588ff07ecfd780bd2a7a7be4fef7efbf51c50dff7d8a04e43aa",
+      "git_blob_sha256": "628b1a15f4433588ff07ecfd780bd2a7a7be4fef7efbf51c50dff7d8a04e43aa"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/make-check-security-final-npm11.txt",
+      "immutable": true,
+      "worktree_sha256": "96f14e838f3a42bbcfb6fca8799aeb67d106b572943f92406658d2682fb74b00",
+      "git_blob_sha256": "96f14e838f3a42bbcfb6fca8799aeb67d106b572943f92406658d2682fb74b00"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/make-check-security-final.txt",
+      "immutable": true,
+      "worktree_sha256": "f49098ed5b126b35629dd9bf6de4e9075b3fd312618f79867710a3b054389925",
+      "git_blob_sha256": "f49098ed5b126b35629dd9bf6de4e9075b3fd312618f79867710a3b054389925"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/make-check-security-retry.txt",
+      "immutable": true,
+      "worktree_sha256": "b37409a2b54c79a31813e4351757e09c0373a372cc9a87f1eb8c6f15db3c46fb",
+      "git_blob_sha256": "b37409a2b54c79a31813e4351757e09c0373a372cc9a87f1eb8c6f15db3c46fb"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/make-check-security.txt",
+      "immutable": true,
+      "worktree_sha256": "e9a1e6cb39b18f1e2cf3e371e01756bcd76161754a47ea97708f59d5a2021607",
+      "git_blob_sha256": "e9a1e6cb39b18f1e2cf3e371e01756bcd76161754a47ea97708f59d5a2021607"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/make-check.txt",
+      "immutable": true,
+      "worktree_sha256": "b2b02119ed431e73e40c407dfd77d2f806e33f1dd49d510809185a8f14015b1b",
+      "git_blob_sha256": "b2b02119ed431e73e40c407dfd77d2f806e33f1dd49d510809185a8f14015b1b"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/make-grade.txt",
+      "immutable": true,
+      "worktree_sha256": "dd279903990a708748ee57979b57d76acada143588257f486d3e7f12c295c9d0",
+      "git_blob_sha256": "dd279903990a708748ee57979b57d76acada143588257f486d3e7f12c295c9d0"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/npm-ci.txt",
+      "immutable": true,
+      "worktree_sha256": "9e4da2a91cdf80f9e21830772cc7d8137ca80d82ed03d59f4b66ce3ed441a05c",
+      "git_blob_sha256": "9e4da2a91cdf80f9e21830772cc7d8137ca80d82ed03d59f4b66ce3ed441a05c"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/original-gates-console.txt",
+      "immutable": true,
+      "worktree_sha256": "869330f90d92e24c1b693fe3211dadb2edbad780f95a34d17460cf6932cee630",
+      "git_blob_sha256": "869330f90d92e24c1b693fe3211dadb2edbad780f95a34d17460cf6932cee630"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/original-gates-results.tsv",
+      "immutable": true,
+      "worktree_sha256": "b5ba34886ae4c6763c481a97ad61bff491bb6d6ca1ff0be6aecd9529607f5540",
+      "git_blob_sha256": "b5ba34886ae4c6763c481a97ad61bff491bb6d6ca1ff0be6aecd9529607f5540"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/performance-gate.txt",
+      "immutable": true,
+      "worktree_sha256": "b953adae62eb9ef956123053d3ad06f06ddfb131c2f8feb9aedc7d596ecb8118",
+      "git_blob_sha256": "b953adae62eb9ef956123053d3ad06f06ddfb131c2f8feb9aedc7d596ecb8118"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/toolchain-regression-final.txt",
+      "immutable": true,
+      "worktree_sha256": "b7335097d184e8a38db3b81f977b9bb3d04d89e386ba13607e8fd475a1fe13e3",
+      "git_blob_sha256": "b7335097d184e8a38db3b81f977b9bb3d04d89e386ba13607e8fd475a1fe13e3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/logs/toolchain-regression.txt",
+      "immutable": true,
+      "worktree_sha256": "2462b12468995405a19424eae9b895641fa28cf8b2d60f52f14ecc2371f53189",
+      "git_blob_sha256": "2462b12468995405a19424eae9b895641fa28cf8b2d60f52f14ecc2371f53189"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/manifest.json",
+      "immutable": true,
+      "worktree_sha256": "2c1ef3fa5b8815c15928bd4d7044a2fd39fdd2f9e8572b448fb6efdcc5516a72",
+      "git_blob_sha256": "2c1ef3fa5b8815c15928bd4d7044a2fd39fdd2f9e8572b448fb6efdcc5516a72"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/native-security-gate/make-check-security.log",
+      "immutable": true,
+      "worktree_sha256": "645c89b4300f28c72d8bf951d2f6337637e718dbc3ddbbecfa6d5ea0fa94b2c0",
+      "git_blob_sha256": "645c89b4300f28c72d8bf951d2f6337637e718dbc3ddbbecfa6d5ea0fa94b2c0"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/native-security-gate/result.json",
+      "immutable": true,
+      "worktree_sha256": "a616ac94357ef8f91face6a2e04eebf0e50006db99790379e3d5fbf905963db3",
+      "git_blob_sha256": "a616ac94357ef8f91face6a2e04eebf0e50006db99790379e3d5fbf905963db3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/performance-analysis.json",
+      "immutable": true,
+      "worktree_sha256": "fffff27777acb85fd10d4dcbbc3093396f97fcddd0ed2975ce193e43b2d2c3a0",
+      "git_blob_sha256": "fffff27777acb85fd10d4dcbbc3093396f97fcddd0ed2975ce193e43b2d2c3a0"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/performance-gate.exit.txt",
+      "immutable": true,
+      "worktree_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "git_blob_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/rsbuild-audit.txt",
+      "immutable": true,
+      "worktree_sha256": "4e0f34e1c9dff66d564e95657920adb363075f6279982d3a98639c3f79f95e49",
+      "git_blob_sha256": "4e0f34e1c9dff66d564e95657920adb363075f6279982d3a98639c3f79f95e49"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/rsbuild-rejection.json",
+      "immutable": true,
+      "worktree_sha256": "b6a16c790c2540049c3fee93ff960f71bd41f48f59e9564cc0f2d2d2bc848476",
+      "git_blob_sha256": "b6a16c790c2540049c3fee93ff960f71bd41f48f59e9564cc0f2d2d2bc848476"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/rsbuild-resolve.txt",
+      "immutable": true,
+      "worktree_sha256": "00996c16a18afdc674339c1a94eec47a348104775e9abf4415f95bd973f915fe",
+      "git_blob_sha256": "00996c16a18afdc674339c1a94eec47a348104775e9abf4415f95bd973f915fe"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/summary.json",
+      "immutable": true,
+      "worktree_sha256": "008680ab2b3037749f9641bcd59168c6b531a4ffa5543bb92ee46f7adfee94a8",
+      "git_blob_sha256": "008680ab2b3037749f9641bcd59168c6b531a4ffa5543bb92ee46f7adfee94a8"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/tested-code-fingerprint.json",
+      "immutable": true,
+      "worktree_sha256": "20b21942e4b6d990b8fe6b52431798dcf2f1f35084e40753c0bcbaaa28ce6af6",
+      "git_blob_sha256": "20b21942e4b6d990b8fe6b52431798dcf2f1f35084e40753c0bcbaaa28ce6af6"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/this-round-changed-files.json",
+      "immutable": true,
+      "worktree_sha256": "21195ba815757d8e990ce8e4b02377ceb0bf0644c506fe416083c47e95d5fadc",
+      "git_blob_sha256": "21195ba815757d8e990ce8e4b02377ceb0bf0644c506fe416083c47e95d5fadc"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/verification-of-deliverables.json",
+      "immutable": true,
+      "worktree_sha256": "efdecf1098770db6c3a09a8cce00e92fc26a495d8fc69e9683bc8a965b69a8b3",
+      "git_blob_sha256": "efdecf1098770db6c3a09a8cce00e92fc26a495d8fc69e9683bc8a965b69a8b3"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/round-02/复测结论.md",
+      "immutable": true,
+      "worktree_sha256": "833b4e5f36f7e1e283795a069476c210fa4666bbdb1fba494238b99c9e06b7f9",
+      "git_blob_sha256": "833b4e5f36f7e1e283795a069476c210fa4666bbdb1fba494238b99c9e06b7f9"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/source-redaction-check.json",
+      "immutable": true,
+      "worktree_sha256": "39beb6901e4fadfb6aac8565bb1612da848bb959c84f64f6d84eecb9a5e1c436",
+      "git_blob_sha256": "39beb6901e4fadfb6aac8565bb1612da848bb959c84f64f6d84eecb9a5e1c436"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/summary.json",
+      "immutable": true,
+      "worktree_sha256": "7133ec4ad95c132eb7e0ba0cdcae60c3df7b7f4fa05828999d14467071de43d7",
+      "git_blob_sha256": "7133ec4ad95c132eb7e0ba0cdcae60c3df7b7f4fa05828999d14467071de43d7"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/validation.json",
+      "immutable": true,
+      "worktree_sha256": "fc606931e0fe0abbc047a9c14dc0f8520b01075730818eba21c850b196431f08",
+      "git_blob_sha256": "fc606931e0fe0abbc047a9c14dc0f8520b01075730818eba21c850b196431f08"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/verify.md",
+      "immutable": true,
+      "worktree_sha256": "f15c5d32b0cfcfddc50b60368a3dd727f55ccbda770b1649680b8b253b02dd1d",
+      "git_blob_sha256": "f15c5d32b0cfcfddc50b60368a3dd727f55ccbda770b1649680b8b253b02dd1d"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/复现与录屏清单.md",
+      "immutable": true,
+      "worktree_sha256": "969986c82f99b7b69094ce5e375c3fcbd13eaaa23efed320333b5ddc23e36101",
+      "git_blob_sha256": "969986c82f99b7b69094ce5e375c3fcbd13eaaa23efed320333b5ddc23e36101"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/提交文件清单.txt",
+      "immutable": true,
+      "worktree_sha256": "2ee23b0081d58bd0a4fe988994489929c8abc985ebb60d5ac5f30daba1593fb4",
+      "git_blob_sha256": "2ee23b0081d58bd0a4fe988994489929c8abc985ebb60d5ac5f30daba1593fb4"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/fix-round/返工记录.md",
+      "immutable": true,
+      "worktree_sha256": "c264a443d9a8ff4d01f46c234add5b74f16cea6104c30142cb3b2eeb1b2b80ec",
+      "git_blob_sha256": "c264a443d9a8ff4d01f46c234add5b74f16cea6104c30142cb3b2eeb1b2b80ec"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/review-06.md",
+      "immutable": true,
+      "worktree_sha256": "cd217b4a1420c66965200429256f14bdeebff3fd937695be16adcb060d6de2a0",
+      "git_blob_sha256": "cd217b4a1420c66965200429256f14bdeebff3fd937695be16adcb060d6de2a0"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/review-07.md",
+      "immutable": true,
+      "worktree_sha256": "68f218000e2f17b3d2a74363c72406459a9c79e39c05b03a0abc94bb42c8a865",
+      "git_blob_sha256": "68f218000e2f17b3d2a74363c72406459a9c79e39c05b03a0abc94bb42c8a865"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/summary.json",
+      "immutable": true,
+      "worktree_sha256": "ffd1d920cfc38fa39770fdf5468e0fe512f92ee1c13d4fe6c9d4c482c97a5059",
+      "git_blob_sha256": "ffd1d920cfc38fa39770fdf5468e0fe512f92ee1c13d4fe6c9d4c482c97a5059"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/修复定位与防御性复核.md",
+      "immutable": true,
+      "worktree_sha256": "514531017d0c30f9f7bee86209432100889320854ac9d589d620fec714f3d7f8",
+      "git_blob_sha256": "514531017d0c30f9f7bee86209432100889320854ac9d589d620fec714f3d7f8"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/复测报告.md",
+      "immutable": true,
+      "worktree_sha256": "c300e409401a5123bda7a58ac5fa04faa56396ea10454b13fa97e7e9a6c09517",
+      "git_blob_sha256": "c300e409401a5123bda7a58ac5fa04faa56396ea10454b13fa97e7e9a6c09517"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/测试代码归档清单.md",
+      "immutable": true,
+      "worktree_sha256": "d170f86d97dc6c954f4d3515d75b5d3a1f3a53d90bd0f731bf5adfeb514a483f",
+      "git_blob_sha256": "d170f86d97dc6c954f4d3515d75b5d3a1f3a53d90bd0f731bf5adfeb514a483f"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/用例执行表.csv",
+      "immutable": true,
+      "worktree_sha256": "3a90f663fc15af5f006168b414cfbfde99698fd535e12cd00117e203e8d195e9",
+      "git_blob_sha256": "3a90f663fc15af5f006168b414cfbfde99698fd535e12cd00117e203e8d195e9"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/缺陷复测表.csv",
+      "immutable": true,
+      "worktree_sha256": "1b4b6abfdff2ccff919926ad830837746f25768b7f70fb78b739f469b9c3067e",
+      "git_blob_sha256": "1b4b6abfdff2ccff919926ad830837746f25768b7f70fb78b739f469b9c3067e"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/证据索引.md",
+      "immutable": true,
+      "worktree_sha256": "09f1491b1270c6ac90289765523291c481a51c99625862b2ef50f5d9b2999c8c",
+      "git_blob_sha256": "09f1491b1270c6ac90289765523291c481a51c99625862b2ef50f5d9b2999c8c"
+    },
+    {
+      "path": "reports/lesson9-20261118/retest-02/课程要求映射.md",
+      "immutable": true,
+      "worktree_sha256": "f2537689f58fb37a1e416969e1a9e25f21b30db363f6fcc440fb0a394c29d1d5",
+      "git_blob_sha256": "f2537689f58fb37a1e416969e1a9e25f21b30db363f6fcc440fb0a394c29d1d5"
+    },
+    {
+      "path": "reports/lesson9-20261118/review-04.md",
+      "immutable": true,
+      "worktree_sha256": "62b1b4f506fa78b7f3eac98c75075c3aa1d8d16f7d14228ae0cc544ff30bdf52",
+      "git_blob_sha256": "62b1b4f506fa78b7f3eac98c75075c3aa1d8d16f7d14228ae0cc544ff30bdf52"
+    },
+    {
+      "path": "reports/lesson9-20261118/review-05.md",
+      "immutable": true,
+      "worktree_sha256": "08e7ef2514d134d15450be45cc70c9edb46353bffa393e3bc06fde4217c21c81",
+      "git_blob_sha256": "08e7ef2514d134d15450be45cc70c9edb46353bffa393e3bc06fde4217c21c81"
+    },
+    {
+      "path": "reports/lesson9-20261118/rework.md",
+      "immutable": true,
+      "worktree_sha256": "938059816b5f9f4a7383ec65b2ffb4be33ef909faedacc51c8e3d01bf4dca319",
+      "git_blob_sha256": "938059816b5f9f4a7383ec65b2ffb4be33ef909faedacc51c8e3d01bf4dca319"
+    },
+    {
+      "path": "reports/lesson9-20261118/sec08-experiment.md",
+      "immutable": true,
+      "worktree_sha256": "72f74450f9e98deb539efaedfcd4e7397c5202e91d40c5206917d2bfcbbb344f",
+      "git_blob_sha256": "72f74450f9e98deb539efaedfcd4e7397c5202e91d40c5206917d2bfcbbb344f"
+    },
+    {
+      "path": "reports/lesson9-20261118/security-baseline.md",
+      "immutable": true,
+      "worktree_sha256": "8b99873af5347e5bd3185dd37fb8be5af1f67ad77b52e60512257f2c9c9b46ba",
+      "git_blob_sha256": "8b99873af5347e5bd3185dd37fb8be5af1f67ad77b52e60512257f2c9c9b46ba"
+    },
+    {
+      "path": "reports/lesson9-20261118/security-fix-log.md",
+      "immutable": true,
+      "worktree_sha256": "9cda1adbcc0dbf32ba6e1b55b8bed4d8bac1d5bd2bede564cab3ea923d655e47",
+      "git_blob_sha256": "9cda1adbcc0dbf32ba6e1b55b8bed4d8bac1d5bd2bede564cab3ea923d655e47"
+    },
+    {
+      "path": "reports/lesson9-20261118/测试与复测报告.md",
+      "immutable": true,
+      "worktree_sha256": "11bc0c8e6dfe9b0d75eaa8d52d99f1a9f5bd5cda68ff180febcd586fd2060281",
+      "git_blob_sha256": "11bc0c8e6dfe9b0d75eaa8d52d99f1a9f5bd5cda68ff180febcd586fd2060281"
+    },
+    {
+      "path": "reports/lesson9-20261118/课程要求映射.md",
+      "immutable": true,
+      "worktree_sha256": "650d93812b906f795343707f3d204fae2f2047ad11453029c926e7a869a850ac",
+      "git_blob_sha256": "650d93812b906f795343707f3d204fae2f2047ad11453029c926e7a869a850ac"
+    },
+    {
+      "path": "scripts/check.sh",
+      "immutable": false,
+      "worktree_sha256": "a60083e33b8e4193ca471692cee6517e045efc4a5a8de6fbfb2915319fc346cb",
+      "git_blob_sha256": "a60083e33b8e4193ca471692cee6517e045efc4a5a8de6fbfb2915319fc346cb"
+    },
+    {
+      "path": "scripts/qa/lesson9/README.md",
+      "immutable": false,
+      "worktree_sha256": "8f501e1009259aee2d4058c6200f93ed903330c86f7b7cf22c8641df66778198",
+      "git_blob_sha256": "8f501e1009259aee2d4058c6200f93ed903330c86f7b7cf22c8641df66778198"
+    },
+    {
+      "path": "scripts/qa/lesson9/check_performance.py",
+      "immutable": false,
+      "worktree_sha256": "08137b293487034169c9ed31195c743a09ada43c0d368e14c4d358215e0041eb",
+      "git_blob_sha256": "08137b293487034169c9ed31195c743a09ada43c0d368e14c4d358215e0041eb"
+    },
+    {
+      "path": "scripts/qa/lesson9/finalize.py",
+      "immutable": false,
+      "worktree_sha256": "eb986b2b513620264490cabe0effa6c13452f6e5acb581725d272f7a97d0df23",
+      "git_blob_sha256": "eb986b2b513620264490cabe0effa6c13452f6e5acb581725d272f7a97d0df23"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/inventory.json",
+      "immutable": true,
+      "worktree_sha256": "ad2a12373c6a81ba31cf2d08a020db07a515d00f88968aaf35604af17092a7d8",
+      "git_blob_sha256": "ad2a12373c6a81ba31cf2d08a020db07a515d00f88968aaf35604af17092a7d8"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/qa/lesson9/build_report.py",
+      "immutable": true,
+      "worktree_sha256": "9819e094ee9a002ef7d4218ae0183df7a4e8ac3f34835811d6d4843ac7b6b10c",
+      "git_blob_sha256": "9819e094ee9a002ef7d4218ae0183df7a4e8ac3f34835811d6d4843ac7b6b10c"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/qa/lesson9/retest-02/acceptance_run.py",
+      "immutable": true,
+      "worktree_sha256": "1669a4a75f73ba6412219b848e2f600241b5975755a31dabcc933faab67a0698",
+      "git_blob_sha256": "1669a4a75f73ba6412219b848e2f600241b5975755a31dabcc933faab67a0698"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/qa/lesson9/retest-02/recovery/import_official_image.py",
+      "immutable": true,
+      "worktree_sha256": "1690041a11c18233ee07a435e45d7ef1aa2ac924ec114505ac8089767f68fa54",
+      "git_blob_sha256": "1690041a11c18233ee07a435e45d7ef1aa2ac924ec114505ac8089767f68fa54"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/qa/lesson9/retest-02/recovery/resume_image.py",
+      "immutable": true,
+      "worktree_sha256": "0d0221cf048825f5a28f576f11e20eede39be191951044a1e30618237e2daae8",
+      "git_blob_sha256": "0d0221cf048825f5a28f576f11e20eede39be191951044a1e30618237e2daae8"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/qa/lesson9/retest-02/recovery/run_online.py",
+      "immutable": true,
+      "worktree_sha256": "43552df8751d6ab8528af7c6ef78a41cf3f68990241e693d99e3885b4144974f",
+      "git_blob_sha256": "43552df8751d6ab8528af7c6ef78a41cf3f68990241e693d99e3885b4144974f"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/qa/lesson9/retest-02/recovery/supplement.py",
+      "immutable": true,
+      "worktree_sha256": "62421ac27e74d086417e9c13439e8956032751e79f4fa55c3b32391470e779d1",
+      "git_blob_sha256": "62421ac27e74d086417e9c13439e8956032751e79f4fa55c3b32391470e779d1"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/qa/lesson9/retest-02/recovery/update_deliverables.py",
+      "immutable": true,
+      "worktree_sha256": "c80aadd11a44f9532f1205bc8beaf21d1dd9f0a858f3b67ec3c74506de685dee",
+      "git_blob_sha256": "c80aadd11a44f9532f1205bc8beaf21d1dd9f0a858f3b67ec3c74506de685dee"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/qa/lesson9/retest-02/report.py",
+      "immutable": true,
+      "worktree_sha256": "1ee75b9b162b7cc8e6935453164289573c727ce78d86f82f9c5b0d971dbaf206",
+      "git_blob_sha256": "1ee75b9b162b7cc8e6935453164289573c727ce78d86f82f9c5b0d971dbaf206"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/qa/lesson9/retest-02/run.py",
+      "immutable": true,
+      "worktree_sha256": "b587e5073e2080d70ec635b5f4bf834e0f43a47ab5254a59af2ff798af816429",
+      "git_blob_sha256": "b587e5073e2080d70ec635b5f4bf834e0f43a47ab5254a59af2ff798af816429"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/qa/lesson9/run_checks.py",
+      "immutable": true,
+      "worktree_sha256": "1a283fad4d63980ee0668a8c7c65202ca35d10f47e8c2518e96ed2e140140ac9",
+      "git_blob_sha256": "1a283fad4d63980ee0668a8c7c65202ca35d10f47e8c2518e96ed2e140140ac9"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/reports/evidence/week8-cross-review/20261106T201036-9a5cfc/runner.py",
+      "immutable": true,
+      "worktree_sha256": "7e9552e04d7f9885a8bcf2870529c36d8084292c9e8c4e8604b59549f0bc25e2",
+      "git_blob_sha256": "7e9552e04d7f9885a8bcf2870529c36d8084292c9e8c4e8604b59549f0bc25e2"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/scripts/week8_security.py",
+      "immutable": true,
+      "worktree_sha256": "40d646fbfc0181bfdeb0d353cbe5a75353d69bb99ba8609329246269fa7d62d4",
+      "git_blob_sha256": "40d646fbfc0181bfdeb0d353cbe5a75353d69bb99ba8609329246269fa7d62d4"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/session-final/scripts/week8_validate.py",
+      "immutable": true,
+      "worktree_sha256": "732682108cb4b4140db8e18c79fc94a29d65f8539e2bbee5f70e25cce00d828b",
+      "git_blob_sha256": "732682108cb4b4140db8e18c79fc94a29d65f8539e2bbee5f70e25cce00d828b"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/apitest/cases/api/materials/POST/case.json",
+      "immutable": true,
+      "worktree_sha256": "87befec5459e1a7c672e59c1820d0e2d21ecfbe4b9cdb904c30607273d1b0538",
+      "git_blob_sha256": "87befec5459e1a7c672e59c1820d0e2d21ecfbe4b9cdb904c30607273d1b0538"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/apitest/cases/api/search/POST/case.json",
+      "immutable": true,
+      "worktree_sha256": "d8a0bc34f8824b39b82f5d3bb9a803aa1e9ce68816d581caf97aa80696535f99",
+      "git_blob_sha256": "d8a0bc34f8824b39b82f5d3bb9a803aa1e9ce68816d581caf97aa80696535f99"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/apitest/cases/api/skills/grade/PATCH/case.json",
+      "immutable": true,
+      "worktree_sha256": "c149e974560f8da2d1aa9eccebcd128df214dad48f06b0e11d7e379a144eba7c",
+      "git_blob_sha256": "c149e974560f8da2d1aa9eccebcd128df214dad48f06b0e11d7e379a144eba7c"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/apitest/cases/async/README.md",
+      "immutable": true,
+      "worktree_sha256": "7f23c89ee93777294ee601af74820afa36eb9cae5b04cf64bb65fa87762f1f77",
+      "git_blob_sha256": "7f23c89ee93777294ee601af74820afa36eb9cae5b04cf64bb65fa87762f1f77"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/apitest/cases/security/README.md",
+      "immutable": true,
+      "worktree_sha256": "a3977bb177660d68566dc6bc08a785ad081c7473c61dda93e84f32682daa7d36",
+      "git_blob_sha256": "a3977bb177660d68566dc6bc08a785ad081c7473c61dda93e84f32682daa7d36"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/auth/jwt_test.go",
+      "immutable": true,
+      "worktree_sha256": "53d1c2aefeb8846274afd306813d88a1d350b837bc79c7957f4665e7c8cb0c50",
+      "git_blob_sha256": "53d1c2aefeb8846274afd306813d88a1d350b837bc79c7957f4665e7c8cb0c50"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/chat/chat_test.go",
+      "immutable": true,
+      "worktree_sha256": "c93a39fccdf3cb4eb057290e063c6653e75314fa9d676a774bd3348c667d3adf",
+      "git_blob_sha256": "c93a39fccdf3cb4eb057290e063c6653e75314fa9d676a774bd3348c667d3adf"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/chunk/chunk_test.go",
+      "immutable": true,
+      "worktree_sha256": "ae4d29e97c4e5f15fdb05b2542d892c9ca6e5a87c7411d20f82951c4e3535f83",
+      "git_blob_sha256": "ae4d29e97c4e5f15fdb05b2542d892c9ca6e5a87c7411d20f82951c4e3535f83"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/config/config_test.go",
+      "immutable": true,
+      "worktree_sha256": "a85d6e1e8e307ce5b08884e4a2fb5e091bf991f4eee4d2085d0ed36a3d7c3574",
+      "git_blob_sha256": "a85d6e1e8e307ce5b08884e4a2fb5e091bf991f4eee4d2085d0ed36a3d7c3574"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/grading/keys_test.go",
+      "immutable": true,
+      "worktree_sha256": "a428b676f473a7e37de9d3ac08b8a3f839a178547c3dc88f4a4ab4503e0d4732",
+      "git_blob_sha256": "a428b676f473a7e37de9d3ac08b8a3f839a178547c3dc88f4a4ab4503e0d4732"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/grading/score_test.go",
+      "immutable": true,
+      "worktree_sha256": "f6bd6ff38aa5609280d2c1911694f67dcc3cd4eb988cd5322185e876fff77e46",
+      "git_blob_sha256": "f6bd6ff38aa5609280d2c1911694f67dcc3cd4eb988cd5322185e876fff77e46"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/grading/state_test.go",
+      "immutable": true,
+      "worktree_sha256": "83b855177418fbe626cf24116b2c092ee7a1f972e6810d12d45a904677c9ad4d",
+      "git_blob_sha256": "83b855177418fbe626cf24116b2c092ee7a1f972e6810d12d45a904677c9ad4d"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/health/health_test.go",
+      "immutable": true,
+      "worktree_sha256": "cfa1be7012dd3cf2396e38fecb7f430fa546d80ad77674f6e1c6413babe48dfc",
+      "git_blob_sha256": "cfa1be7012dd3cf2396e38fecb7f430fa546d80ad77674f6e1c6413babe48dfc"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/lifecycle/server_test.go",
+      "immutable": true,
+      "worktree_sha256": "0ccf1faa85568ef941bc3cd9e9d93491d533fac091ec54fc380b0a735d1b8848",
+      "git_blob_sha256": "0ccf1faa85568ef941bc3cd9e9d93491d533fac091ec54fc380b0a735d1b8848"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/logging/logging_test.go",
+      "immutable": true,
+      "worktree_sha256": "9ce4b75c1d08d3dda8620e33cb94bb29dc7702a011e69c94443d33f1655ac135",
+      "git_blob_sha256": "9ce4b75c1d08d3dda8620e33cb94bb29dc7702a011e69c94443d33f1655ac135"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/materials/text_test.go",
+      "immutable": true,
+      "worktree_sha256": "5658826c64fcc95b917397418ec0fdcd500830d1291679330ea6de90846ca6cf",
+      "git_blob_sha256": "5658826c64fcc95b917397418ec0fdcd500830d1291679330ea6de90846ca6cf"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/queue/topology_test.go",
+      "immutable": true,
+      "worktree_sha256": "5eee5378e8dc5e68bc3f9f9ace5ce609ae0f62c43c6fa420212d39e514ff5e28",
+      "git_blob_sha256": "5eee5378e8dc5e68bc3f9f9ace5ce609ae0f62c43c6fa420212d39e514ff5e28"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/backend/internal/retrieval/rrf_test.go",
+      "immutable": true,
+      "worktree_sha256": "2561447a7296333993d71b12669c2bc082a441b3cd21ed1767a123623fabd129",
+      "git_blob_sha256": "2561447a7296333993d71b12669c2bc082a441b3cd21ed1767a123623fabd129"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/frontend/e2e/assignments.spec.ts",
+      "immutable": true,
+      "worktree_sha256": "707b82db811563deb304f6267eb02eff0ef6ad3e6aa6624cc03fc73fc4c684e9",
+      "git_blob_sha256": "707b82db811563deb304f6267eb02eff0ef6ad3e6aa6624cc03fc73fc4c684e9"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/frontend/e2e/package-lock.json",
+      "immutable": true,
+      "worktree_sha256": "6b762b46471f7167b2840fab0a60d1d95a71cc0f17caf2174ffc823a03b0183f",
+      "git_blob_sha256": "6b762b46471f7167b2840fab0a60d1d95a71cc0f17caf2174ffc823a03b0183f"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/frontend/e2e/package.json",
+      "immutable": true,
+      "worktree_sha256": "8a91c8542c542b1859ce2339c9a65fb65b9b2a7db7b5f7c7d9956aae8cc73adf",
+      "git_blob_sha256": "8a91c8542c542b1859ce2339c9a65fb65b9b2a7db7b5f7c7d9956aae8cc73adf"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/frontend/e2e/playwright.config.ts",
+      "immutable": true,
+      "worktree_sha256": "c744318d9f8ae9b4c6279a2406296cad5eff14071baf96f6977f11542edf3102",
+      "git_blob_sha256": "c744318d9f8ae9b4c6279a2406296cad5eff14071baf96f6977f11542edf3102"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/frontend/e2e/xss-materials.spec.ts",
+      "immutable": true,
+      "worktree_sha256": "f70dc5812752cd4d31a63eb3fda84d16c84675fda1d03f2199f54ffb823e7ba4",
+      "git_blob_sha256": "f70dc5812752cd4d31a63eb3fda84d16c84675fda1d03f2199f54ffb823e7ba4"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/acceptance.py",
+      "immutable": true,
+      "worktree_sha256": "c7d8d7a8d9e7ce9d85ab24d65a149e4a51336540ec73087c5e9b9e6a6785d4dd",
+      "git_blob_sha256": "c7d8d7a8d9e7ce9d85ab24d65a149e4a51336540ec73087c5e9b9e6a6785d4dd"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/async_test.py",
+      "immutable": true,
+      "worktree_sha256": "dcdf173f150a16ed47c515ce8253bc6c9f6e2945bce966735235dd5c83b086cd",
+      "git_blob_sha256": "dcdf173f150a16ed47c515ce8253bc6c9f6e2945bce966735235dd5c83b086cd"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/check.sh",
+      "immutable": true,
+      "worktree_sha256": "358ca0541595da1d796a55600bd49334ebde972775faa77f093adcd006394dfa",
+      "git_blob_sha256": "358ca0541595da1d796a55600bd49334ebde972775faa77f093adcd006394dfa"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/ci_env.py",
+      "immutable": true,
+      "worktree_sha256": "488a07700c5e707c421fa14cc846243e571f321acc5a121dd8ff7983c3060073",
+      "git_blob_sha256": "488a07700c5e707c421fa14cc846243e571f321acc5a121dd8ff7983c3060073"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/govuln_check.py",
+      "immutable": true,
+      "worktree_sha256": "078b04281a5aa76cfa7f03ddf3f807e6eef30adc45499e0272dcf9f0a49e383b",
+      "git_blob_sha256": "078b04281a5aa76cfa7f03ddf3f807e6eef30adc45499e0272dcf9f0a49e383b"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/grade.sh",
+      "immutable": true,
+      "worktree_sha256": "2dd91ab5262a4dcbfac4418f51cff40e71c51382b43009c7ea0684b3a0dbe1e7",
+      "git_blob_sha256": "2dd91ab5262a4dcbfac4418f51cff40e71c51382b43009c7ea0684b3a0dbe1e7"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/layer_check.py",
+      "immutable": true,
+      "worktree_sha256": "cca724c8edfe2d7dce88dcbc663fa62c8107e965714ec5408e049caf75c1b9c4",
+      "git_blob_sha256": "cca724c8edfe2d7dce88dcbc663fa62c8107e965714ec5408e049caf75c1b9c4"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/mutation.py",
+      "immutable": true,
+      "worktree_sha256": "9165de2afabefb67eb319038b310112f94c0d138a01814bf9efc007792600fef",
+      "git_blob_sha256": "9165de2afabefb67eb319038b310112f94c0d138a01814bf9efc007792600fef"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/sec08_experiment.py",
+      "immutable": true,
+      "worktree_sha256": "0c44c397b95b0ed5076b27d0c02a4c620cc814149644a7e3160d6b7677612183",
+      "git_blob_sha256": "0c44c397b95b0ed5076b27d0c02a4c620cc814149644a7e3160d6b7677612183"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/secret_scan.py",
+      "immutable": true,
+      "worktree_sha256": "d0c88ba159164f21b2a9e6ca1086374091f30b07eb3603936a64de42c219590b",
+      "git_blob_sha256": "d0c88ba159164f21b2a9e6ca1086374091f30b07eb3603936a64de42c219590b"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/security_cases.py",
+      "immutable": true,
+      "worktree_sha256": "fe6b408b9ff7d160ed8ec46e84fb0e4d72f1db0fb8593752aa7dd72076e2e363",
+      "git_blob_sha256": "fe6b408b9ff7d160ed8ec46e84fb0e4d72f1db0fb8593752aa7dd72076e2e363"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/security_gate.py",
+      "immutable": true,
+      "worktree_sha256": "0dabc73b2ecda8a53874a612983fcb5b3592e57ccfdee66e079bcac2f54ac00e",
+      "git_blob_sha256": "0dabc73b2ecda8a53874a612983fcb5b3592e57ccfdee66e079bcac2f54ac00e"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/security_static.py",
+      "immutable": true,
+      "worktree_sha256": "1137fa2378a74c7b83b313ed459083379d7e5196ff0ffa85462660039631fb64",
+      "git_blob_sha256": "1137fa2378a74c7b83b313ed459083379d7e5196ff0ffa85462660039631fb64"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/security_test.py",
+      "immutable": true,
+      "worktree_sha256": "c230027dcc804cc1f42f5e65be18570345b191748217e33f89b40447c7d9078e",
+      "git_blob_sha256": "c230027dcc804cc1f42f5e65be18570345b191748217e33f89b40447c7d9078e"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/spec_check.py",
+      "immutable": true,
+      "worktree_sha256": "e7491f4a2ad76c02a8ef45b31614657690b9be2117cb3633993d88957970f171",
+      "git_blob_sha256": "e7491f4a2ad76c02a8ef45b31614657690b9be2117cb3633993d88957970f171"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/standards_check.py",
+      "immutable": true,
+      "worktree_sha256": "17ad4c90d4800e12a0f23fa955dd70c620709314d117fe7a5ac6e39480a244d1",
+      "git_blob_sha256": "17ad4c90d4800e12a0f23fa955dd70c620709314d117fe7a5ac6e39480a244d1"
+    },
+    {
+      "path": "scripts/qa/lesson9/history/tracked-bd42a61/scripts/verify.py",
+      "immutable": true,
+      "worktree_sha256": "a9a256b0f12f43d8fdf74f093a76ea74e9ed01b609d13aa1dd6b9f97f445ceb3",
+      "git_blob_sha256": "a9a256b0f12f43d8fdf74f093a76ea74e9ed01b609d13aa1dd6b9f97f445ceb3"
+    },
+    {
+      "path": "scripts/qa/lesson9/performance_probe.py",
+      "immutable": false,
+      "worktree_sha256": "99c9e5d891398da434904fb5081ca2ffbd6c100693e779cbf3805eb80a3995a6",
+      "git_blob_sha256": "99c9e5d891398da434904fb5081ca2ffbd6c100693e779cbf3805eb80a3995a6"
+    },
+    {
+      "path": "scripts/qa/lesson9/verify_release.py",
+      "immutable": false,
+      "worktree_sha256": "d2a56b76497a19d922644de6c344b7946c9c2384a9564492127870bd6d3428f2",
+      "git_blob_sha256": "d2a56b76497a19d922644de6c344b7946c9c2384a9564492127870bd6d3428f2"
+    },
+    {
+      "path": "scripts/spec_check.py",
+      "immutable": false,
+      "worktree_sha256": "1559682f697b6b329bed3867e9b4f98135ab286ae63e9c4ba7991cf4b1227c75",
+      "git_blob_sha256": "1559682f697b6b329bed3867e9b4f98135ab286ae63e9c4ba7991cf4b1227c75"
+    },
+    {
+      "path": "tests/README.md",
+      "immutable": false,
+      "worktree_sha256": "3eae504736afa7238df8603aee7ca1cd4cbb0916a14eecc6425884c4cb90f33f",
+      "git_blob_sha256": "3eae504736afa7238df8603aee7ca1cd4cbb0916a14eecc6425884c4cb90f33f"
+    },
+    {
+      "path": "tests/environment/history/windows_tool_launcher_argument_attempt01.c",
+      "immutable": true,
+      "worktree_sha256": "e2603f065e84fb2796e0ab35bc85f849f7dc573d34c186f7cbd04e7babf6b551",
+      "git_blob_sha256": "e2603f065e84fb2796e0ab35bc85f849f7dc573d34c186f7cbd04e7babf6b551"
+    },
+    {
+      "path": "tests/environment/npm",
+      "immutable": false,
+      "worktree_sha256": "7d0ef9447adeac9a66117eb884762e4a8e59661a4806b055493c3bce68851fcf",
+      "git_blob_sha256": "7d0ef9447adeac9a66117eb884762e4a8e59661a4806b055493c3bce68851fcf"
+    },
+    {
+      "path": "tests/environment/run_project_gates.sh",
+      "immutable": false,
+      "worktree_sha256": "1dc8a0f0612920a2afd82047ab356f3480ebf78401b0a83acf9bdcc8a3657c21",
+      "git_blob_sha256": "1dc8a0f0612920a2afd82047ab356f3480ebf78401b0a83acf9bdcc8a3657c21"
+    },
+    {
+      "path": "tests/environment/run_windows_security_gate.py",
+      "immutable": false,
+      "worktree_sha256": "4001d0129726125615c44ee41728eb869b9fa80cdcbeffa4b31f88bb47b434df",
+      "git_blob_sha256": "4001d0129726125615c44ee41728eb869b9fa80cdcbeffa4b31f88bb47b434df"
+    },
+    {
+      "path": "tests/environment/windows_tool_launcher.c",
+      "immutable": false,
+      "worktree_sha256": "efb3e38176ce3f9c72299f6c33c59ad40d7c40e96277c8459fe16857f8ccc503",
+      "git_blob_sha256": "efb3e38176ce3f9c72299f6c33c59ad40d7c40e96277c8459fe16857f8ccc503"
+    },
+    {
+      "path": "tests/manifest.json",
+      "immutable": true,
+      "worktree_sha256": "3ff95248c2089532f04d6ea0a1023c2f0aeca3bb8be9f4c8979d18b80304d05a",
+      "git_blob_sha256": "3ff95248c2089532f04d6ea0a1023c2f0aeca3bb8be9f4c8979d18b80304d05a"
+    },
+    {
+      "path": "tests/performance/analyze_grade_waits.py",
+      "immutable": false,
+      "worktree_sha256": "85c7c95a5c5ec9aa7c6d39e597fac1239e8345a63ad554d4d8993bc773130189",
+      "git_blob_sha256": "85c7c95a5c5ec9aa7c6d39e597fac1239e8345a63ad554d4d8993bc773130189"
+    },
+    {
+      "path": "tests/performance/check_single_request_limit.py",
+      "immutable": false,
+      "worktree_sha256": "8ebe329bc74bc4ba556fb37b93fc151d96c8f2dc8df638647cf8a45f5a0475e3",
+      "git_blob_sha256": "8ebe329bc74bc4ba556fb37b93fc151d96c8f2dc8df638647cf8a45f5a0475e3"
+    },
+    {
+      "path": "tests/performance/compare_outbox_isolation.py",
+      "immutable": false,
+      "worktree_sha256": "ded18f1b66f2ea4e4d2b47739a31cebc7e8efc53b330f1fb3727d8ca4deca2df",
+      "git_blob_sha256": "ded18f1b66f2ea4e4d2b47739a31cebc7e8efc53b330f1fb3727d8ca4deca2df"
+    },
+    {
+      "path": "tests/performance/grade_enqueue_latency.py",
+      "immutable": false,
+      "worktree_sha256": "caf253f9f39936733476c156d321fc4c0f4293ccc79bddc3cdba0fdf4a98fda7",
+      "git_blob_sha256": "caf253f9f39936733476c156d321fc4c0f4293ccc79bddc3cdba0fdf4a98fda7"
+    },
+    {
+      "path": "tests/performance/grade_latency_diagnostics.py",
+      "immutable": false,
+      "worktree_sha256": "0d15253b13e80003b5eab5810abd6453a7e6f14fc0bde4fa8b574984127890e1",
+      "git_blob_sha256": "0d15253b13e80003b5eab5810abd6453a7e6f14fc0bde4fa8b574984127890e1"
+    },
+    {
+      "path": "tests/performance/latency_gate_contract.py",
+      "immutable": false,
+      "worktree_sha256": "4d952241074c156b22d813adf94dbe900d89b854ec2d2e98acc0ee029de0634f",
+      "git_blob_sha256": "4d952241074c156b22d813adf94dbe900d89b854ec2d2e98acc0ee029de0634f"
+    },
+    {
+      "path": "tests/regression/frontend_toolchain.test.mjs",
+      "immutable": false,
+      "worktree_sha256": "aa9d2b51599d8252b87783e4be6dd339c21273258aa1a7c1ee25606983816176",
+      "git_blob_sha256": "aa9d2b51599d8252b87783e4be6dd339c21273258aa1a7c1ee25606983816176"
+    },
+    {
+      "path": "tests/regression/lesson9_final_regression.py",
+      "immutable": false,
+      "worktree_sha256": "894abc784a50ce66ed52361f9ce72e8307e319f9955c3cba22714591b69d2f06",
+      "git_blob_sha256": "894abc784a50ce66ed52361f9ce72e8307e319f9955c3cba22714591b69d2f06"
+    },
+    {
+      "path": "tests/release/README.md",
+      "immutable": false,
+      "worktree_sha256": "0c6132a1dc3e505cfa2ad5162e34ee4e926c2274da163390feb5045e3fc96d9f",
+      "git_blob_sha256": "0c6132a1dc3e505cfa2ad5162e34ee4e926c2274da163390feb5045e3fc96d9f"
+    },
+    {
+      "path": "tests/release/history-context.json",
+      "immutable": false,
+      "worktree_sha256": "9d62e06eaacd7b1895561c31c299c81996fcd5529e4456b98a1574485a3e3b4f",
+      "git_blob_sha256": "9d62e06eaacd7b1895561c31c299c81996fcd5529e4456b98a1574485a3e3b4f"
+    },
+    {
+      "path": "tests/release/history/browser-run-state.json",
+      "immutable": true,
+      "worktree_sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+      "git_blob_sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "tests/security/frontend_dependency_candidates.py",
+      "immutable": false,
+      "worktree_sha256": "fa6a10e2333b091b872ad678bb3e0610a1edbe871aafd0f424f69cb1ec413712",
+      "git_blob_sha256": "fa6a10e2333b091b872ad678bb3e0610a1edbe871aafd0f424f69cb1ec413712"
+    },
+    {
+      "path": "tests/support/update_lesson9_round2_report.py",
+      "immutable": false,
+      "worktree_sha256": "200ae66678846478435feadd2733d5d7ab60ac1ee057e817c8583945fc11c8c9",
+      "git_blob_sha256": "200ae66678846478435feadd2733d5d7ab60ac1ee057e817c8583945fc11c8c9"
+    }
+  ],
+  "deleted": [
+    "frontend/src/vite-env.d.ts",
+    "frontend/vite.config.ts"
+  ],
+  "excluded": [
+    {
+      "path": "reports/xss-page-source.md",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/build_release.py",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/diff-check.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/latency-contracts.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/openspec-strict.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/results.json",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/spec-check.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/checks/standards-check.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/git-status-before.txt",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/npm-audit-result.json",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/npm-audit-stderr.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/npm-audit.json",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/preservation-before.json",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/suggested-source-reference.txt",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/validation-01/checkout.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-submission-preparation/validation-01/worktree.log",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/Dockerfile.tools",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/grade-build-proxy.yml",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_fix_validation.py",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_grade.sh",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_grade_buildproxy.sh",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_grade_clean.sh",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_grade_final_host.py",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "scripts/qa/lesson9/run_make.sh",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "tests/release/lesson9-v2.json",
+      "reason": "not in reviewed sources or frozen lesson-9 evidence; retained locally"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/live-attempt-04/browser-results/.last-run.json",
+      "reason": "ignored browser state; immutable alias in history-context.json"
+    },
+    {
+      "path": "docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/__pycache__/run_checks.cpython-312.pyc",
+      "reason": "historical CPython cache; explicitly non-published, see history-context.json"
+    }
+  ],
+  "self": "tests/release/lesson9-v2-publication.json",
+  "derived_evidence": "docs/lesson-09/2026-11-18-submission-preparation/evidence-index.json",
+  "revision_note": "After validation-02, finalized history-context current-index wording and ignored the failed initial draft; prior draft preserved in validation-02. No historical digest was changed."
+}

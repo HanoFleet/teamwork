@@ -1,0 +1,164 @@
+[
+  {
+    "id": "spec",
+    "command": [
+      "python",
+      "scripts/spec_check.py"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main",
+    "started": "2026-11-18T08:58:24.109316+08:00",
+    "ended": "2026-11-18T08:58:24.313959+08:00",
+    "exit": 0,
+    "evidence": "logs/spec.txt"
+  },
+  {
+    "id": "standards",
+    "command": [
+      "python",
+      "scripts/standards_check.py"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main",
+    "started": "2026-11-18T08:58:24.315910+08:00",
+    "ended": "2026-11-18T08:58:24.485584+08:00",
+    "exit": 0,
+    "evidence": "logs/standards.txt"
+  },
+  {
+    "id": "layer",
+    "command": [
+      "python",
+      "scripts/layer_check.py"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main",
+    "started": "2026-11-18T08:58:24.486559+08:00",
+    "ended": "2026-11-18T08:58:24.639275+08:00",
+    "exit": 0,
+    "evidence": "logs/layer.txt"
+  },
+  {
+    "id": "static",
+    "command": [
+      "python",
+      "scripts/security_static.py"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main",
+    "started": "2026-11-18T08:58:24.640249+08:00",
+    "ended": "2026-11-18T08:58:24.769417+08:00",
+    "exit": 0,
+    "evidence": "logs/static.txt"
+  },
+  {
+    "id": "cases",
+    "command": [
+      "python",
+      "scripts/security_cases.py"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main",
+    "started": "2026-11-18T08:58:24.770395+08:00",
+    "ended": "2026-11-18T08:58:24.904586+08:00",
+    "exit": 0,
+    "evidence": "logs/cases.txt"
+  },
+  {
+    "id": "secrets",
+    "command": [
+      "python",
+      "scripts/secret_scan.py"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main",
+    "started": "2026-11-18T08:58:24.905557+08:00",
+    "ended": "2026-11-18T08:58:27.017705+08:00",
+    "exit": 0,
+    "evidence": "logs/secrets.txt"
+  },
+  {
+    "id": "go",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./..."
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main\\backend",
+    "started": "2026-11-18T08:58:27.018682+08:00",
+    "ended": "2026-11-18T08:58:28.702257+08:00",
+    "exit": 0,
+    "evidence": "logs/go.txt"
+  },
+  {
+    "id": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./..."
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main\\backend",
+    "started": "2026-11-18T08:58:28.703034+08:00",
+    "ended": "2026-11-18T08:58:37.549164+08:00",
+    "exit": 0,
+    "evidence": "logs/vet.txt"
+  },
+  {
+    "id": "audit",
+    "command": [
+      "cmd",
+      "/c",
+      "npm audit --json --audit-level=high --package-lock-only --registry=https://registry.npmjs.org"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main\\frontend",
+    "started": "2026-11-18T08:58:37.551117+08:00",
+    "ended": "2026-11-18T08:58:41.934724+08:00",
+    "exit": 1,
+    "evidence": "logs/audit.txt"
+  },
+  {
+    "id": "govuln",
+    "command": [
+      "python",
+      "scripts/govuln_check.py"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main",
+    "started": "2026-11-18T08:58:41.937656+08:00",
+    "ended": "2026-11-18T09:00:08.470080+08:00",
+    "exit": 0,
+    "evidence": "logs/govuln.txt"
+  },
+  {
+    "id": "gate-self-test",
+    "command": [
+      "python",
+      "scripts/security_gate.py",
+      "--self-test"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main",
+    "started": "2026-11-18T09:00:08.471055+08:00",
+    "ended": "2026-11-18T09:00:10.473140+08:00",
+    "exit": 0,
+    "evidence": "logs/gate-self-test.txt"
+  },
+  {
+    "id": "strict",
+    "command": [
+      "cmd",
+      "/c",
+      "npx -y @fission-ai/openspec@1.15.0 validate --all --strict"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main",
+    "started": "2026-11-18T09:00:10.474116+08:00",
+    "ended": "2026-11-18T09:00:14.840306+08:00",
+    "exit": 0,
+    "evidence": "logs/strict.txt"
+  },
+  {
+    "id": "make",
+    "command": [
+      "make",
+      "check"
+    ],
+    "cwd": "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\test-main",
+    "started": "2026-11-18T09:00:14.842258+08:00",
+    "ended": "2026-11-18T09:00:14.855930+08:00",
+    "exit": 127,
+    "evidence": "logs/make.txt"
+  }
+]

@@ -1,0 +1,367 @@
+[
+  {
+    "phase": "before",
+    "round": 1,
+    "max_ms": 317.57329999891226,
+    "over_100_ms": 1,
+    "outbox_lock_edges": 27,
+    "slow_requests": [
+      {
+        "index": 18,
+        "request_id": "l9-diagnostic-1-1794991251457553000-18",
+        "client_ms": 317.57329999891226,
+        "api_ms": 312,
+        "overlapping_statements": [
+          {
+            "thread_id": "58",
+            "event_id": "114",
+            "start_ps": "24711200360000",
+            "end_ps": "24983776996000",
+            "duration_ms": "272.577",
+            "lock_ms": "272.263",
+            "digest": "statement/com/Execute",
+            "rows_affected": "1"
+          },
+          {
+            "thread_id": "49",
+            "event_id": "749",
+            "start_ps": "24861041144000",
+            "end_ps": "24909592562000",
+            "duration_ms": "48.551",
+            "lock_ms": "0.000",
+            "digest": "COMMIT",
+            "rows_affected": "0"
+          },
+          {
+            "thread_id": "49",
+            "event_id": "596",
+            "start_ps": "24733714331000",
+            "end_ps": "24770670837000",
+            "duration_ms": "36.957",
+            "lock_ms": "0.000",
+            "digest": "COMMIT",
+            "rows_affected": "0"
+          },
+          {
+            "thread_id": "49",
+            "event_id": "698",
+            "start_ps": "24813963942000",
+            "end_ps": "24848570763000",
+            "duration_ms": "34.607",
+            "lock_ms": "0.000",
+            "digest": "COMMIT",
+            "rows_affected": "0"
+          },
+          {
+            "thread_id": "58",
+            "event_id": "129",
+            "start_ps": "24984795276000",
+            "end_ps": "25018020389000",
+            "duration_ms": "33.225",
+            "lock_ms": "0.000",
+            "digest": "COMMIT",
+            "rows_affected": "0"
+          }
+        ],
+        "overlapping_db_waits": [
+          {
+            "thread_id": "58",
+            "event_id": "116",
+            "start_ps": "24788312550270",
+            "end_ps": "25061530010760",
+            "duration_ms": "273.217",
+            "event": "wait/io/table/sql/handler",
+            "operation": "insert",
+            "table": "outbox_messages"
+          },
+          {
+            "thread_id": "49",
+            "event_id": "751",
+            "start_ps": "24964160712075",
+            "end_ps": "24987061676241",
+            "duration_ms": "22.901",
+            "event": "wait/io/file/sql/binlog",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "16",
+            "event_id": "130",
+            "start_ps": "24943707365787",
+            "end_ps": "24964004707731",
+            "duration_ms": "20.297",
+            "event": "wait/io/file/innodb/innodb_log_file",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "49",
+            "event_id": "802",
+            "start_ps": "25005049692435",
+            "end_ps": "25024318222356",
+            "duration_ms": "19.269",
+            "event": "wait/io/file/sql/binlog",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "16",
+            "event_id": "122",
+            "start_ps": "24841082818017",
+            "end_ps": "24859582884747",
+            "duration_ms": "18.500",
+            "event": "wait/io/file/innodb/innodb_log_file",
+            "operation": "sync",
+            "table": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "phase": "before",
+    "round": 2,
+    "max_ms": 109.24380000142264,
+    "over_100_ms": 1,
+    "outbox_lock_edges": 6,
+    "slow_requests": [
+      {
+        "index": 5,
+        "request_id": "l9-diagnostic-2-1794991268591361800-5",
+        "client_ms": 109.24380000142264,
+        "api_ms": 105,
+        "overlapping_statements": [
+          {
+            "thread_id": "58",
+            "event_id": "1328",
+            "start_ps": "40736415635000",
+            "end_ps": "40805471139000",
+            "duration_ms": "69.056",
+            "lock_ms": "68.785",
+            "digest": "statement/com/Execute",
+            "rows_affected": "1"
+          },
+          {
+            "thread_id": "49",
+            "event_id": "2330",
+            "start_ps": "40801004641000",
+            "end_ps": "40832342830000",
+            "duration_ms": "31.338",
+            "lock_ms": "0.000",
+            "digest": "COMMIT",
+            "rows_affected": "0"
+          },
+          {
+            "thread_id": "58",
+            "event_id": "1342",
+            "start_ps": "40806188886000",
+            "end_ps": "40836219588000",
+            "duration_ms": "30.031",
+            "lock_ms": "0.000",
+            "digest": "COMMIT",
+            "rows_affected": "0"
+          },
+          {
+            "thread_id": "49",
+            "event_id": "2228",
+            "start_ps": "40734772026000",
+            "end_ps": "40762694287000",
+            "duration_ms": "27.922",
+            "lock_ms": "0.000",
+            "digest": "COMMIT",
+            "rows_affected": "0"
+          },
+          {
+            "thread_id": "49",
+            "event_id": "2381",
+            "start_ps": "40837140950000",
+            "end_ps": "40863690620000",
+            "duration_ms": "26.550",
+            "lock_ms": "0.000",
+            "digest": "COMMIT",
+            "rows_affected": "0"
+          }
+        ],
+        "overlapping_db_waits": [
+          {
+            "thread_id": "12",
+            "event_id": "61",
+            "start_ps": "40776584984451",
+            "end_ps": "40795971884514",
+            "duration_ms": "19.387",
+            "event": "wait/io/file/innodb/innodb_data_file",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "13",
+            "event_id": "551",
+            "start_ps": "40776618816378",
+            "end_ps": "40795971868647",
+            "duration_ms": "19.353",
+            "event": "wait/io/file/innodb/innodb_dblwr_file",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "58",
+            "event_id": "1200",
+            "start_ps": "40800267856575",
+            "end_ps": "40818331699614",
+            "duration_ms": "18.064",
+            "event": "wait/io/file/sql/binlog",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "16",
+            "event_id": "242",
+            "start_ps": "40769052240753",
+            "end_ps": "40786026318108",
+            "duration_ms": "16.974",
+            "event": "wait/io/file/innodb/innodb_log_file",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "16",
+            "event_id": "240",
+            "start_ps": "40734888597864",
+            "end_ps": "40751201975661",
+            "duration_ms": "16.313",
+            "event": "wait/io/file/innodb/innodb_log_file",
+            "operation": "sync",
+            "table": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "phase": "after",
+    "round": 1,
+    "max_ms": 122.06220000007306,
+    "over_100_ms": 1,
+    "outbox_lock_edges": 0,
+    "slow_requests": [
+      {
+        "index": 3,
+        "request_id": "l9-diagnostic-1-1794991296370412900-3",
+        "client_ms": 122.06220000007306,
+        "api_ms": 117,
+        "overlapping_statements": [
+          {
+            "thread_id": "75",
+            "event_id": "1053",
+            "start_ps": "68417986674000",
+            "end_ps": "68505339074000",
+            "duration_ms": "87.352",
+            "lock_ms": "0.000",
+            "digest": "COMMIT",
+            "rows_affected": "0"
+          },
+          {
+            "thread_id": "74",
+            "event_id": "213",
+            "start_ps": "68457325297000",
+            "end_ps": "68525058690000",
+            "duration_ms": "67.733",
+            "lock_ms": "0.000",
+            "digest": "COMMIT",
+            "rows_affected": "0"
+          },
+          {
+            "thread_id": "75",
+            "event_id": "1039",
+            "start_ps": "68394337117000",
+            "end_ps": "68417063994000",
+            "duration_ms": "22.727",
+            "lock_ms": "0.001",
+            "digest": "statement/com/Execute",
+            "rows_affected": "1"
+          },
+          {
+            "thread_id": "82",
+            "event_id": "11",
+            "start_ps": "68430644675000",
+            "end_ps": "68431147819000",
+            "duration_ms": "0.503",
+            "lock_ms": "0.003",
+            "digest": "SELECT `id` , `payload` , `attempts` FROM `outbox_messages` WHERE STATUS = ? AND ( `next_attempt_at` IS NULL OR `next_attempt_at` <= UTC_TIMESTAMP ( ) ) ORDER BY `id` LIMIT ? FOR UPDATE SKIP LOCKED",
+            "rows_affected": "0"
+          },
+          {
+            "thread_id": "82",
+            "event_id": "17",
+            "start_ps": "68488812936000",
+            "end_ps": "68489210071000",
+            "duration_ms": "0.397",
+            "lock_ms": "0.003",
+            "digest": "statement/com/Execute",
+            "rows_affected": "1"
+          }
+        ],
+        "overlapping_db_waits": [
+          {
+            "thread_id": "16",
+            "event_id": "452",
+            "start_ps": "68426221874823",
+            "end_ps": "68447195657163",
+            "duration_ms": "20.974",
+            "event": "wait/io/file/innodb/innodb_log_file",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "75",
+            "event_id": "823",
+            "start_ps": "68455714222602",
+            "end_ps": "68476159823472",
+            "duration_ms": "20.446",
+            "event": "wait/io/file/sql/binlog",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "13",
+            "event_id": "1092",
+            "start_ps": "68435666968185",
+            "end_ps": "68455503970533",
+            "duration_ms": "19.837",
+            "event": "wait/io/file/innodb/innodb_dblwr_file",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "12",
+            "event_id": "116",
+            "start_ps": "68435649079110",
+            "end_ps": "68455479461823",
+            "duration_ms": "19.830",
+            "event": "wait/io/file/innodb/innodb_data_file",
+            "operation": "sync",
+            "table": ""
+          },
+          {
+            "thread_id": "12",
+            "event_id": "118",
+            "start_ps": "68461613272890",
+            "end_ps": "68479594226334",
+            "duration_ms": "17.981",
+            "event": "wait/io/file/innodb/innodb_data_file",
+            "operation": "sync",
+            "table": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "phase": "after",
+    "round": 2,
+    "max_ms": 77.58109999849694,
+    "over_100_ms": 0,
+    "outbox_lock_edges": 0,
+    "slow_requests": []
+  }
+]

@@ -1,0 +1,2 @@
+WARN {"index": 19, "request_id": "boundary-19", "elapsed_ms": 100.001}
+{"rule": "enqueue-latency-v2", "sample_count": 20, "p95_ms": 100, "max_ms": 100.001, "over_100_ms": 1, "warnings": [{"index": 19, "request_id": "boundary-19", "elapsed_ms": 100.001}], "valid": true, "async_p95_pass": true, "passed": true}

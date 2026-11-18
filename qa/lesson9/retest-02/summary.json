@@ -1,0 +1,24 @@
+{
+  "version": "bd42a6149e975c1ed217fb9349621443a3be53d5",
+  "checks": {
+    "通过": 11,
+    "失败": 1,
+    "阻塞": 11
+  },
+  "defects": {
+    "复测阻塞": 3,
+    "待确认修复版本": 1
+  },
+  "go_tests": {
+    "pass": 32
+  },
+  "npm": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 5,
+    "critical": 0,
+    "total": 5
+  },
+  "acceptance": "ENV failed; classified blocked (not 18 business failures)"
+}

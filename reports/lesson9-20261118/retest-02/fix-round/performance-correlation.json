@@ -1,0 +1,362 @@
+[
+  {
+    "round": "performance-1.json",
+    "index": 0,
+    "elapsed_ms": 29.900700001235236,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-0",
+    "api_duration_ms": 26,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 1,
+    "elapsed_ms": 32.093499999973574,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-1",
+    "api_duration_ms": 28,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 2,
+    "elapsed_ms": 56.55529999967257,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-2",
+    "api_duration_ms": 32,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 3,
+    "elapsed_ms": 31.211999999868567,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-3",
+    "api_duration_ms": 26,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 4,
+    "elapsed_ms": 26.073799999721814,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-4",
+    "api_duration_ms": 22,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 5,
+    "elapsed_ms": 28.456599999117316,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-5",
+    "api_duration_ms": 24,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 6,
+    "elapsed_ms": 34.5471999989968,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-6",
+    "api_duration_ms": 29,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 7,
+    "elapsed_ms": 185.47120000039286,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-7",
+    "api_duration_ms": 178,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 8,
+    "elapsed_ms": 48.594199999570264,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-8",
+    "api_duration_ms": 45,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 9,
+    "elapsed_ms": 46.11480000130541,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-9",
+    "api_duration_ms": 26,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 10,
+    "elapsed_ms": 32.5276000003214,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-10",
+    "api_duration_ms": 29,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 11,
+    "elapsed_ms": 26.571800000965595,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-11",
+    "api_duration_ms": 23,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 12,
+    "elapsed_ms": 29.680999999982305,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-12",
+    "api_duration_ms": 24,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 13,
+    "elapsed_ms": 29.716799999732757,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-13",
+    "api_duration_ms": 25,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 14,
+    "elapsed_ms": 28.278399999180692,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-14",
+    "api_duration_ms": 25,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 15,
+    "elapsed_ms": 26.344800000515534,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-15",
+    "api_duration_ms": 22,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 16,
+    "elapsed_ms": 26.274499999999534,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-16",
+    "api_duration_ms": 22,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 17,
+    "elapsed_ms": 29.26370000022871,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-17",
+    "api_duration_ms": 26,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 18,
+    "elapsed_ms": 27.659900000799098,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-18",
+    "api_duration_ms": 25,
+    "api_status": 202
+  },
+  {
+    "round": "performance-1.json",
+    "index": 19,
+    "elapsed_ms": 253.71959999938554,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968976837690600-19",
+    "api_duration_ms": 249,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 0,
+    "elapsed_ms": 27.575399999477668,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-0",
+    "api_duration_ms": 23,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 1,
+    "elapsed_ms": 27.94759999960661,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-1",
+    "api_duration_ms": 24,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 2,
+    "elapsed_ms": 25.9102999989409,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-2",
+    "api_duration_ms": 23,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 3,
+    "elapsed_ms": 58.986000000004424,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-3",
+    "api_duration_ms": 33,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 4,
+    "elapsed_ms": 31.91769999830285,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-4",
+    "api_duration_ms": 28,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 5,
+    "elapsed_ms": 47.47320000024047,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-5",
+    "api_duration_ms": 42,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 6,
+    "elapsed_ms": 31.568999998853542,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-6",
+    "api_duration_ms": 26,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 7,
+    "elapsed_ms": 27.777100000093924,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-7",
+    "api_duration_ms": 24,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 8,
+    "elapsed_ms": 27.774899999712943,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-8",
+    "api_duration_ms": 24,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 9,
+    "elapsed_ms": 32.020900000134134,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-9",
+    "api_duration_ms": 28,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 10,
+    "elapsed_ms": 25.359000001117238,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-10",
+    "api_duration_ms": 22,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 11,
+    "elapsed_ms": 26.966900000843452,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-11",
+    "api_duration_ms": 24,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 12,
+    "elapsed_ms": 26.581600001009065,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-12",
+    "api_duration_ms": 22,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 13,
+    "elapsed_ms": 28.882200000225566,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-13",
+    "api_duration_ms": 25,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 14,
+    "elapsed_ms": 30.14940000139177,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-14",
+    "api_duration_ms": 26,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 15,
+    "elapsed_ms": 28.014699999403092,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-15",
+    "api_duration_ms": 23,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 16,
+    "elapsed_ms": 34.84349999962433,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-16",
+    "api_duration_ms": 29,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 17,
+    "elapsed_ms": 349.701000001005,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-17",
+    "api_duration_ms": 346,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 18,
+    "elapsed_ms": 30.600199999753386,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-18",
+    "api_duration_ms": 27,
+    "api_status": 202
+  },
+  {
+    "round": "performance-2.json",
+    "index": 19,
+    "elapsed_ms": 37.56170000087877,
+    "status": 202,
+    "request_id": "lesson9-perf-1794968980240578000-19",
+    "api_duration_ms": 33,
+    "api_status": 202
+  }
+]

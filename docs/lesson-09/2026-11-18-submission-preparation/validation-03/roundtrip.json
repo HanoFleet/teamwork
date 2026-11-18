@@ -1,0 +1,47 @@
+{
+  "tree": "f6878cfca9df650f842ceb0db8552fb465dc5bd6",
+  "git_commit_created": false,
+  "real_index_sha256_before": "87b339e73fa70fa33d664294894254c63e6f65c55d32887b74e782d7d05d9068",
+  "real_index_sha256_after": "87b339e73fa70fa33d664294894254c63e6f65c55d32887b74e782d7d05d9068",
+  "selected_files": 604,
+  "immutable_files": 558,
+  "checkout_mismatches": [],
+  "checks": [
+    {
+      "name": "worktree",
+      "command": [
+        "F:\\Anaconda\\python.exe",
+        "E:\\proj\\teamwork-main-latest\\qa\\lesson9\\fix-worktree\\scripts\\qa\\lesson9\\verify_release.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "checkout",
+      "command": [
+        "F:\\Anaconda\\python.exe",
+        "C:\\Users\\Kugeln\\AppData\\Local\\Temp\\lesson9-git-roundtrip-lniz8nfj\\checkout\\scripts\\qa\\lesson9\\verify_release.py",
+        "--checkout"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "tamper_negative_exit": 1,
+  "historical_aliases": 1,
+  "historical_manifest_sha256": "3ff95248c2089532f04d6ea0a1023c2f0aeca3bb8be9f4c8979d18b80304d05a",
+  "negative_checks": [
+    {
+      "name": "missing",
+      "exit_code": 1
+    },
+    {
+      "name": "escape",
+      "exit_code": 1
+    },
+    {
+      "name": "runtime",
+      "exit_code": 1
+    }
+  ],
+  "protected_files": 639,
+  "protected_changed": []
+}

@@ -1,0 +1,29 @@
+{
+  "services": {
+    "api": {
+      "build": {
+        "args": {
+          "GOPROXY": "https://goproxy.cn,direct"
+        }
+      }
+    },
+    "worker": {
+      "build": {
+        "args": {
+          "GOPROXY": "https://goproxy.cn,direct"
+        }
+      }
+    }
+  },
+  "networks": {
+    "default": {
+      "ipam": {
+        "config": [
+          {
+            "subnet": "10.254.2.0/24"
+          }
+        ]
+      }
+    }
+  }
+}

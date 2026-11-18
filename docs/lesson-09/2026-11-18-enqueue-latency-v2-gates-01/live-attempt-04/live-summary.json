@@ -1,0 +1,14 @@
+{
+  "selected_subnet": "10.254.1.0/24",
+  "project": "teamwork-tests-latency-v2-gates-0cb92284",
+  "project_output": "tests\\output\\teamwork-tests-latency-v2-gates-0cb92284",
+  "verify-build": 0,
+  "verify-up": 0,
+  "verify": 0,
+  "live_v2": 0,
+  "live_v2_p95_ms": 95.28799999998228,
+  "live_v2_warnings": 1,
+  "e2e_copied_sources_match": true,
+  "e2e_install": 0,
+  "playwright": 0
+}

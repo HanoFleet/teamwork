@@ -1,0 +1,32 @@
+{
+  "make-check-security": {
+    "exit": 2,
+    "classification": "target-result",
+    "evidence": "logs/make-check-security.txt"
+  },
+  "make-check": {
+    "exit": 0,
+    "classification": "target-result",
+    "evidence": "logs/make-check.txt"
+  },
+  "make-grade-buildproxy": {
+    "exit": 0,
+    "classification": "target-result",
+    "evidence": "logs/make-grade-buildproxy.txt"
+  },
+  "make-grade-clean": {
+    "exit": 2,
+    "classification": "environment-blocked",
+    "evidence": "logs/make-grade-clean.txt"
+  },
+  "make-grade-retry": {
+    "exit": 2,
+    "classification": "environment-blocked",
+    "evidence": "logs/make-grade-retry.txt"
+  },
+  "make-grade": {
+    "exit": 2,
+    "classification": "environment-blocked",
+    "evidence": "logs/make-grade.txt"
+  }
+}

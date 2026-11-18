@@ -1,0 +1,6 @@
+{"ImportPath":"./...","Action":"build-output","Output":"# ./...\n"}
+{"ImportPath":"./...","Action":"build-output","Output":"pattern ./...: open C:\\Users\\Kugeln\\AppData\\Local\\go-build\\87\\877881035812ade1244946bf7e89a3ef8b9029276c6740adb7cdff6dcc02ff61-d: Access is denied.\n"}
+{"ImportPath":"./...","Action":"build-fail"}
+{"Time":"2026-11-18T08:31:12.4215368+08:00","Action":"start","Package":"./..."}
+{"Time":"2026-11-18T08:31:12.422529+08:00","Action":"output","Package":"./...","Output":"FAIL\t./... [setup failed]\n","OutputType":"frame"}
+{"Time":"2026-11-18T08:31:12.422529+08:00","Action":"fail","Package":"./...","Elapsed":0.001,"FailedBuild":"./..."}

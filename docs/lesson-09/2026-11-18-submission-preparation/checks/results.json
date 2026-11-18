@@ -1,0 +1,54 @@
+[
+  {
+    "name": "spec-check",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/spec_check.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "standards-check",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "scripts/standards_check.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "latency-contracts",
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "-W",
+      "error::ResourceWarning",
+      "tests/performance/latency_gate_contract.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "openspec-strict",
+    "command": [
+      "node",
+      "C:\\Users\\Kugeln\\AppData\\Local\\npm-cache\\_npx\\21a1280729add0a7\\node_modules\\@fission-ai\\openspec\\bin\\openspec.js",
+      "validate",
+      "--all",
+      "--strict"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0
+  }
+]

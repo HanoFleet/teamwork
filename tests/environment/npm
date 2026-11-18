@@ -1,0 +1,3 @@
+#!/bin/sh
+# Select an explicitly supplied official npm CLI without changing gate arguments.
+exec node "${QA_NPM_CLI:?Set QA_NPM_CLI to the official npm-cli.js}" "$@"

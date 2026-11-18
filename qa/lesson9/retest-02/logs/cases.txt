@@ -1,0 +1,13 @@
+PASS sqli apitest/cases/api/search/POST/case.json
+  前置：学生 A1 已登录。B 班预置讲义标题为「B班-牛顿定律笔记」。
+  操作：登录用户名提交 ' OR '1'='1。材料列表 q 和关键字检索 query 分别提交 ' OR '1'='1、% 和 _。
+  期望：登录返回 401。材料列表和检索返回 200，响应正文不含 B 班标题，没有 500，也没有 SQL 报错。
+PASS xss apitest/cases/api/materials/POST/case.json
+  前置：教师已登录。列表页用 React 文本节点渲染标题，正文用 ReactMarkdown，不启用 rehype-raw。
+  操作：上传文件名含 <script>alert(1) 且不含 / 的 Markdown（显示标题按最后一段路径取值，</script> 会被截断），正文含 <script>alert(1)</script>，再打开 /materials 查看页面源码。
+  期望：详情 JSON 把 <script> 写成 \u003cscript\u003e。列表页源码包含 &lt;script&gt;，不存在可执行的 <script>alert(1)</script>。
+PASS csrf apitest/cases/api/skills/grade/PATCH/case.json
+  前置：教师已登录。会话 Cookie 为 HttpOnly、SameSite=Lax。Cookie 写请求必须带 X-CSRF-Token。
+  操作：PATCH /api/skills/grade：不带令牌一次，带令牌但 Origin 为 https://evil.example 一次，带正确令牌且 Origin 为本站一次。
+  期望：缺令牌和跨源都返回 403，技能描述不变。正确令牌且同源返回 200。
+注入反例文件与静态 XSS 检查通过。在线三段式由 python3 scripts/verify.py 执行。

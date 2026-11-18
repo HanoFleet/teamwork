@@ -1,0 +1,32 @@
+ M .gitattributes
+ M .gitignore
+ M backend/Dockerfile
+ M backend/internal/outbox/dispatcher.go
+ M frontend/package-lock.json
+ M frontend/package.json
+ D frontend/src/vite-env.d.ts
+ D frontend/vite.config.ts
+ M reports/xss-page-source.md
+ M scripts/spec_check.py
+ M tests/README.md
+ M tests/environment/run_project_gates.sh
+ M tests/manifest.json
+?? docs/lesson-09/fix-20261118.md
+?? frontend/README.md
+?? frontend/src/assets.d.ts
+?? frontend/toolchain.mjs
+?? openspec/changes/2026-11-18-fix-lesson9-retest/
+?? qa/
+?? reports/lesson9-20261118/
+?? scripts/qa/
+?? tests/environment/history/
+?? tests/environment/npm
+?? tests/environment/run_windows_security_gate.py
+?? tests/environment/windows_tool_launcher.c
+?? tests/performance/analyze_grade_waits.py
+?? tests/performance/compare_outbox_isolation.py
+?? tests/performance/grade_latency_diagnostics.py
+?? tests/regression/frontend_toolchain.test.mjs
+?? tests/regression/lesson9_final_regression.py
+?? tests/security/frontend_dependency_candidates.py
+?? tests/support/update_lesson9_round2_report.py

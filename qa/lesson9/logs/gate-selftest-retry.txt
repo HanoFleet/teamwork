@@ -1,0 +1,8 @@
+$ ��ʱ�ֿ⣺���� SESSION_SECRET
+��Կ�߽���ʧ�ܣ�
+  \u2717 leak.env: SESSION_SECRET �зǿ�ֵ
+exit=1
+$ ��ʱ�ֿ⣺�ɾ�
+��Կ�߽���ͨ�������������ύ��ʷ��û�зǿ���Կ��ֵ��
+exit=0
+SELF-TEST PASSED: �Ⱥ����

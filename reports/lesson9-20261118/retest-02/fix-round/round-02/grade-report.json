@@ -1,0 +1,173 @@
+{
+  "project": "CampusClaw 2.0 platform foundation",
+  "created_at": "2026-11-18T08:58:49.705659+00:00",
+  "source_commit": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+  "source_dirty": true,
+  "environment": {
+    "os": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-musl1",
+    "python": "3.14.10",
+    "docker": "Docker version 29.9.3, build 5457199aa57c45e990c59c89cab5f02b817238d7"
+  },
+  "scope": "lesson 7 skeleton: live/health/ready, logs, shutdown, default deny",
+  "status": "passed",
+  "counts": {
+    "passed": 18,
+    "failed": 0,
+    "total": 18
+  },
+  "checks": [
+    {
+      "id": "A01",
+      "name": "可复现启动与存活",
+      "criterion": "Compose 起来后 /live 200，含 version/time",
+      "status": "passed",
+      "elapsed_ms": 16,
+      "detail": "{\"status\":\"ok\",\"version\":\"v2.0.0-skeleton\",\"time\":\"2026-11-18T08:58:21Z\"}\n"
+    },
+    {
+      "id": "A02",
+      "name": "就绪检查",
+      "criterion": "/health 200，db/qdrant/embedding 都为 true",
+      "status": "passed",
+      "elapsed_ms": 14,
+      "detail": {
+        "status": "ready",
+        "version": "v2.0.0-skeleton",
+        "time": "2026-11-18T08:58:21Z",
+        "checks": {
+          "db": true,
+          "embedding": true,
+          "qdrant": true
+        }
+      }
+    },
+    {
+      "id": "A03",
+      "name": "就绪别名",
+      "criterion": "/ready 与 /health 同源，200",
+      "status": "passed",
+      "elapsed_ms": 9,
+      "detail": true
+    },
+    {
+      "id": "A04",
+      "name": "未知 API 404",
+      "criterion": "GET /api/nope -> 404",
+      "status": "passed",
+      "elapsed_ms": 10,
+      "detail": true
+    },
+    {
+      "id": "A05",
+      "name": "方法拒绝",
+      "criterion": "POST /health -> 405",
+      "status": "passed",
+      "elapsed_ms": 9,
+      "detail": true
+    },
+    {
+      "id": "A06",
+      "name": "非法参数",
+      "criterion": "GET /health?x=1 -> 400",
+      "status": "passed",
+      "elapsed_ms": 8,
+      "detail": true
+    },
+    {
+      "id": "A07",
+      "name": "未登录业务接口",
+      "criterion": "GET /api/materials -> 401",
+      "status": "passed",
+      "elapsed_ms": 7,
+      "detail": true
+    },
+    {
+      "id": "A08",
+      "name": "请求 ID 贯穿",
+      "criterion": "合法 X-Request-ID 原样回写",
+      "status": "passed",
+      "elapsed_ms": 7,
+      "detail": "响应头保留 verify-lesson07"
+    },
+    {
+      "id": "A09",
+      "name": "日志契约",
+      "criterion": "单行 JSON，含 request_id/path/status，无机密",
+      "status": "passed",
+      "elapsed_ms": 85,
+      "detail": "13 条请求日志可解析"
+    },
+    {
+      "id": "A15",
+      "name": "异步批改 202",
+      "criterion": "学生提交后批改返回 202 且不含分数，教师提交 403",
+      "status": "passed",
+      "elapsed_ms": 298,
+      "detail": "202 in 33ms, task=01M7PY1SME2TAC5CRECAC81N4Q"
+    },
+    {
+      "id": "A16",
+      "name": "SQLi 反例",
+      "criterion": "登录/材料/检索的注入载荷不泄露 B 班",
+      "status": "passed",
+      "elapsed_ms": 350,
+      "detail": "3 组 SQLi 载荷均未泄露 B 班"
+    },
+    {
+      "id": "A17",
+      "name": "CSRF 反例",
+      "criterion": "无 token/跨源 403，同源正确 token 200",
+      "status": "passed",
+      "elapsed_ms": 114,
+      "detail": "无 token/跨源 403，同源 200"
+    },
+    {
+      "id": "A18",
+      "name": "配置与审计",
+      "criterion": "学生配置 403，教师审计七列，学生审计 403",
+      "status": "passed",
+      "elapsed_ms": 72,
+      "detail": "学生 403，教师七列可查"
+    },
+    {
+      "id": "A10",
+      "name": "依赖不可达",
+      "criterion": "停 MySQL 后 live 200、health 503、业务 503",
+      "status": "passed",
+      "elapsed_ms": 9504,
+      "detail": "live=200, health=503(db=false), materials=503"
+    },
+    {
+      "id": "A11",
+      "name": "依赖恢复",
+      "criterion": "重启 MySQL 后 /health 恢复 200",
+      "status": "passed",
+      "elapsed_ms": 4376,
+      "detail": "MySQL 恢复后 /health=200"
+    },
+    {
+      "id": "A12",
+      "name": "端口边界",
+      "criterion": "db/qdrant/api 无 ports，web 有 ports",
+      "status": "passed",
+      "elapsed_ms": 101,
+      "detail": "只有 web 映射端口，六个服务都在"
+    },
+    {
+      "id": "A13",
+      "name": "Qdrant 不可达",
+      "criterion": "停 Qdrant 后 live 200、health 503，恢复后 200",
+      "status": "passed",
+      "elapsed_ms": 7735,
+      "detail": "qdrant=down 时 health=503，恢复后 health=200"
+    },
+    {
+      "id": "A14",
+      "name": "优雅停机",
+      "criterion": "stop api 后日志含 shutdown_complete",
+      "status": "passed",
+      "elapsed_ms": 444,
+      "detail": "api 收到 SIGTERM 后记录 shutdown_complete"
+    }
+  ]
+}

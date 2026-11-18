@@ -1,0 +1,8 @@
+✓ change/2026-10-14-upgrade-material-library
+✓ change/2026-11-18-fix-lesson9-retest
+✓ spec/async-grading
+✓ spec/auth-upload
+✓ spec/knowledge-retrieval
+✓ spec/platform-foundation
+✓ spec/security-hardening
+Totals: 7 passed, 0 failed (7 items)

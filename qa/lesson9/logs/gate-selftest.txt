@@ -1,0 +1,24 @@
+Exception in thread Thread-2 (_readerthread):
+Traceback (most recent call last):
+  File "F:\Anaconda\Lib\threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "F:\Anaconda\Lib\threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "F:\Anaconda\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x80 in position 14: illegal multibyte sequence
+$ 临时仓库：带假 SESSION_SECRET
+Traceback (most recent call last):
+  File "E:\proj\teamwork-main-latest\qa\lesson9\test-main\scripts\security_gate.py", line 96, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "E:\proj\teamwork-main-latest\qa\lesson9\test-main\scripts\security_gate.py", line 75, in main
+    return self_test()
+           ^^^^^^^^^^^
+  File "E:\proj\teamwork-main-latest\qa\lesson9\test-main\scripts\security_gate.py", line 54, in self_test
+    print_result("临时仓库：带假 SESSION_SECRET", red)
+  File "E:\proj\teamwork-main-latest\qa\lesson9\test-main\scripts\security_gate.py", line 27, in print_result
+    if proc.stderr.strip():
+       ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'strip'

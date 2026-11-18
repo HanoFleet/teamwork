@@ -1,0 +1,28 @@
+Sending build context to Docker daemon  45.77kB
+
+Sending build context to Docker daemon  45.77kB
+
+Step 1/13 : FROM golang:1.26.11-alpine AS build
+Step 1/13 : FROM golang:1.26.11-alpine AS build
+ ---> 3cd4009543b6
+Step 2/13 : WORKDIR /src
+ ---> 3cd4009543b6
+Step 2/13 : WORKDIR /src
+ ---> Using cache
+ ---> d055eb696402
+ ---> Using cache
+ ---> d055eb696402
+Step 3/13 : COPY go.mod go.sum ./
+Step 3/13 : COPY go.mod go.sum ./
+ ---> 7af3e84858be
+Step 4/13 : RUN go mod download
+ ---> 71566d3b57df
+Step 4/13 : RUN go mod download
+ ---> Running in 423e9e58479f
+ ---> Running in df3f88e27004
+[91mgo: filippo.io/edwards25519@v1.1.1: Get "https://proxy.golang.org/filippo.io/edwards25519/@v/v1.1.1.mod": EOF
+[0m Image teamwork-tests-latency-diagnosis-c5aae1f3-worker Building 
+ Image teamwork-tests-latency-diagnosis-c5aae1f3-api Building 
+ Image teamwork-tests-latency-diagnosis-c5aae1f3-worker Building 
+ Image teamwork-tests-latency-diagnosis-c5aae1f3-api Building 
+The command '/bin/sh -c go mod download' returned a non-zero code: 1

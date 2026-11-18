@@ -1,0 +1,373 @@
+[
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\acceptance.py",
+    "archive": "tracked-bd42a61/scripts/acceptance.py",
+    "sha256": "c7d8d7a8d9e7ce9d85ab24d65a149e4a51336540ec73087c5e9b9e6a6785d4dd",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\async_test.py",
+    "archive": "tracked-bd42a61/scripts/async_test.py",
+    "sha256": "dcdf173f150a16ed47c515ce8253bc6c9f6e2945bce966735235dd5c83b086cd",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\ci_env.py",
+    "archive": "tracked-bd42a61/scripts/ci_env.py",
+    "sha256": "488a07700c5e707c421fa14cc846243e571f321acc5a121dd8ff7983c3060073",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\govuln_check.py",
+    "archive": "tracked-bd42a61/scripts/govuln_check.py",
+    "sha256": "078b04281a5aa76cfa7f03ddf3f807e6eef30adc45499e0272dcf9f0a49e383b",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\layer_check.py",
+    "archive": "tracked-bd42a61/scripts/layer_check.py",
+    "sha256": "cca724c8edfe2d7dce88dcbc663fa62c8107e965714ec5408e049caf75c1b9c4",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\mutation.py",
+    "archive": "tracked-bd42a61/scripts/mutation.py",
+    "sha256": "9165de2afabefb67eb319038b310112f94c0d138a01814bf9efc007792600fef",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\sec08_experiment.py",
+    "archive": "tracked-bd42a61/scripts/sec08_experiment.py",
+    "sha256": "0c44c397b95b0ed5076b27d0c02a4c620cc814149644a7e3160d6b7677612183",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\secret_scan.py",
+    "archive": "tracked-bd42a61/scripts/secret_scan.py",
+    "sha256": "d0c88ba159164f21b2a9e6ca1086374091f30b07eb3603936a64de42c219590b",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\security_cases.py",
+    "archive": "tracked-bd42a61/scripts/security_cases.py",
+    "sha256": "fe6b408b9ff7d160ed8ec46e84fb0e4d72f1db0fb8593752aa7dd72076e2e363",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\security_gate.py",
+    "archive": "tracked-bd42a61/scripts/security_gate.py",
+    "sha256": "0dabc73b2ecda8a53874a612983fcb5b3592e57ccfdee66e079bcac2f54ac00e",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\security_static.py",
+    "archive": "tracked-bd42a61/scripts/security_static.py",
+    "sha256": "1137fa2378a74c7b83b313ed459083379d7e5196ff0ffa85462660039631fb64",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\security_test.py",
+    "archive": "tracked-bd42a61/scripts/security_test.py",
+    "sha256": "c230027dcc804cc1f42f5e65be18570345b191748217e33f89b40447c7d9078e",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\spec_check.py",
+    "archive": "tracked-bd42a61/scripts/spec_check.py",
+    "sha256": "e7491f4a2ad76c02a8ef45b31614657690b9be2117cb3633993d88957970f171",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\standards_check.py",
+    "archive": "tracked-bd42a61/scripts/standards_check.py",
+    "sha256": "17ad4c90d4800e12a0f23fa955dd70c620709314d117fe7a5ac6e39480a244d1",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\verify.py",
+    "archive": "tracked-bd42a61/scripts/verify.py",
+    "sha256": "a9a256b0f12f43d8fdf74f093a76ea74e9ed01b609d13aa1dd6b9f97f445ceb3",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\check.sh",
+    "archive": "tracked-bd42a61/scripts/check.sh",
+    "sha256": "358ca0541595da1d796a55600bd49334ebde972775faa77f093adcd006394dfa",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\scripts\\grade.sh",
+    "archive": "tracked-bd42a61/scripts/grade.sh",
+    "sha256": "2dd91ab5262a4dcbfac4418f51cff40e71c51382b43009c7ea0684b3a0dbe1e7",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\apitest\\cases\\async\\README.md",
+    "archive": "tracked-bd42a61/apitest/cases/async/README.md",
+    "sha256": "7f23c89ee93777294ee601af74820afa36eb9cae5b04cf64bb65fa87762f1f77",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\apitest\\cases\\security\\README.md",
+    "archive": "tracked-bd42a61/apitest/cases/security/README.md",
+    "sha256": "a3977bb177660d68566dc6bc08a785ad081c7473c61dda93e84f32682daa7d36",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\apitest\\cases\\api\\materials\\POST\\case.json",
+    "archive": "tracked-bd42a61/apitest/cases/api/materials/POST/case.json",
+    "sha256": "87befec5459e1a7c672e59c1820d0e2d21ecfbe4b9cdb904c30607273d1b0538",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\apitest\\cases\\api\\search\\POST\\case.json",
+    "archive": "tracked-bd42a61/apitest/cases/api/search/POST/case.json",
+    "sha256": "d8a0bc34f8824b39b82f5d3bb9a803aa1e9ce68816d581caf97aa80696535f99",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\apitest\\cases\\api\\skills\\grade\\PATCH\\case.json",
+    "archive": "tracked-bd42a61/apitest/cases/api/skills/grade/PATCH/case.json",
+    "sha256": "c149e974560f8da2d1aa9eccebcd128df214dad48f06b0e11d7e379a144eba7c",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\frontend\\e2e\\assignments.spec.ts",
+    "archive": "tracked-bd42a61/frontend/e2e/assignments.spec.ts",
+    "sha256": "707b82db811563deb304f6267eb02eff0ef6ad3e6aa6624cc03fc73fc4c684e9",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\frontend\\e2e\\package-lock.json",
+    "archive": "tracked-bd42a61/frontend/e2e/package-lock.json",
+    "sha256": "6b762b46471f7167b2840fab0a60d1d95a71cc0f17caf2174ffc823a03b0183f",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\frontend\\e2e\\package.json",
+    "archive": "tracked-bd42a61/frontend/e2e/package.json",
+    "sha256": "8a91c8542c542b1859ce2339c9a65fb65b9b2a7db7b5f7c7d9956aae8cc73adf",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\frontend\\e2e\\playwright.config.ts",
+    "archive": "tracked-bd42a61/frontend/e2e/playwright.config.ts",
+    "sha256": "c744318d9f8ae9b4c6279a2406296cad5eff14071baf96f6977f11542edf3102",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\frontend\\e2e\\xss-materials.spec.ts",
+    "archive": "tracked-bd42a61/frontend/e2e/xss-materials.spec.ts",
+    "sha256": "f70dc5812752cd4d31a63eb3fda84d16c84675fda1d03f2199f54ffb823e7ba4",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\auth\\jwt_test.go",
+    "archive": "tracked-bd42a61/backend/internal/auth/jwt_test.go",
+    "sha256": "53d1c2aefeb8846274afd306813d88a1d350b837bc79c7957f4665e7c8cb0c50",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\chat\\chat_test.go",
+    "archive": "tracked-bd42a61/backend/internal/chat/chat_test.go",
+    "sha256": "c93a39fccdf3cb4eb057290e063c6653e75314fa9d676a774bd3348c667d3adf",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\chunk\\chunk_test.go",
+    "archive": "tracked-bd42a61/backend/internal/chunk/chunk_test.go",
+    "sha256": "ae4d29e97c4e5f15fdb05b2542d892c9ca6e5a87c7411d20f82951c4e3535f83",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\config\\config_test.go",
+    "archive": "tracked-bd42a61/backend/internal/config/config_test.go",
+    "sha256": "a85d6e1e8e307ce5b08884e4a2fb5e091bf991f4eee4d2085d0ed36a3d7c3574",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\grading\\keys_test.go",
+    "archive": "tracked-bd42a61/backend/internal/grading/keys_test.go",
+    "sha256": "a428b676f473a7e37de9d3ac08b8a3f839a178547c3dc88f4a4ab4503e0d4732",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\grading\\score_test.go",
+    "archive": "tracked-bd42a61/backend/internal/grading/score_test.go",
+    "sha256": "f6bd6ff38aa5609280d2c1911694f67dcc3cd4eb988cd5322185e876fff77e46",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\grading\\state_test.go",
+    "archive": "tracked-bd42a61/backend/internal/grading/state_test.go",
+    "sha256": "83b855177418fbe626cf24116b2c092ee7a1f972e6810d12d45a904677c9ad4d",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\health\\health_test.go",
+    "archive": "tracked-bd42a61/backend/internal/health/health_test.go",
+    "sha256": "cfa1be7012dd3cf2396e38fecb7f430fa546d80ad77674f6e1c6413babe48dfc",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\lifecycle\\server_test.go",
+    "archive": "tracked-bd42a61/backend/internal/lifecycle/server_test.go",
+    "sha256": "0ccf1faa85568ef941bc3cd9e9d93491d533fac091ec54fc380b0a735d1b8848",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\logging\\logging_test.go",
+    "archive": "tracked-bd42a61/backend/internal/logging/logging_test.go",
+    "sha256": "9ce4b75c1d08d3dda8620e33cb94bb29dc7702a011e69c94443d33f1655ac135",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\materials\\text_test.go",
+    "archive": "tracked-bd42a61/backend/internal/materials/text_test.go",
+    "sha256": "5658826c64fcc95b917397418ec0fdcd500830d1291679330ea6de90846ca6cf",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\queue\\topology_test.go",
+    "archive": "tracked-bd42a61/backend/internal/queue/topology_test.go",
+    "sha256": "5eee5378e8dc5e68bc3f9f9ace5ce609ae0f62c43c6fa420212d39e514ff5e28",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\test-main\\backend\\internal\\retrieval\\rrf_test.go",
+    "archive": "tracked-bd42a61/backend/internal/retrieval/rrf_test.go",
+    "sha256": "2561447a7296333993d71b12669c2bc082a441b3cd21ed1767a123623fabd129",
+    "git_state": "tracked",
+    "version": "bd42a6149e975c1ed217fb9349621443a3be53d5"
+  },
+  {
+    "source": "qa\\lesson9\\build_report.py",
+    "archive": "session-final/qa/lesson9/build_report.py",
+    "sha256": "9819e094ee9a002ef7d4218ae0183df7a4e8ac3f34835811d6d4843ac7b6b10c",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "qa\\lesson9\\run_checks.py",
+    "archive": "session-final/qa/lesson9/run_checks.py",
+    "sha256": "1a283fad4d63980ee0668a8c7c65202ca35d10f47e8c2518e96ed2e140140ac9",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "qa\\lesson9\\retest-02\\acceptance_run.py",
+    "archive": "session-final/qa/lesson9/retest-02/acceptance_run.py",
+    "sha256": "1669a4a75f73ba6412219b848e2f600241b5975755a31dabcc933faab67a0698",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "qa\\lesson9\\retest-02\\report.py",
+    "archive": "session-final/qa/lesson9/retest-02/report.py",
+    "sha256": "1ee75b9b162b7cc8e6935453164289573c727ce78d86f82f9c5b0d971dbaf206",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "qa\\lesson9\\retest-02\\run.py",
+    "archive": "session-final/qa/lesson9/retest-02/run.py",
+    "sha256": "b587e5073e2080d70ec635b5f4bf834e0f43a47ab5254a59af2ff798af816429",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "qa\\lesson9\\retest-02\\recovery\\import_official_image.py",
+    "archive": "session-final/qa/lesson9/retest-02/recovery/import_official_image.py",
+    "sha256": "1690041a11c18233ee07a435e45d7ef1aa2ac924ec114505ac8089767f68fa54",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "qa\\lesson9\\retest-02\\recovery\\resume_image.py",
+    "archive": "session-final/qa/lesson9/retest-02/recovery/resume_image.py",
+    "sha256": "0d0221cf048825f5a28f576f11e20eede39be191951044a1e30618237e2daae8",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "qa\\lesson9\\retest-02\\recovery\\run_online.py",
+    "archive": "session-final/qa/lesson9/retest-02/recovery/run_online.py",
+    "sha256": "43552df8751d6ab8528af7c6ef78a41cf3f68990241e693d99e3885b4144974f",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "qa\\lesson9\\retest-02\\recovery\\supplement.py",
+    "archive": "session-final/qa/lesson9/retest-02/recovery/supplement.py",
+    "sha256": "62421ac27e74d086417e9c13439e8956032751e79f4fa55c3b32391470e779d1",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "qa\\lesson9\\retest-02\\recovery\\update_deliverables.py",
+    "archive": "session-final/qa/lesson9/retest-02/recovery/update_deliverables.py",
+    "sha256": "c80aadd11a44f9532f1205bc8beaf21d1dd9f0a858f3b67ec3c74506de685dee",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "scripts\\week8_security.py",
+    "archive": "session-final/scripts/week8_security.py",
+    "sha256": "40d646fbfc0181bfdeb0d353cbe5a75353d69bb99ba8609329246269fa7d62d4",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "scripts\\week8_validate.py",
+    "archive": "session-final/scripts/week8_validate.py",
+    "sha256": "732682108cb4b4140db8e18c79fc94a29d65f8539e2bbee5f70e25cce00d828b",
+    "git_state": "untracked",
+    "version": "session final; early overwritten revisions unavailable"
+  },
+  {
+    "source": "reports/evidence/week8-cross-review/20261106T201036-9a5cfc/runner.py",
+    "archive": "session-final/reports/evidence/week8-cross-review/20261106T201036-9a5cfc/runner.py",
+    "sha256": "7e9552e04d7f9885a8bcf2870529c36d8084292c9e8c4e8604b59549f0bc25e2",
+    "git_state": "untracked",
+    "version": "292eaaff + working tree; 20261106T201036 cross-review metadata"
+  }
+]

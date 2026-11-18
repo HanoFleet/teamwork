@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "E:\proj\teamwork-main-latest\qa\lesson9\fix-worktree\docs\lesson-09\2026-11-18-enqueue-latency-v2-gates-01\live_verify.py", line 29, in <module>
+    occupied = [ipaddress.ip_network(c["Subnet"]) for network in networks for c in network.get("IPAM", {}).get("Config", []) if c.get("Subnet")]
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable

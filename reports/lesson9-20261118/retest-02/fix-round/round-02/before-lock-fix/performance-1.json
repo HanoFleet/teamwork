@@ -1,0 +1,193 @@
+{
+  "time": "2026-11-18T16:29:35.108723+08:00",
+  "samples": [
+    {
+      "index": 0,
+      "submission_id": 1,
+      "request_id": "l9-diagnostic-1-1794990571297705400-0",
+      "start_epoch_ms": 1794990571346.0847,
+      "elapsed_ms": 206.86079999723006,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 1,
+      "submission_id": 2,
+      "request_id": "l9-diagnostic-1-1794990571297705400-1",
+      "start_epoch_ms": 1794990571665.6045,
+      "elapsed_ms": 94.04020000147284,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 2,
+      "submission_id": 3,
+      "request_id": "l9-diagnostic-1-1794990571297705400-2",
+      "start_epoch_ms": 1794990571867.4805,
+      "elapsed_ms": 256.77839999843854,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 3,
+      "submission_id": 4,
+      "request_id": "l9-diagnostic-1-1794990571297705400-3",
+      "start_epoch_ms": 1794990572276.9294,
+      "elapsed_ms": 87.26089999981923,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 4,
+      "submission_id": 5,
+      "request_id": "l9-diagnostic-1-1794990571297705400-4",
+      "start_epoch_ms": 1794990572420.1116,
+      "elapsed_ms": 100.04449999905773,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 5,
+      "submission_id": 6,
+      "request_id": "l9-diagnostic-1-1794990571297705400-5",
+      "start_epoch_ms": 1794990572577.9126,
+      "elapsed_ms": 65.95459999880404,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 6,
+      "submission_id": 7,
+      "request_id": "l9-diagnostic-1-1794990571297705400-6",
+      "start_epoch_ms": 1794990572688.7476,
+      "elapsed_ms": 37.701499997638166,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 7,
+      "submission_id": 8,
+      "request_id": "l9-diagnostic-1-1794990571297705400-7",
+      "start_epoch_ms": 1794990572774.0293,
+      "elapsed_ms": 97.56099999867729,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 8,
+      "submission_id": 9,
+      "request_id": "l9-diagnostic-1-1794990571297705400-8",
+      "start_epoch_ms": 1794990572957.2827,
+      "elapsed_ms": 197.43510000262177,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 9,
+      "submission_id": 10,
+      "request_id": "l9-diagnostic-1-1794990571297705400-9",
+      "start_epoch_ms": 1794990573220.8506,
+      "elapsed_ms": 87.84960000048159,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 10,
+      "submission_id": 11,
+      "request_id": "l9-diagnostic-1-1794990571297705400-10",
+      "start_epoch_ms": 1794990573352.1372,
+      "elapsed_ms": 66.19990000035614,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 11,
+      "submission_id": 12,
+      "request_id": "l9-diagnostic-1-1794990571297705400-11",
+      "start_epoch_ms": 1794990573506.2886,
+      "elapsed_ms": 80.28030000059516,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 12,
+      "submission_id": 13,
+      "request_id": "l9-diagnostic-1-1794990571297705400-12",
+      "start_epoch_ms": 1794990573639.7869,
+      "elapsed_ms": 69.79460000002291,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 13,
+      "submission_id": 14,
+      "request_id": "l9-diagnostic-1-1794990571297705400-13",
+      "start_epoch_ms": 1794990573772.4907,
+      "elapsed_ms": 232.15089999939664,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 14,
+      "submission_id": 15,
+      "request_id": "l9-diagnostic-1-1794990571297705400-14",
+      "start_epoch_ms": 1794990574075.1443,
+      "elapsed_ms": 133.44449999931385,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 15,
+      "submission_id": 16,
+      "request_id": "l9-diagnostic-1-1794990571297705400-15",
+      "start_epoch_ms": 1794990574389.8423,
+      "elapsed_ms": 189.49170000269078,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 16,
+      "submission_id": 17,
+      "request_id": "l9-diagnostic-1-1794990571297705400-16",
+      "start_epoch_ms": 1794990574709.605,
+      "elapsed_ms": 42.12589999951888,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 17,
+      "submission_id": 18,
+      "request_id": "l9-diagnostic-1-1794990571297705400-17",
+      "start_epoch_ms": 1794990574793.8425,
+      "elapsed_ms": 46.52630000055069,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 18,
+      "submission_id": 19,
+      "request_id": "l9-diagnostic-1-1794990571297705400-18",
+      "start_epoch_ms": 1794990574884.253,
+      "elapsed_ms": 77.49730000068666,
+      "status": 202,
+      "accepted_without_result": true
+    },
+    {
+      "index": 19,
+      "submission_id": 20,
+      "request_id": "l9-diagnostic-1-1794990571297705400-19",
+      "start_epoch_ms": 1794990575045.1687,
+      "elapsed_ms": 60.667000001558335,
+      "status": 202,
+      "accepted_without_result": true
+    }
+  ],
+  "sample_count": 20,
+  "max_ms": 256.77839999843854,
+  "p95_ms": 232.15089999939664,
+  "over_100_ms": 7,
+  "threshold_ms": 100,
+  "passed": false,
+  "complete": true,
+  "db_anchor": "1794990571205.254000\t29605321872000"
+}

@@ -1,0 +1,7 @@
+epoch_ms	waiter_thread	blocker_thread	table	index	lock_type	lock_mode	key_class
+1794991269062.825000	58	50	outbox_messages	idx_outbox_status_next	RECORD	X	record-key-redacted
+1794991269074.000000	58	50	outbox_messages	idx_outbox_status_next	RECORD	X	record-key-redacted
+1794991269084.974000	58	50	outbox_messages	idx_outbox_status_next	RECORD	X	record-key-redacted
+1794991269095.899000	58	50	outbox_messages	idx_outbox_status_next	RECORD	X	record-key-redacted
+1794991269106.842000	58	50	outbox_messages	idx_outbox_status_next	RECORD	X	record-key-redacted
+1794991269118.054000	58	50	outbox_messages	idx_outbox_status_next	RECORD	X	record-key-redacted

@@ -1,0 +1,889 @@
+git log --format=%H %s origin/main -- backend/internal/httpapi/config.go backend/internal/httpapi/skill.go backend/internal/httpapi/audit.go backend/internal/audit backend/internal/catalog scripts/security_test.py
+090ca01a08598e099905b3272ee5907bfb02c7ac test(security-hardening): 按学生和时间窗回查配置拒绝审计
+7263dda211139292a7ff8f7539ed25429a9da983 feat(security-hardening): 0.1-7.3 完成第9课安全加固
+
+git log --format=%H %s origin/main -- backend/internal/grading/service.go
+4f8414285f7ff7508f6b2658e58734c32d4b4d52 feat(async-grading): 1.1-1.4 增加 RabbitMQ、worker 与任务表
+
+git log --format=%H %s origin/main -- frontend/package.json frontend/package-lock.json
+635d4651f55807a0e12fbfa79e04d6db413f539d feat(platform-foundation): 恢复可运行骨架（不含 CI 工作流）
+96cfdb3d0303aaf2a93603ff8d232d91842fde1b refactor: 旧实现归档，仓库聚焦阶段一规约
+2cb149837f078794512024c8a3d78f6a0c325dfb 交付 CampusClaw 迭代 1：可登录、按班级隔离、能把材料写入知识库。
+
+reports\async-grading.md
+reports\e2e-playwright.md
+reports\gate-red-green.md
+reports\govuln-disposition.md
+reports\README.md
+reports\review-01.md
+reports\review-02.md
+reports\review-03.md
+reports\risk-authz.md
+reports\risk-concurrency.md
+reports\risk-transaction.md
+reports\sec08-experiment.md
+reports\security-baseline.md
+reports\security-fix-log.md
+reports\security-precheck.md
+reports\xss-page-source.md
+
+SOURCE backend/internal/httpapi/config.go
+package httpapi
+
+import (
+	"encoding/json"
+	"errors"
+	"io"
+	"net/http"
+	"strings"
+	"time"
+
+	"campusclaw/internal/audit"
+	"campusclaw/internal/catalog"
+)
+
+type skillPatchRequest struct {
+	Name        *string `json:"name"`
+	Description *string `json:"description"`
+	Enabled     *bool   `json:"enabled"`
+}
+
+type assistantPatchRequest struct {
+	Name         *string `json:"name"`
+	SystemPrompt *string `json:"system_prompt"`
+	Enabled      *bool   `json:"enabled"`
+}
+
+func (s *Server) listSkills(w http.ResponseWriter, r *http.Request) {
+	if _, ok := s.requireUser(w, r); !ok {
+		return
+	}
+	if s.catalog == nil {
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
+	list, err := s.catalog.ListSkills(r.Context())
+	if err != nil {
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"skills": list})
+}
+
+func (s *Server) patchSkill(w http.ResponseWriter, r *http.Request) {
+	u, ok := s.requireUser(w, r)
+	if !ok {
+		return
+	}
+	key := strings.TrimSpace(r.PathValue("key"))
+	object := "skill:" + key
+	if u.Role != "teacher" {
+		s.recordAudit(r, u, "config.change", "skill", object, audit.StatusDenied, key, nil, nil, "forbidden")
+		writeError(w, http.StatusForbidden, "forbidden")
+		return
+	}
+	var req skillPatchRequest
+	if !decodeStrictJSON(w, r, &req) {
+		return
+	}
+	if !validSkillPatch(w, req) {
+		return
+	}
+	started := time.Now()
+	updated, err := s.catalog.UpdateSkill(r.Context(), key, catalog.SkillPatch{
+		Name: req.Name, Description: req.Description, Enabled: req.Enabled,
+	})
+	duration := int(time.Since(started).Milliseconds())
+	if err != nil {
+		if errors.Is(err, catalog.ErrNotFound) {
+			s.recordAudit(r, u, "config.change", "skill", object, audit.StatusDenied, key, &duration, nil, "not_found")
+			writeError(w, http.StatusNotFound, "not_found")
+			return
+		}
+		s.recordAudit(r, u, "config.change", "skill", object, audit.StatusFailure, key, &duration, nil, "unavailable")
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
+	s.recordAudit(r, u, "config.change", "skill", object, audit.StatusSuccess, key, &duration, nil, "")
+	writeJSON(w, http.StatusOK, updated)
+}
+
+func (s *Server) listAssistants(w http.ResponseWriter, r *http.Request) {
+	u, ok := s.requireUser(w, r)
+	if !ok {
+		return
+	}
+	if s.catalog == nil {
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
+	list, err := s.catalog.ListAssistants(r.Context(), u.ClassID)
+	if err != nil {
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"assistants": list})
+}
+
+func (s *Server) patchAssistant(w http.ResponseWriter, r *http.Request) {
+	u, ok := s.requireUser(w, r)
+	if !ok {
+		return
+	}
+	id, ok := parsePositiveID(r.PathValue("id"))
+	if !ok {
+		writeError(w, http.StatusNotFound, "not_found")
+		return
+	}
+	object := "assistant:" + r.PathValue("id")
+	if u.Role != "teacher" {
+		s.recordAudit(r, u, "config.change", "assistant", object, audit.StatusDenied, "", nil, nil, "forbidden")
+		writeError(w, http.StatusForbidden, "forbidden")
+		return
+	}
+	var req assistantPatchRequest
+	if !decodeStrictJSON(w, r, &req) {
+		return
+	}
+	if !validAssistantPatch(w, req) {
+		return
+	}
+	started := time.Now()
+	updated, err := s.catalog.UpdateAssistant(r.Context(), id, u.ClassID, catalog.AssistantPatch{
+		Name: req.Name, SystemPrompt: req.SystemPrompt, Enabled: req.Enabled,
+	})
+	duration := int(time.Since(started).Milliseconds())
+	if err != nil {
+		if errors.Is(err, catalog.ErrNotFound) {
+			s.recordAudit(r, u, "config.change", "assistant", object, audit.StatusDenied, "", &duration, nil, "not_found")
+			writeError(w, http.StatusNotFound, "not_found")
+			return
+		}
+		s.recordAudit(r, u, "config.change", "assistant", object, audit.StatusFailure, "", &duration, nil, "unavailable")
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
+	s.recordAudit(r, u, "config.change", "assistant", object, audit.StatusSuccess, "", &duration, nil, "")
+	writeJSON(w, http.StatusOK, updated)
+}
+
+func decodeStrictJSON(w http.ResponseWriter, r *http.Request, dest any) bool {
+	dec := json.NewDecoder(io.LimitReader(r.Body, 1<<20))
+	dec.DisallowUnknownFields()
+	if err := dec.Decode(dest); err != nil {
+		writeError(w, http.StatusBadRequest, "invalid_request")
+		return false
+	}
+	return true
+}
+
+func validSkillPatch(w http.ResponseWriter, req skillPatchRequest) bool {
+	if req.Name != nil {
+		n := strings.TrimSpace(*req.Name)
+		if len(n) < 1 || len(n) > 255 {
+			writeError(w, http.StatusBadRequest, "invalid_request")
+			return false
+		}
+	}
+	if req.Description != nil && len(*req.Description) > 2000 {
+		writeError(w, http.StatusBadRequest, "invalid_request")
+		return false
+	}
+	return true
+}
+
+func validAssistantPatch(w http.ResponseWriter, req assistantPatchRequest) bool {
+	if req.Name != nil {
+		n := strings.TrimSpace(*req.Name)
+		if len(n) < 1 || len(n) > 255 {
+			writeError(w, http.StatusBadRequest, "invalid_request")
+			return false
+		}
+	}
+	if req.SystemPrompt != nil && len(*req.SystemPrompt) > 8000 {
+		writeError(w, http.StatusBadRequest, "invalid_request")
+		return false
+	}
+	return true
+}
+
+
+SOURCE backend/internal/httpapi/skill.go
+package httpapi
+
+import (
+	"errors"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
+
+	"campusclaw/internal/audit"
+	"campusclaw/internal/grading"
+)
+
+type skillRunRequest struct {
+	SubmissionID int64 `json:"submission_id"`
+}
+
+func (s *Server) runSkill(w http.ResponseWriter, r *http.Request) {
+	u, ok := s.requireUser(w, r)
+	if !ok {
+		return
+	}
+	key := strings.TrimSpace(r.PathValue("key"))
+	object := "skill:" + key
+	if s.catalog == nil {
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
+	skill, err := s.catalog.GetSkill(r.Context(), key)
+	if err != nil || !skill.Enabled || key != "grade" {
+		s.recordAudit(r, u, "skill.run", "skill", object, audit.StatusDenied, key, nil, nil, "not_found")
+		writeError(w, http.StatusNotFound, "not_found")
+		return
+	}
+	var req skillRunRequest
+	if !decodeJSONBody(w, r, &req) {
+		return
+	}
+	if req.SubmissionID <= 0 {
+		s.recordAudit(r, u, "skill.run", "submission", "0", audit.StatusDenied, key, nil, nil, "invalid_request")
+		writeError(w, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	object = "submission:" + strconv.FormatInt(req.SubmissionID, 10)
+	started := time.Now()
+	task, result, _, err := s.grades.EnqueueGrade(r.Context(), actorOf(u), req.SubmissionID)
+	duration := int(time.Since(started).Milliseconds())
+	usage := map[string]any{"model": "local", "tokens": 0}
+	if err != nil {
+		code, status := "unavailable", audit.StatusFailure
+		if errors.Is(err, grading.ErrNotFound) {
+			code, status = "not_found", audit.StatusDenied
+		} else if errors.Is(err, grading.ErrForbidden) {
+			code, status = "forbidden", audit.StatusDenied
+		}
+		s.recordAudit(r, u, "skill.run", "submission", object, status, key, &duration, usage, code)
+		mapGradeErr(w, err)
+		return
+	}
+	resultStatus := audit.StatusAccepted
+	if result != nil {
+		resultStatus = audit.StatusSuccess
+	}
+	if task.Status == grading.StatusFailed || task.Status == grading.StatusDead {
+		resultStatus = audit.StatusFailure
+	}
+	s.recordAudit(r, u, "skill.run", "submission", object, resultStatus, key, &duration, usage, "")
+	writeGradeTaskResponse(w, task, result)
+}
+
+
+SOURCE backend/internal/httpapi/audit.go
+package httpapi
+
+import (
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
+
+	"campusclaw/internal/audit"
+	"campusclaw/internal/logging"
+)
+
+func (s *Server) recordAudit(r *http.Request, u *User, operation, objectType, objectID, status, skillKey string, duration *int, usage map[string]any, errorCode string) {
+	if s.audit == nil {
+		return
+	}
+	entry := audit.Entry{
+		OccurredAt:   time.Now().UTC(),
+		Operation:    operation,
+		ObjectType:   objectType,
+		ObjectID:     objectID,
+		ResultStatus: status,
+		SkillKey:     skillKey,
+		DurationMS:   duration,
+		Usage:        usage,
+		ErrorCode:    errorCode,
+		RequestID:    logging.RequestID(r.Context()),
+	}
+	if u != nil {
+		entry.OperatorID = u.ID
+		entry.OperatorUsername = u.Username
+		entry.OperatorRole = u.Role
+		entry.ClassID = u.ClassID
+	} else {
+		entry.OperatorUsername = "anonymous"
+		entry.OperatorRole = "system"
+	}
+	if err := s.audit.Append(r.Context(), entry); err != nil && s.logger != nil {
+		s.logger.Error("audit_insert", "event", "audit", "reason", err.Error())
+	}
+}
+
+func (s *Server) listAuditLogs(w http.ResponseWriter, r *http.Request) {
+	u, ok := s.requireUser(w, r)
+	if !ok {
+		return
+	}
+	if u.Role != "teacher" {
+		s.recordAudit(r, u, "audit.query", "audit", "list", audit.StatusDenied, "", nil, nil, "forbidden")
+		writeError(w, http.StatusForbidden, "forbidden")
+		return
+	}
+	if s.audit == nil {
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
+	filter := audit.Filter{ClassID: u.ClassID, Limit: 100}
+	query := r.URL.Query()
+	if raw := strings.TrimSpace(query.Get("limit")); raw != "" {
+		n, err := strconv.Atoi(raw)
+		if err != nil || n < 1 || n > 100 {
+			writeError(w, http.StatusBadRequest, "invalid_request")
+			return
+		}
+		filter.Limit = n
+	}
+	if raw := strings.TrimSpace(query.Get("skill_key")); raw != "" {
+		if len(raw) > 64 {
+			writeError(w, http.StatusBadRequest, "invalid_request")
+			return
+		}
+		filter.SkillKey = raw
+	}
+	if raw := strings.TrimSpace(query.Get("operator_id")); raw != "" {
+		n, err := strconv.ParseInt(raw, 10, 64)
+		if err != nil || n <= 0 {
+			writeError(w, http.StatusBadRequest, "invalid_request")
+			return
+		}
+		filter.OperatorID = n
+	}
+	for key, dest := range map[string]*time.Time{"from": &filter.From, "to": &filter.To} {
+		if raw := strings.TrimSpace(query.Get(key)); raw != "" {
+			t, err := time.Parse(time.RFC3339, raw)
+			if err != nil {
+				writeError(w, http.StatusBadRequest, "invalid_request")
+				return
+			}
+			*dest = t.UTC()
+		}
+	}
+	if !filter.From.IsZero() && !filter.To.IsZero() && filter.To.Before(filter.From) {
+		writeError(w, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	logs, err := s.audit.List(r.Context(), filter)
+	if err != nil {
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"logs": logs})
+}
+
+
+SOURCE backend/internal/httpapi/grading.go
+package httpapi
+
+import (
+	"encoding/json"
+	"errors"
+	"io"
+	"net/http"
+	"strconv"
+	"time"
+
+	"campusclaw/internal/grading"
+)
+
+func (s *Server) listAssignments(w http.ResponseWriter, r *http.Request) {
+	u, ok := s.requireUser(w, r)
+	if !ok {
+		return
+	}
+	list, err := s.grades.ListAssignments(r.Context(), actorOf(u))
+	if err != nil {
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+		return
+	}
+	type item struct {
+		ID        int64  `json:"id"`
+		Title     string `json:"title"`
+		Published bool   `json:"published"`
+		CreatedAt string `json:"created_at"`
+	}
+	out := make([]item, 0, len(list))
+	for _, row := range list {
+		out = append(out, item{
+			ID:        row.ID,
+			Title:     row.Title,
+			Published: row.Published,
+			CreatedAt: row.CreatedAt.UTC().Format(time.RFC3339),
+		})
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"assignments": out})
+}
+
+func (s *Server) createSubmission(w http.ResponseWriter, r *http.Request) {
+	u, ok := s.requireUser(w, r)
+	if !ok {
+		return
+	}
+	id, ok := parsePositiveID(r.PathValue("id"))
+	if !ok {
+		writeError(w, http.StatusNotFound, "not_found")
+		return
+	}
+	var req struct {
+		Body string `json:"body"`
+	}
+	if !decodeJSONBody(w, r, &req) {
+		return
+	}
+	row, created, err := s.grades.Submit(r.Context(), actorOf(u), id, req.Body)
+	if mapGradeErr(w, err) {
+		return
+	}
+	status := http.StatusOK
+	if created {
+		status = http.StatusCreated
+	}
+	writeJSON(w, status, map[string]any{
+		"submission_id": row.ID,
+		"version":       row.Version,
+		"status":        row.Status,
+	})
+}
+
+func (s *Server) gradeSubmission(w http.ResponseWriter, r *http.Request) {
+	u, ok := s.requireUser(w, r)
+	if !ok {
+		return
+	}
+	id, ok := parsePositiveID(r.PathValue("id"))
+	if !ok {
+		writeError(w, http.StatusNotFound, "not_found")
+		return
+	}
+	task, result, _, err := s.grades.EnqueueGrade(r.Context(), actorOf(u), id)
+	if mapGradeErr(w, err) {
+		return
+	}
+	writeGradeTaskResponse(w, task, result)
+}
+
+func writeGradeTaskResponse(w http.ResponseWriter, task grading.Task, result *grading.Result) {
+	if result != nil {
+		writeJSON(w, http.StatusOK, map[string]any{
+			"task_id": task.TaskID,
+			"status":  grading.StatusSucceeded,
+			"result":  resultJSON(result),
+		})
+		return
+	}
+	if task.Status == grading.StatusFailed || task.Status == grading.StatusDead {
+		body := map[string]any{"task_id": task.TaskID, "status": task.Status}
+		if task.Error != "" {
+			body["error"] = task.Error
+		}
+		writeJSON(w, http.StatusOK, body)
+		return
+	}
+	writeJSON(w, http.StatusAccepted, map[string]string{
+		"task_id":    task.TaskID,
+		"status":     grading.StatusPending,
+		"status_url": "/api/tasks/" + task.TaskID,
+	})
+}
+
+func (s *Server) getTask(w http.ResponseWriter, r *http.Request) {
+	u, ok := s.requireUser(w, r)
+	if !ok {
+		return
+	}
+	taskID := r.PathValue("task_id")
+	task, result, err := s.grades.GetTask(r.Context(), actorOf(u), taskID)
+	if mapGradeErr(w, err) {
+		return
+	}
+	view := map[string]any{
+		"task_id":    task.TaskID,
+		"type":       grading.TaskTypeGrade,
+		"status":     task.Status,
+		"attempts":   task.Attempts,
+		"created_at": task.CreatedAt.UTC().Format(time.RFC3339),
+	}
+	if task.StartedAt != nil {
+		view["started_at"] = task.StartedAt.UTC().Format(time.RFC3339)
+	}
+	if task.FinishedAt != nil {
+		view["finished_at"] = task.FinishedAt.UTC().Format(time.RFC3339)
+	}
+	if task.Error != "" {
+		view["error"] = task.Error
+	}
+	if result != nil {
+		view["result"] = resultJSON(result)
+	}
+	writeJSON(w, http.StatusOK, view)
+}
+
+func resultJSON(result *grading.Result) map[string]any {
+	return map[string]any{
+		"score":     result.Score,
+		"feedback":  result.Feedback,
+		"sources":   []string{"本地评分规则（关键词覆盖与篇幅）"},
+		"graded_at": result.GradedAt.UTC().Format(time.RFC3339),
+	}
+}
+
+func actorOf(u *User) grading.Actor {
+	return grading.Actor{ID: u.ID, Role: u.Role, ClassID: u.ClassID}
+}
+
+func parsePositiveID(raw string) (int64, bool) {
+	id, err := strconv.ParseInt(raw, 10, 64)
+	if err != nil || id <= 0 {
+		return 0, false
+	}
+	return id, true
+}
+
+func decodeJSONBody(w http.ResponseWriter, r *http.Request, dest any) bool {
+	dec := json.NewDecoder(io.LimitReader(r.Body, 1<<20))
+	if err := dec.Decode(dest); err != nil && !errors.Is(err, io.EOF) {
+		writeError(w, http.StatusBadRequest, "invalid_request")
+		return false
+	}
+	return true
+}
+
+func mapGradeErr(w http.ResponseWriter, err error) bool {
+	if err == nil {
+		return false
+	}
+	switch {
+	case errors.Is(err, grading.ErrInvalid):
+		writeError(w, http.StatusBadRequest, "invalid_request")
+	case errors.Is(err, grading.ErrForbidden):
+		writeError(w, http.StatusForbidden, "forbidden")
+	case errors.Is(err, grading.ErrNotFound):
+		writeError(w, http.StatusNotFound, "not_found")
+	default:
+		writeError(w, http.StatusServiceUnavailable, "unavailable")
+	}
+	return true
+}
+
+
+SOURCE backend/internal/grading/service.go
+package grading
+
+import (
+	"context"
+	"errors"
+	"strings"
+	"unicode/utf8"
+
+	"campusclaw/internal/config"
+	"database/sql"
+)
+
+type Actor struct {
+	ID      int64
+	Role    string
+	ClassID int64
+}
+
+type Service struct {
+	store *Store
+}
+
+func NewService(db *sql.DB, cfg config.Config) *Service {
+	return &Service{store: NewStore(db, cfg)}
+}
+
+func (s *Service) Store() *Store { return s.store }
+
+func (s *Service) ListAssignments(ctx context.Context, actor Actor) ([]Assignment, error) {
+	return s.store.ListPublished(ctx, actor.ClassID)
+}
+
+func (s *Service) Submit(ctx context.Context, actor Actor, assignmentID int64, body string) (Submission, bool, error) {
+	if actor.Role != "student" {
+		return Submission{}, false, ErrForbidden
+	}
+	trimmed := strings.TrimSpace(body)
+	n := utf8.RuneCountInString(trimmed)
+	if n < 1 || n > 20000 {
+		return Submission{}, false, ErrInvalid
+	}
+	asg, err := s.store.GetAssignment(ctx, assignmentID)
+	if err != nil {
+		if errors.Is(err, ErrNotFound) {
+			return Submission{}, false, ErrNotFound
+		}
+		return Submission{}, false, ErrUnavailable
+	}
+	if asg.ClassID != actor.ClassID || !asg.Published {
+		return Submission{}, false, ErrNotFound
+	}
+	row, created, err := s.store.Submit(ctx, asg, actor.ID, trimmed)
+	if err != nil {
+		return Submission{}, false, ErrUnavailable
+	}
+	return row, created, nil
+}
+
+func (s *Service) EnqueueGrade(ctx context.Context, actor Actor, submissionID int64) (Task, *Result, bool, error) {
+	sub, err := s.store.GetSubmission(ctx, submissionID)
+	if err != nil {
+		if errors.Is(err, ErrNotFound) {
+			return Task{}, nil, false, ErrNotFound
+		}
+		return Task{}, nil, false, ErrUnavailable
+	}
+	if sub.StudentID != actor.ID || sub.ClassID != actor.ClassID {
+		return Task{}, nil, false, ErrNotFound
+	}
+	task, result, created, err := s.store.EnqueueGrade(ctx, sub)
+	if err != nil {
+		if errors.Is(err, ErrNotFound) {
+			return Task{}, nil, false, ErrNotFound
+		}
+		return Task{}, nil, false, ErrUnavailable
+	}
+	return task, result, created, nil
+}
+
+func (s *Service) GetTask(ctx context.Context, actor Actor, taskID string) (Task, *Result, error) {
+	if taskID == "" || len(taskID) != 26 {
+		return Task{}, nil, ErrNotFound
+	}
+	task, err := s.store.GetTaskByID(ctx, taskID)
+	if err != nil {
+		if errors.Is(err, ErrNotFound) {
+			return Task{}, nil, ErrNotFound
+		}
+		return Task{}, nil, ErrUnavailable
+	}
+	if task.ClassID != actor.ClassID {
+		return Task{}, nil, ErrNotFound
+	}
+	if actor.Role != "teacher" && task.StudentID != actor.ID {
+		return Task{}, nil, ErrNotFound
+	}
+	result, err := s.store.GetResult(ctx, task.SubmissionID, task.SubmissionVersion)
+	if err != nil {
+		if errors.Is(err, ErrNotFound) {
+			return task, nil, nil
+		}
+		return Task{}, nil, ErrUnavailable
+	}
+	return task, &result, nil
+}
+
+
+SOURCE backend/internal/audit/audit.go
+// Package audit stores security-relevant events in audit_logs.
+package audit
+
+import (
+	"context"
+	"database/sql"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"strings"
+	"time"
+)
+
+const (
+	StatusSuccess  = "success"
+	StatusFailure  = "failure"
+	StatusDenied   = "denied"
+	StatusAccepted = "accepted"
+)
+
+type Entry struct {
+	ID               int64          `json:"id"`
+	OccurredAt       time.Time      `json:"occurred_at"`
+	OperatorID       int64          `json:"operator_id,omitempty"`
+	OperatorUsername string         `json:"operator_username"`
+	OperatorRole     string         `json:"operator_role"`
+	ClassID          int64          `json:"class_id,omitempty"`
+	Operation        string         `json:"operation"`
+	ObjectType       string         `json:"object_type"`
+	ObjectID         string         `json:"object_id"`
+	ResultStatus     string         `json:"result_status"`
+	SkillKey         string         `json:"skill_key,omitempty"`
+	DurationMS       *int           `json:"duration_ms,omitempty"`
+	Usage            map[string]any `json:"usage,omitempty"`
+	ErrorCode        string         `json:"error_code,omitempty"`
+	RequestID        string         `json:"request_id,omitempty"`
+}
+
+type Filter struct {
+	OperatorID int64
+	ClassID    int64
+	SkillKey   string
+	From       time.Time
+	To         time.Time
+	Limit      int
+}
+
+type Store struct {
+	db *sql.DB
+}
+
+func NewStore(db *sql.DB) *Store { return &Store{db: db} }
+
+func (s *Store) Append(ctx context.Context, e Entry) error {
+	username := truncate(strings.TrimSpace(e.OperatorUsername), 64)
+	if username == "" {
+		username = "anonymous"
+	}
+	role := e.OperatorRole
+	if role != "teacher" && role != "student" && role != "system" {
+		role = "system"
+	}
+	status := e.ResultStatus
+	if status != StatusSuccess && status != StatusFailure && status != StatusDenied && status != StatusAccepted {
+		status = StatusFailure
+	}
+	operation := truncate(strings.TrimSpace(e.Operation), 64)
+	objectType := truncate(strings.TrimSpace(e.ObjectType), 32)
+	objectID := truncate(strings.TrimSpace(e.ObjectID), 64)
+	skillKey := truncate(strings.TrimSpace(e.SkillKey), 64)
+	errorCode := truncate(strings.TrimSpace(e.ErrorCode), 64)
+	requestID := truncate(strings.TrimSpace(e.RequestID), 64)
+	usage, err := marshalUsage(e.Usage)
+	if err != nil {
+		return err
+	}
+	occurred := e.OccurredAt
+	if occurred.IsZero() {
+		occurred = time.Now().UTC()
+	}
+	var operatorID, classID any
+	if e.OperatorID > 0 {
+		operatorID = e.OperatorID
+	}
+	if e.ClassID > 0 {
+		classID = e.ClassID
+	}
+	var duration any
+	if e.DurationMS != nil {
+		duration = *e.DurationMS
+	}
+	_, err = s.db.ExecContext(ctx, `
+		INSERT INTO audit_logs (
+			occurred_at, operator_id, operator_username, operator_role, class_id,
+			operation, object_type, object_id, result_status, skill_key,
+			duration_ms, usage_json, error_code, request_id
+		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+		occurred.UTC(), operatorID, username, role, classID,
+		operation, objectType, objectID, status, nullString(skillKey),
+		duration, usage, nullString(errorCode), nullString(requestID))
+	return err
+}
+
+func (s *Store) List(ctx context.Context, f Filter) ([]Entry, error) {
+	if f.Limit <= 0 {
+		f.Limit = 100
+	}
+	if f.Limit > 100 {
+		f.Limit = 100
+	}
+	query := `SELECT id, occurred_at, operator_id, operator_username, operator_role, class_id,
+		operation, object_type, object_id, result_status, skill_key,
+		duration_ms, usage_json, error_code, request_id
+		FROM audit_logs WHERE class_id=?`
+	args := []any{f.ClassID}
+	if f.OperatorID > 0 {
+		query += ` AND operator_id=?`
+		args = append(args, f.OperatorID)
+	}
+	if f.SkillKey != "" {
+		query += ` AND skill_key=?`
+		args = append(args, f.SkillKey)
+	}
+	if !f.From.IsZero() {
+		query += ` AND occurred_at>=?`
+		args = append(args, f.From.UTC())
+	}
+	if !f.To.IsZero() {
+		query += ` AND occurred_at<=?`
+		args = append(args, f.To.UTC())
+	}
+	query += ` ORDER BY occurred_at DESC, id DESC LIMIT ?`
+	args = append(args, f.Limit)
+	rows, err := s.db.QueryContext(ctx, query, args...)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	list := []Entry{}
+	for rows.Next() {
+		var e Entry
+		var operatorID, classID, duration sql.NullInt64
+		var skillKey, errorCode, requestID sql.NullString
+		var usage []byte
+		if err := rows.Scan(&e.ID, &e.OccurredAt, &operatorID, &e.OperatorUsername, &e.OperatorRole, &classID,
+			&e.Operation, &e.ObjectType, &e.ObjectID, &e.ResultStatus, &skillKey,
+			&duration, &usage, &errorCode, &requestID); err != nil {
+			return nil, err
+		}
+		if operatorID.Valid {
+			e.OperatorID = operatorID.Int64
+		}
+		if classID.Valid {
+			e.ClassID = classID.Int64
+		}
+		if duration.Valid {
+			v := int(duration.Int64)
+			e.DurationMS = &v
+		}
+		e.SkillKey = skillKey.String
+		e.ErrorCode = errorCode.String
+		e.RequestID = requestID.String
+		if len(usage) > 0 {
+			if err := json.Unmarshal(usage, &e.Usage); err != nil {
+				e.Usage = map[string]any{"invalid": true}
+			}
+		}
+		list = append(list, e)
+	}
+	return list, rows.Err()
+}
+
+func marshalUsage(usage map[string]any) (any, error) {
+	if usage == nil {
+		return nil, nil
+	}
+	raw, err := json.Marshal(usage)
+	if err != nil {
+		return nil, fmt.Errorf("audit usage: %w", err)
+	}
+	if len(raw) > 2048 {
+		return nil, errors.New("audit usage too large")
+	}
+	return raw, nil
+}
+
+func nullString(v string) any {
+	if v == "" {
+		return nil
+	}
+	return v
+}
+
+func truncate(s string, n int) string {
+	if len(s) <= n {
+		return s
+	}
+	return s[:n]
+}

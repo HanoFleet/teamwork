@@ -1,0 +1,305 @@
+{
+  "total_count": 3,
+  "jobs": [
+    {
+      "id": 134652992899,
+      "run_id": 44260682697,
+      "workflow_name": "check",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/HanoFleet/teamwork/actions/runs/44260682697",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVIijTM8AAAAfWfGdgw",
+      "head_sha": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+      "url": "https://api.github.com/repos/HanoFleet/teamwork/actions/jobs/134652992899",
+      "html_url": "https://github.com/HanoFleet/teamwork/actions/runs/44260682697/job/134652992899",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-18T07:40:12Z",
+      "started_at": "2026-11-18T07:40:15Z",
+      "completed_at": "2026-11-18T07:40:33Z",
+      "name": "check",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-18T07:40:16Z",
+          "completed_at": "2026-11-18T07:40:19Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-18T07:40:19Z",
+          "completed_at": "2026-11-18T07:40:24Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-18T07:40:24Z",
+          "completed_at": "2026-11-18T07:40:29Z"
+        },
+        {
+          "name": "Run make check-security",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 4,
+          "started_at": "2026-11-18T07:40:29Z",
+          "completed_at": "2026-11-18T07:40:31Z"
+        },
+        {
+          "name": "Run make check",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5,
+          "started_at": "2026-11-18T07:40:31Z",
+          "completed_at": "2026-11-18T07:40:31Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 9,
+          "started_at": "2026-11-18T07:40:31Z",
+          "completed_at": "2026-11-18T07:40:31Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-18T07:40:31Z",
+          "completed_at": "2026-11-18T07:40:31Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-18T07:40:31Z",
+          "completed_at": "2026-11-18T07:40:31Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/HanoFleet/teamwork/check-runs/134652992899",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000104,
+      "runner_name": "GitHub Actions 1000000104",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 134652993275,
+      "run_id": 44260682697,
+      "workflow_name": "check",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/HanoFleet/teamwork/actions/runs/44260682697",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVIijTM8AAAAfWfGe-w",
+      "head_sha": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+      "url": "https://api.github.com/repos/HanoFleet/teamwork/actions/jobs/134652993275",
+      "html_url": "https://github.com/HanoFleet/teamwork/actions/runs/44260682697/job/134652993275",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-18T07:40:12Z",
+      "started_at": "2026-11-18T07:40:16Z",
+      "completed_at": "2026-11-18T07:43:46Z",
+      "name": "verify",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-18T07:40:16Z",
+          "completed_at": "2026-11-18T07:40:18Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-18T07:40:18Z",
+          "completed_at": "2026-11-18T07:40:23Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-18T07:40:23Z",
+          "completed_at": "2026-11-18T07:40:26Z"
+        },
+        {
+          "name": "Prepare isolated env",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-18T07:40:26Z",
+          "completed_at": "2026-11-18T07:40:26Z"
+        },
+        {
+          "name": "Start Compose",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-18T07:40:26Z",
+          "completed_at": "2026-11-18T07:41:22Z"
+        },
+        {
+          "name": "Full verify (three async judgments + security)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-18T07:41:22Z",
+          "completed_at": "2026-11-18T07:43:27Z"
+        },
+        {
+          "name": "Install e2e dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-18T07:43:27Z",
+          "completed_at": "2026-11-18T07:43:28Z"
+        },
+        {
+          "name": "Playwright assignments page",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-18T07:43:28Z",
+          "completed_at": "2026-11-18T07:43:41Z"
+        },
+        {
+          "name": "Upload E2E artifacts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-18T07:43:41Z",
+          "completed_at": "2026-11-18T07:43:41Z"
+        },
+        {
+          "name": "Cleanup",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-18T07:43:41Z",
+          "completed_at": "2026-11-18T07:43:43Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-18T07:43:43Z",
+          "completed_at": "2026-11-18T07:43:43Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-18T07:43:43Z",
+          "completed_at": "2026-11-18T07:43:43Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-18T07:43:43Z",
+          "completed_at": "2026-11-18T07:43:43Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/HanoFleet/teamwork/check-runs/134652993275",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000106,
+      "runner_name": "GitHub Actions 1000000106",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 134652993298,
+      "run_id": 44260682697,
+      "workflow_name": "check",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/HanoFleet/teamwork/actions/runs/44260682697",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVIijTM8AAAAfWfGfEg",
+      "head_sha": "2d2900bf34b52d8df21513c6ef2ebc873df9f345",
+      "url": "https://api.github.com/repos/HanoFleet/teamwork/actions/jobs/134652993298",
+      "html_url": "https://github.com/HanoFleet/teamwork/actions/runs/44260682697/job/134652993298",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-18T07:40:12Z",
+      "started_at": "2026-11-18T07:40:15Z",
+      "completed_at": "2026-11-18T07:42:11Z",
+      "name": "grade",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-18T07:40:16Z",
+          "completed_at": "2026-11-18T07:40:17Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-18T07:40:17Z",
+          "completed_at": "2026-11-18T07:40:18Z"
+        },
+        {
+          "name": "Run sh scripts/grade.sh",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-18T07:40:18Z",
+          "completed_at": "2026-11-18T07:42:07Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-18T07:42:07Z",
+          "completed_at": "2026-11-18T07:42:08Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-18T07:42:08Z",
+          "completed_at": "2026-11-18T07:42:08Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-18T07:42:08Z",
+          "completed_at": "2026-11-18T07:42:09Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/HanoFleet/teamwork/check-runs/134652993298",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000105,
+      "runner_name": "GitHub Actions 1000000105",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

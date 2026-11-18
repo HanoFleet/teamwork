@@ -1,2 +1,11 @@
+* text=auto eol=lf
 archive/*.zip binary
 archive/*.sha256 text
+# Immutable test-source and evidence snapshots retain their recorded bytes/hashes.
+scripts/qa/lesson9/history/** -text
+qa/lesson9/** -text
+reports/lesson9-20261118/** -text
+# Immutable lesson-9 verification records must survive Git clean/checkout unchanged.
+docs/lesson-09/2026-11-18-observe-enqueue-latency/** -text
+docs/lesson-09/2026-11-18-enqueue-latency-v2-gates-01/** -text
+docs/lesson-09/2026-11-18-submission-preparation/** -text

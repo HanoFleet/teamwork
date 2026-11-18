@@ -1,0 +1,11 @@
+{
+  "frontend/package.json": "fa26798bad9960c959bceea57b27bff59b61b6626487f8508ab803fec7e61b93",
+  "frontend/package-lock.json": "0191b84c34a6221f8ad2e5a6f519462457a1aec8cf88f2adb5e287243c4b71c5",
+  "frontend/toolchain.mjs": "ccab93a35973e57b1f5da4f2fe499ce51f51b1fc123adcfbd7ae3dc86b4aa834",
+  "frontend/src/assets.d.ts": "cdd18327f675a1513103a06e7387b021a44239bc126f5fa4fa286adf1ab64629",
+  "backend/Dockerfile": "6eff0cce3e81354ccb101edf0296287b9d8fae797fc0f73b1a35a4819ae15d4b",
+  "backend/internal/outbox/dispatcher.go": "5cbbf4da4b261f35c3d434024fb980930fffcd5dd4447e8a120419f5c25eacdc",
+  "tests/performance/grade_latency_diagnostics.py": "a7612309c1df6616fe095c02419ef7d813120cd559225ccbbcd7bd2fc8c4fa93",
+  "tests/performance/compare_outbox_isolation.py": "b675af034dfba2b86614890235916fbfcf641664e193f16405363c45b23ec7a2",
+  "tests/regression/frontend_toolchain.test.mjs": "aa9d2b51599d8252b87783e4be6dd339c21273258aa1a7c1ee25606983816176"
+}

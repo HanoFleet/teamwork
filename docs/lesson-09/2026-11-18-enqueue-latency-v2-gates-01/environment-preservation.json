@@ -1,0 +1,9 @@
+{
+  "original_container_count": 228,
+  "missing": [],
+  "changed_running_state": [],
+  "owned_compose_containers_remaining": [],
+  "new_container_count": 2,
+  "acceptance_env_remaining": false,
+  "mutation_file_remaining": false
+}
