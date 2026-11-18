@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "dev": "node toolchain.mjs dev",
+    "build": "tsc --noEmit && node toolchain.mjs build",
+    "preview": "node toolchain.mjs preview"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -17,8 +17,7 @@
   "devDependencies": {
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "@vitejs/plugin-react": "^6.1.2",
     "typescript": "^7.0.2",
-    "vite": "^8.3.5"
+    "esbuild": "0.28.2"
   }
 }
