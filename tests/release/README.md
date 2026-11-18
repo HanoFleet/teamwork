@@ -1,3 +1,7 @@
+## 2026-11-18 archive revision
+
+The default verifier now uses `lesson9-v2-archive.json`. The prior `lesson9-v2-publication.json` remains tied to commit `5b2a8f51ee295771c11248d1e3be1bc12919ebeb`. The archive revision records the two OpenSpec moves, checked tasks, and canonical spec updates. Historical manifests and evidence retain their original bytes.
+
 # 第9课发布索引
 
 `lesson9-v2-publication.json`记录以2d2900bf34b52d8df21513c6ef2ebc873df9f345为基线的选定工作树增量。files逐项包含worktree_sha256和git_blob_sha256。普通源码可按根属性转换LF；不可变历史证据必须两个值相同。索引不包含自身，验证输出与最终报告另有独立证据索引，避免自引用。
@@ -12,4 +16,4 @@
 
 历史gate manifest还包含1个CPython缓存条目，在history-context.json中明确列为excluded_runtime。它不进入Git，工作树存在时核对旧哈希，隔离检出时只记录其历史非发布状态。98项旧gate条目中97项可解析验证，1项为明确保留的非发布缓存，不能宣称98项均随发布检出。
 
-`tests/release/lesson9-v2.json`为首次验证草稿，隔离检出因旧manifest中的缓存引用失败，原样保留在本地但不纳入发布。现行入口与提交清单均使用`lesson9-v2-publication.json`。
+`tests/release/lesson9-v2.json`为首次验证草稿，隔离检出因旧manifest中的缓存引用失败，原样保留在本地但不纳入发布。现行入口与提交清单均使用`lesson9-v2-archive.json`。

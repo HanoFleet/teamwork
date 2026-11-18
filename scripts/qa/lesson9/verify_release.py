@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_MANIFEST = "tests/release/lesson9-v2-publication.json"
+DEFAULT_MANIFEST = "tests/release/lesson9-v2-archive.json"
 
 
 def file_path(root, name):

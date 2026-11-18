@@ -6,7 +6,7 @@
 - `python scripts/qa/lesson9/check_performance.py reports/lesson9-20261118/retest-02/fix-round/performance-1.json reports/lesson9-20261118/retest-02/fix-round/performance-2.json`：采用enqueue-latency-v2。恰好20次提交全部202，P95取第19小值并严格小于500ms为硬性判据；单次>100ms仅输出WARN及序号、request_id和完整耗时，不直接导致整轮失败。非法样本、非202或P95>=500ms仍退出1。
 - `performance_probe.py`：从现有async_test.py提取同口径探针，附request_id用于关联API耗时；这是新增代码，不冒称历史丢失脚本。由调度器调用，不打印Cookie/令牌。
 - `Dockerfile.tools`：容器化GNU make/Python/Node/Go/Docker CLI，不安装到宿主；原Makefile未修改。
-- `finalize.py`：历史报告生成器已冻结，仅保留源码追溯。当前发布内容使用`python scripts/qa/lesson9/verify_release.py`校验，当前索引为`tests/release/lesson9-v2-publication.json`。
+- `finalize.py`：历史报告生成器已冻结，仅保留源码追溯。当前发布内容使用`python scripts/qa/lesson9/verify_release.py`校验，当前索引为`tests/release/lesson9-v2-archive.json`。
 
 历史精确版本：`history/tracked-bd42a61/` 是原工作树真实字节，基线bd42a614；`history/session-final/` 是会话脚本最终落盘版本。原脚本SHA256及当时tracked/untracked/ignored状态在history/inventory.json。早期包装器被覆盖的修订没有可恢复文件，明确记作“原脚本缺失（早期包装器执行版本）”；不得用最终版本冒充原版本，也未按日志重新编写历史版本。
 
