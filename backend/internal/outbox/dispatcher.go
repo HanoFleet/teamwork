@@ -42,7 +42,8 @@ func (d *Dispatcher) flush(ctx context.Context) error {
 	if d.broker == nil {
 		return nil
 	}
-	tx, err := d.db.BeginTx(ctx, nil)
+	// Keep batch row locks without gap-locking new outbox inserts while awaiting confirms.
+	tx, err := d.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelReadCommitted})
 	if err != nil {
 		return err
 	}
